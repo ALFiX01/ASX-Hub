@@ -64,7 +64,7 @@ echo     %COL%[33m2.%COL%[37m If you don't know what a tweak is, do not use it a
 echo.
 echo     %COL%[33m3.%COL%[37m Even though we have an automatic restore point feature, we highly recommend making a manual restore point before running.
 echo.
-echo   For any questions and/or concerns, please join our discord: discord.gg/hone
+echo   For any questions and/or concerns, please join our discord: https://discord.gg/J7wghdhKsx
 echo.
 echo   Please enter "I agree" without quotes to continue:
 echo.
@@ -75,7 +75,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.0.71
+set local=0.0.8
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/Test-optimization/main/Files/HoneCtrlVer" >nul 2>&1
@@ -183,19 +183,12 @@ if "%choice%"=="8" exit /b
 if "%choice%"=="9" goto Dog
 goto MainMenu
 
-:HoneTitle
-echo                                       %COL%[33m+N.
-echo                            //        oMMs
-echo                           +Nm`    ``yMMm-     ::::::::     ::::    :::    ::::::::::
-echo                        ``dMMsoyhh-hMMd.     :+:    :+:    :+:+:   :+:    :+:
-echo                        `yy/MMMMNh:dMMh`    +:+    +:+    :+:+:+  +:+    +:+                 +::+:+::      +::+:+::
-echo                       .hMM.sso++:oMMs`    +#+    +:+    +#+ +:+ +#+    +#++:++#           ++:    #++    ++:    #++
-echo                      -mMMy:osyyys.No     +#+    +#+    +#+  +#+#+#    +#+                +#+    +#+    +#+    +#+
-echo                     :NMMs-oo+/syy:-     #+#    #+#    #+#   #+#+#    #+#          %COL%[37m#+#%COL%[33m    +#+   #+#     #+#   #+#
-echo                    /NMN+ ``   :ys.      ########     ###    ####    ##########   %COL%[37m###%COL%[33m       ######        ######
-echo                   `NMN:        +.                                                      ##    ###     ##    ###
-echo                   om-                                                                   #######       #######
-echo                    `.
+:HoneTitle 
+echo                                               ####      ##        #######   ##   ##    ##
+echo                                              ##  ##     ##        ##              ##  ##
+echo                                             ##    ##    ##        #######   ##      ##
+echo                                            ##########   ##        ##        ##    ##  ##
+echo                                           ##        ##  #######   ##        ##   ##    ## 
 goto :eof
 
 :Comingsoon
@@ -600,20 +593,11 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                           %COL%[33m.
-echo                                                                        +N.
-echo                                                               //        oMMs
-echo                                                              +Nm`    ``yMMm-
-echo                                                           ``dMMsoyhh-hMMd.
-echo                                                           `yy/MMMMNh:dMMh`
-echo                                                          .hMM.sso++:oMMs`
-echo                                                         -mMMy:osyyys.No
-echo                                                        :NMMs-oo+/syy:-
-echo                                                       /NMN+ ``   :ys.
-echo                                                      `NMN:        +.
-echo                                                      om-
-echo                                                       `.
-echo.
+echo                                               ####      ##        #######   ##   ##    ##
+echo                                              ##  ##     ##        ##              ##  ##
+echo                                             ##    ##    ##        #######   ##      ##
+echo                                            ##########   ##        ##        ##    ##  ##
+echo                                           ##        ##  #######   ##        ##   ##    ##
 echo.
 echo.
 echo.
@@ -1392,19 +1376,11 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                            %COL%[33m.
-echo                                                                         +N.
-echo                                                                //        oMMs
-echo                                                               +Nm`    ``yMMm-
-echo                                                            ``dMMsoyhh-hMMd.
-echo                                                            `yy/MMMMNh:dMMh`
-echo                                                           .hMM.sso++:oMMs`
-echo                                                          -mMMy:osyyys.No
-echo                                                         :NMMs-oo+/syy:-
-echo                                                        /NMN+ ``   :ys.
-echo                                                       `NMN:        +.
-echo                                                       om-
-echo                                                        `.
+echo                                               ####      ##        #######   ##   ##    ##
+echo                                              ##  ##     ##        ##              ##  ##
+echo                                             ##    ##    ##        #######   ##      ##
+echo                                            ##########   ##        ##        ##    ##  ##
+echo                                           ##        ##  #######   ##        ##   ##    ##
 echo.
 echo.
 echo.
@@ -1674,19 +1650,11 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                            %COL%[33m.
-echo                                                                         +N.
-echo                                                                //        oMMs
-echo                                                               +Nm`    ``yMMm-
-echo                                                            ``dMMsoyhh-hMMd.
-echo                                                            `yy/MMMMNh:dMMh`
-echo                                                           .hMM.sso++:oMMs`
-echo                                                          -mMMy:osyyys.No
-echo                                                         :NMMs-oo+/syy:-
-echo                                                        /NMN+ ``   :ys.
-echo                                                       `NMN:        +.
-echo                                                       om-
-echo                                                        `.
+echo                                               ####      ##        #######   ##   ##    ##
+echo                                              ##  ##     ##        ##              ##  ##
+echo                                             ##    ##    ##        #######   ##      ##
+echo                                            ##########   ##        ##        ##    ##  ##
+echo                                           ##        ##  #######   ##        ##   ##    ##
 echo.
 echo.
 echo.
@@ -1720,18 +1688,12 @@ goto done
 cls
 echo.
 echo.
-echo                                       %COL%[33m+N.
-echo                            //        oMMs
-echo                           +Nm`    ``yMMm-     ::::::::     ::::    :::    ::::::::::
-echo                        ``dMMsoyhh-hMMd.     :+:    :+:    :+:+:   :+:    :+:
-echo                        `yy/MMMMNh:dMMh`    +:+    +:+    :+:+:+  +:+    +:+                 +::+:+::      +::+:+::
-echo                       .hMM.sso++:oMMs`    +#+    +:+    +#+ +:+ +#+    +#++:++#           ++:    #++    ++:    #++
-echo                      -mMMy:osyyys.No     +#+    +#+    +#+  +#+#+#    +#+                +#+    +#+    +#+    +#+
-echo                     :NMMs-oo+/syy:-     #+#    #+#    #+#   #+#+#    #+#          %COL%[37m#+#%COL%[33m    +#+   #+#     #+#   #+#
-echo                    /NMN+ ``   :ys.      ########     ###    ####    ##########   %COL%[37m###%COL%[33m       ######        ######
-echo                   `NMN:        +.                                                      ##    ###     ##    ###
-echo                   om-                                                                   #######       #######
-echo                    `.                                     %COL%[34m%COL%[1mOBS Settings%COL%[0m
+echo                                               ####      ##        #######   ##   ##    ##
+echo                                              ##  ##     ##        ##              ##  ##
+echo                                             ##    ##    ##        #######   ##      ##
+echo                                            ##########   ##        ##        ##    ##  ##
+echo                                           ##        ##  #######   ##        ##   ##    ##
+echo                                                           %COL%[34m%COL%[1mOBS Settings%COL%[0m
 echo.
 echo              %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m Install/Update OBS             %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m Recording                      %COL%[33m[ %COL%[37m3 %COL%[33m]%COL%[37m Streaming
 echo              %COL%[90mAutomatically install or update      %COL%[90mAutomated recording settings for     %COL%[90mAutomated streaming settings for
@@ -3638,19 +3600,11 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                            %COL%[33m.
-echo                                                                           +N.
-echo                                                                //        oMMs
-echo                                                               +Nm`    ``yMMm-
-echo                                                            ``dMMsoyhh-hMMd.
-echo                                                            `yy/MMMMNh:dMMh`
-echo                                                           .hMM.sso++:oMMs`
-echo                                                          -mMMy:osyyys.No
-echo                                                         :NMMs-oo+/syy:-
-echo                                                        /NMN+ ``   :ys.
-echo                                                       `NMN:        +.
-echo                                                       om-
-echo                                                        `.
+echo                                               ####      ##        #######   ##   ##    ##
+echo                                              ##  ##     ##        ##              ##  ##
+echo                                             ##    ##    ##        #######   ##      ##
+echo                                            ##########   ##        ##        ##    ##  ##
+echo                                           ##        ##  #######   ##        ##   ##    ##
 echo.
 echo.
 echo.
@@ -3690,8 +3644,8 @@ goto More
 :About
 cls
 echo About
-echo Owned by AuraSide, Inc. Copyright Claimed.
-echo This is a GUI for the Hone Manual Tweaks.
+echo Owned by ALFiX, Inc. Copyright Claimed.
+echo This is a GUI for the Tweaks.
 echo.
 call :ColorText 8 "                                                      [ press X to go back ]"
 echo.
@@ -3740,42 +3694,32 @@ echo.
 echo.
 echo.
 echo %COL%[90m                                                         Product Lead
-echo %COL%[97m                                                       Ryan A. - Ryan
+echo %COL%[97m                                                       Daniil B. - ALFiX
 echo.
 echo.
 echo.
 echo %COL%[90m                                                   Product Development Lead
-echo %COL%[97m                                                  Christina A. - UnLovedCookie
+echo %COL%[97m                                                       Daniil B. - ALFiX
 echo.
 echo.
 echo.
 echo %COL%[90m                                                      Product Development
-echo %COL%[97m                                                   Jonathan H. - Jonathan
-echo %COL%[97m                                                     Dexter K. - Drevoes
-echo %COL%[97m                                                     Arthur C. - Yaamruo
-echo %COL%[97m                                                    Valeria D. - Melody
+echo %COL%[97m                                                       Daniil B. - ALFiX
 echo.
 echo.
 echo.
 echo %COL%[90m                                                     Network Optimizations
-echo %COL%[97m                                                      Krzysiek - VVASD
-echo %COL%[97m                                                      Filip G. - Curtal
+echo %COL%[97m                                                       Daniil B. - ALFiX
 echo.
 echo.
 echo.
 echo %COL%[90m                                                        Render Settings
-echo %COL%[97m                                                       Eesa H. - mmunk
+echo %COL%[97m                                                       Daniil B. - ALFiX
 echo.
 echo.
 echo.
 echo %COL%[90m                                                          Credits to
-echo %COL%[97m                                                       mbk1969 - (Timer Resolution)
-echo %COL%[97m                                                       W1zzard - (Nvcleanstall)
-echo %COL%[97m                                                       M2-Team - (Nsudo)
-echo %COL%[97m                                                       ToastyX - (Restart64)
-echo %COL%[97m                                                          wj32 - (Purgestandby)
-echo %COL%[97m                                                     mini)(ant - (REAL)
-echo %COL%[97m                                                          nssm - (Iain Patterson)
+echo %COL%[97m                                                       Daniil B. - ALFiX
 echo.
 echo.
 echo.
@@ -3797,45 +3741,20 @@ cls
 goto :eof
 
 :Discord
-start http://discord.gg/hone
+start https://discord.gg/J7wghdhKsx
 goto More
 
-echo       :::    :::     ::::::::     ::::    :::    ::::::::::
-echo      :+:    :+:    :+:    :+:    :+:+:   :+:    :+:
-echo     +:+    +:+    +:+    +:+    :+:+:+  +:+    +:+                 +::+:+::      +::+:+::
-echo    +#++:++#++    +#+    +:+    +#+ +:+ +#+    +#++:++#           ++:    #++    ++:    #++
-echo   +#+    +#+    +#+    +#+    +#+  +#+#+#    +#+                +#+    +#+    +#+    +#+
-echo  #+#    #+#    #+#    #+#    #+#   #+#+#    #+#          #+#   #+#    #+#    #+#    #+#
-echo ###    ###     ########     ###    ####    ##########   ###     ########      ########
-echo                                                                     ###           ###
-echo                                                             ##     ###    ##     ###
-echo                                                              ########      ########
+echo                      ########   ##   ###
+echo                      ##         ##  ####
+echo                      ##  ####   ## ## ##
+echo                      ##    ##   ####  ##
+echo                      ########   ###   ##
 
-echo                                           %COL%[33m+N.
-echo                                //        oMMs
-echo                               +Nm`    ``yMMm-      ::::::::     ::::    :::    ::::::::::
-echo                            ``dMMsoyhh-hMMd.      :+:    :+:    :+:+:   :+:    :+:
-echo                            `yy/MMMMNh:dMMh`     +:+    +:+    :+:+:+  +:+    +:+                 +::+:+::      +::+:+::
-echo                           .hMM.sso++:oMMs`     +#+    +:+    +#+ +:+ +#+    +#++:++#           ++:    #++    ++:    #++
-echo                          -mMMy:osyyys.No      +#+    +#+    +#+  +#+#+#    +#+                +#+    +#+    +#+    +#+
-echo                         :NMMs-oo+/syy:-      #+#    #+#    #+#   #+#+#    #+#          #+#   #+#    #+#    #+#    #+#
-echo                        /NMN+ ``   :ys.       ########     ###    ####    ##########   ###     ########      ########
-echo                       `NMN:        +.                                                             ###           ###
-echo                       om-                                                                 ##     ###    ##     ###
-echo                        `.                                                                  ########      ########
-
-echo                                           %COL%[33m+N.
-echo                                //        oMMs
-echo                               +Nm`    ``yMMm-               :::    :::     ::::::::     ::::    :::    ::::::::::
-echo                            ``dMMsoyhh-hMMd.                :+:    :+:    :+:    :+:    :+:+:   :+:    :+:
-echo                            `yy/MMMMNh:dMMh`               +:+    +:+    +:+    +:+    :+:+:+  +:+    +:+
-echo                           .hMM.sso++:oMMs`               +#++:++#++    +#+    +:+    +#+ +:+ +#+    +#++:++#
-echo                          -mMMy:osyyys.No                +#+    +#+    +#+    +#+    +#+  +#+#+#    +#+
-echo                         :NMMs-oo+/syy:-                #+#    #+#    #+#    #+#    #+#   #+#+#    #+#
-echo                        /NMN+ ``   :ys.                ###    ###     ########     ###    ####    ##########
-echo                       `NMN:        +.
-echo                       om-
-echo                        `.
+echo                                               ####      ##        #######   ##   ##    ##
+echo                                              ##  ##     ##        ##              ##  ##
+echo                                             ##    ##    ##        #######   ##      ##
+echo                                            ##########   ##        ##        ##    ##  ##
+echo                                           ##        ##  #######   ##        ##   ##    ##
 
 :ColorText
 echo off
@@ -3997,21 +3916,11 @@ cls
 echo.
 echo.
 echo.
-echo.
-echo                                                                            %COL%[33m.
-echo                                                                         +N.
-echo                                                                //        oMMs
-echo                                                               +Nm`    ``yMMm-
-echo                                                            ``dMMsoyhh-hMMd.
-echo                                                            `yy/MMMMNh:dMMh`
-echo                                                           .hMM.sso++:oMMs`
-echo                                                          -mMMy:osyyys.No
-echo                                                         :NMMs-oo+/syy:-
-echo                                                        /NMN+ ``   :ys.
-echo                                                       `NMN:        +.
-echo                                                       om-
-echo                                                        `.
-echo.
+echo                                               ####      ##        #######   ##   ##    ##
+echo                                              ##  ##     ##        ##              ##  ##
+echo                                             ##    ##    ##        #######   ##      ##
+echo                                            ##########   ##        ##        ##    ##  ##
+echo                                           ##        ##  #######   ##        ##   ##    ##
 echo.
 echo.
 echo.
@@ -4211,20 +4120,11 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                            %COL%[33m.
-echo                                                                         +N.
-echo                                                                //        oMMs
-echo                                                               +Nm`    ``yMMm-
-echo                                                            ``dMMsoyhh-hMMd.
-echo                                                            `yy/MMMMNh:dMMh`
-echo                                                           .hMM.sso++:oMMs`
-echo                                                          -mMMy:osyyys.No
-echo                                                         :NMMs-oo+/syy:-
-echo                                                        /NMN+ ``   :ys.
-echo                                                       `NMN:        +.
-echo                                                       om-
-echo                                                        `.
-echo.
+echo                                               ####      ##        #######   ##   ##    ##
+echo                                              ##  ##     ##        ##              ##  ##
+echo                                             ##    ##    ##        #######   ##      ##
+echo                                            ##########   ##        ##        ##    ##  ##
+echo                                           ##        ##  #######   ##        ##   ##    ##
 echo.
 echo.
 echo.
