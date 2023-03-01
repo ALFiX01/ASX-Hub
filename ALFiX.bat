@@ -1,4 +1,4 @@
-REM Copyright (C) 2022 Auraside, Inc.
+REM Copyright (C) 2023 Auraside, Inc.
 
 REM This program is free software: you can redistribute it and/or modify
 REM it under the terms of the GNU Affero General Public License as published
@@ -136,7 +136,7 @@ echo set "firstlaunch=0" > %SYSTEMDRIVE%\Hone\HoneRevert\firstlaunch.bat
 
 :MainMenu
 Mode 130,45
-TITLE Hone Control Panel %localtwo%
+TITLE ALFiX Control Panel %localtwo%
 set "choice="
 cls
 echo.
