@@ -75,7 +75,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.0.8
+set local=0.0.81
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/Test-optimization/main/Files/HoneCtrlVer" >nul 2>&1
@@ -189,6 +189,7 @@ echo                                              ##  ##     ##        ##       
 echo                                             ##    ##    ##        #######   ##      ##
 echo                                            ##########   ##        ##        ##    ##  ##
 echo                                           ##        ##  #######   ##        ##   ##    ## 
+echo.
 goto :eof
 
 :Comingsoon
@@ -3197,9 +3198,9 @@ echo.
 call :HoneTitle
 echo                                                           %COL%[1;4;34mNetwork Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Disable Task Offloading %TOFOF%    %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m NonBestEffortLimit %NONOF%         %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m AutoTuning %AUTOF%
-echo              %COL%[90mTask Offloading assigns the          %COL%[90mAllocate more bandwidth to apps      %COL%[90mCan reduce bufferbloat,
-echo              %COL%[90mCPU to handle the NIC load           %COL%[90mUse only on fast connections         %COL%[90mbut lower your Network speed
+echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m  Disable Smartscreen %TOFOF%       %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m NonBestEffortLimit %NONOF%         %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m AutoTuning %AUTOF%
+echo              %COL%[90mDisable Antivirus Smartscreen          %COL%[90mAllocate more bandwidth to apps        %COL%[90mCan reduce bufferbloat,
+echo                                                     %COL%[90mUse only on fast connections         %COL%[90mbut lower your Network speed
 echo.
 echo                           %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m DSCP Value %DSCOF%                      %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m Wi-fi Congestion Provider %CONG%
 echo                           %COL%[90mSet the priority of your network          %COL%[91mTurn ON only, if you have Wi-Fi.
@@ -3224,7 +3225,7 @@ echo.
 echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]%COL%[37m
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto TaskOffloading
+if /i "%choice%"=="1" goto Smartscreen
 if /i "%choice%"=="2" goto NonBestEffortLimit
 if /i "%choice%"=="3" goto Autotuning
 if /i "%choice%"=="4" goto DSCPValue
@@ -3239,13 +3240,15 @@ if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto MainMenu
 goto Advanced
 
-:TaskOffloading
+:Smartscreen
 if "%TOFOF%" == "%COL%[91mOFF" (
-	netsh int ip set global taskoffload=disabled >nul 2>&1
-	reg add HKLM\SYSTEM\CurrentControlSet\Services\TCPIP\Parameters /v DisableTaskOffload /t REG_DWORD /d 1 /f
+	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "PromptOnSecureDesktop" /t REG_DWORD /d 0 /f
+      reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "ConsentPromptBehaviorAdmin" /t REG_DWORD /d 0 /f
+      reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v SmartScreenEnabled /t REG_SZ /d "Off" /f
 ) >nul 2>&1 else (
-	netsh int ip set global taskoffload=enabled >nul 2>&1
-	reg add HKLM\SYSTEM\CurrentControlSet\Services\TCPIP\Parameters /v DisableTaskOffload /t REG_DWORD /d 0 /f
+	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "PromptOnSecureDesktop" /t REG_DWORD /d 1 /f
+      reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "ConsentPromptBehaviorAdmin" /t REG_DWORD /d 1 /f
+      reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v SmartScreenEnabled /t REG_SZ /d "On" /f
 ) >nul 2>&1
 goto Advanced
 
