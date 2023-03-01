@@ -100,7 +100,7 @@ if "%LOCAL%" gtr "%LOCALTWO%" (
 	%SYSTEMROOT%\System32\choice.exe /c:YN /n /m "%DEL%                                >:"
 	set choice=!errorlevel!
 	if !choice! == 1 (
-		curl -L -o %0 "https://github.com/ALFiX01/Test-optimization/releases/download/0.0.5/ALFiX.bat" >nul 2>&1
+		curl -L -o %0 "https://github.com/ALFiX01/Test-optimization/releases/latest/download/ALFiX.bat" >nul 2>&1
 		call %0
 		exit /b
 	)
