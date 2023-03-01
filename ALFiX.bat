@@ -75,7 +75,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.0.7
+set local=0.0.71
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/Test-optimization/main/Files/HoneCtrlVer" >nul 2>&1
@@ -143,7 +143,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                                        %COL%[90m HoneCtrl is a free and open-source desktop utility
+echo                                        %COL%[90m ALFiX PACK is a free and open-source desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -204,7 +204,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                                        %COL%[90m HoneCtrl is a free and open-source desktop utility
+echo                                        %COL%[90m ALFiX PACK is a free and open-source desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -345,7 +345,7 @@ if /i "%choice%"=="6" goto Affinity
 if /i "%choice%"=="7" goto W32PrioSep
 if /i "%choice%"=="8" goto MemOptimization
 if /i "%choice%"=="9" goto Mouse
-echo %NPIOF% | find "N/A" >nul && if "%choice%" geq "10" if "%choice%" leq "15" call :HoneCtrlError "You don't have an NVIDIA GPU" && goto Tweaks
+echo %NPIOF% | find "N/A" >nul && if "%choice%" geq "10" if "%choice%" leq "15" call :ALFiX PACK Error "You don't have an NVIDIA GPU" && goto Tweaks
 if /i "%choice%"=="10" goto DisableHDCP
 if /i "%choice%"=="11" goto DisablePreemtion
 if /i "%choice%"=="12" goto ProfileInspector
@@ -408,7 +408,7 @@ if /i "%choice%"=="N" (set "PG=TweaksPG1") & goto TweaksPG1
 goto TweaksPG2
 
 :PowerPlan
-echo %PWROF% | find "N/A" >nul && call :HoneCtrlError "This power plan isn't recommended for batteries." && goto Tweaks
+echo %PWROF% | find "N/A" >nul && call :ALFiX PACK Error "This power plan isn't recommended for batteries." && goto Tweaks
 if "%PWROF%" == "%COL%[91mOFF" (
 	curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Resources\HoneV2.pow" "https://github.com/auraside/HoneCtrl/raw/main/Files/HoneV2.pow"
 	powercfg /d 44444444-4444-4444-4444-444444444449
