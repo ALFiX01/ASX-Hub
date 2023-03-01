@@ -49,7 +49,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                                        %COL%[90m HoneCtrl is a free and open-source desktop utility
+echo                                        %COL%[90m ALFiX PACK is a free and open-source desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -75,7 +75,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.0.4
+set local=0.0.5
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/Test-optimization/main/Files/HoneCtrlVer" >nul 2>&1
@@ -100,7 +100,7 @@ if "%LOCAL%" gtr "%LOCALTWO%" (
 	%SYSTEMROOT%\System32\choice.exe /c:YN /n /m "%DEL%                                >:"
 	set choice=!errorlevel!
 	if !choice! == 1 (
-		curl -L -o %0 "https://github.com/ALFiX01/Test-optimization/releases/latest/download/ALFiX.bat" >nul 2>&1
+		curl -L -o %0 "https://github.com/ALFiX01/Test-optimization/releases/download/0.0.5/ALFiX.bat" >nul 2>&1
 		call %0
 		exit /b
 	)
