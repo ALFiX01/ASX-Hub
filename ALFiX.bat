@@ -78,7 +78,7 @@ reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 set local=0.0.3
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
-curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/HoneCtrlVer" >nul 2>&1
+curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/Test-optimization/main/Files/HoneCtrlVer" >nul 2>&1
 call "%TEMP%\Updater.bat"
 if "%LOCAL%" gtr "%LOCALTWO%" (
 	clsr
@@ -100,7 +100,7 @@ if "%LOCAL%" gtr "%LOCALTWO%" (
 	%SYSTEMROOT%\System32\choice.exe /c:YN /n /m "%DEL%                                >:"
 	set choice=!errorlevel!
 	if !choice! == 1 (
-		curl -L -o %0 "https://github.com/auraside/HoneCtrl/releases/latest/download/HoneCtrl.Bat" >nul 2>&1
+		curl -L -o %0 "https://github.com/ALFiX01/Test-optimization/releases/download/0.0.5/ALFiX.bat" >nul 2>&1
 		call %0
 		exit /b
 	)
