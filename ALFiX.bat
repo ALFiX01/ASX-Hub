@@ -1,14 +1,11 @@
-REM Copyright (C) 2023 Auraside, Inc.
+REM Copyright (C) 2023 GENESIS, Inc.
 
 REM This program is free software: you can redistribute it and/or modify
 REM it under the terms of the GNU Affero General Public License as published
 REM by the Free Software Foundation, either version 3 of the License, or
-REM (at your option) any later version.
 
 REM This program is distributed in the hope that it will be useful,
-REM but WITHOUT ANY WARRANTY; without even the implied warranty of
-REM MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-REM GNU Affero General Public License for more details.
+REM but WITHOUT ANY WARRANTY; even without the implied security guarantee
 
 REM You should have received a copy of the GNU Affero General Public License
 REM along with this program.  If not, see <https://www.gnu.org/licenses/>.
@@ -50,7 +47,7 @@ echo.
 call :HoneTitle
 echo.
 echo                                        %COL%[90m ALFiX PACK is a free and open-source desktop utility
-echo                                        %COL%[90m    made to improve your day-to-day productivity
+echo                                        %COL%[90m     made to improve your day-to-day productivity
 echo.
 echo.
 echo.
@@ -75,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.0.82
+set local=0.0.9
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/Test-optimization/main/Files/HoneCtrlVer" >nul 2>&1
@@ -144,7 +141,7 @@ echo.
 call :HoneTitle
 echo.
 echo                                        %COL%[90m ALFiX PACK is a free and open-source desktop utility
-echo                                        %COL%[90m    made to improve your day-to-day productivity
+echo                                        %COL%[90m     made to improve your day-to-day productivity
 echo.
 echo.
 echo.
@@ -215,7 +212,7 @@ goto :eof
 
 :Tweaks
 Mode 130,45
-TITLE Hone Control Panel %localtwo%
+TITLE ALFiX Control Panel %localtwo%
 set "choice="
 set "BLANK=   "
 REM Check Values
@@ -303,7 +300,7 @@ echo                                                                            
 call :HoneTitle
 echo                                                               %COL%[1;4;34mTweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Power Plan %PWROF%                 %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m CSRSS High Priority %CRSOF%
+echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Power Plan %PWROF%                 %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Disable Keys 
 echo              %COL%[90mDesktop Power Plan, not good         %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
 echo              %COL%[90mto use with a laptop battery.        %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
 echo.
@@ -332,7 +329,7 @@ echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" goto PowerPlan
 if /i "%choice%"=="2" goto ServicesOptimization
-if /i "%choice%"=="3" goto CSRSS
+if /i "%choice%"=="3" goto Dsk
 if /i "%choice%"=="4" goto TimerRes
 if /i "%choice%"=="5" goto MSI
 if /i "%choice%"=="6" goto Affinity
@@ -486,22 +483,36 @@ REM call :HoneCtrlRestart "KBoost" "%KBOOF%"
 REM Mode 130,45
 REM goto Tweaks
 
-:CSRSS
-if "%CRSOF%" == "%COL%[91mOFF" (
-	reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\csrss.exe\PerfOptions" /v CpuPriorityClass /t Reg_DWORD /d "4" /f
-	reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\csrss.exe\PerfOptions" /v IoPriority /t Reg_DWORD /d "3" /f
-	reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NoLazyMode" /t REG_DWORD /d "1" /f
-	reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "AlwaysOn" /t REG_DWORD /d "1" /f
-	reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NetworkThrottlingIndex" /t REG_DWORD /d "10" /f
-	reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d "0" /f
+:Dsk
+if "%DSKOF%" == "%COL%[91mOFF" (
+   set "DSKOF=%COL%[91mON"
+   reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "Flags" /t REG_SZ /d "506" /f
+   reg add "HKCU\Control Panel\Accessibility\ToggleKeys" /v "Flags" /t REG_SZ /d "58" /f
+   reg add Control Panel\Accessibility\Keyboard Response" /v "DelayBeforeAcceptance" /t REG_SZ /d "0" /f
+   reg add Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatRate" /t REG_SZ /d "0" /f
+   reg add Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatDelay" /t REG_SZ /d "0" /f
+   reg add Control Panel\Accessibility\Keyboard Response" /v "Flags" /t REG_SZ /d "122" /f
 ) >nul 2>&1 else (
-	reg delete "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\csrss.exe\PerfOptions" /v CpuPriorityClass /f
-	reg delete "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\csrss.exe\PerfOptions" /v IoPriority /f
-	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NoLazyMode" /f
-	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "AlwaysOn" /f
-	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NetworkThrottlingIndex" /f
-	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /f
+   reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "Flags" /t REG_SZ /d "498" /f
+   reg add "HKCU\Control Panel\Accessibility\ToggleKeys" /v "Flags" /t REG_SZ /d "58" /f
+   reg add Control Panel\Accessibility\Keyboard Response" /v "DelayBeforeAcceptance" /t REG_SZ /d "0" /f
+   reg add Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatRate" /t REG_SZ /d "0" /f
+   reg add Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatDelay" /t REG_SZ /d "0" /f
+   reg add Control Panel\Accessibility\Keyboard Response" /v "Flags" /t REG_SZ /d "122" /f
 ) >nul 2>&1
+cls
+color A
+echo.
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 2
 goto Tweaks
 
 :MSI
@@ -3180,7 +3191,7 @@ for %%i in (DSCOF AUTOF DRIOF BCDOF NONOF CS0OF TOFOF PS0OF IDLOF CONG DPSOF) do
 	rem CS0 Tweak
 	reg query "HKLM\SYSTEM\ControlSet001\Control\Class\{4D36E968-E325-11CE-BFC1-08002BE10318}\0000" /v "AllowDeepCStates" | find "0x0" || set "CS0OF=%COL%[91mOFF"
 	rem Task Offloading
-	reg query "HKLM\SYSTEM\CurrentControlSet\Services\TCPIP\Parameters" /v "DisableTaskOffload" | find "0x1" || set "TOFOF=%COL%[91mOFF"
+	reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "SmartScreenEnabled" | find "off" || set "TOFOF=%COL%[91mOFF"
 	rem PStates0
 	For /F "tokens=*" %%i in ('reg query "HKLM\SYSTEM\ControlSet001\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}" /t REG_SZ /s /e /f "NVIDIA" ^| findstr "HK"') do (reg query "%%i" /v "DisableDynamicPstate" | find "0x1" || set "PS0OF=%COL%[91mOFF")
 	rem Check If Applicable For PC
@@ -3198,55 +3209,63 @@ echo.
 call :HoneTitle
 echo                                                           %COL%[1;4;34mNetwork Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m  Disable Smartscreen %TOFOF%       %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m NonBestEffortLimit %NONOF%         %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m AutoTuning %AUTOF%
-echo              %COL%[90mDisable Antivirus Smartscreen          %COL%[90mAllocate more bandwidth to apps        %COL%[90mCan reduce bufferbloat,
-echo                                                     %COL%[90mUse only on fast connections         %COL%[90mbut lower your Network speed
-echo.
-echo                           %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m DSCP Value %DSCOF%                      %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m Wi-fi Congestion Provider %CONG%
-echo                           %COL%[90mSet the priority of your network          %COL%[91mTurn ON only, if you have Wi-Fi.
-echo                           %COL%[90mtraffic to expedited forwarding           %COL%[90mChanges the algorithm on how data is processed.
+echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m NonBestEffortLimit %NONOF%         %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m AutoTuning %AUTOF%                 %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m DSCP Value %DSCOF%
+echo              %COL%[90mAllocate more bandwidth to apps      %COL%[90mCan reduce bufferbloat,              %COL%[90mSet the priority of your network
+echo              %COL%[90mUse only on fast connections         %COL%[90mbut lower your Network speed         %COL%[90mtraffic to expedited forwarding
 echo.
 echo.
 echo                                                            %COL%[1;4;34mPower Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 6 %COL%[33m]%COL%[37m Disable C-States %CS0OF%           %COL%[33m[%COL%[37m 7 %COL%[33m]%COL%[37m PStates 0 %PS0OF%                  %COL%[33m[%COL%[37m 8 %COL%[33m]%COL%[37m Disable Idle %IDLOF%
+echo              %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m Disable C-States %CS0OF%           %COL%[33m[%COL%[37m 6 %COL%[33m]%COL%[37m PStates 0 %PS0OF%                  %COL%[33m[%COL%[37m 7 %COL%[33m]%COL%[37m Disable Idle %IDLOF%
 echo              %COL%[90mKeep CPU at C0 stopping throttling   %COL%[90mRun graphics card at its highest     %COL%[90mForce CPU to always be running
 echo              %COL%[90mwill make PC generate more heat      %COL%[90mdefined frequencies                  %COL%[90mat highest CPU state
 echo.
 echo.
 echo                                                            %COL%[1;4;34mOther Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 9 %COL%[33m]%COL%[37m Nvidia Driver %DRIOF%              %COL%[33m[%COL%[37m 10 %COL%[33m]%COL%[37m BCDEdit %BCDOF%                   %COL%[33m[%COL%[37m 11 %COL%[33m]%COL%[37m Disable USB Power Savings %DPSOF%
-echo              %COL%[90mInstall the best tweaked nvidia      %COL%[90mTweaks your windows boot config      %COL%[90mDisable USB power savings that
-echo              %COL%[90mdriver for latency and fps           %COL%[90mdata to optimized settings           %COL%[90maffect latency
+echo              %COL%[33m[%COL%[37m 8 %COL%[33m]%COL%[37m Nvidia Driver %DRIOF%              %COL%[33m[%COL%[37m 9 %COL%[33m]%COL%[37m BCDEdit %BCDOF%                    %COL%[33m[%COL%[37m 10 %COL%[33m]%COL%[37m Disable Smartscreen
+echo              %COL%[90mInstall the best tweaked nvidia      %COL%[90mTweaks your windows boot config      %COL%[90mDisable Antivirus Smartscreen
+echo              %COL%[90mdriver for latency and fps           %COL%[90mdata to optimized settings
 echo.
 echo.
 echo.
 echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]%COL%[37m
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto Smartscreen
-if /i "%choice%"=="2" goto NonBestEffortLimit
-if /i "%choice%"=="3" goto Autotuning
-if /i "%choice%"=="4" goto DSCPValue
-if /i "%choice%"=="5" goto Congestion
-if /i "%choice%"=="6" goto cstates
-if /i "%choice%"=="7" goto pstates0
-if /i "%choice%"=="8" goto DisableIdle
-if /i "%choice%"=="9" goto Driver
-if /i "%choice%"=="10" goto BCDEdit
-if /i "%choice%"=="11" goto DUSBPowerSavings
+if /i "%choice%"=="1" goto NonBestEffortLimit
+if /i "%choice%"=="2" goto Autotuning
+if /i "%choice%"=="3" goto DSCPValue
+if /i "%choice%"=="4" goto Congestion
+if /i "%choice%"=="5" goto cstates
+if /i "%choice%"=="6" goto pstates0
+if /i "%choice%"=="7" goto DisableIdle
+if /i "%choice%"=="8" goto Driver
+if /i "%choice%"=="9" goto BCDEdit
+if /i "%choice%"=="10" goto Smartscreen
 if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto MainMenu
 goto Advanced
 
 :Smartscreen
+cls
+color A
+echo.
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 2
 if "%TOFOF%" == "%COL%[91mOFF" (
 	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "PromptOnSecureDesktop" /t REG_DWORD /d 0 /f
       reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "ConsentPromptBehaviorAdmin" /t REG_DWORD /d 0 /f
-      reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v SmartScreenEnabled /t REG_SZ /d "Off" /f
+      reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "SmartScreenEnabled" /t REG_SZ /d "Off" /f
 ) >nul 2>&1 else (
-      reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v SmartScreenEnabled /t REG_SZ /d "On" /f
+      reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "SmartScreenEnabled" /t REG_SZ /d "Off" /f
 ) >nul 2>&1
 goto Advanced
 
