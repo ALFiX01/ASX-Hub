@@ -46,7 +46,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                                        %COL%[90m ALFiX PACK is a free and open-source desktop utility
+echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
 echo                                        %COL%[90m     made to improve your day-to-day productivity
 echo.
 echo.
@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.1.1
+set local=0.1.12
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/HoneCtrlVer" >nul 2>&1
@@ -133,14 +133,14 @@ echo set "firstlaunch=0" > %SYSTEMDRIVE%\Hone\HoneRevert\firstlaunch.bat
 
 :MainMenu
 Mode 130,45
-TITLE ALFiX Control Panel %localtwo%
+TITLE AssistantX Control Panel %localtwo%
 set "choice="
 cls
 echo.
 echo.
 call :HoneTitle
 echo.
-echo                                        %COL%[90m ALFiX PACK is a free and open-source desktop utility
+echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
 echo                                        %COL%[90m     made to improve your day-to-day productivity
 echo.
 echo.
@@ -197,7 +197,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                                        %COL%[90m ALFiX PACK is a free and open-source desktop utility
+echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -214,7 +214,7 @@ goto :eof
 
 :Tweaks
 Mode 130,45
-TITLE ALFiX Control Panel %localtwo%
+TITLE AssistantX Control Panel %localtwo%
 set "choice="
 set "BLANK=   "
 REM Check Values
@@ -339,7 +339,7 @@ if /i "%choice%"=="6" goto Affinity
 if /i "%choice%"=="7" goto W32PrioSep
 if /i "%choice%"=="8" goto MemOptimization
 if /i "%choice%"=="9" goto Mouse
-echo %NPIOF% | find "N/A" >nul && if "%choice%" geq "10" if "%choice%" leq "15" call :ALFiX PACK Error "You don't have an NVIDIA GPU" && goto Tweaks
+echo %NPIOF% | find "N/A" >nul && if "%choice%" geq "10" if "%choice%" leq "15" call :AssistantX Error "You don't have an NVIDIA GPU" && goto Tweaks
 if /i "%choice%"=="10" goto DisableHDCP
 if /i "%choice%"=="11" goto DisablePreemtion
 if /i "%choice%"=="12" goto ProfileInspector
@@ -437,7 +437,7 @@ if /i "%choice%"=="N" (set "PG=TweaksPG1") & goto TweaksPG1
 goto TweaksPG2
 
 :DeleteHighPerformancePlan
-echo %PWROF% | find "N/A" >nul && call :ALFiX PACK Error "This power plan isn't recommended for batteries." && goto Tweaks
+echo %PWROF% | find "N/A" >nul && call :AssistantX Error "This power plan isn't recommended for batteries." && goto Tweaks
 if "%PWROF%" == "%COL%[91mOFF" (
       powercfg -delete 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
 ) >nul 2>&1 else (
@@ -460,7 +460,7 @@ color 06
 goto PowerPlanTW
 
 :DeletePowerSavingPlan
-echo %PWROF% | find "N/A" >nul && call :ALFiX PACK Error "This power plan isn't recommended for batteries." && goto Tweaks
+echo %PWROF% | find "N/A" >nul && call :AssistantX Error "This power plan isn't recommended for batteries." && goto Tweaks
 if "%PWROF%" == "%COL%[91mOFF" (
       powercfg -delete a1841308-3541-4fab-bc81-f71556f20b4a
 ) >nul 2>&1 else (
@@ -469,7 +469,7 @@ if "%PWROF%" == "%COL%[91mOFF" (
 goto PowerPlanTW
 
 :MaxPowerPlan
-echo %PWROF% | find "N/A" >nul && call :ALFiX PACK Error "This power plan isn't recommended for batteries." && goto Tweaks
+echo %PWROF% | find "N/A" >nul && call :AssistantX Error "This power plan isn't recommended for batteries." && goto Tweaks
 if "%PWROF%" == "%COL%[91mOFF" (
       powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
 ) >nul 2>&1 else (
