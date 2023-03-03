@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.1.2
+set local=0.1.23
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/HoneCtrlVer" >nul 2>&1
@@ -881,7 +881,7 @@ if "%NPIOF%" == "%COL%[91mOFF" (
 	curl -g -L -# -o %SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector.zip "https://github.com/Orbmu2k/nvidiaProfileInspector/releases/latest/download/nvidiaProfileInspector.zip"
 	powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector.zip' -DestinationPath '%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\'
 	del /F /Q "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector.zip"
-	curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\Latency_and_Performances_Settings_by_Hone_Team2.nip" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Latency_and_Performances_Settings_by_Hone_Team2.nip"
+	curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\Latency_and_Performances_Settings_by_Hone_Team2.nip" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Latency_and_Performances_Settings_by_Hone_Team2.nip"
 	cd "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\"
 	nvidiaProfileInspector.exe "Latency_and_Performances_Settings_by_Hone_Team2.nip"
 ) >nul 2>&1 else (
@@ -978,7 +978,7 @@ if "%MITOF%" == "%COL%[91mOFF" (
 	reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "3" /f
 	reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f
 	cd %TEMP%
-	if not exist "%TEMP%\NSudo.exe" curl -g -L -# -o "%TEMP%\NSudo.exe" "https://github.com/auraside/HoneCtrl/raw/main/Files/NSudo.exe"
+	if not exist "%TEMP%\NSudo.exe" curl -g -L -# -o "%TEMP%\NSudo.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/NSudo.exe"
 	NSudo -U:S -ShowWindowMode:Hide -wait cmd /c "reg add "HKLM\SYSTEM\CurrentControlSet\Services\TrustedInstaller" /v "Start" /t Reg_DWORD /d "3" /f"
 	NSudo -U:S -ShowWindowMode:Hide -wait cmd /c "sc start "TrustedInstaller""
 	NSudo -U:T -P:E -M:S -ShowWindowMode:Hide -wait cmd /c "ren %SYSTEMROOT%\System32\mcupdate_GenuineIntel.dll mcupdate_GenuineIntel.old"
@@ -998,7 +998,7 @@ if "%MITOF%" == "%COL%[91mOFF" (
 	reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v FeatureSettingsOverride /f
 	reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v FeatureSettingsOverrideMask /f
 	cd %TEMP%
-	if not exist "%TEMP%\NSudo.exe" curl -g -L -# -o "%TEMP%\NSudo.exe" "https://github.com/auraside/HoneCtrl/raw/main/Files/NSudo.exe"
+	if not exist "%TEMP%\NSudo.exe" curl -g -L -# -o "%TEMP%\NSudo.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/NSudo.exe"
 	NSudo -U:S -ShowWindowMode:Hide -wait cmd /c "reg add "HKLM\SYSTEM\CurrentControlSet\Services\TrustedInstaller" /v "Start" /t Reg_DWORD /d "2" /f"
 	NSudo -U:S -ShowWindowMode:Hide -wait cmd /c "sc start "TrustedInstaller"" 
 	NSudo -U:T -P:E -M:S -ShowWindowMode:Hide -wait cmd /c "ren %SYSTEMROOT%\System32\mcupdate_GenuineIntel.old mcupdate_GenuineIntel.dll"
@@ -1307,8 +1307,8 @@ goto Tweaks
 cd %SYSTEMDRIVE%\Hone\Resources
 if "%AUDOF%" == "%COL%[91mOFF" (
 	if not exist nssm.exe (
-		curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\nssm.exe" "https://github.com/auraside/HoneCtrl/raw/main/Files/nssm.exe"
-		curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\REAL.exe" "https://github.com/auraside/HoneCtrl/raw/main/Files/REAL.exe"
+		curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\nssm.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/nssm.exe"
+		curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\REAL.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/REAL.exe"
 		nssm install HoneAudio "%SYSTEMDRIVE%\Hone\Resources\REAL.exe"
 		nssm set HoneAudio DisplayName Hone Audio Latency Reducer Service
 		nssm set HoneAudio Description Reduces Audio Latency
@@ -1328,7 +1328,7 @@ cls
 rmdir /S /Q "%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd\" >nul 2>&1
 del /F /Q "%SYSTEMDRIVE%\Hone\Resources\AdwCleaner.exe" >nul 2>&1
 del /F /Q "%SYSTEMDRIVE%\Hone\Resources\EmptyStandbyList.exe" >nul 2>&1
-curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\EmptyStandbyList.exe" "https://github.com/auraside/HoneCtrl/raw/main/Files/EmptyStandbyList.exe"
+curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\EmptyStandbyList.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/EmptyStandbyList.exe"
 curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd.zip" "https://www.uwe-sieber.de/files/DeviceCleanupCmd.zip"
 curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\AdwCleaner.exe" "https://adwcleaner.malwarebytes.com/adwcleaner?channel=release"
 powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd.zip' -DestinationPath '%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd\'
@@ -1370,11 +1370,11 @@ goto :eof
 :softRestart
 cls
 cd %TEMP%
-if not exist "%TEMP%\NSudo.exe" curl -g -L -# -o "%TEMP%\NSudo.exe" "https://github.com/auraside/HoneCtrl/raw/main/Files/NSudo.exe"
+if not exist "%TEMP%\NSudo.exe" curl -g -L -# -o "%TEMP%\NSudo.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/NSudo.exe"
 NSudo.exe -U:S -ShowWindowMode:Hide cmd /c "reg add "HKLM\SYSTEM\CurrentControlSet\Services\TrustedInstaller" /v "Start" /t Reg_DWORD /d "3" /f" >nul 2>&1
 NSudo.exe -U:S -ShowWindowMode:Hide cmd /c "sc start "TrustedInstaller"" >nul 2>&1
-if not exist "%TEMP%\restart64.exe" curl -g -L -# -o "%TEMP%\Restart64.exe" "https://github.com/auraside/HoneCtrl/raw/main/Files/restart64.exe"
-if not exist "%TEMP%\EmptyStandbyList.exe" curl -g -L -# -o "%TEMP%\EmptyStandbyList.exe" "https://github.com/auraside/HoneCtrl/raw/main/Files/EmptyStandbyList.exe"
+if not exist "%TEMP%\restart64.exe" curl -g -L -# -o "%TEMP%\Restart64.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/restart64.exe"
+if not exist "%TEMP%\EmptyStandbyList.exe" curl -g -L -# -o "%TEMP%\EmptyStandbyList.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/EmptyStandbyList.exe"
 taskkill /f /im explorer.exe >nul 2>&1
 cd %SYSTEMROOT% >nul 2>&1
 start explorer.exe >nul 2>&1
@@ -2884,7 +2884,7 @@ goto Accurate
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Nvidia.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/FPS/Accurate/60-120/Nvidia/FPSAccurate60Nvidia.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Nvidia/FPSAccurate60Nvidia.cfg"
 ) else (
 set config=FPSAccurate60Nvidia.cfg
 goto skip
@@ -2893,7 +2893,7 @@ goto skip
 
 if %encoder% == AMF (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60AMD.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60AMD.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/FPS/Accurate/60-120/Amd/FPSAccurate60AMD.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60AMD.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Amd/FPSAccurate60AMD.cfg"
 ) else (
 set config=FPSAccurate60AMD.cfg
 goto skip
@@ -2902,7 +2902,7 @@ goto skip
 
 if %encoder% == CPU (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Intel.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/FPS/Accurate/60-120/Intel/FPSAccurate60Intel.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Intel/FPSAccurate60Intel.cfg"
 ) else (
 set config=FPSAccurate60Intel.cfg
 goto skip
@@ -2913,7 +2913,7 @@ goto skip
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Nvidia.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/FPS/Accurate/240/Nvidia/FPSAccurate240Nvidia.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Nvidia/FPSAccurate240Nvidia.cfg"
 ) else (
 set config=FPSAccurate240Nvidia.cfg
 goto skip
@@ -2922,7 +2922,7 @@ goto skip
 
 if %encoder% == AMF (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240AMD.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240AMD.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/FPS/Accurate/240/Amd/FPSAccurate240AMD.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240AMD.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Amd/FPSAccurate240Amd.cfg"
 ) else (
 set config=FPSAccurate240AMD.cfg
 goto skip
@@ -2931,7 +2931,7 @@ goto skip
 
 if %encoder% == CPU (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Intel.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/FPS/Accurate/240/Intel/FPSAccurate240Intel.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Intel/FPSAccurate240Intel.cfg"
 ) else (
 set config=FPSAccurate240Intel.cfg
 goto skip
@@ -2942,7 +2942,7 @@ goto skip
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothNvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothNvidia.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/FPS/Smooth/Nvidia/FPSSmoothNvidia.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothNvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Nvidia/FPSSmoothNvidia.cfg"
 ) else (
 set config=FPSSmoothNvidia.cfg
 goto skip
@@ -2951,7 +2951,7 @@ goto skip
 
 if %encoder% == AMF (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothAmd.cfg.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothAmd.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/FPS/Smooth/Amd/FPSSmoothAmd.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothAmd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Amd/FPSSmoothAmd.cfg"
 ) else (
 set config=FPSSmoothAmd.cfg.cfg
 goto skip
@@ -2960,7 +2960,7 @@ goto skip
 
 if %encoder% == CPU (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothIntel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothIntel.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/FPS/Smooth/Intel/FPSSmoothIntel.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothIntel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Intel/FPSSmoothIntel.cfg"
 ) else (
 set config=FPSSmoothIntel.cfg
 goto skip
@@ -3013,7 +3013,7 @@ goto MinecraftBlur
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyNvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyNvidia.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Minecraft/Any/Nvidia/MinecraftAnyNvidia.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyNvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Nvidia/MinecraftAnyNvidia.cfg"
 ) else (
 set config=MinecraftAnyNvidia.cfg
 goto skip
@@ -3022,7 +3022,7 @@ goto skip
 
 if %encoder% == AMF (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyAmd.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyAmd.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Minecraft/Any/Amd/MinecraftAnyAmd.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyAmd.cfg" "hhttps://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Amd/MinecraftAnyAmd.cfg"
 ) else (
 set config=MinecraftAnyAmd.cfg
 goto skip
@@ -3031,7 +3031,7 @@ goto skip
 
 if %encoder% == CPU (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyIntel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyIntel.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Minecraft/Any/Intel/MinecraftAnyIntel.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyIntel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Intel/MinecraftAnyIntel.cfg"
 ) else (
 set config=MinecraftAnyIntel.cfg
 goto skip
@@ -3042,7 +3042,7 @@ goto skip
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Nvidia.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Minecraft/240-360/Nvidia/Minecraft240Nvidia.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Nvidia/Minecraft240Nvidia.cfg"
 ) else (
 set config=Minecraft240Nvidia.cfg
 goto skip
@@ -3051,7 +3051,7 @@ goto skip
 
 if %encoder% == AMF (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Amd.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Amd.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Minecraft/240-360/Amd/Minecraft240Amd.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Amd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Amd/Minecraft240Amd.cfg"
 ) else (
 set config=Minecraft240Amd.cfg
 goto skip
@@ -3060,7 +3060,7 @@ goto skip
 
 if %encoder% == CPU (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Intel.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Minecraft/240-360/Intel/Minecraft240Intel.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Intel/Minecraft240Intel.cfg"
 ) else (
 set config=Minecraft240Intel.cfg
 goto skip
@@ -3071,7 +3071,7 @@ goto skip
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Nvidia.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Minecraft/480+/Nvidia/Minecraft480Nvidia.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Nvidia/Minecraft480Nvidia.cfg"
 ) else (
 set config=Minecraft480Nvidia.cfg
 goto skip
@@ -3080,7 +3080,7 @@ goto skip
 
 if %encoder% == AMF (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Amd.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Amd.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Minecraft/480+/Amd/Minecraft480Amd.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Amd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Amd/Minecraft480Amd.cfg"
 ) else (
 set config=Minecraft480Amd.cfg
 goto skip
@@ -3089,7 +3089,7 @@ goto skip
 
 if %encoder% == CPU (
 if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Intel.cfg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Minecraft/480+/Intel/Minecraft480Intel.cfg"
+curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Intel/Minecraft480Intel.cfg"
 ) else (
 set config=Minecraft480Intel.cfg
 goto skip
@@ -3147,22 +3147,22 @@ goto NLEInstall
 :ProjectSettings
 cls
 if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 17.0" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Settings/ProjectProperties17.reg"
+	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties17.reg"
 ) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 17" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Settings/ProjectProperties17.reg"
+	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties17.reg"
 ) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 18" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Settings/ProjectProperties18.reg"
+	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
 ) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 18.0" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Settings/ProjectProperties18.reg"
+	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
 ) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 19.0" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Settings/ProjectProperties18.reg"
+	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
 ) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 19" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Settings/ProjectProperties18.reg"
+	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
 ) >nul 2>&1 else echo Vegas Pro 17-19 isn't installed... & pause & goto HoneRenders
 taskkill /f /im Vegas170.exe >nul 2>&1
 taskkill /f /im Vegas180.exe >nul 2>&1
 taskkill /f /im Vegas190.exe >nul 2>&1
-curl -g -k -L -# -o "%TEMP%\Hone.veg" "https://github.com/auraside/HoneCtrl/raw/main/Files/Settings/Hone.veg"
+curl -g -k -L -# -o "%TEMP%\Hone.veg" "https://github.com/ALFiX01/AssistantX/raw/main/Files/Settings/Hone.veg"
 reg import "%TEMP%\project.reg" >nul 2>&1
 start "" /D "%TEMP%\Hone.veg" >nul 2>&1
 goto HoneRenders
@@ -3190,8 +3190,8 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                                        %COL%[90m HoneCtrl is a free and open-source desktop utility
-echo                                        %COL%[90m    made to improve your day-to-day productivity
+echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
+echo                                        %COL%[90m     made to improve your day-to-day productivity
 echo.
 echo.
 echo.
