@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.1.13
+set local=0.1.2
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/HoneCtrlVer" >nul 2>&1
@@ -1771,32 +1771,20 @@ echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##  
 echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
 echo                                                                                          %COL%[33m##      ##
 echo.
-echo                                                           %COL%[34m%COL%[1mOBS Settings%COL%[0m
+echo                                                           %COL%[94m%COL%[4mOBS Settings%COL%[0m
 echo.
 echo              %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Install/Update OBS             %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Recording                      %COL%[96m[ %COL%[37m3 %COL%[96m]%COL%[37m Streaming
 echo              %COL%[90mAutomatically install or update      %COL%[90mAutomated recording settings for     %COL%[90mAutomated streaming settings for
 echo              %COL%[90mOBS using the official link          %COL%[90mOBS based on your preference         %COL%[90mOBS based on your preference
 echo.
 echo.
-echo                                                           %COL%[34m%COL%[1mFFmpeg Settings%COL%[0m
+echo                                                       %COL%[94m%COL%[4mVideo Editor Settings%COL%[0m
 echo.
-echo              %COL%[96m[ %COL%[37m4 %COL%[96m]%COL%[37m Upscale                        %COL%[96m[ %COL%[37m5 %COL%[96m]%COL%[37m Compress                       %COL%[96m[ %COL%[37m6 %COL%[96m]%COL%[37m Preview Lag
-echo              %COL%[90mModify the scale of a video          %COL%[90mMake a clips size smaller for        %COL%[90mAdjust a clips quality
-echo              %COL%[90mfor higher bitrate on YouTube        %COL%[90msharing by compressing the file      %COL%[90mto play well with vegas preview
-echo.
-echo.
-echo                                                           %COL%[34m%COL%[1mBlur Settings%COL%[0m
-echo.
-echo              %COL%[96m[ %COL%[37m7 %COL%[96m]%COL%[37m Install/Update Blur            %COL%[96m[ %COL%[37m8 %COL%[96m]%COL%[37m FPS Games                      %COL%[96m[ %COL%[37m9 %COL%[96m]%COL%[37m Minecraft
-echo              %COL%[90mAutomatically install or update      %COL%[90mAutomated Blur settings for          %COL%[90mBlur settings for games
-echo              %COL%[90mBlur using the official link         %COL%[90mfirst person shooter games           %COL%[90mrecorded in extremely high fps
-echo.
-echo.
-echo                                                           %COL%[34m%COL%[1mVideo Editor Settings%COL%[0m
-echo.
-echo              %COL%[96m[ %COL%[37m10 %COL%[96m]%COL%[37m Install A Video Editor (NLE)  %COL%[96m[ %COL%[37m11 %COL%[96m]%COL%[37m Project Settings              %COL%[96m[ %COL%[37m12 %COL%[96m]%COL%[37m Renders
+echo              %COL%[96m[ %COL%[37m4 %COL%[96m]%COL%[37m Install A Video Editor (NLE)  %COL%[96m[ %COL%[37m5 %COL%[96m]%COL%[37m Project Settings              %COL%[96m[ %COL%[37m6 %COL%[96m]%COL%[37m Renders
 echo              %COL%[90mDownload ^& install a		  %COL%[90mAutomated Project settings	       %COL%[90mAutomated render settings
 echo		     %COL%[90mNon-Linear editing software	  %COL%[90mfor Vegas pro                        %COL%[90mfor Vegas pro
+echo.
+echo.
 echo.
 echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
 echo.
@@ -1804,15 +1792,9 @@ set /p choice="%DEL%                                        %COL%[37mSelect a co
 if /i "%choice%"=="1" call:OBSInstall
 if /i "%choice%"=="2" goto Recording
 if /i "%choice%"=="3" goto Streaming
-if /i "%choice%"=="4" goto Upscale
-if /i "%choice%"=="5" goto Compress
-if /i "%choice%"=="6" goto PreviewLag
-if /i "%choice%"=="7" call:Blurinstall
-if /i "%choice%"=="8" goto FPSGames
-if /i "%choice%"=="9" goto MinecraftBlur
-if /i "%choice%"=="10" goto NLEInstall
-if /i "%choice%"=="11" goto ProjectSettings
-if /i "%choice%"=="12" goto RenderSettings
+if /i "%choice%"=="4" goto NLEInstall
+if /i "%choice%"=="5" goto ProjectSettings
+if /i "%choice%"=="6" goto RenderSettings
 if /i "%choice%"=="B" goto MainMenu
 if /i "%choice%"=="X" exit /b
 goto HoneRenders
