@@ -72,10 +72,10 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.0.92
+set local=0.0.97
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
-curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/Test-optimization/main/Files/HoneCtrlVer" >nul 2>&1
+curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/HoneCtrlVer" >nul 2>&1
 call "%TEMP%\Updater.bat"
 if "%LOCAL%" gtr "%LOCALTWO%" (
 	clsr
@@ -97,7 +97,7 @@ if "%LOCAL%" gtr "%LOCALTWO%" (
 	%SYSTEMROOT%\System32\choice.exe /c:YN /n /m "%DEL%                                >:"
 	set choice=!errorlevel!
 	if !choice! == 1 (
-		curl -L -o %0 "https://github.com/ALFiX01/Test-optimization/releases/latest/download/ALFiX.bat" >nul 2>&1
+		curl -L -o %0 "https://github.com/ALFiX01/AssistantX/releases/latest/download/AssistantX.bat" >nul 2>&1
 		call %0
 		exit /b
 	)
@@ -181,11 +181,13 @@ if "%choice%"=="9" goto Dog
 goto MainMenu
 
 :HoneTitle 
-echo                                               ####      ##        #######   ##   ##    ##
-echo                                              ##  ##     ##        ##              ##  ##
-echo                                             ##    ##    ##        #######   ##      ##
-echo                                            ##########   ##        ##        ##    ##  ##
-echo                                           ##        ##  #######   ##        ##   ##    ## 
+echo                                                                             ##      ##
+echo                     ####              ##         ##                   ##     ##    ##
+echo                    ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                    ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                    ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                    ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                             ##      ## 
 echo.
 goto :eof
 
@@ -293,6 +295,7 @@ for %%i in (PWROF MEMOF AUDOF TMROF NETOF AFFOF MOUOF AFTOF NICOF DSSOF SERVOF D
 ) >nul 2>&1
 
 goto %PG%
+
 :TweaksPG1
 cls
 echo.
@@ -300,34 +303,34 @@ echo                                                                            
 call :HoneTitle
 echo                                                               %COL%[1;4;34mTweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Max Power Plan %PWROF%             %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Disable Keys 
-echo              %COL%[90mMaximum performance mode             %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
-echo              %COL%[31mDo not enable on laptops             %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
+echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Power Plan Tweaks               %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Disable Keys 
+echo              %COL%[90mOpens the power optimization          %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
+echo              %COL%[90mmenu                                  %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
 echo.
 echo              %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m Timer Resolution %TMROF%           %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m MSI Mode %MSIOF%                   %COL%[33m[%COL%[37m 6 %COL%[33m]%COL%[37m Affinity %AFFOF%
-echo              %COL%[90mThis tweak changes how fast          %COL%[90mEnable MSI Mode for gpu and          %COL%[90mThis tweak will spread devices
-echo              %COL%[90myour cpu refreshes                   %COL%[90mnetwork adapters                     %COL%[90mon multiple cpu cores
+echo              %COL%[90mThis tweak changes how fast           %COL%[90mEnable MSI Mode for gpu and          %COL%[90mThis tweak will spread devices
+echo              %COL%[90myour cpu refreshes                    %COL%[90mnetwork adapters                     %COL%[90mon multiple cpu cores
 echo.
 echo              %COL%[33m[%COL%[37m 7 %COL%[33m]%COL%[37m W32 Priority Seperation %BLANK%    %COL%[33m[%COL%[37m 8 %COL%[33m]%COL%[37m Memory Optimization %ME2OF%        %COL%[33m[%COL%[37m 9 %COL%[33m]%COL%[37m Mouse Fix %MOUOF%
-echo              %COL%[90mOptimizes the usage priority of      %COL%[90mOptimizes your fsutil, win           %COL%[90mThis removes acceleration which
-echo              %COL%[90myour running services                %COL%[90mstartup settings and more            %COL%[90mmakes your aim inconsistent
+echo              %COL%[90mOptimizes the usage priority of       %COL%[90mOptimizes your fsutil, win           %COL%[90mThis removes acceleration which
+echo              %COL%[90myour running services                 %COL%[90mstartup settings and more            %COL%[90mmakes your aim inconsistent
 echo.
-echo                                                            %COL%[1;4;34mNvidia Tweaks%COL%[0m
+echo                                                             %COL%[1;4;34mNvidia Tweaks%COL%[0m
 echo.
 echo              %COL%[33m[%COL%[37m 10 %COL%[33m]%COL%[37m Disable HDCP %HDCOF%              %COL%[33m[%COL%[37m 11 %COL%[33m]%COL%[37m Disable Preemption %CMAOF%        %COL%[33m[%COL%[37m 12 %COL%[33m]%COL%[37m ProfileInspector %NPIOF%
-echo              %COL%[90mDisable copy protection technology   %COL%[90mDisable preemption requests from     %COL%[90mWill edit your Nvidia control panel
-echo              %COL%[90mof illegal High Definition content   %COL%[90mthe GPU scheduler                    %COL%[90mand add various tweaks
+echo              %COL%[90mDisable copy protection technology    %COL%[90mDisable preemption requests from     %COL%[90mWill edit your Nvidia control panel
+echo              %COL%[90mof illegal High Definition content    %COL%[90mthe GPU scheduler                    %COL%[90mand add various tweaks
 echo.
 echo              %COL%[33m[%COL%[37m 13 %COL%[33m]%COL%[37m Disable Nvidia Telemetry %NVTOF%  %COL%[33m[%COL%[37m 14 %COL%[33m]%COL%[37m Nvidia Tweaks %NVIOF%             %COL%[33m[%COL%[37m 15 %COL%[33m]%COL%[37m Disable Write Combining %DWCOF%
-echo              %COL%[90mRemove built in Nvidia telemetry     %COL%[90mVarious essential tweaks for         %COL%[90mStops data from being combined
-echo              %COL%[90mfrom your computer and driver.       %COL%[90mNvidia graphics cards                %COL%[90mand temporarily stored
+echo              %COL%[90mRemove built in Nvidia telemetry      %COL%[90mVarious essential tweaks for         %COL%[90mStops data from being combined
+echo              %COL%[90mfrom your computer and driver.        %COL%[90mNvidia graphics cards                %COL%[90mand temporarily stored
 echo.
 echo.
 echo.
 echo                                     %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         %COL%[36m[ N page two ]
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto PowerPlan
+if /i "%choice%"=="1" goto PowerPlanTW
 if /i "%choice%"=="2" goto ServicesOptimization
 if /i "%choice%"=="3" goto Dsk
 if /i "%choice%"=="4" goto TimerRes
@@ -346,6 +349,41 @@ if /i "%choice%"=="15" goto DisableWriteCombining
 if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto MainMenu
 if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
+goto Tweaks
+
+:PowerPlanTW
+cls
+echo.
+call :HoneTitle
+echo.
+echo                                                           %COL%[1;4;34mPower Plan Tweaks%COL%[0m
+echo.
+echo             %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Max Power Plan              %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m Delete Power Saving Plan           %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Delete High Performance Plan 
+echo             %COL%[90mMaximum performance mode          %COL%[90mDeletes the power saving plan            %COL%[90mDeletes the high performance plan
+echo             %COL%[31mDo not enable on laptops
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="1" goto MaxPowerPlan
+if /i "%choice%"=="2" goto DeletePowerSavingPlan
+if /i "%choice%"=="3" goto DeleteHighPerformancePlan
+if /i "%choice%"=="X" exit /b
+if /i "%choice%"=="B" goto Tweaks
 goto Tweaks
 
 :TweaksPG2
@@ -398,10 +436,42 @@ if /i "%choice%"=="B" goto MainMenu
 if /i "%choice%"=="N" (set "PG=TweaksPG1") & goto TweaksPG1
 goto TweaksPG2
 
-:PowerPlan
+:DeleteHighPerformancePlan
 echo %PWROF% | find "N/A" >nul && call :ALFiX PACK Error "This power plan isn't recommended for batteries." && goto Tweaks
 if "%PWROF%" == "%COL%[91mOFF" (
-powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
+      powercfg -delete 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
+) >nul 2>&1 else (
+      powercfg -delete 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
+) >nul 2>&1
+cls
+color A
+echo.
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 2
+color 06
+goto PowerPlanTW
+
+:DeletePowerSavingPlan
+echo %PWROF% | find "N/A" >nul && call :ALFiX PACK Error "This power plan isn't recommended for batteries." && goto Tweaks
+if "%PWROF%" == "%COL%[91mOFF" (
+      powercfg -delete a1841308-3541-4fab-bc81-f71556f20b4a
+) >nul 2>&1 else (
+      powercfg -delete a1841308-3541-4fab-bc81-f71556f20b4a
+) >nul 2>&1
+goto PowerPlanTW
+
+:MaxPowerPlan
+echo %PWROF% | find "N/A" >nul && call :ALFiX PACK Error "This power plan isn't recommended for batteries." && goto Tweaks
+if "%PWROF%" == "%COL%[91mOFF" (
+      powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
 ) >nul 2>&1 else (
 	powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
 ) >nul 2>&1
@@ -592,11 +662,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                               ####      ##        #######   ##   ##    ##
-echo                                              ##  ##     ##        ##              ##  ##
-echo                                             ##    ##    ##        #######   ##      ##
-echo                                            ##########   ##        ##        ##    ##  ##
-echo                                           ##        ##  #######   ##        ##   ##    ##
+echo                                                                             ##      ##
+echo                     ####              ##         ##                   ##     ##    ##
+echo                    ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                    ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                    ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                    ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                             ##      ## 
 echo.
 echo.
 echo.
@@ -1375,11 +1447,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                               ####      ##        #######   ##   ##    ##
-echo                                              ##  ##     ##        ##              ##  ##
-echo                                             ##    ##    ##        #######   ##      ##
-echo                                            ##########   ##        ##        ##    ##  ##
-echo                                           ##        ##  #######   ##        ##   ##    ##
+echo                                                                              ##      ##
+echo                      ####              ##         ##                   ##     ##    ##
+echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                              ##      ## 
 echo.
 echo.
 echo.
@@ -1649,11 +1723,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                               ####      ##        #######   ##   ##    ##
-echo                                              ##  ##     ##        ##              ##  ##
-echo                                             ##    ##    ##        #######   ##      ##
-echo                                            ##########   ##        ##        ##    ##  ##
-echo                                           ##        ##  #######   ##        ##   ##    ##
+echo                                                                              ##      ##
+echo                      ####              ##         ##                   ##     ##    ##
+echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                              ##      ##
 echo.
 echo.
 echo.
@@ -1687,11 +1763,13 @@ goto done
 cls
 echo.
 echo.
-echo                                               ####      ##        #######   ##   ##    ##
-echo                                              ##  ##     ##        ##              ##  ##
-echo                                             ##    ##    ##        #######   ##      ##
-echo                                            ##########   ##        ##        ##    ##  ##
-echo                                           ##        ##  #######   ##        ##   ##    ##
+echo                                                                              ##      ##
+echo                      ####              ##         ##                   ##     ##    ##
+echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                              ##      ##
 echo.
 echo                                                           %COL%[34m%COL%[1mOBS Settings%COL%[0m
 echo.
@@ -3608,11 +3686,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                               ####      ##        #######   ##   ##    ##
-echo                                              ##  ##     ##        ##              ##  ##
-echo                                             ##    ##    ##        #######   ##      ##
-echo                                            ##########   ##        ##        ##    ##  ##
-echo                                           ##        ##  #######   ##        ##   ##    ##
+echo                                                                              ##      ##
+echo                      ####              ##         ##                   ##     ##    ##
+echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                              ##      ##
 echo.
 echo.
 echo.
@@ -3757,12 +3837,13 @@ echo                      ##         ##  ####
 echo                      ##  ####   ## ## ##
 echo                      ##    ##   ####  ##
 echo                      ########   ###   ##
-
-echo                                               ####      ##        #######   ##   ##    ##
-echo                                              ##  ##     ##        ##              ##  ##
-echo                                             ##    ##    ##        #######   ##      ##
-echo                                            ##########   ##        ##        ##    ##  ##
-echo                                           ##        ##  #######   ##        ##   ##    ##
+echo                                                                                                      ##      ##
+echo                                              ####              ##         ##                   ##     ##    ##
+echo                                             ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                             ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                             ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                             ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                                      ##      ##
 
 :ColorText
 echo off
@@ -3924,11 +4005,13 @@ cls
 echo.
 echo.
 echo.
-echo                                               ####      ##        #######   ##   ##    ##
-echo                                              ##  ##     ##        ##              ##  ##
-echo                                             ##    ##    ##        #######   ##      ##
-echo                                            ##########   ##        ##        ##    ##  ##
-echo                                           ##        ##  #######   ##        ##   ##    ##
+echo                                                                              ##      ##
+echo                      ####              ##         ##                   ##     ##    ##
+echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                              ##      ##
 echo.
 echo.
 echo.
@@ -4128,11 +4211,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                               ####      ##        #######   ##   ##    ##
-echo                                              ##  ##     ##        ##              ##  ##
-echo                                             ##    ##    ##        #######   ##      ##
-echo                                            ##########   ##        ##        ##    ##  ##
-echo                                           ##        ##  #######   ##        ##   ##    ##
+echo                                                                              ##      ##
+echo                      ####              ##         ##                   ##     ##    ##
+echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                              ##      ##
 echo.
 echo.
 echo.
