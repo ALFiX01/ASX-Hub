@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.0.9
+set local=0.0.92
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/Test-optimization/main/Files/HoneCtrlVer" >nul 2>&1
@@ -300,9 +300,9 @@ echo                                                                            
 call :HoneTitle
 echo                                                               %COL%[1;4;34mTweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Power Plan %PWROF%                 %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Disable Keys 
-echo              %COL%[90mDesktop Power Plan, not good         %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
-echo              %COL%[90mto use with a laptop battery.        %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
+echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Max Power Plan %PWROF%             %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Disable Keys 
+echo              %COL%[90mMaximum performance mode             %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
+echo              %COL%[31mDo not enable on laptops             %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
 echo.
 echo              %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m Timer Resolution %TMROF%           %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m MSI Mode %MSIOF%                   %COL%[33m[%COL%[37m 6 %COL%[33m]%COL%[37m Affinity %AFFOF%
 echo              %COL%[90mThis tweak changes how fast          %COL%[90mEnable MSI Mode for gpu and          %COL%[90mThis tweak will spread devices
@@ -401,22 +401,9 @@ goto TweaksPG2
 :PowerPlan
 echo %PWROF% | find "N/A" >nul && call :ALFiX PACK Error "This power plan isn't recommended for batteries." && goto Tweaks
 if "%PWROF%" == "%COL%[91mOFF" (
-	curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Resources\HoneV2.pow" "https://github.com/auraside/HoneCtrl/raw/main/Files/HoneV2.pow"
-	powercfg /d 44444444-4444-4444-4444-444444444449
-	powercfg -import "%SYSTEMDRIVE%\Hone\Resources\HoneV2.pow" 44444444-4444-4444-4444-444444444449
-	powercfg /changename 44444444-4444-4444-4444-444444444449 "Hone Ultimate Power Plan V2" "The Ultimate Power Plan to increase FPS, improve latency and reduce input lag."
-REM Enable Idle on Hyper-Threading
-set THREADS=%NUMBER_OF_PROCESSORS%
-	for /f "tokens=2 delims==" %%n in ('wmic cpu get numberOfCores /value') do set CORES=%%n
-	if "%CORES%" == "%NUMBER_OF_PROCESSORS%" (
-		powercfg -setacvalueindex 44444444-4444-4444-4444-444444444449 sub_processor IDLEDISABLE 1
-) else (
-		powercfg -setacvalueindex 44444444-4444-4444-4444-444444444449 sub_processor IDLEDISABLE 0 
-)
-	powercfg -setacvalueindex 44444444-4444-4444-4444-444444444449 sub_processor IDLEDISABLE 0
-	powercfg -setactive "44444444-4444-4444-4444-444444444449"
+powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
 ) >nul 2>&1 else (
-	powercfg -restoredefaultschemes
+	powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
 ) >nul 2>&1
 goto tweaks
 
@@ -1705,6 +1692,7 @@ echo                                              ##  ##     ##        ##       
 echo                                             ##    ##    ##        #######   ##      ##
 echo                                            ##########   ##        ##        ##    ##  ##
 echo                                           ##        ##  #######   ##        ##   ##    ##
+echo.
 echo                                                           %COL%[34m%COL%[1mOBS Settings%COL%[0m
 echo.
 echo              %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m Install/Update OBS             %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m Recording                      %COL%[33m[ %COL%[37m3 %COL%[33m]%COL%[37m Streaming
