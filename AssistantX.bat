@@ -54,12 +54,12 @@ echo.
 echo %COL%[91m  WARNING:
 echo %COL%[37m  Please note that we cannot guarantee an FPS boost from applying our optimizations, every system + configuration is different.
 echo.
-echo     %COL%[33m1.%COL%[37m Everything is "use at your own risk", we are %COL%[91mNOT LIABLE%COL%[37m if you damage your system in any way
+echo     %COL%[96m1.%COL%[37m Everything is "use at your own risk", we are %COL%[91mNOT LIABLE%COL%[37m if you damage your system in any way
 echo        (ex. not following the disclaimers carefully).
 echo.
-echo     %COL%[33m2.%COL%[37m If you don't know what a tweak is, do not use it and contact our support team to receive more assistance.
+echo     %COL%[96m2.%COL%[37m If you don't know what a tweak is, do not use it and contact our support team to receive more assistance.
 echo.
-echo     %COL%[33m3.%COL%[37m Even though we have an automatic restore point feature, we highly recommend making a manual restore point before running.
+echo     %COL%[96m3.%COL%[37m Even though we have an automatic restore point feature, we highly recommend making a manual restore point before running.
 echo.
 echo   For any questions and/or concerns, please join our discord: https://discord.gg/J7wghdhKsx
 echo.
@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.0.97
+set local=0.1.1
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/HoneCtrlVer" >nul 2>&1
@@ -85,14 +85,14 @@ if "%LOCAL%" gtr "%LOCALTWO%" (
 	echo                           Update found
 	echo  --------------------------------------------------------------
 	echo.
-	echo                    Your current version: %LOCALTWO%
+	echo                    Your current version: %COL%[94m%LOCALTWO%%COL%[33m
 	echo.
-	echo                          New version: %LOCAL%
+	echo                          New version: %COL%[94m%LOCAL%
 	echo.
 	echo.
 	echo.
-	echo      [Y] Yes, Update
-	echo      [N] No
+	echo      %COL%[32m[Y] Yes, Update
+	echo      %COL%[31m[N] No%COL%[37m
 	echo.
 	%SYSTEMROOT%\System32\choice.exe /c:YN /n /m "%DEL%                                >:"
 	set choice=!errorlevel!
@@ -148,17 +148,17 @@ echo.
 echo.
 echo.
 echo.
-echo                                           %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Optimizations        %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m Game Settings
+echo                                           %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Optimizations        %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Game Settings
 echo.
 echo.
 echo.
 echo.
-echo                                     %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Media         %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[90m Privacy        %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[90m Aesthetics
+echo                                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Media         %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[90m Privacy        %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[90m Aesthetics
 echo.
 echo.
 echo.
 echo.
-echo                                               %COL%[33m[%COL%[37m 6 %COL%[33m]%COL%[37m Advanced           %COL%[33m[%COL%[37m 7 %COL%[33m]%COL%[37m More
+echo                                               %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Advanced           %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m More
 echo.
 echo.
 echo.
@@ -181,13 +181,13 @@ if "%choice%"=="9" goto Dog
 goto MainMenu
 
 :HoneTitle 
-echo                                                                             ##      ##
-echo                     ####              ##         ##                   ##     ##    ##
-echo                    ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                    ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                    ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                    ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                             ##      ## 
+echo                                                                                          %COL%[33m##      ##
+echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                          %COL%[33m##      ## 
 echo.
 goto :eof
 
@@ -303,25 +303,25 @@ echo                                                                            
 call :HoneTitle
 echo                                                               %COL%[1;4;34mTweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Power Plan Tweaks               %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Disable Keys 
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Power Plan Tweaks               %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Disable Keys 
 echo              %COL%[90mOpens the power optimization          %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
 echo              %COL%[90mmenu                                  %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
 echo.
-echo              %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m Timer Resolution %TMROF%           %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m MSI Mode %MSIOF%                   %COL%[33m[%COL%[37m 6 %COL%[33m]%COL%[37m Affinity %AFFOF%
+echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Timer Resolution %TMROF%           %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m MSI Mode %MSIOF%                   %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Affinity %AFFOF%
 echo              %COL%[90mThis tweak changes how fast           %COL%[90mEnable MSI Mode for gpu and          %COL%[90mThis tweak will spread devices
 echo              %COL%[90myour cpu refreshes                    %COL%[90mnetwork adapters                     %COL%[90mon multiple cpu cores
 echo.
-echo              %COL%[33m[%COL%[37m 7 %COL%[33m]%COL%[37m W32 Priority Seperation %BLANK%    %COL%[33m[%COL%[37m 8 %COL%[33m]%COL%[37m Memory Optimization %ME2OF%        %COL%[33m[%COL%[37m 9 %COL%[33m]%COL%[37m Mouse Fix %MOUOF%
+echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m W32 Priority Seperation %BLANK%    %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Memory Optimization %ME2OF%        %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Mouse Fix %MOUOF%
 echo              %COL%[90mOptimizes the usage priority of       %COL%[90mOptimizes your fsutil, win           %COL%[90mThis removes acceleration which
 echo              %COL%[90myour running services                 %COL%[90mstartup settings and more            %COL%[90mmakes your aim inconsistent
 echo.
 echo                                                             %COL%[1;4;34mNvidia Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 10 %COL%[33m]%COL%[37m Disable HDCP %HDCOF%              %COL%[33m[%COL%[37m 11 %COL%[33m]%COL%[37m Disable Preemption %CMAOF%        %COL%[33m[%COL%[37m 12 %COL%[33m]%COL%[37m ProfileInspector %NPIOF%
+echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Disable HDCP %HDCOF%              %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Disable Preemption %CMAOF%        %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m ProfileInspector %NPIOF%
 echo              %COL%[90mDisable copy protection technology    %COL%[90mDisable preemption requests from     %COL%[90mWill edit your Nvidia control panel
 echo              %COL%[90mof illegal High Definition content    %COL%[90mthe GPU scheduler                    %COL%[90mand add various tweaks
 echo.
-echo              %COL%[33m[%COL%[37m 13 %COL%[33m]%COL%[37m Disable Nvidia Telemetry %NVTOF%  %COL%[33m[%COL%[37m 14 %COL%[33m]%COL%[37m Nvidia Tweaks %NVIOF%             %COL%[33m[%COL%[37m 15 %COL%[33m]%COL%[37m Disable Write Combining %DWCOF%
+echo              %COL%[96m[%COL%[37m 13 %COL%[96m]%COL%[37m Disable Nvidia Telemetry %NVTOF%  %COL%[96m[%COL%[37m 14 %COL%[96m]%COL%[37m Nvidia Tweaks %NVIOF%             %COL%[96m[%COL%[37m 15 %COL%[96m]%COL%[37m Disable Write Combining %DWCOF%
 echo              %COL%[90mRemove built in Nvidia telemetry      %COL%[90mVarious essential tweaks for         %COL%[90mStops data from being combined
 echo              %COL%[90mfrom your computer and driver.        %COL%[90mNvidia graphics cards                %COL%[90mand temporarily stored
 echo.
@@ -358,7 +358,7 @@ call :HoneTitle
 echo.
 echo                                                           %COL%[1;4;34mPower Plan Tweaks%COL%[0m
 echo.
-echo             %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Max Power Plan              %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m Delete Power Saving Plan           %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Delete High Performance Plan 
+echo             %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Max Power Plan              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Delete Power Saving Plan           %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Delete High Performance Plan 
 echo             %COL%[90mMaximum performance mode          %COL%[90mDeletes the power saving plan            %COL%[90mDeletes the high performance plan
 echo             %COL%[31mDo not enable on laptops
 echo.
@@ -393,24 +393,24 @@ echo                                                                            
 call :HoneTitle
 echo                                                           %COL%[1;4;34mNetwork Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Optimize TCP/IP %TCPOF%            %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m Optimize NIC %NICOF%               %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m Optimize Netsh %NETOF%
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Optimize TCP/IP %TCPOF%            %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Optimize NIC %NICOF%               %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Optimize Netsh %NETOF%
 echo              %COL%[90mTweaks your Internet Protocol        %COL%[90mOptimize your Network Card settings  %COL%[90mThis tweak will optimize your
 echo              %COL%[91mDon't use if you are using Wi-Fi     %COL%[91mDon't use if you are using Wi-Fi     %COL%[90mcomputer network configuration
 echo.
 echo                                                             %COL%[1;4;34mGPU ^& CPU%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 4 %COL%[33m]%COL%[37m All GPU Tweaks %ALLOF%             %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m Optimize Intel iGPU %DSSOF%        %COL%[33m[%COL%[37m 6 %COL%[33m]%COL%[37m AMD GPU Tweaks %AMDOF%
+echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m All GPU Tweaks %ALLOF%             %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Optimize Intel iGPU %DSSOF%        %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m AMD GPU Tweaks %AMDOF%
 echo              %COL%[90mVarious essential tweaks for all     %COL%[90mIncrease dedicated video vram on     %COL%[90mConfigure AMD GPU to optimized
 echo              %COL%[90mGPU brands and manufacturers         %COL%[90ma intel iGPU                         %COL%[90msettings
 echo                                                               %COL%[1;4;34mBloat%COL%[0m
 echo.
 echo                                                        %COL%[1;4;34mMiscellaneous Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 7 %COL%[33m]%COL%[37m Reduce Audio Latency %AUDOF%       %COL%[33m[%COL%[37m 8 %COL%[33m]%COL%[37m Debloat %COL%[93mN/A                    %COL%[33m[%COL%[37m 9 %COL%[33m]%COL%[37m Disable Mitigations %MITOF%
+echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Reduce Audio Latency %AUDOF%       %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Debloat %COL%[93mN/A                    %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable Mitigations %MITOF%
 echo              %COL%[90mReduces Audio Latency  		  %COL%[91mComing Soon			       %COL%[90mDisable protections against memory
 echo              %COL%[91mDon't use on slow or old CPU's	  %COL%[90m				       %COL%[90mbased attacks that consume perf
 echo.
-echo              %COL%[33m[%COL%[37m 10 %COL%[33m]%COL%[37m Cleaner %BLANK%                   %COL%[33m[%COL%[37m 11 %COL%[33m]%COL%[37m Game-Booster %BLANK%              %COL%[33m[%COL%[37m 12 %COL%[33m]%COL%[37m Soft Restart %BLANK%
+echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Cleaner %BLANK%                   %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Game-Booster %BLANK%              %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Soft Restart %BLANK%
 echo              %COL%[90mRemove adware, unused devices, and   %COL%[90mSets GPU ^& CPU to high performance   %COL%[90mIf your PC has been running a while
 echo              %COL%[90mtemp files. Empties recycle bin.     %COL%[90mDisables fullscreen optimizations    %COL%[90muse this to receive a quick boost
 echo.
@@ -662,13 +662,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                             ##      ##
-echo                     ####              ##         ##                   ##     ##    ##
-echo                    ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                    ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                    ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                    ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                             ##      ## 
+echo                                                                                          %COL%[33m##      ##
+echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                          %COL%[33m##      ##
 echo.
 echo.
 echo.
@@ -676,7 +676,7 @@ echo.
 echo.
 echo.
 echo.
-echo                    %COL%[33m[ %COL%[37m1 %COL%[33m] %COL%[37m26 Hex                                                   %COL%[33m[ %COL%[37m2 %COL%[33m] %COL%[37m28 Hex
+echo                    %COL%[96m[ %COL%[37m1 %COL%[96m] %COL%[37m26 Hex                                                   %COL%[96m[ %COL%[37m2 %COL%[96m] %COL%[37m28 Hex
 echo                    %COL%[90mDefault                                                        %COL%[90mMight be better
 echo                    %COL%[90mShort, Variable, High foreground boost.                        %COL%[90mShort, Fixed, No foreground boost.
 echo.
@@ -1409,9 +1409,9 @@ call :HoneTitle
 echo.
 echo.
 echo.
-echo                                                               %COL%[34m%COL%[1mGames%COL%[0m
+echo                                                               %COL%[94m%COL%[4mGames%COL%[0m
 echo.
-echo                                                         %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Minecraft
+echo                                                         %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Minecraft
 echo.
 echo.
 echo.
@@ -1447,13 +1447,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                              ##      ##
-echo                      ####              ##         ##                   ##     ##    ##
-echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                              ##      ## 
+echo                                                                                          %COL%[33m##      ##
+echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                          %COL%[33m##      ##
 echo.
 echo.
 echo.
@@ -1464,7 +1464,7 @@ echo.
 echo.
 echo.
 echo.
-echo                       %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m 1.7.10                         %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m 1.8.9                          %COL%[33m[ %COL%[37m3 %COL%[33m] %COL%[37m 1.9 - latest
+echo                       %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m 1.7.10                         %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m 1.8.9                          %COL%[96m[ %COL%[37m3 %COL%[96m] %COL%[37m 1.9 - latest
 echo.
 echo.
 echo.
@@ -1723,13 +1723,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                              ##      ##
-echo                      ####              ##         ##                   ##     ##    ##
-echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                              ##      ##
+echo                                                                                          %COL%[33m##      ##
+echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                          %COL%[33m##      ##
 echo.
 echo.
 echo.
@@ -1763,38 +1763,38 @@ goto done
 cls
 echo.
 echo.
-echo                                                                              ##      ##
-echo                      ####              ##         ##                   ##     ##    ##
-echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                              ##      ##
+echo                                                                                          %COL%[33m##      ##
+echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                          %COL%[33m##      ##
 echo.
 echo                                                           %COL%[34m%COL%[1mOBS Settings%COL%[0m
 echo.
-echo              %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m Install/Update OBS             %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m Recording                      %COL%[33m[ %COL%[37m3 %COL%[33m]%COL%[37m Streaming
+echo              %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Install/Update OBS             %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Recording                      %COL%[96m[ %COL%[37m3 %COL%[96m]%COL%[37m Streaming
 echo              %COL%[90mAutomatically install or update      %COL%[90mAutomated recording settings for     %COL%[90mAutomated streaming settings for
 echo              %COL%[90mOBS using the official link          %COL%[90mOBS based on your preference         %COL%[90mOBS based on your preference
 echo.
 echo.
 echo                                                           %COL%[34m%COL%[1mFFmpeg Settings%COL%[0m
 echo.
-echo              %COL%[33m[ %COL%[37m4 %COL%[33m]%COL%[37m Upscale                        %COL%[33m[ %COL%[37m5 %COL%[33m]%COL%[37m Compress                       %COL%[33m[ %COL%[37m6 %COL%[33m]%COL%[37m Preview Lag
+echo              %COL%[96m[ %COL%[37m4 %COL%[96m]%COL%[37m Upscale                        %COL%[96m[ %COL%[37m5 %COL%[96m]%COL%[37m Compress                       %COL%[96m[ %COL%[37m6 %COL%[96m]%COL%[37m Preview Lag
 echo              %COL%[90mModify the scale of a video          %COL%[90mMake a clips size smaller for        %COL%[90mAdjust a clips quality
 echo              %COL%[90mfor higher bitrate on YouTube        %COL%[90msharing by compressing the file      %COL%[90mto play well with vegas preview
 echo.
 echo.
 echo                                                           %COL%[34m%COL%[1mBlur Settings%COL%[0m
 echo.
-echo              %COL%[33m[ %COL%[37m7 %COL%[33m]%COL%[37m Install/Update Blur            %COL%[33m[ %COL%[37m8 %COL%[33m]%COL%[37m FPS Games                      %COL%[33m[ %COL%[37m9 %COL%[33m]%COL%[37m Minecraft
+echo              %COL%[96m[ %COL%[37m7 %COL%[96m]%COL%[37m Install/Update Blur            %COL%[96m[ %COL%[37m8 %COL%[96m]%COL%[37m FPS Games                      %COL%[96m[ %COL%[37m9 %COL%[96m]%COL%[37m Minecraft
 echo              %COL%[90mAutomatically install or update      %COL%[90mAutomated Blur settings for          %COL%[90mBlur settings for games
 echo              %COL%[90mBlur using the official link         %COL%[90mfirst person shooter games           %COL%[90mrecorded in extremely high fps
 echo.
 echo.
 echo                                                           %COL%[34m%COL%[1mVideo Editor Settings%COL%[0m
 echo.
-echo              %COL%[33m[ %COL%[37m10 %COL%[33m]%COL%[37m Install A Video Editor (NLE)  %COL%[33m[ %COL%[37m11 %COL%[33m]%COL%[37m Project Settings              %COL%[33m[ %COL%[37m12 %COL%[33m]%COL%[37m Renders
+echo              %COL%[96m[ %COL%[37m10 %COL%[96m]%COL%[37m Install A Video Editor (NLE)  %COL%[96m[ %COL%[37m11 %COL%[96m]%COL%[37m Project Settings              %COL%[96m[ %COL%[37m12 %COL%[96m]%COL%[37m Renders
 echo              %COL%[90mDownload ^& install a		  %COL%[90mAutomated Project settings	       %COL%[90mAutomated render settings
 echo		     %COL%[90mNon-Linear editing software	  %COL%[90mfor Vegas pro                        %COL%[90mfor Vegas pro
 echo.
@@ -1836,7 +1836,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo              %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m Quality                        %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m Optimal                        %COL%[33m[ %COL%[37m3 %COL%[33m]%COL%[37m Performance
+echo              %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Quality                        %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Optimal                        %COL%[96m[ %COL%[37m3 %COL%[96m]%COL%[37m Performance
 echo              %COL%[90mSettings for the best                %COL%[90mThe best for performance             %COL%[90mSettings for the best
 echo              %COL%[90mquality in OBS                       %COL%[90mwithout losing much quality          %COL%[90mperformance in OBS
 echo.
@@ -2299,7 +2299,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                              %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m Quality                                        %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m Performance
+echo                              %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Quality                                        %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Performance
 echo                              %COL%[90mSettings for the best                                %COL%[90mSettings for the best
 echo                              %COL%[90mquality in OBS                                       %COL%[90mperformance in OBS
 echo.
@@ -2626,7 +2626,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                            %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m 4k                                             %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m 8k
+echo                            %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m 4k                                             %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m 8k
 echo                            %COL%[90mModify the scale of a video                          %COL%[90mModify the scale of a video
 echo                            %COL%[90mto turn it to 4k                                     %COL%[90mto turn it to 8k
 echo.
@@ -2731,7 +2731,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                         %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m Heavy                                          %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m Light
+echo                         %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Heavy                                          %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Light
 echo                         %COL%[90mCompress a video                     	 	     %COL%[90mCompress a video
 echo                         %COL%[90mto make it take up much less space                   %COL%[90mto make it take up less space
 echo.
@@ -2824,7 +2824,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo                    	     %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m Accurate                                   %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m Smooth
+echo                    	     %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Accurate                                   %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Smooth
 echo                     	     %COL%[90mAutomated Blur settings                          %COL%[90mAutomated Blur settings
 echo                     	     %COL%[90mfor the most precise results             	      %COL%[90mfor the smoothest results
 echo.
@@ -2864,7 +2864,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo					%COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m 60-120FPS                                   %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m 240FPS+
+echo					%COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m 60-120FPS                                   %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m 240FPS+
 echo					%COL%[90mAutomated Blur settings				  %COL%[90mAutomated Blur settings
 echo					%COL%[90mfor 60-120FPS clips				  %COL%[90mfor 240FPS+ clips
 echo.
@@ -2993,7 +2993,7 @@ call :HoneTitle
 echo.
 echo.
 echo.
-echo            	   %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Any			%COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m 240-360FPS			%COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m 480FPS+
+echo            	   %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Any			%COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m 240-360FPS			%COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m 480FPS+
 echo			   %COL%[90mAutomated Blur settings      %COL%[90mAutomated Blur settings    	 	%COL%[90mAutomated Blur settings
 echo			   %COL%[90mfor any clips        	%COL%[90mfor 240-360FPS clips            	%COL%[90mfor 480FPS+ clips
 echo.
@@ -3132,7 +3132,7 @@ echo                       %COL%[90mcannot buy Vegas Pro, an alternative that we
 echo                       %COL%[90mcalled 'DaVinci Resolve' (note: this program does not contain render settings)^^!
 echo.
 echo.
-echo                           %COL%[33m[ %COL%[37m1 %COL%[33m]%COL%[37m Vegas Pro website                        %COL%[33m[ %COL%[37m2 %COL%[33m]%COL%[37m DaVinci Resolve website
+echo                           %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Vegas Pro website                        %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m DaVinci Resolve website
 echo                           %COL%[90mPaid with supported renders                    %COL%[90mFree but unsupported renders
 echo.
 echo.
@@ -3215,11 +3215,11 @@ echo.
 echo.
 echo %COL%[91m  WARNING:
 echo.
-echo     %COL%[33m1.%COL%[37m These Tweaks are HIGHLY experimental, we do %COL%[91mnot%COL%[37m recommend proceeding if you do not know what you're doing!
+echo     %COL%[96m1.%COL%[37m These Tweaks are HIGHLY experimental, we do %COL%[91mnot%COL%[37m recommend proceeding if you do not know what you're doing!
 echo.
-echo     %COL%[33m1.%COL%[37m Everything is "use at your own risk", we are %COL%[91mNOT LIABLE%COL%[37m if you damage your system in any way.
+echo     %COL%[96m1.%COL%[37m Everything is "use at your own risk", we are %COL%[91mNOT LIABLE%COL%[37m if you damage your system in any way.
 echo.
-echo     %COL%[33m1.%COL%[37m Even though we have an automatic restore point feature, we %COL%[91mHighly%COL%[37m recommend making a manual restore point before running.
+echo     %COL%[96m1.%COL%[37m Even though we have an automatic restore point feature, we %COL%[91mHighly%COL%[37m recommend making a manual restore point before running.
 echo.
 echo     Please enter "I agree" (without quotes) to continue:
 echo.
@@ -3275,21 +3275,21 @@ echo.
 call :HoneTitle
 echo                                                           %COL%[1;4;34mNetwork Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m NonBestEffortLimit %NONOF%         %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m AutoTuning %AUTOF%                 %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m DSCP Value %DSCOF%
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m NonBestEffortLimit %NONOF%         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m AutoTuning %AUTOF%                 %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m DSCP Value %DSCOF%
 echo              %COL%[90mAllocate more bandwidth to apps      %COL%[90mCan reduce bufferbloat,              %COL%[90mSet the priority of your network
 echo              %COL%[90mUse only on fast connections         %COL%[90mbut lower your Network speed         %COL%[90mtraffic to expedited forwarding
 echo.
 echo.
 echo                                                            %COL%[1;4;34mPower Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 5 %COL%[33m]%COL%[37m Disable C-States %CS0OF%           %COL%[33m[%COL%[37m 6 %COL%[33m]%COL%[37m PStates 0 %PS0OF%                  %COL%[33m[%COL%[37m 7 %COL%[33m]%COL%[37m Disable Idle %IDLOF%
+echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Disable C-States %CS0OF%           %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m PStates 0 %PS0OF%                  %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Disable Idle %IDLOF%
 echo              %COL%[90mKeep CPU at C0 stopping throttling   %COL%[90mRun graphics card at its highest     %COL%[90mForce CPU to always be running
 echo              %COL%[90mwill make PC generate more heat      %COL%[90mdefined frequencies                  %COL%[90mat highest CPU state
 echo.
 echo.
 echo                                                            %COL%[1;4;34mOther Tweaks%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 8 %COL%[33m]%COL%[37m Nvidia Driver %DRIOF%              %COL%[33m[%COL%[37m 9 %COL%[33m]%COL%[37m BCDEdit %BCDOF%                    %COL%[33m[%COL%[37m 10 %COL%[33m]%COL%[37m Disable Smartscreen
+echo              %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Nvidia Driver %DRIOF%              %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m BCDEdit %BCDOF%                    %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Disable Smartscreen
 echo              %COL%[90mInstall the best tweaked nvidia      %COL%[90mTweaks your windows boot config      %COL%[90mDisable Antivirus Smartscreen
 echo              %COL%[90mdriver for latency and fps           %COL%[90mdata to optimized settings
 echo.
@@ -3686,25 +3686,25 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                              ##      ##
-echo                      ####              ##         ##                   ##     ##    ##
-echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                              ##      ##
+echo                                                                                          %COL%[33m##      ##
+echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                          %COL%[33m##      ##
 echo.
 echo.
 echo.
-echo                  %COL%[33m[ %COL%[37m1 %COL%[33m] %COL%[37mAbout                                                   %COL%[33m[ %COL%[37m2 %COL%[33m] %COL%[37mDisclaimer
+echo                  %COL%[96m[ %COL%[37m1 %COL%[96m] %COL%[37mAbout                                                   %COL%[96m[ %COL%[37m2 %COL%[96m] %COL%[37mDisclaimer
 echo.
 echo.
-echo                  %COL%[33m[ %COL%[37m3 %COL%[33m] %COL%[37mBackup                                                  %COL%[33m[ %COL%[37m4 %COL%[33m] %COL%[37mDiscord
+echo                  %COL%[96m[ %COL%[37m3 %COL%[96m] %COL%[37mBackup                                                  %COL%[96m[ %COL%[37m4 %COL%[96m] %COL%[37mDiscord
 echo                  %COL%[90mBackup your current registry ^& create a
 echo                  %COL%[90mrestore point used to revert tweaks applied.
 echo.
 echo.
-echo                  %COL%[33m[ %COL%[37m5 %COL%[33m] %COL%[37mCredits
+echo                  %COL%[96m[ %COL%[37m5 %COL%[96m] %COL%[37mCredits
 echo.
 echo.
 echo.
@@ -3731,9 +3731,21 @@ goto More
 
 :About
 cls
-echo About
-echo Owned by ALFiX, Inc. Copyright Claimed.
-echo This is a GUI for the Tweaks.
+echo.
+echo.
+echo                                                                                          %COL%[33m##      ##
+echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                          %COL%[33m##      ##
+echo.
+echo.
+echo  About
+echo  Owned by ALFiX, Inc. Copyright Claimed.
+echo  This is a GUI for the Tweaks.
+echo.
 echo.
 call :ColorText 8 "                                                      [ press X to go back ]"
 echo.
@@ -3757,12 +3769,12 @@ echo.
 echo %COL%[91m  WARNING:
 echo %COL%[37m  Please note that we cannot guarantee an FPS boost from applying our optimizations, every system + configuration is different.
 echo.
-echo     %COL%[33m1.%COL%[37m Everything is "use at your own risk", we are %COL%[91mNOT LIABLE%COL%[37m if you damage your system in any way
+echo     %COL%[96m1.%COL%[37m Everything is "use at your own risk", we are %COL%[91mNOT LIABLE%COL%[37m if you damage your system in any way
 echo        (ex. not following the disclaimers carefully).
 echo.
-echo     %COL%[33m2.%COL%[37m If you don't know what a tweak is, do not use it and contact our support team to receive more assistance.
+echo     %COL%[96m2.%COL%[37m If you don't know what a tweak is, do not use it and contact our support team to receive more assistance.
 echo.
-echo     %COL%[33m3.%COL%[37m Even though we have an automatic restore point feature, we highly recommend making a manual restore point before running.
+echo     %COL%[96m3.%COL%[37m Even though we have an automatic restore point feature, we highly recommend making a manual restore point before running.
 echo.
 echo   For any questions and/or concerns, please join our discord: discord.gg/hone
 echo.
@@ -3837,13 +3849,14 @@ echo                      ##         ##  ####
 echo                      ##  ####   ## ## ##
 echo                      ##    ##   ####  ##
 echo                      ########   ###   ##
-echo                                                                                                      ##      ##
-echo                                              ####              ##         ##                   ##     ##    ##
-echo                                             ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                             ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                             ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                             ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                                      ##      ##
+echo.
+echo                                                                                               ##      ##
+echo                                       ####              ##         ##                   ##     ##    ##
+echo                                      ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                      ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                      ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                      ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                               ##      ##
 
 :ColorText
 echo off
@@ -3912,7 +3925,7 @@ echo.
 echo.
 call :HoneTitle
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m AUTO                 %COL%[33m[%COL%[37m 2 %COL%[33m]%COL%[37m MANUAL      %COL%[33m[%COL%[37m 3 %COL%[33m]%COL%[37m RESET
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m AUTO                 %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m MANUAL      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m RESET
 echo              %COL%[90mApply all recommended         %COL%[90mCustomize your experience      %COL%[90mReset all Aesthetics
 echo              %COL%[90msettings automatically        %COL%[90mto your liking             %COL%[90mSettings to original
 echo.
@@ -3953,7 +3966,7 @@ echo.
 call :HoneTitle
 echo                                                               %COL%[1;4;34mAesthetics Manual%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Auto Transparency
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Auto Transparency
 echo              %COL%[90mApply recommended
 echo              %COL%[90mtransparency settings
 echo.
@@ -4005,13 +4018,13 @@ cls
 echo.
 echo.
 echo.
-echo                                                                              ##      ##
-echo                      ####              ##         ##                   ##     ##    ##
-echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                              ##      ##
+echo                                                                                          ##      ##
+echo                                  ####              ##         ##                   ##     ##    ##
+echo                                 ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                 ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                 ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                 ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                          ##      ##
 echo.
 echo.
 echo.
@@ -4032,7 +4045,7 @@ echo.
 call :HoneTitle
 echo                                                               %COL%[1;4;34mAesthetics Manual%COL%[0m
 echo.
-echo              %COL%[33m[%COL%[37m 1 %COL%[33m]%COL%[37m Transparency
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Transparency
 echo              %COL%[90mCustomize what you want
 echo              %COL%[90mto be transparent
 echo.
@@ -4211,13 +4224,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                              ##      ##
-echo                      ####              ##         ##                   ##     ##    ##
-echo                     ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                     ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                     ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                     ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                              ##      ##
+echo                                                                                          ##      ##
+echo                                  ####              ##         ##                   ##     ##    ##
+echo                                 ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                 ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                 ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                 ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                          ##      ##
 echo.
 echo.
 echo.
