@@ -17,12 +17,12 @@ Mode 130,45
 setlocal EnableDelayedExpansion
 
 REM Make Directories
-mkdir %SYSTEMDRIVE%\Hone >nul 2>&1
-mkdir %SYSTEMDRIVE%\Hone\Resources >nul 2>&1
-mkdir %SYSTEMDRIVE%\Hone\HoneRevert >nul 2>&1
-mkdir %SYSTEMDRIVE%\Hone\Drivers >nul 2>&1
-mkdir %SYSTEMDRIVE%\Hone\Renders >nul 2>&1
-cd %SYSTEMDRIVE%\Hone
+mkdir %SYSTEMDRIVE%\AssistantX >nul 2>&1
+mkdir %SYSTEMDRIVE%\AssistantX\Resources >nul 2>&1
+mkdir %SYSTEMDRIVE%\AssistantX\AssistantXRevert >nul 2>&1
+mkdir %SYSTEMDRIVE%\AssistantX\Drivers >nul 2>&1
+mkdir %SYSTEMDRIVE%\AssistantX\Renders >nul 2>&1
+cd %SYSTEMDRIVE%\AssistantX
 
 REM Run as Admin
 reg add HKLM /F >nul 2>&1
@@ -40,11 +40,11 @@ reg add HKCU\CONSOLE /v VirtualTerminalLevel /t REG_DWORD /d 1 /f >nul 2>&1
 
 
 :Disclaimer
-reg query "HKCU\Software\Hone" /v "Disclaimer" >nul 2>&1 && goto CheckForUpdates
+reg query "HKCU\Software\AssistantX" /v "Disclaimer" >nul 2>&1 && goto CheckForUpdates
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
 echo                                        %COL%[90m     made to improve your day-to-day productivity
@@ -69,10 +69,10 @@ echo.
 echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!" neq "i agree" goto Disclaimer
-reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
+reg add "HKCU\Software\AssistantX" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.3
+set local=0.3.1
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -105,8 +105,8 @@ if "%LOCAL%" gtr "%LOCALTWO%" (
 )
 
 REM Restart Checks
-if exist "%SYSTEMDRIVE%\Hone\Drivers\NvidiaHone.exe" "%SYSTEMDRIVE%\Desktop\Hone\Drivers\NvidiaHone.exe" >nul 2>&1
-if exist "%SYSTEMDRIVE%\Hone\Drivers\NvidiaHone.exe" del /Q "%SYSTEMDRIVE%\Desktop\Hone\Drivers\NvidiaHone.exe" >nul 2>&1
+if exist "%SYSTEMDRIVE%\AssistantX\Drivers\NvidiaAssistantX.exe" "%SYSTEMDRIVE%\Desktop\AssistantX\Drivers\NvidiaAssistantX.exe" >nul 2>&1
+if exist "%SYSTEMDRIVE%\AssistantX\Drivers\NvidiaAssistantX.exe" del /Q "%SYSTEMDRIVE%\Desktop\AssistantX\Drivers\NvidiaAssistantX.exe" >nul 2>&1
 if exist "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Driverinstall.bat" del /Q "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Driverinstall.bat" >nul 2>&1
 
 REM Attempt to enable WMIC
@@ -114,22 +114,22 @@ dism /online /enable-feature /featurename:MicrosoftWindowsWMICore /NoRestart >nu
 
 REM Check If First Launch
 set firstlaunch=1
->nul 2>&1 call "%SYSTEMDRIVE%\Hone\HoneRevert\firstlaunch.bat"
+>nul 2>&1 call "%SYSTEMDRIVE%\AssistantX\AssistantXRevert\firstlaunch.bat"
 if "%firstlaunch%" == "0" (goto MainMenu)
 
 REM Restore Point
 reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "SystemRestorePointCreationFrequency" /t REG_DWORD /d 0 /f >nul 2>&1
 powershell -ExecutionPolicy Unrestricted -NoProfile Enable-ComputerRestore -Drive 'C:\', 'D:\', 'E:\', 'F:\', 'G:\' >nul 2>&1
-powershell -ExecutionPolicy Unrestricted -NoProfile Checkpoint-Computer -Description 'Hone Restore Point' >nul 2>&1
+powershell -ExecutionPolicy Unrestricted -NoProfile Checkpoint-Computer -Description 'AssistantX Restore Point' >nul 2>&1
 
 REM HKCU & HKLM backup
 
 for /F "tokens=2" %%i in ('date /t') do set date=%%i
 set date1=%date:/=.%
->nul 2>&1 md %SYSTEMDRIVE%\Hone\HoneRevert\%date1%
-reg export HKCU %SYSTEMDRIVE%\Hone\HoneRevert\%date1%\HKLM.reg /y >nul 2>&1
-reg export HKCU %SYSTEMDRIVE%\Hone\HoneRevert\%date1%\HKCU.reg /y >nul 2>&1
-echo set "firstlaunch=0" > %SYSTEMDRIVE%\Hone\HoneRevert\firstlaunch.bat
+>nul 2>&1 md %SYSTEMDRIVE%\AssistantX\AssistantXRevert\%date1%
+reg export HKCU %SYSTEMDRIVE%\AssistantX\AssistantXRevert\%date1%\HKLM.reg /y >nul 2>&1
+reg export HKCU %SYSTEMDRIVE%\AssistantX\AssistantXRevert\%date1%\HKCU.reg /y >nul 2>&1
+echo set "firstlaunch=0" > %SYSTEMDRIVE%\AssistantX\AssistantXRevert\firstlaunch.bat
 
 :MainMenu
 Mode 130,45
@@ -138,11 +138,10 @@ set "choice="
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
 echo                                        %COL%[90m     made to improve your day-to-day productivity
-echo.
 echo.
 echo.
 echo.
@@ -158,7 +157,8 @@ echo.
 echo.
 echo.
 echo.
-echo                                       %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Advanced    %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37mGame-Booster       %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m More
+echo                                       %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Advanced    %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Game-Booster       %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m More
+echo.
 echo.
 echo.
 echo.
@@ -171,7 +171,7 @@ echo.
 set choice=%errorlevel%
 if "%choice%"=="1" set PG=TweaksPG1 & goto Tweaks
 if "%choice%"=="2" goto GameSettings
-if "%choice%"=="3" goto HoneRenders
+if "%choice%"=="3" goto AssistantXRenders
 if "%choice%"=="4" call:Comingsoon
 if "%choice%"=="5" call:Files
 if "%choice%"=="6" goto AdvancedTW
@@ -180,14 +180,14 @@ if "%choice%"=="8" goto More
 if "%choice%"=="8" exit /b
 goto MainMenu
 
-:HoneTitle 
-echo                                                                                          %COL%[33m##      ##
-echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                          %COL%[33m##      ## 
+:AssistantXTitle 
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ## 
 echo.
 goto :eof
 :Files
@@ -195,7 +195,7 @@ TITLE AssistantX Files Downloads - v%localtwo%
 cls
 echo.
 echo                                                                                                                        %COL%[36mPage 1/2
-call :HoneTitle
+call :AssistantXTitle
 echo                                                          %COL%[1;4;34mFiles for Gamers%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Discord                         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Epic Games Launcher         %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Steam 
@@ -240,7 +240,7 @@ TITLE AssistantX Files Downloads - v%localtwo%
 cls
 echo.
 echo                                                                                                                        %COL%[36mPage 2/2
-call :HoneTitle
+call :AssistantXTitle
 echo                                                   %COL%[1;4;34mFiles To watch movies and series%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Zona 
@@ -340,7 +340,7 @@ goto FilesPG2
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
@@ -379,7 +379,7 @@ for %%i in (PWROF MEMOF FSOOF AUDOF TMROF NETOF AFFOF MOUOF AFTOF NICOF DSSOF SE
 	for /f "tokens=3" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB"') do (set /a currentmem=%%a)
 	if "!currentmem!" neq "!mem!" set "MEMOF=%COL%[91mOFF"
 	REM Nvidia Telemetry
-	reg query "HKCU\Software\Hone" /v "NVTTweaks" || set "NVTOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "NVTTweaks" || set "NVTOF=%COL%[91mOFF"
 	REM DissableFSOandGameBar
 	reg query "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" || set "FSOOF=%COL%[91mOFF"
 	REM Nvidia HDCP
@@ -394,39 +394,39 @@ for %%i in (PWROF MEMOF FSOOF AUDOF TMROF NETOF AFFOF MOUOF AFTOF NICOF DSSOF SE
 	reg query "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\csrss.exe\PerfOptions" /v CpuPriorityClass | find "0x4" || set "CRSOF=%COL%[91mOFF"
 	reg query "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\csrss.exe\PerfOptions" /v IoPriority | find "0x3" || set "CRSOF=%COL%[91mOFF"
 	REM Power Plan
-	powercfg /GetActiveScheme | find "Hone" || set "PWROF=%COL%[91mOFF"
+	powercfg /GetActiveScheme | find "AssistantX" || set "PWROF=%COL%[91mOFF"
 	REM All GPU Tweaks
-	reg query "HKCU\Software\Hone" /v "AllGPUTweaks" || set "ALLOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "AllGPUTweaks" || set "ALLOF=%COL%[91mOFF"
 	REM Profile Inspector Tweaks
-	reg query "HKCU\Software\Hone" /v "NpiTweaks" || set "NPIOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "NpiTweaks" || set "NPIOF=%COL%[91mOFF"
 	REM TCPIP
-	reg query "HKCU\Software\Hone" /v "TCPIP" || set "TCPOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "TCPIP" || set "TCPOF=%COL%[91mOFF"
 	REM Nvidia Tweaks
-	reg query "HKCU\Software\Hone" /v "NvidiaTweaks" || set "NVIOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "NvidiaTweaks" || set "NVIOF=%COL%[91mOFF"
 	REM Memory Optimization
-	reg query "HKCU\Software\Hone" /v "MemoryTweaks" || set "ME2OF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "MemoryTweaks" || set "ME2OF=%COL%[91mOFF"
 	REM Network Internet Tweaks
-	reg query "HKCU\Software\Hone" /v "InternetTweaks" || set "NETOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "InternetTweaks" || set "NETOF=%COL%[91mOFF"
 	REM Services Tweaks
-	reg query "HKCU\Software\Hone" /v "ServicesTweaks" || set "SERVOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "ServicesTweaks" || set "SERVOF=%COL%[91mOFF"
 	REM Debloat Tweaks
-	reg query "HKCU\Software\Hone" /v "DebloatTweaks" || set "DEBOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "DebloatTweaks" || set "DEBOF=%COL%[91mOFF"
 	REM Mitigations Tweaks
-	reg query "HKCU\Software\Hone" /v "MitigationsTweaks" || set "MITOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "MitigationsTweaks" || set "MITOF=%COL%[91mOFF"
 	REM Affinities
-	reg query "HKCU\Software\Hone" /v "AffinityTweaks" || set "AFFOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "AffinityTweaks" || set "AFFOF=%COL%[91mOFF"
 	REM DisableWriteCombining
 	reg query "HKLM\SYSTEM\CurrentControlSet\Services\nvlddmkm" /v "DisableWriteCombining" || set "DWCOF=%COL%[91mOFF"
 	REM Mouse Fix
 	reg query "HKCU\Control Panel\Mouse" /v "SmoothMouseYCurve" | find "0000000000000000000038000000000000007000000000000000A800000000000000E00000000000" || set "MOUOF=%COL%[91mOFF"
 	REM NIC
-	if not exist "%SYSTEMDRIVE%\Hone\HoneRevert\ognic1.reg" set "NICOF=%COL%[91mOFF"
+	if not exist "%SYSTEMDRIVE%\AssistantX\AssistantXRevert\ognic1.reg" set "NICOF=%COL%[91mOFF"
 	REM Intel iGPU
 	reg query "HKLM\SOFTWARE\Intel\GMM" /v "DedicatedSegmentSize" | find "0x400" || set "DSSOF=%COL%[91mOFF"
 	REM Timer Res
 	sc query STR | find "RUNNING" || set "TMROF=%COL%[91mOFF"
 	REM Audio Service
-	sc query HoneAudio | find "RUNNING" || set "AUDOF=%COL%[91mOFF"
+	sc query AssistantXAudio | find "RUNNING" || set "AUDOF=%COL%[91mOFF"
 	REM Check If Applicable For PC
 	REM Laptop
 	wmic path Win32_Battery Get BatteryStatus | find "1" && set "PWROF=%COL%[93mN/A"
@@ -447,7 +447,7 @@ goto %PG%
 cls
 echo.
 echo                                                                                                                        %COL%[36mPage 1/2
-call :HoneTitle
+call :AssistantXTitle
 echo                                                               %COL%[1;4;34mTweaks%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Power Plan Tweaks              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Disable Keys 
@@ -501,7 +501,7 @@ goto Tweaks
 :PowerPlanTW
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo                                                           %COL%[1;4;34mPower Plan Tweaks%COL%[0m
 echo.
@@ -575,7 +575,7 @@ goto tweaks
 cls
 echo.
 echo                                                                                                                        %COL%[36mPage 2/2
-call :HoneTitle
+call :AssistantXTitle
 echo                                                           %COL%[1;4;34mNetwork Tweaks%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Optimize TCP/IP %TCPOF%            %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Optimize NIC %NICOF%               %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Optimize Netsh %NETOF%
@@ -685,13 +685,13 @@ if "%MEMOF%" == "%COL%[91mOFF" (
 goto tweaks
 
 :TimerRes
-cd %SYSTEMDRIVE%\Hone\Resources
+cd %SYSTEMDRIVE%\AssistantX\Resources
 sc config "STR" start= auto >nul 2>&1
 start /b net start STR >nul 2>&1
 if "%TMROF%" == "%COL%[91mOFF" (
 	if not exist SetTimerResolutionService.exe (
 		REM https://forums.guru3d.com/threads/windows-timer-resolution-tool-in-form-of-system-service.376458/
-		curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\SetTimerResolutionService.exe" "https://github.com/auraside/HoneCtrl/raw/main/Files/SetTimerResolutionService.exe"
+		curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\SetTimerResolutionService.exe" "https://github.com/auraside/AssistantXCtrl/raw/main/Files/SetTimerResolutionService.exe"
 		%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe /i SetTimerResolutionService.exe
 	)
 	sc config "STR" start=auto
@@ -734,7 +734,7 @@ REM ) >nul 2>&1 else (
 		REM reg delete "%%a" /v "PerfLevelSrc" /f
 	REM )
 REM ) >nul 2>&1
-REM call :HoneCtrlRestart "KBoost" "%KBOOF%"
+REM call :AssistantXCtrlRestart "KBoost" "%KBOOF%"
 REM Mode 130,45
 REM goto Tweaks
 
@@ -772,13 +772,13 @@ goto Tweaks
 
 :MSI
 if "%MSIOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v "MSIModeTweaks" /f
+	reg add "HKCU\Software\AssistantX" /v "MSIModeTweaks" /f
 	for /f %%g in ('wmic path win32_VideoController get PNPDeviceID ^| findstr /L "VEN_"') do reg add "HKLM\SYSTEM\CurrentControlSet\Enum\%%g\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v "MSISupported" /t REG_DWORD /d "1" /f
 	for /f %%g in ('wmic path win32_VideoController get PNPDeviceID ^| findstr /L "VEN_"') do reg delete "HKLM\System\CurrentControlSet\Enum\%%g\Device Parameters\Interrupt Management\Affinity Policy" /v "DevicePriority" /f
 	for /f %%i in ('wmic path Win32_NetworkAdapter get PNPDeviceID ^| findstr /L "VEN_"') do reg add "HKLM\SYSTEM\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v "MSISupported" /t REG_DWORD /d "1" /f
 	for /f %%i in ('wmic path Win32_NetworkAdapter get PNPDeviceID ^| findstr /L "VEN_"') do reg delete "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\Affinity Policy" /v "DevicePriority" /f
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v "MSIModeTweaks" /f
+	reg delete "HKCU\Software\AssistantX" /v "MSIModeTweaks" /f
 	for /f %%g in ('wmic path win32_VideoController get PNPDeviceID ^| findstr /L "VEN_"') do reg delete "HKLM\SYSTEM\CurrentControlSet\Enum\%%g\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v "MSISupported" /f
 	for /f %%g in ('wmic path win32_VideoController get PNPDeviceID ^| findstr /L "VEN_"') do reg delete "HKLM\System\CurrentControlSet\Enum\%%g\Device Parameters\Interrupt Management\Affinity Policy" /v "DevicePriority" /f
 	for /f %%i in ('wmic path Win32_NetworkAdapter get PNPDeviceID ^| findstr /L "VEN_"') do reg delete "HKLM\SYSTEM\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v "MSISupported" /f
@@ -788,14 +788,14 @@ goto Tweaks
 
 :Affinity
 if "%AFFOF%" == "%COL%[91mOFF" (
-reg add "HKCU\Software\Hone" /v AffinityTweaks /f
+reg add "HKCU\Software\AssistantX" /v AffinityTweaks /f
 for /f "tokens=*" %%f in ('wmic cpu get NumberOfCores /value ^| find "="') do set %%f
 for /f "tokens=*" %%f in ('wmic cpu get NumberOfLogicalProcessors /value ^| find "="') do set %%f
 if "!NumberOfCores!" == "2" (
 	cls
 	echo You have 2 cores. Affinities won't work.
 	pause
-	reg delete "HKCU\Software\Hone" /v AffinityTweaks /f
+	reg delete "HKCU\Software\AssistantX" /v AffinityTweaks /f
 	goto Tweaks
 )
 if !NumberOfCores! gtr 4 (
@@ -838,7 +838,7 @@ for /f %%i in ('wmic path Win32_NetworkAdapter get PNPDeviceID^| findstr /l "PCI
 )
 )
 ) >nul 2>&1 else (
-reg delete "HKCU\Software\Hone" /v AffinityTweaks /f
+reg delete "HKCU\Software\AssistantX" /v AffinityTweaks /f
 for /f %%i in ('wmic path Win32_USBController get PNPDeviceID^| findstr /l "PCI\VEN_"') do (
 	reg delete "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\Affinity Policy" /v "DevicePolicy" /f
 	reg delete "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\Affinity Policy" /v "AssignmentSetOverride" /f
@@ -860,13 +860,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                                          %COL%[33m##      ##
-echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                          %COL%[33m##      ##
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ## 
 echo.
 echo.
 echo.
@@ -898,7 +898,7 @@ goto Tweaks
 
 :MemOptimization
 if "%ME2OF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v "MemoryTweaks" /f
+	reg add "HKCU\Software\AssistantX" /v "MemoryTweaks" /f
 	REM Disable FTH
 	reg add "HKLM\Software\Microsoft\FTH" /v "Enabled" /t Reg_DWORD /d "0" /f
 	REM Disable Desktop Composition
@@ -952,7 +952,7 @@ if "%ME2OF%" == "%COL%[91mOFF" (
 		fsutil behavior set disabledeletenotify 0
 	)
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v MemoryTweaks /f
+	reg delete "HKCU\Software\AssistantX" /v MemoryTweaks /f
 	REM Delete FTH
 	reg delete "HKLM\Software\Microsoft\FTH" /v "Enabled" /f
 	REM Delete Desktop Composition
@@ -1009,7 +1009,7 @@ if "%ME2OF%" == "%COL%[91mOFF" (
 		fsutil behavior set disabledeletenotify 0
 	)
 ) >nul 2>&1
-call :HoneCtrlRestart "Memory Optimization" "%ME2OF%"
+call :AssistantXCtrlRestart "Memory Optimization" "%ME2OF%"
 Mode 130,45
 goto Tweaks
 
@@ -1040,17 +1040,17 @@ if /i "%choice%"=="300" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve
 if /i "%choice%"=="350" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "0000000000000000C0CC2C0000000000809959000000000040668600000000000033B30000000000" /f >nul 2>&1 & goto MouseEnd
 goto ChooseScale
 :MouseEnd
-call :HoneCtrlRestart "Mouse Tweaks" "%MOUOF%"
+call :AssistantXCtrlRestart "Mouse Tweaks" "%MOUOF%"
 Mode 130,45
 goto tweaks
 
 :DisableHDCP
 for /f %%a in ('reg query "HKLM\System\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}" /t REG_SZ /s /e /f "NVIDIA" ^| findstr "HKEY"') do (
 	if "%HDCOF%" == "%COL%[91mOFF" (
-		reg add "HKCU\Software\Hone" /v HDCTweaks /f
+		reg add "HKCU\Software\AssistantX" /v HDCTweaks /f
 		reg add "%%a" /v "RMHdcpKeyglobZero" /t REG_DWORD /d "1" /f
 	) else (
-		reg delete "HKCU\Software\Hone" /v HDCTweaks /f
+		reg delete "HKCU\Software\AssistantX" /v HDCTweaks /f
 		reg add "%%a" /v "RMHdcpKeyglobZero" /t REG_DWORD /d "0" /f
 	)
 ) >nul 2>&1
@@ -1074,30 +1074,30 @@ goto Tweaks
 
 :ProfileInspector
 if "%NPIOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v NpiTweaks /f
-	rmdir /S /Q "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\"
-	curl -g -L -# -o %SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector.zip "https://github.com/Orbmu2k/nvidiaProfileInspector/releases/latest/download/nvidiaProfileInspector.zip"
-	powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector.zip' -DestinationPath '%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\'
-	del /F /Q "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector.zip"
-	curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\Latency_and_Performances_Settings_by_Hone_Team2.nip" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Latency_and_Performances_Settings_by_Hone_Team2.nip"
-	cd "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\"
-	nvidiaProfileInspector.exe "Latency_and_Performances_Settings_by_Hone_Team2.nip"
+	reg add "HKCU\Software\AssistantX" /v NpiTweaks /f
+	rmdir /S /Q "%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector\"
+	curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector.zip "https://github.com/Orbmu2k/nvidiaProfileInspector/releases/latest/download/nvidiaProfileInspector.zip"
+	powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector.zip' -DestinationPath '%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector\'
+	del /F /Q "%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector.zip"
+	curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector\Latency_and_Performances_Settings_by_AssistantX_Team2.nip" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Latency_and_Performances_Settings_by_AssistantX_Team2.nip"
+	cd "%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector\"
+	nvidiaProfileInspector.exe "Latency_and_Performances_Settings_by_AssistantX_Team2.nip"
 ) >nul 2>&1 else (
 	rem https://github.com/Orbmu2k/nvidiaProfileInspector/releases/latest/download/nvidiaProfileInspector.zip
-	reg delete "HKCU\Software\Hone" /v NpiTweaks /f
-	rmdir /S /Q "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\"
-	curl -g -L -# -o %SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector.zip "https://github.com/Orbmu2k/nvidiaProfileInspector/releases/latest/download/nvidiaProfileInspector.zip"
-	powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector.zip' -DestinationPath '%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\'
-	del /F /Q "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector.zip"
-	curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\Base_Profile.nip" "https://raw.githubusercontent.com/auraside/HoneCtrl/main/Files/Base_Profile.nip"
-	cd "%SYSTEMDRIVE%\Hone\Resources\nvidiaProfileInspector\"
+	reg delete "HKCU\Software\AssistantX" /v NpiTweaks /f
+	rmdir /S /Q "%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector\"
+	curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector.zip "https://github.com/Orbmu2k/nvidiaProfileInspector/releases/latest/download/nvidiaProfileInspector.zip"
+	powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector.zip' -DestinationPath '%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector\'
+	del /F /Q "%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector.zip"
+	curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector\Base_Profile.nip" "https://raw.githubusercontent.com/auraside/AssistantXCtrl/main/Files/Base_Profile.nip"
+	cd "%SYSTEMDRIVE%\AssistantX\Resources\nvidiaProfileInspector\"
 	nvidiaProfileInspector.exe "Base_Profile.nip"
 ) >nul 2>&1
 goto Tweaks
 
 :NVTelemetry
 if "%NVTOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v NVTTweaks /f
+	reg add "HKCU\Software\AssistantX" /v NVTTweaks /f
 	reg add "HKLM\SOFTWARE\NVIDIA Corporation\NvControlPanel2\Client" /v "OptInOrOutPreference" /t REG_DWORD /d 0 /f
 	reg add "HKLM\SOFTWARE\NVIDIA Corporation\Global\FTS" /v "EnableRID44231" /t REG_DWORD /d 0 /f
 	reg add "HKLM\SOFTWARE\NVIDIA Corporation\Global\FTS" /v "EnableRID64640" /t REG_DWORD /d 0 /f
@@ -1108,7 +1108,7 @@ if "%NVTOF%" == "%COL%[91mOFF" (
 	schtasks /change /disable /tn "NvTmRep_CrashReport3_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}"
 	schtasks /change /disable /tn "NvTmRep_CrashReport4_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}"
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /f
+	reg delete "HKCU\Software\AssistantX" /f
 	reg delete "HKLM\SOFTWARE\NVIDIA Corporation\NvControlPanel2\Client" /v "OptInOrOutPreference" /f
 	reg delete "HKLM\SOFTWARE\NVIDIA Corporation\Global\FTS" /v "EnableRID44231" /f
 	reg delete "HKLM\SOFTWARE\NVIDIA Corporation\Global\FTS" /v "EnableRID64640" /f
@@ -1122,7 +1122,7 @@ goto tweaks
 
 :NvidiaTweaks
 if "%NVIOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v "NvidiaTweaks" /f
+	reg add "HKCU\Software\AssistantX" /v "NvidiaTweaks" /f
 	rem Nvidia Reg
 	reg add "HKCU\Software\NVIDIA Corporation\Global\NVTweak\Devices\509901423-0\Color" /v "NvCplUseColorCorrection" /t Reg_DWORD /d "0" /f
 	reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v "PlatformSupportMiracast" /t Reg_DWORD /d "0" /f
@@ -1141,7 +1141,7 @@ if "%NVIOF%" == "%COL%[91mOFF" (
 	rem Silk Smoothness Option
 	reg add "HKLM\SYSTEM\CurrentControlSet\Services\nvlddmkm\FTS" /v "EnableRID61684" /t REG_DWORD /d "1" /f
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v "NvidiaTweaks" /f
+	reg delete "HKCU\Software\AssistantX" /v "NvidiaTweaks" /f
 	rem Nvidia Reg
 	reg delete "HKCU\Software\NVIDIA Corporation\Global\NVTweak\Devices\509901423-0\Color" /v "NvCplUseColorCorrection" /f
 	reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v "PlatformSupportMiracast" /t Reg_DWORD /d "1" /f
@@ -1166,7 +1166,7 @@ goto Tweaks
 
 :Mitigations
 if "%MITOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v MitigationsTweaks /f
+	reg add "HKCU\Software\AssistantX" /v MitigationsTweaks /f
 	REM Turn Core Isolation Memory Integrity OFF
 	reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /t REG_DWORD /d "0" /f
 	REM Disable SEHOP
@@ -1186,7 +1186,7 @@ if "%MITOF%" == "%COL%[91mOFF" (
 	REM Disable NTFS/ReFS and FS Mitigations
 	reg add "HKLM\System\CurrentControlSet\Control\Session Manager" /v "ProtectionMode" /t Reg_DWORD /d "0" /f
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v MitigationsTweaks /f
+	reg delete "HKCU\Software\AssistantX" /v MitigationsTweaks /f
 	REM Turn Core Isolation Memory Integrity ON
 	reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /t REG_DWORD /d "1" /f
 	REM Enable SEHOP
@@ -1209,13 +1209,13 @@ if "%MITOF%" == "%COL%[91mOFF" (
 goto Tweaks
 
 :TCPIP
-Reg query "HKCU\Software\Hone" /v "WifiDisclaimer" >nul 2>&1 && goto TCPIP2
+Reg query "HKCU\Software\AssistantX" /v "WifiDisclaimer" >nul 2>&1 && goto TCPIP2
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
-echo                                        %COL%[90m HoneCtrl is a free and open-source desktop utility
+echo                                        %COL%[90m AssistantXCtrl is a free and open-source desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -1223,7 +1223,7 @@ echo.
 echo %COL%[91m  WARNING:
 echo %COL%[91m  This tweak is for Ethernet users only, if you're on Wi-Fi, do not run this tweak.
 echo.
-echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/hone
+echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/AssistantX
 echo.
 echo   %COL%[37mPlease enter "I understand" without quotes to continue:
 echo.
@@ -1231,10 +1231,10 @@ echo.
 echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!" neq "i understand" goto Tweaks
-Reg add "HKCU\Software\Hone" /v "WifiDisclaimer" /f >nul 2>&1
+Reg add "HKCU\Software\AssistantX" /v "WifiDisclaimer" /f >nul 2>&1
 :TCPIP2
 if "%TCPOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v "TCPIP" /f
+	reg add "HKCU\Software\AssistantX" /v "TCPIP" /f
 	powershell -NoProfile -NonInteractive -Command ^
 	Enable-NetAdapterQos -Name "*";^
 	Disable-NetAdapterPowerManagement -Name "*";^
@@ -1273,7 +1273,7 @@ if "%TCPOF%" == "%COL%[91mOFF" (
 		reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\%%i" /v "DeadGWDetectDefault" /d "1" /t REG_DWORD /f
 	)
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v "TCPIP" /f
+	reg delete "HKCU\Software\AssistantX" /v "TCPIP" /f
 	powershell -NoProfile -NonInteractive -Command ^
 	Set-NetTCPSetting -SettingName "*" -InitialCongestionWindow 4 -ErrorAction SilentlyContinue
 	reg delete "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v "TcpMaxConnectRetransmissions" /f
@@ -1312,13 +1312,13 @@ start /B cmd /c "ipconfig /release & ipconfig /renew" >nul 2>&1
 goto Tweaks
 
 :NIC
-Reg query "HKCU\Software\Hone" /v "Wifiadvancedtv" >nul 2>&1 && goto NIC2
+Reg query "HKCU\Software\AssistantX" /v "Wifiadvancedtv" >nul 2>&1 && goto NIC2
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
-echo                                        %COL%[90m HoneCtrl is a free and open-source desktop utility
+echo                                        %COL%[90m AssistantXCtrl is a free and open-source desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -1326,7 +1326,7 @@ echo.
 echo %COL%[91m  WARNING:
 echo %COL%[91m  This tweak is for ethernet users only, if you're on Wi-Fi, do not run this tweak.
 echo.
-echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/hone
+echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/AssistantX
 echo.
 echo   %COL%[37mPlease enter "I understand" without quotes to continue:
 echo.
@@ -1334,9 +1334,9 @@ echo.
 echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!" neq "i understand" goto Tweaks
-Reg add "HKCU\Software\Hone" /v "Wifiadvancedtv" /f >nul 2>&1
+Reg add "HKCU\Software\AssistantX" /v "Wifiadvancedtv" /f >nul 2>&1
 :NIC2
-cd %SYSTEMDRIVE%\Hone\HoneRevert
+cd %SYSTEMDRIVE%\AssistantX\AssistantXRevert
 if "%NICOF%" neq "%COL%[91mOFF" (
 	reg import ognic1.reg
 	reg import ognic2.reg
@@ -1352,7 +1352,7 @@ set ognic=1
 for /f "tokens=*" %%f in ('wmic cpu get NumberOfCores /value ^| find "="') do set %%f
 for /f "tokens=3*" %%a in ('reg query "HKLM\Software\Microsoft\Windows NT\CurrentVersion\NetworkCards" /k /v /f "Description" /s /e ^| findstr /ri "REG_SZ"') do (
 	for /f %%g in ('reg query "HKLM\System\CurrentControlSet\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}" /s /f "%%b" /d ^| findstr /C:"HKEY"') do (
-		reg export "%%g" "%SYSTEMDRIVE%\Hone\HoneRevert\ognic!ognic!.reg" /y
+		reg export "%%g" "%SYSTEMDRIVE%\AssistantX\AssistantXRevert\ognic!ognic!.reg" /y
 		reg add "%%g" /v "MIMOPowerSaveMode" /t REG_SZ /d "3" /f
 		reg add "%%g" /v "PowerSavingMode" /t REG_SZ /d "0" /f
 		reg add "%%g" /v "EnableGreenEthernet" /t REG_SZ /d "0" /f
@@ -1375,7 +1375,7 @@ goto Tweaks
 
 :Netsh
 if "%NETOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v InternetTweaks /f
+	reg add "HKCU\Software\AssistantX" /v InternetTweaks /f
 	netsh int tcp set global dca=enabled
 	netsh int tcp set global netdma=enabled
 	netsh interface isatap set state disabled
@@ -1386,7 +1386,7 @@ if "%NETOF%" == "%COL%[91mOFF" (
 	netsh int tcp set supplemental template=custom icw=10
 	netsh interface ip set interface ethernet currenthoplimit=64
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v InternetTweaks /f
+	reg delete "HKCU\Software\AssistantX" /v InternetTweaks /f
 	netsh int tcp set supplemental Internet congestionprovider=default
 	netsh int tcp set global initialRto=3000
 	netsh int tcp set global rss=default
@@ -1400,7 +1400,7 @@ goto Tweaks
 
 :AllGPUTweaks
 if "%ALLOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v "AllGPUTweaks" /f
+	reg add "HKCU\Software\AssistantX" /v "AllGPUTweaks" /f
 	REM Enable Hardware Accelerated Scheduling
 	reg query "HKLM\System\CurrentControlSet\Control\GraphicsDrivers" /v "HwSchMode" && reg add "HKLM\System\CurrentControlSet\Control\GraphicsDrivers" /v "HwSchMode" /t Reg_DWORD /d "2" /f
 	REM Enable gdi hardware acceleration
@@ -1422,7 +1422,7 @@ if "%ALLOF%" == "%COL%[91mOFF" (
 	REM Disable Preemption
 	reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Scheduler" /v "EnablePreemption" /t Reg_DWORD /d "0" /f
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v "AllGPUTweaks" /f
+	reg delete "HKCU\Software\AssistantX" /v "AllGPUTweaks" /f
 	REM Enable Hardware Accelerated Scheduling
 	reg query "HKLM\System\CurrentControlSet\Control\GraphicsDrivers" /v "HwSchMode" && reg add "HKLM\System\CurrentControlSet\Control\GraphicsDrivers" /v "HwSchMode" /t Reg_DWORD /d "1" /f
 	REM Disable gdi hardware acceleration
@@ -1447,7 +1447,7 @@ if "%ALLOF%" == "%COL%[91mOFF" (
 goto Tweaks
 
 :Intel
-echo %DSSOF% | find "N/A" >nul && call :HoneCtrlError "You don't have an intel GPU" && goto Tweaks
+echo %DSSOF% | find "N/A" >nul && call :AssistantXCtrlError "You don't have an intel GPU" && goto Tweaks
 REM DedicatedSegmentSize in Intel iGPU
 if "%DSSOF%" == "%COL%[91mOFF" (
 	reg add "HKLM\SOFTWARE\Intel\GMM" /v "DedicatedSegmentSize" /t REG_DWORD /d "1024" /f
@@ -1457,7 +1457,7 @@ if "%DSSOF%" == "%COL%[91mOFF" (
 goto Tweaks
 
 :AMD
-echo %AMDOF% | find "N/A" >nul && call :HoneCtrlError "You don't have an AMD GPU" && goto Tweaks
+echo %AMDOF% | find "N/A" >nul && call :AssistantXCtrlError "You don't have an AMD GPU" && goto Tweaks
 REM AMD Registry Location
 for /f %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}" /s /v "DriverDesc"^| findstr "HKEY AMD ATI"') do if /i "%%i" neq "DriverDesc" (set "REGPATH_AMD=%%i")
 REM AMD Tweaks
@@ -1502,45 +1502,45 @@ reg add "%REGPATH_AMD%\DAL2_DATA__2_0\DisplayPath_4\EDID_D109_78E9\Option" /v "P
 goto Tweaks
 
 :AudioLatency
-cd %SYSTEMDRIVE%\Hone\Resources
+cd %SYSTEMDRIVE%\AssistantX\Resources
 if "%AUDOF%" == "%COL%[91mOFF" (
 	if not exist nssm.exe (
-		curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\nssm.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/nssm.exe"
-		curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\REAL.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/REAL.exe"
-		nssm install HoneAudio "%SYSTEMDRIVE%\Hone\Resources\REAL.exe"
-		nssm set HoneAudio DisplayName Hone Audio Latency Reducer Service
-		nssm set HoneAudio Description Reduces Audio Latency
-		nssm set HoneAudio Start SERVICE_AUTO_START
-		nssm set HoneAudio AppAffinity 1
+		curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\nssm.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/nssm.exe"
+		curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\REAL.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/REAL.exe"
+		nssm install AssistantXAudio "%SYSTEMDRIVE%\AssistantX\Resources\REAL.exe"
+		nssm set AssistantXAudio DisplayName AssistantX Audio Latency Reducer Service
+		nssm set AssistantXAudio Description Reduces Audio Latency
+		nssm set AssistantXAudio Start SERVICE_AUTO_START
+		nssm set AssistantXAudio AppAffinity 1
 	)
-nssm set HoneAudio start SERVICE_AUTO_START
-nssm start HoneAudio
+nssm set AssistantXAudio start SERVICE_AUTO_START
+nssm start AssistantXAudio
 ) >nul 2>&1 else (
-nssm set HoneAudio start SERVICE_DISABLED
-nssm stop HoneAudio
+nssm set AssistantXAudio start SERVICE_DISABLED
+nssm stop AssistantXAudio
 ) >nul 2>&1
 goto Tweaks
 
 :Cleaner
 cls
-rmdir /S /Q "%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd\" >nul 2>&1
-del /F /Q "%SYSTEMDRIVE%\Hone\Resources\AdwCleaner.exe" >nul 2>&1
-del /F /Q "%SYSTEMDRIVE%\Hone\Resources\EmptyStandbyList.exe" >nul 2>&1
-curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\EmptyStandbyList.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/EmptyStandbyList.exe"
-curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd.zip" "https://www.uwe-sieber.de/files/DeviceCleanupCmd.zip"
-curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\AdwCleaner.exe" "https://adwcleaner.malwarebytes.com/adwcleaner?channel=release"
-powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd.zip' -DestinationPath '%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd\'
-del /F /Q "%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd.zip" >nul 2>&1
+rmdir /S /Q "%SYSTEMDRIVE%\AssistantX\Resources\DeviceCleanupCmd\" >nul 2>&1
+del /F /Q "%SYSTEMDRIVE%\AssistantX\Resources\AdwCleaner.exe" >nul 2>&1
+del /F /Q "%SYSTEMDRIVE%\AssistantX\Resources\EmptyStandbyList.exe" >nul 2>&1
+curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\EmptyStandbyList.exe" "https://github.com/ALFiX01/AssistantX/raw/main/Files/EmptyStandbyList.exe"
+curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\DeviceCleanupCmd.zip" "https://www.uwe-sieber.de/files/DeviceCleanupCmd.zip"
+curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\AdwCleaner.exe" "https://adwcleaner.malwarebytes.com/adwcleaner?channel=release"
+powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\AssistantX\Resources\DeviceCleanupCmd.zip' -DestinationPath '%SYSTEMDRIVE%\AssistantX\Resources\DeviceCleanupCmd\'
+del /F /Q "%SYSTEMDRIVE%\AssistantX\Resources\DeviceCleanupCmd.zip" >nul 2>&1
 del /Q %LOCALAPPDATA%\Microsoft\Windows\INetCache\IE\*.* >nul 2>&1
 del /Q "%SYSTEMROOT%\Downloaded Program Files\*.*" >nul 2>&1
 rd /s /q %SYSTEMDRIVE%\$Recycle.bin >nul 2>&1
 del /Q %TEMP%\*.* >nul 2>&1
 del /Q %SYSTEMROOT%\Temp\*.* >nul 2>&1
 del /Q %SYSTEMROOT%\Prefetch\*.* >nul 2>&1
-cd %SYSTEMDRIVE%\Hone\Resources >nul 2>&1
+cd %SYSTEMDRIVE%\AssistantX\Resources >nul 2>&1
 AdwCleaner.exe /eula /clean /noreboot
 for %%g in (workingsets modifiedpagelist standbylist priority0standbylist) do EmptyStandbyList.exe %%g
-cd "%SYSTEMDRIVE%\Hone\Resources\DeviceCleanupCmd\x64" >nul 2>&1
+cd "%SYSTEMDRIVE%\AssistantX\Resources\DeviceCleanupCmd\x64" >nul 2>&1
 DeviceCleanupCmd.exe *
 goto tweaks
 
@@ -1603,7 +1603,7 @@ goto tweaks
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo.
 echo.
@@ -1639,19 +1639,19 @@ if "%choice%"=="2" goto MainMenu
 if "%choice%"=="3" exit /b
 
 :Minecraft
-if not exist "%APPDATA%\.minecraft\" call:HoneCtrlError "Can't find your Minecraft installation." & goto GameSettings
+if not exist "%APPDATA%\.minecraft\" call:AssistantXCtrlError "Can't find your Minecraft installation." & goto GameSettings
 cls
 echo.
 echo.
 echo.
 echo.
-echo                                                                                          %COL%[33m##      ##
-echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                          %COL%[33m##      ##
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ## 
 echo.
 echo.
 echo.
@@ -1921,13 +1921,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                                          %COL%[33m##      ##
-echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                          %COL%[33m##      ##
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ## 
 echo.
 echo.
 echo.
@@ -1943,7 +1943,7 @@ echo.
 %SYSTEMROOT%\System32\choice.exe /c:B /n /m "%DEL%                                                               >:"
 goto GameSettings
 
-:HoneRenders
+:AssistantXRenders
 REM Detect encoder for obs, blur, and ffmpeg settings
 for /F "tokens=*" %%n in ('WMIC path Win32_VideoController get Name ^| findstr "NVIDIA"') do set GPU_NAME=%%n
 echo %GPU_NAME% | find "NVIDIA" && set encoder=NVENC
@@ -1961,13 +1961,13 @@ goto done
 cls
 echo.
 echo.
-echo                                                                                          %COL%[33m##      ##
-echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                          %COL%[33m##      ##
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ## 
 echo.
 echo                                                           %COL%[94m%COL%[4mOBS Settings%COL%[0m
 echo.
@@ -1995,7 +1995,7 @@ if /i "%choice%"=="5" goto ProjectSettings
 if /i "%choice%"=="6" goto RenderSettings
 if /i "%choice%"=="B" goto MainMenu
 if /i "%choice%"=="X" exit /b
-goto HoneRenders
+goto AssistantXRenders
 
 :OBSInstall
 REM Delete old OBS
@@ -2014,7 +2014,7 @@ goto :eof
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo              %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Quality                        %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Optimal                        %COL%[96m[ %COL%[37m3 %COL%[96m]%COL%[37m Performance
 echo              %COL%[90mSettings for the best                %COL%[90mThe best for performance             %COL%[90mSettings for the best
@@ -2047,7 +2047,7 @@ set /p choice="%DEL%                                        %COL%[37mSelect a co
 if /i "%choice%"=="1" goto Quality
 if /i "%choice%"=="2" goto Optimal
 if /i "%choice%"=="3" goto Performance
-if /i "%choice%"=="B" goto HoneRenders
+if /i "%choice%"=="B" goto AssistantXRenders
 if /i "%choice%"=="X" goto exit /b
 goto recording
 
@@ -2190,7 +2190,7 @@ if %encoder% == CPU (
 )
 move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
 move /Y "%TEMP%\RecordEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto HoneRenders
+goto AssistantXRenders
 
 :Optimal
 if not exist "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit" call:OBSInstall
@@ -2330,7 +2330,7 @@ if %encoder% == CPU (
 )
 move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
 move /Y "%TEMP%\RecordEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto HoneRenders
+goto AssistantXRenders
 
 :Performance
 if not exist "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit" call:OBSInstall
@@ -2470,14 +2470,14 @@ if %encoder% == CPU (
 )
 move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
 move /Y "%TEMP%\RecordEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto HoneRenders
+goto AssistantXRenders
 
 
 :Streaming
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo                              %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Quality                                        %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Performance
 echo                              %COL%[90mSettings for the best                                %COL%[90mSettings for the best
@@ -2509,7 +2509,7 @@ echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" goto Quality
 if /i "%choice%"=="2" goto Performance
-if /i "%choice%"=="B" goto HoneRenders
+if /i "%choice%"=="B" goto AssistantXRenders
 if /i "%choice%"=="X" goto exit /b
 goto Streaming
 
@@ -2653,7 +2653,7 @@ if %encoder% == CPU (
 )
 move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
 move /Y "%TEMP%\StreamEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto HoneRenders
+goto AssistantXRenders
 
 
 :Performance
@@ -2796,7 +2796,7 @@ if %encoder% == CPU (
 )
 move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
 move /Y "%TEMP%\StreamEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto HoneRenders
+goto AssistantXRenders
 
 
 :upscale
@@ -2804,7 +2804,7 @@ where /q ffmpeg.exe || if not exist %SYSTEMDRIVE%\ffmpeg call :ffmpeginstall
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo                            %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m 4k                                             %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m 8k
 echo                            %COL%[90mModify the scale of a video                          %COL%[90mModify the scale of a video
@@ -2836,7 +2836,7 @@ echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" goto 4k
 if /i "%choice%"=="2" goto 8k
-if /i "%choice%"=="B" goto HoneRenders
+if /i "%choice%"=="B" goto AssistantXRenders
 if /i "%choice%"=="X" exit /b
 goto upscale
 
@@ -2909,7 +2909,7 @@ where /q ffmpeg.exe || if not exist %SYSTEMDRIVE%\ffmpeg call :ffmpeginstall
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo                         %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Heavy                                          %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Light
 echo                         %COL%[90mCompress a video                     	 	     %COL%[90mCompress a video
@@ -2941,7 +2941,7 @@ echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" goto heavy
 if /i "%choice%"=="2" goto light
-if /i "%choice%"=="B" goto HoneRenders
+if /i "%choice%"=="B" goto AssistantXRenders
 if /i "%choice%"=="X" exit /b
 goto compress
 
@@ -2980,7 +2980,7 @@ set /p "file= Print the path of the file you want use in vegas or drag it in (re
 	) || (
 		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg.exe -i "%file%" -c:v libx264 -preset superfast -crf 23 -tune fastdecode -c:a copy "%PUBLIC%\Desktop\previewlag.mp4" -y
 	)
-goto HoneRenders
+goto AssistantXRenders
 
 :ffmpeginstall
 cls
@@ -3002,7 +3002,7 @@ goto :eof
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo                    	     %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Accurate                                   %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Smooth
 echo                     	     %COL%[90mAutomated Blur settings                          %COL%[90mAutomated Blur settings
@@ -3034,7 +3034,7 @@ echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" goto Accurate
 if /i "%choice%"=="2" goto Smooth
-if /i "%choice%"=="B" goto HoneRenders
+if /i "%choice%"=="B" goto AssistantXRenders
 if /i "%choice%"=="X" exit /b
 goto FPSGames
 
@@ -3042,7 +3042,7 @@ goto FPSGames
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo					%COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m 60-120FPS                                   %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m 240FPS+
 echo					%COL%[90mAutomated Blur settings				  %COL%[90mAutomated Blur settings
@@ -3081,8 +3081,8 @@ goto Accurate
 :Accurate60120
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Nvidia/FPSAccurate60Nvidia.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60Nvidia.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Nvidia/FPSAccurate60Nvidia.cfg"
 ) else (
 set config=FPSAccurate60Nvidia.cfg
 goto skip
@@ -3090,8 +3090,8 @@ goto skip
 )
 
 if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60AMD.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60AMD.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Amd/FPSAccurate60AMD.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60AMD.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60AMD.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Amd/FPSAccurate60AMD.cfg"
 ) else (
 set config=FPSAccurate60AMD.cfg
 goto skip
@@ -3099,8 +3099,8 @@ goto skip
 )
 
 if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate60Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Intel/FPSAccurate60Intel.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60Intel.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Intel/FPSAccurate60Intel.cfg"
 ) else (
 set config=FPSAccurate60Intel.cfg
 goto skip
@@ -3110,8 +3110,8 @@ goto skip
 :Accurate240
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Nvidia/FPSAccurate240Nvidia.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240Nvidia.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Nvidia/FPSAccurate240Nvidia.cfg"
 ) else (
 set config=FPSAccurate240Nvidia.cfg
 goto skip
@@ -3119,8 +3119,8 @@ goto skip
 )
 
 if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240AMD.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240AMD.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Amd/FPSAccurate240Amd.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240AMD.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240AMD.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Amd/FPSAccurate240Amd.cfg"
 ) else (
 set config=FPSAccurate240AMD.cfg
 goto skip
@@ -3128,8 +3128,8 @@ goto skip
 )
 
 if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSAccurate240Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Intel/FPSAccurate240Intel.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240Intel.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Intel/FPSAccurate240Intel.cfg"
 ) else (
 set config=FPSAccurate240Intel.cfg
 goto skip
@@ -3139,8 +3139,8 @@ goto skip
 :Smooth
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothNvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothNvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Nvidia/FPSSmoothNvidia.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothNvidia.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothNvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Nvidia/FPSSmoothNvidia.cfg"
 ) else (
 set config=FPSSmoothNvidia.cfg
 goto skip
@@ -3148,8 +3148,8 @@ goto skip
 )
 
 if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothAmd.cfg.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothAmd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Amd/FPSSmoothAmd.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothAmd.cfg.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothAmd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Amd/FPSSmoothAmd.cfg"
 ) else (
 set config=FPSSmoothAmd.cfg.cfg
 goto skip
@@ -3157,8 +3157,8 @@ goto skip
 )
 
 if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothIntel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\FPSSmoothIntel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Intel/FPSSmoothIntel.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothIntel.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothIntel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Intel/FPSSmoothIntel.cfg"
 ) else (
 set config=FPSSmoothIntel.cfg
 goto skip
@@ -3169,7 +3169,7 @@ goto skip
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo.
 echo.
@@ -3210,8 +3210,8 @@ goto MinecraftBlur
 :MinecraftAny
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyNvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyNvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Nvidia/MinecraftAnyNvidia.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyNvidia.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyNvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Nvidia/MinecraftAnyNvidia.cfg"
 ) else (
 set config=MinecraftAnyNvidia.cfg
 goto skip
@@ -3219,8 +3219,8 @@ goto skip
 )
 
 if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyAmd.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyAmd.cfg" "hhttps://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Amd/MinecraftAnyAmd.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyAmd.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyAmd.cfg" "hhttps://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Amd/MinecraftAnyAmd.cfg"
 ) else (
 set config=MinecraftAnyAmd.cfg
 goto skip
@@ -3228,8 +3228,8 @@ goto skip
 )
 
 if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyIntel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\MinecraftAnyIntel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Intel/MinecraftAnyIntel.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyIntel.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyIntel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Intel/MinecraftAnyIntel.cfg"
 ) else (
 set config=MinecraftAnyIntel.cfg
 goto skip
@@ -3239,8 +3239,8 @@ goto skip
 :Minecraft240360
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Nvidia/Minecraft240Nvidia.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Nvidia.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Nvidia/Minecraft240Nvidia.cfg"
 ) else (
 set config=Minecraft240Nvidia.cfg
 goto skip
@@ -3248,8 +3248,8 @@ goto skip
 )
 
 if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Amd.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Amd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Amd/Minecraft240Amd.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Amd.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Amd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Amd/Minecraft240Amd.cfg"
 ) else (
 set config=Minecraft240Amd.cfg
 goto skip
@@ -3257,8 +3257,8 @@ goto skip
 )
 
 if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft240Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Intel/Minecraft240Intel.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Intel.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Intel/Minecraft240Intel.cfg"
 ) else (
 set config=Minecraft240Intel.cfg
 goto skip
@@ -3268,8 +3268,8 @@ goto skip
 :Minecraft480
 if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
 if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Nvidia/Minecraft480Nvidia.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Nvidia.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Nvidia/Minecraft480Nvidia.cfg"
 ) else (
 set config=Minecraft480Nvidia.cfg
 goto skip
@@ -3277,8 +3277,8 @@ goto skip
 )
 
 if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Amd.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Amd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Amd/Minecraft480Amd.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Amd.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Amd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Amd/Minecraft480Amd.cfg"
 ) else (
 set config=Minecraft480Amd.cfg
 goto skip
@@ -3286,8 +3286,8 @@ goto skip
 )
 
 if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\Hone\Renders\Minecraft480Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Intel/Minecraft480Intel.cfg"
+if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Intel.cfg" ( 
+curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Intel/Minecraft480Intel.cfg"
 ) else (
 set config=Minecraft480Intel.cfg
 goto skip
@@ -3299,15 +3299,15 @@ cls
 echo The path needs to be in between " " and have a simple name.
 echo.
 set /p "file= Print the path of the file you want blurred into this window or drag it in >> "
-"%SYSTEMDRIVE%\program files (x86)\blur\blur.exe" -i %file% -c "%SYSTEMDRIVE%\Hone\Renders\%config%" -n -p -v
-goto HoneRenders
+"%SYSTEMDRIVE%\program files (x86)\blur\blur.exe" -i %file% -c "%SYSTEMDRIVE%\AssistantX\Renders\%config%" -n -p -v
+goto AssistantXRenders
 
 :NLEInstall
 cls
 echo.
 echo.
-call :HoneTitle
-echo                       %COL%[90mUnfortunately, Hone cannot supply unofficial distributions of software. If you
+call :AssistantXTitle
+echo                       %COL%[90mUnfortunately, AssistantX cannot supply unofficial distributions of software. If you
 echo                       %COL%[90mcannot buy Vegas Pro, an alternative that we recommend is a freemium video editing software
 echo                       %COL%[90mcalled 'DaVinci Resolve' (note: this program does not contain render settings)^^!
 echo.
@@ -3338,7 +3338,7 @@ echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" start https://www.vegascreativesoftware.com/us/vegas-pro/
 if /i "%choice%"=="2" start https://www.blackmagicdesign.com/products/davinciresolve
-if /i "%choice%"=="B" goto HoneRenders
+if /i "%choice%"=="B" goto AssistantXRenders
 if /i "%choice%"=="X" exit /b
 goto NLEInstall
 
@@ -3356,14 +3356,14 @@ if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 17.0" (
 	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
 ) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 19" (
 	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
-) >nul 2>&1 else echo Vegas Pro 17-19 isn't installed... & pause & goto HoneRenders
+) >nul 2>&1 else echo Vegas Pro 17-19 isn't installed... & pause & goto AssistantXRenders
 taskkill /f /im Vegas170.exe >nul 2>&1
 taskkill /f /im Vegas180.exe >nul 2>&1
 taskkill /f /im Vegas190.exe >nul 2>&1
-curl -g -k -L -# -o "%TEMP%\Hone.veg" "https://github.com/ALFiX01/AssistantX/raw/main/Files/Settings/Hone.veg"
+curl -g -k -L -# -o "%TEMP%\AssistantX.veg" "https://github.com/ALFiX01/AssistantX/raw/main/Files/Settings/AssistantX.veg"
 reg import "%TEMP%\project.reg" >nul 2>&1
-start "" /D "%TEMP%\Hone.veg" >nul 2>&1
-goto HoneRenders
+start "" /D "%TEMP%\AssistantX.veg" >nul 2>&1
+goto AssistantXRenders
 
 :RenderSettings
 cls
@@ -3374,19 +3374,19 @@ taskkill /f /im Vegas170.exe >nul 2>&1
 taskkill /f /im Vegas180.exe >nul 2>&1
 taskkill /f /im Vegas190.exe >nul 2>&1
 mkdir "%APPDATA%\VEGAS\Render Templates\avc" >nul 2>&1
-curl -g -k -L -# -o "%APPDATA%\VEGAS\Render Templates\avc\Hone.sft2" "https://cdn.discordapp.com/attachments/934698794933702666/987166340714471514/Hone.sft2"
-goto HoneRenders
+curl -g -k -L -# -o "%APPDATA%\VEGAS\Render Templates\avc\AssistantX.sft2" "https://cdn.discordapp.com/attachments/934698794933702666/987166340714471514/AssistantX.sft2"
+goto AssistantXRenders
 :NoVegas
 echo Vegas Pro 17-19 isn't installed...
 pause
-goto HoneRenders
+goto AssistantXRenders
 
 :AdvancedTW
-reg query "HKCU\Software\Hone" /v "advancedtv" >nul 2>&1 && goto Advanced
+reg query "HKCU\Software\AssistantX" /v "advancedtv" >nul 2>&1 && goto Advanced
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
 echo                                        %COL%[90m     made to improve your day-to-day productivity
@@ -3408,7 +3408,7 @@ echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!"=="B" goto TweaksPG3
 if /i "!input!" neq "i agree" goto advancedtv
-reg add "HKCU\Software\Hone" /v "advancedtv" /f >nul 2>&1
+reg add "HKCU\Software\AssistantX" /v "advancedtv" /f >nul 2>&1
 
 :Advanced
 REM for /f "tokens=2 delims==" %%a in ('wmic path Win32_Battery Get BatteryStatus /value ^| findstr "BatteryStatus"') do set status=%%a
@@ -3422,16 +3422,16 @@ for %%i in (DSCOF AUTOF DRIOF BCDOF NONOF CS0OF TOFOF PS0OF IDLOF CONG DPSOF) do
 	rem DSCP Tweaks
 	reg query "HKLM\Software\Policies\Microsoft\Windows\QoS\javaw" || set "DSCOF=%COL%[91mOFF"
 	rem AutoTuning Tweak
-	reg query "HKCU\Software\Hone" /v "TuningTweak" || set "AUTOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "TuningTweak" || set "AUTOF=%COL%[91mOFF"
 	rem Congestion Provider Tweak
-	reg query "HKCU\Software\Hone" /v "CongestionAdvancedON" || set "CONG=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "CongestionAdvancedON" || set "CONG=%COL%[91mOFF"
 	rem Disable USB Powersavings
-	reg query "HKCU\Software\Hone" /v "DUSBPowerSavings" || set "DPSOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "DUSBPowerSavings" || set "DPSOF=%COL%[91mOFF"
 	rem Nvidia Drivers
 	cd "%SYSTEMDRIVE%\Program Files\NVIDIA Corporation\NVSMI"
 	for /f "tokens=1 skip=1" %%a in ('nvidia-smi --query-gpu^=driver_version --format^=csv') do if "%%a" neq "528.24" set "DRIOF=%COL%[91mOFF"
 	rem BCDEDIT
-	reg query "HKCU\Software\Hone" /v "BcdEditTweaks" || set "BCDOF=%COL%[91mOFF"
+	reg query "HKCU\Software\AssistantX" /v "BcdEditTweaks" || set "BCDOF=%COL%[91mOFF"
 	rem NonBestEffortLimit Tweak
 	reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched" /v "NonBestEffortLimit" | find "0xa" || set "NONOF=%COL%[91mOFF"
 	rem CS0 Tweak
@@ -3452,7 +3452,7 @@ for %%i in (DSCOF AUTOF DRIOF BCDOF NONOF CS0OF TOFOF PS0OF IDLOF CONG DPSOF) do
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo                                                           %COL%[1;4;34mNetwork Tweaks%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m NonBestEffortLimit %NONOF%         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m AutoTuning %AUTOF%                 %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m DSCP Value %DSCOF%
@@ -3526,11 +3526,11 @@ goto Advanced
 
 :Autotuning
 if "%AUTOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v TuningTweak /f
+	reg add "HKCU\Software\AssistantX" /v TuningTweak /f
 	netsh int tcp set global autotuninglevel=disabled
 	netsh winsock set autotuning off
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v TuningTweak /f
+	reg delete "HKCU\Software\AssistantX" /v TuningTweak /f
 	netsh int tcp set global autotuninglevel=normal
 	netsh winsock set autotuning on
 ) >nul 2>&1
@@ -3577,13 +3577,13 @@ if "%DSCOF%" == "%COL%[91mOFF" (
 goto Advanced
 
 :Congestion
-Reg query "HKCU\Software\Hone" /v "WifiDisclaimer3" >nul 2>&1 && goto Congestion2
+Reg query "HKCU\Software\AssistantX" /v "WifiDisclaimer3" >nul 2>&1 && goto Congestion2
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
-echo                                        %COL%[90m HoneCtrl is a free and open-source desktop utility
+echo                                        %COL%[90m AssistantXCtrl is a free and open-source desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -3591,7 +3591,7 @@ echo.
 echo %COL%[91m  WARNING:
 echo %COL%[91m  This tweak is for Wi-Fi users only, if you're on Ethernet, do not run this tweak.
 echo.
-echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/hone
+echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/AssistantX
 echo.
 echo   %COL%[37mPlease enter "I understand" without quotes to continue:
 echo.
@@ -3599,13 +3599,13 @@ echo.
 echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!" neq "i understand" goto Tweaks
-Reg add "HKCU\Software\Hone" /v "WifiDisclaimer3" /f >nul 2>&1
+Reg add "HKCU\Software\AssistantX" /v "WifiDisclaimer3" /f >nul 2>&1
 :Congestion2
 if "%CONG%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v CongestionAdvancedON /f
+	reg add "HKCU\Software\AssistantX" /v CongestionAdvancedON /f
 	netsh int tcp set supplemental Internet congestionprovider=newreno
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v CongestionAdvancedON /f
+	reg delete "HKCU\Software\AssistantX" /v CongestionAdvancedON /f
 	netsh int tcp set supplemental Internet congestionprovider=default
 ) >nul 2>&1
 goto Advanced
@@ -3616,7 +3616,7 @@ if "%CS0OF%" == "%COL%[91mOFF" (
 ) >nul 2>&1 else (
 	reg add "HKLM\SYSTEM\ControlSet001\Control\Class\{4D36E968-E325-11CE-BFC1-08002BE10318}\0000" /v "AllowDeepCStates" /t REG_DWORD /d "1" /f
 ) >nul 2>&1
-call :HoneCtrlRestart "CStates" "%CS0OF%"
+call :AssistantXCtrlRestart "CStates" "%CS0OF%"
 Mode 130,45
 goto Advanced
 
@@ -3630,7 +3630,7 @@ if "%PS0OF%" == "%COL%[91mOFF" (
 		reg delete "%%i" /v "DisableDynamicPstate" /f
 	)
 ) >nul 2>&1
-call :HoneCtrlRestart "PStates 0" "%PS0OF%"
+call :AssistantXCtrlRestart "PStates 0" "%PS0OF%"
 Mode 130,45
 goto Advanced
 
@@ -3666,12 +3666,12 @@ echo Would you like to install?
 %SYSTEMROOT%\System32\choice.exe /c:YN /n /m "[Y] Yes  [N] No"
 if %errorlevel% == 2 goto Advanced
 cd "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-curl -LJ https://github.com/auraside/HoneCtrl/blob/main/Files/Driverinstall.bat?raw=true -o Driverinstall.bat 
+curl -LJ https://github.com/auraside/AssistantXCtrl/blob/main/Files/Driverinstall.bat?raw=true -o Driverinstall.bat 
 title Executing DDU...
-curl -g -L -# -o "%SYSTEMDRIVE%\Hone\Resources\DDU.zip" "https://github.com/auraside/HoneCtrl/raw/main/Files/DDU.zip"
-powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\Hone\Resources\DDU.zip' -DestinationPath '%SYSTEMDRIVE%\Hone\Resources\DDU\' >nul 2>&1
-del "%SYSTEMDRIVE%\Hone\Resources\DDU.zip"
-cd %SYSTEMDRIVE%\Hone\Resources\DDU
+curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\DDU.zip" "https://github.com/auraside/AssistantXCtrl/raw/main/Files/DDU.zip"
+powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\AssistantX\Resources\DDU.zip' -DestinationPath '%SYSTEMDRIVE%\AssistantX\Resources\DDU\' >nul 2>&1
+del "%SYSTEMDRIVE%\AssistantX\Resources\DDU.zip"
+cd %SYSTEMDRIVE%\AssistantX\Resources\DDU
 DDU.exe -silent -cleannvidia
 title Restart Confirmation
 cls
@@ -3693,7 +3693,7 @@ if /i "%choice%" == "y" (
 
 :BCDEdit
 if "%BCDOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v BcdEditTweaks /f
+	reg add "HKCU\Software\AssistantX" /v BcdEditTweaks /f
 	rem tscsyncpolicy
 	bcdedit /set tscsyncpolicy enhanced
 	rem Quick Boot
@@ -3733,7 +3733,7 @@ if "%BCDOF%" == "%COL%[91mOFF" (
 	bcdedit /set usephysicaldestination No
 	bcdedit /set usefirmwarepcisettings No 
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v "BcdEditTweaks" /f
+	reg delete "HKCU\Software\AssistantX" /v "BcdEditTweaks" /f
 	rem Better Input
 	bcdedit /deletevalue tscsyncpolicy
 	rem Quick Boot
@@ -3774,7 +3774,7 @@ goto Advanced
 
 :DUSBPowerSavings
 if "%DPSOF%" == "%COL%[91mOFF" (
-	reg add "HKCU\Software\Hone" /v DUSBPowerSavings /f
+	reg add "HKCU\Software\AssistantX" /v DUSBPowerSavings /f
 	for /f "tokens=*" %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Enum" /s /f "StorPort" ^| findstr "StorPort"') do reg add "%%i" /v "EnableIdlePowerManagement" /t REG_DWORD /d "0" /f
 	for /f "tokens=*" %%i in ('wmic PATH Win32_PnPEntity GET DeviceID ^| findstr "USB\VID_"') do (
 	reg add "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters" /v "EnhancedPowerManagementEnabled" /t REG_DWORD /d "0" /f
@@ -3786,7 +3786,7 @@ if "%DPSOF%" == "%COL%[91mOFF" (
 	reg add "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters" /v "D3ColdSupported" /t REG_DWORD /d "0" /f
 	)
 ) >nul 2>&1 else (
-	reg delete "HKCU\Software\Hone" /v DUSBPowerSavings /f
+	reg delete "HKCU\Software\AssistantX" /v DUSBPowerSavings /f
 	for /f "tokens=*" %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Enum" /s /f "StorPort" ^| findstr "StorPort"') do reg delete "%%i" /v "EnableIdlePowerManagement" /f
 	for /f "tokens=*" %%i in ('wmic PATH Win32_PnPEntity GET DeviceID ^| findstr "USB\VID_"') do (
 	reg delete "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters" /v "EnhancedPowerManagementEnabled" /f
@@ -3806,13 +3806,13 @@ echo.
 echo.
 echo.
 echo.
-echo                                                                                          %COL%[33m##      ##
-echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                          %COL%[33m##      ##
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ## 
 echo.
 echo.
 echo.
@@ -3853,13 +3853,13 @@ goto More
 cls
 echo.
 echo.
-echo                                                                                          %COL%[33m##      ##
-echo                                  %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                 %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                 %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                 %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                          %COL%[33m##      ##
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ## 
 echo.
 echo.
 echo  About
@@ -3879,9 +3879,9 @@ if "%choice%"=="1" goto More
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
-echo                                        %COL%[90m HoneCtrl is a free and open-source desktop utility
+echo                                        %COL%[90m AssistantXCtrl is a free and open-source desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -3896,7 +3896,7 @@ echo     %COL%[96m2.%COL%[37m If you don't know what a tweak is, do not use it a
 echo.
 echo     %COL%[96m3.%COL%[37m Even though we have an automatic restore point feature, we highly recommend making a manual restore point before running.
 echo.
-echo   For any questions and/or concerns, please join our discord: discord.gg/hone
+echo   For any questions and/or concerns, please join our discord: discord.gg/AssistantX
 echo.
 echo   Please enter "I agree" without quotes to continue:
 echo.
@@ -3952,11 +3952,11 @@ if "%choice%"=="1" goto More
 :Backup
 reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "SystemRestorePointCreationFrequency" /t REG_DWORD /d 0 /f >nul 2>&1
 powershell Enable-ComputerRestore -Drive 'C:\', 'D:\', 'E:\', 'F:\', 'G:\' >nul 2>&1
-powershell Checkpoint-Computer -Description 'Hone Restore Point' >nul 2>&1
+powershell Checkpoint-Computer -Description 'AssistantX Restore Point' >nul 2>&1
 for /F "tokens=2" %%i in ('date /t') do set date=%%i  >nul 2>&1
 set date1=%date:/=.%  >nul 2>&1
-md %SYSTEMDRIVE%\Hone\HoneRevert\%date1%  >nul 2>&1
-reg export HKCU %SYSTEMDRIVE%\Hone\HoneRevert\%date1%\HKLM.reg /y & reg export HKCU %SYSTEMDRIVE%\Hone\HoneRevert\%date1%\HKCU.reg /y >nul 2>&1
+md %SYSTEMDRIVE%\AssistantX\AssistantXRevert\%date1%  >nul 2>&1
+reg export HKCU %SYSTEMDRIVE%\AssistantX\AssistantXRevert\%date1%\HKLM.reg /y & reg export HKCU %SYSTEMDRIVE%\AssistantX\AssistantXRevert\%date1%\HKCU.reg /y >nul 2>&1
 cls
 goto :eof
 
@@ -3964,19 +3964,19 @@ goto :eof
 start https://discord.gg/J7wghdhKsx
 goto More
 
-echo                      ########   ##   ###
-echo                      ##         ##  ####
-echo                      ##  ####   ## ## ##
-echo                      ##    ##   ####  ##
-echo                      ########   ###   ##
+echo                       %COL%[33m########   ##   ###
+echo                       %COL%[33m##         ##  ####
+echo                       %COL%[33m##  ####   ## ## ##
+echo                       %COL%[33m##    ##   ####  ##
+echo                       %COL%[33m########   ###   ##
 echo.
-echo                                                                                               ##      ##
-echo                                       ####              ##         ##                   ##     ##    ##
-echo                                      ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                      ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                      ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                      ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                               ##      ##
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ## 
 
 :ColorText
 echo off
@@ -3985,7 +3985,7 @@ findstr /v /a:%1 /R "^$" "%~2" nul
 del "%~2" > nul
 goto :eof
 
-:HoneCtrlError
+:AssistantXCtrlError
 cls
 color 06
 echo.
@@ -4009,7 +4009,7 @@ goto :eof
 
 
 
-:HoneCtrlRestart
+:AssistantXCtrlRestart
 setlocal DisableDelayedExpansion
 if "%~2" == "%COL%[91mOFF" (set "ed=enable") else (set "ed=disable")
 start "Restart" cmd /V:ON /C @echo off
@@ -4043,7 +4043,7 @@ if /i "%choice%" == "y" (
 cls
 echo.
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m AUTO                 %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m MANUAL      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m RESET
 echo              %COL%[90mApply all recommended         %COL%[90mCustomize your experience      %COL%[90mReset all Aesthetics
@@ -4083,7 +4083,7 @@ goto Aesthetics
 :Auto
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo                                                               %COL%[1;4;34mAesthetics Manual%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Auto Transparency
@@ -4106,7 +4106,7 @@ if exist "%USERPROFILE%\Documents\systemtransparency.ini" del /Q "%USERPROFILE%\
 if exist "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Clear.exe" ( goto TransparencyAuto1 ) else ( goto TransparencyAuto11 ) >nul 2>&1
 :TransparencyAuto11
 cd "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-curl -g -LJ -# "https://github.com/auraside/HoneCtrl/raw/main/Files/Aesthetics/Clear.exe" -o "Clear.exe"
+curl -g -LJ -# "https://github.com/auraside/AssistantXCtrl/raw/main/Files/Aesthetics/Clear.exe" -o "Clear.exe"
 :TransparencyAuto1
 cd %USERPROFILE%\documents
 (
@@ -4138,13 +4138,13 @@ cls
 echo.
 echo.
 echo.
-echo                                                                                          ##      ##
-echo                                  ####              ##         ##                   ##     ##    ##
-echo                                 ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                 ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                 ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                 ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                          ##      ##
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ##
 echo.
 echo.
 echo.
@@ -4162,7 +4162,7 @@ goto Auto
 :Manual
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo                                                               %COL%[1;4;34mAesthetics Manual%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Transparency
@@ -4185,11 +4185,11 @@ if exist "%USERPROFILE%\Documents\systemtransparency.ini" del /Q "%USERPROFILE%\
 if exist "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Clear.exe" ( goto TransparencySetup1 ) else ( goto TransparencySetup11 ) >nul 2>&1
 :TransparencySetup11
 cd "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-curl -g -LJ -# "https://github.com/auraside/HoneCtrl/raw/main/Files/Aesthetics/Clear.exe" -o "Clear.exe"
+curl -g -LJ -# "https://github.com/auraside/AssistantXCtrl/raw/main/Files/Aesthetics/Clear.exe" -o "Clear.exe"
 :TransparencySetup1
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo Please select a transparency level, we recommend 200 or above (Lower = more transparent)
 echo.
@@ -4212,7 +4212,7 @@ goto TransparencySetup1
 :TransparencySetup2
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo Do you want the right click menu to be transparent?
 echo.
@@ -4230,7 +4230,7 @@ goto TransparencySetup2
 :TransparencySetup3
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo Do you want the Taskbar to be transparent?
 echo.
@@ -4247,7 +4247,7 @@ goto TransparencySetup3
 :TransparencySetup4
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo Do you want the Start Menu to be transparent?
 echo.
@@ -4264,7 +4264,7 @@ goto TransparencySetup4
 :TransparencySetup5
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo Do you want Explorer to be transparent?
 echo.
@@ -4281,7 +4281,7 @@ goto TransparencySetup5
 :TransparencySetup6
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo Do you want Firefox to be transparent?
 echo.
@@ -4298,7 +4298,7 @@ goto TransparencySetup6
 :TransparencySetup7
 cls
 echo.
-call :HoneTitle
+call :AssistantXTitle
 echo.
 echo Do you want Google Chrome to be transparent?
 echo.
@@ -4343,14 +4343,13 @@ cls
 echo.
 echo.
 echo.
-echo.
-echo                                                                                          ##      ##
-echo                                  ####              ##         ##                   ##     ##    ##
-echo                                 ##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                 ######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                 ##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                 ##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                          ##      ##
+echo                                                                                           %COL%[33m##      ##
+echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
+echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
+echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
+echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
+echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
+echo                                                                                           %COL%[33m##      ##
 echo.
 echo.
 echo.
