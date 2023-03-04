@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.2
+set local=0.2.1
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -250,7 +250,7 @@ echo                                                             %COL%[1;4;34mOt
 echo.
 echo              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m AIDA64                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m dfControl                    %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m qbittorrent
 echo.
-echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m WinRaR
+echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m WinRaR                     %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Uninstall Tool
 echo.
 echo.
 echo.
@@ -266,6 +266,7 @@ if /i "%choice%"=="2" call:AIDA64
 if /i "%choice%"=="3" call:dfControl
 if /i "%choice%"=="4" call:qbittorrent
 if /i "%choice%"=="5" call:WinRaR
+if /i "%choice%"=="6" call:UninstallTool
 if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto Files
 if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
@@ -312,7 +313,7 @@ start https://drive.google.com/file/d/1CCGGnt2M0hZAU6OnAv7HmixRk6DTJlcE/view?usp
 goto Files
 
 :AIDA64
-start https://drive.google.com/file/d/1Wl0QvHsdlll9Ltjz3Klyg1HAJW77j7oO/view?usp=sharing
+start https://drive.google.com/file/d/1kz7nfvacA6rwqNl8dxf5QhAF61EC6Qnf/view?usp=sharing
 goto Files
 
 :dfControl
@@ -320,11 +321,15 @@ start https://disk.yandex.ru/d/iCwXLAW_vJENEg
 goto Files
 
 :qbittorrent
-start https://drive.google.com/file/d/12GPGt7kZRp5xiaPUikt9SEc6t0zNxFLY/view?usp=sharing
+start https://drive.google.com/file/d/1LbjSYEij-Lspdj40Anqpo62DmXtGmYVB/view?usp=sharing
 goto Files
 
 :WinRaR
-start https://drive.google.com/file/d/1vZwKMKumJWj0Hy5leiJ1I8c3d1pYRdZK/view?usp=sharing
+start https://drive.google.com/file/d/1gskcAXypZJtJgb35SZmgdEmlHr_AKSEr/view?usp=sharing
+goto Files
+
+:UninstallTool
+start https://drive.google.com/file/d/1Vjw_VCjep4TnQO85ZV6cnIzTpHAfql82/view?usp=sharing
 goto Files
 
 :Comingsoon
