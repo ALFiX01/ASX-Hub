@@ -110,9 +110,9 @@ Even though we have an automatic restore point feature some users have issues wi
 
 ### Installation
 
-1. Download the latest HoneCtrl Version
+1. Download the latest AssistantX Version
    ```sh
-   https://github.com/auraside/HoneCtrl/releases/latest/download/HoneCtrl.Bat
+   https://github.com/ALFiX01/AssistantX/releases/download/0.3/AssistantX.bat
    ```
 2. Right click HoneCtrl.bat and run it as admin
 
@@ -128,23 +128,6 @@ HoneCtrl can be used on any PC running windows 10 and above.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
@@ -163,7 +146,7 @@ Distributed under the GNU AGPLv3  License. See `LICENSE.txt` for more informatio
 Join the discord and create a ticket,
 https://discord.gg/hone
 
-Project Link: [https://github.com/auraside/HoneCtrl](https://github.com/auraside/HoneCtrl)
+Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01/AssistantX)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -179,23 +162,4 @@ Project Link: [https://github.com/auraside/HoneCtrl](https://github.com/auraside
 * [Empty Standby List](https://wj32.org/wp/software/empty-standby-list/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/auraside/HoneCtrl.svg?style=for-the-badge
-[contributors-url]: https://github.com/auraside/HoneCtrl/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/auraside/HoneCtrl.svg?style=for-the-badge
-[forks-url]: https://github.com/auraside/HoneCtrl/network/members
-[stars-shield]: https://img.shields.io/github/stars/auraside/HoneCtrl.svg?style=for-the-badge
-[stars-url]: https://github.com/auraside/HoneCtrl/stargazers
-[issues-shield]: https://img.shields.io/github/issues/auraside/HoneCtrl.svg?style=for-the-badge
-[issues-url]: https://github.com/auraside/HoneCtrl/issues
-[license-shield]: https://img.shields.io/github/license/auraside/HoneCtrl.svg?style=for-the-badge
-[license-url]: https://github.com/auraside/HoneCtrl/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: https://user-images.githubusercontent.com/107450640/173981200-3be429ba-54b5-4be2-9a86-e190fb39c854.png
-
 
