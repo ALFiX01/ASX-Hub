@@ -9,43 +9,25 @@
 
 
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![GNU AGPLv3 License][license-shield]][license-url]
-
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/auraside/HoneCtrl">
-    <img src="https://user-images.githubusercontent.com/107450640/173981024-5ee33a72-9476-4c82-b78f-4acc4a09ae1a.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/ALFiX01/AssistantX">
+    <img src="https://cdn.discordapp.com/attachments/1032718953149108304/1081676090386436206/seo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">HoneCtrl</h3>
 
   <p align="center">
-    HoneCtrl is a free and open source desktop utility that aims to improve FPS, reduce input lag, and optimize network performance for video game titles and day-to-day productivity.
+    AssistantX is a free and open source desktop utility that aims to improve FPS, reduce input lag, and optimize network performance for video game titles and day-to-day productivity.
   <p align="center">
-    If you would like to support the hone project, please leave a review on our Trustpilot: https://www.trustpilot.com/review/hone.gg
     <br />
     <br />
-    <a href="https://github.com/auraside/HoneCtrl"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/auraside/HoneCtrl/issues">Report Bug</a>
+    <a href="https://github.com/ALFiX01/AssistantX/issues">Report Bug</a>
     ·
-    <a href="https://github.com/auraside/HoneCtrl/issues">Request Feature</a>
+    <a href="https://github.com/ALFiX01/AssistantX/issues">Request Feature</a>
   </p>
 </div>
 
