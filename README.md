@@ -16,7 +16,7 @@
     <img src="https://cdn.discordapp.com/attachments/1032718953149108304/1081676090386436206/seo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">HoneCtrl</h3>
+<h3 align="center">AssistantX</h3>
 
   <p align="center">
     AssistantX is a free and open source desktop utility that aims to improve FPS, reduce input lag, and optimize network performance for video game titles and day-to-day productivity.
@@ -83,7 +83,7 @@
 
 ## Getting Started
 
-To run the optimizer is easy, all you need to do is double click HoneCtrl.bat and run it as admin
+To run the optimizer is easy, all you need to do is double click AssistantX.bat and run it as admin
 
 ### Warning
 
@@ -96,7 +96,7 @@ Even though we have an automatic restore point feature some users have issues wi
    ```sh
    https://github.com/ALFiX01/AssistantX/releases/download/0.3/AssistantX.bat
    ```
-2. Right click HoneCtrl.bat and run it as admin
+2. Right click AssistantX.bat and run it as admin
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -106,7 +106,7 @@ Even though we have an automatic restore point feature some users have issues wi
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-HoneCtrl can be used on any PC running windows 10 and above.
+AssistantX can be used on any PC running windows 10 and above.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -126,7 +126,7 @@ Distributed under the GNU AGPLv3  License. See `LICENSE.txt` for more informatio
 ## Contact
 
 Join the discord and create a ticket,
-https://discord.gg/hone
+https://discord.gg/J7wghdhKsx
 
 Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01/AssistantX)
 
