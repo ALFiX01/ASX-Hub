@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.2.4
+set local=0.2.5
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -190,7 +190,6 @@ echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ### 
 echo                                                                                          %COL%[33m##      ## 
 echo.
 goto :eof
-
 :Files
 TITLE AssistantX Files Downloads - v%localtwo%
 cls
@@ -359,7 +358,7 @@ TITLE AssistantX Control Panel - v%localtwo%
 set "choice="
 set "BLANK=   "
 REM Check Values
-for %%i in (PWROF MEMOF AUDOF TMROF NETOF AFFOF MOUOF AFTOF NICOF DSSOF SERVOF DEBOF MITOF ME2OF NPIOF NVIOF NVTOF HDCOF CMAOF ALLOF MSIOF TCPOF DWCOF CRSOF) do (set "%%i=%COL%[92mON ") >nul 2>&1
+for %%i in (PWROF MEMOF FSOOF AUDOF TMROF NETOF AFFOF MOUOF AFTOF NICOF DSSOF SERVOF DEBOF MITOF ME2OF NPIOF NVIOF NVTOF HDCOF CMAOF ALLOF MSIOF TCPOF DWCOF CRSOF) do (set "%%i=%COL%[92mON ") >nul 2>&1
 (
 	REM MSI Mode
 	for /f %%g in ('wmic path win32_VideoController get PNPDeviceID ^| findstr /L "VEN_"') do (
@@ -376,6 +375,8 @@ for %%i in (PWROF MEMOF AUDOF TMROF NETOF AFFOF MOUOF AFTOF NICOF DSSOF SERVOF D
 	if "!currentmem!" neq "!mem!" set "MEMOF=%COL%[91mOFF"
 	REM Nvidia Telemetry
 	reg query "HKCU\Software\Hone" /v "NVTTweaks" || set "NVTOF=%COL%[91mOFF"
+	REM DissableFSOandGameBar
+	reg query "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" || set "FSOOF=%COL%[91mOFF"
 	REM Nvidia HDCP
 	for /f %%a in ('reg query "HKLM\System\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}" /t REG_SZ /s /e /f "NVIDIA" ^| findstr "HKEY"') do reg query "%%a" /v "RMHdcpKeyglobZero" | find "0x1" || set "HDCOF=%COL%[91mOFF"
 	REM Disable Preemption
@@ -444,7 +445,7 @@ echo                                                                            
 call :HoneTitle
 echo                                                               %COL%[1;4;34mTweaks%COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Power Plan Tweaks               %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Disable Keys 
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Power Plan Tweaks              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Disable Keys 
 echo              %COL%[90mOpens the power optimization          %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
 echo              %COL%[90mmenu                                  %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
 echo.
@@ -452,17 +453,17 @@ echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Timer Resolution %TM
 echo              %COL%[90mThis tweak changes how fast           %COL%[90mEnable MSI Mode for gpu and          %COL%[90mThis tweak will spread devices
 echo              %COL%[90myour cpu refreshes                    %COL%[90mnetwork adapters                     %COL%[90mon multiple cpu cores
 echo.
-echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m W32 Priority Seperation %BLANK%    %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Memory Optimization %ME2OF%        %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Mouse Fix %MOUOF%
-echo              %COL%[90mOptimizes the usage priority of       %COL%[90mOptimizes your fsutil, win           %COL%[90mThis removes acceleration which
-echo              %COL%[90myour running services                 %COL%[90mstartup settings and more            %COL%[90mmakes your aim inconsistent
+echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m W32 Priority Seperation %BLANK%    %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Memory Optimization %ME2OF%        %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable FSO and GameBar     
+echo              %COL%[90mOptimizes the usage priority of       %COL%[90mOptimizes your fsutil, win
+echo              %COL%[90myour running services                 %COL%[90mstartup settings and more
 echo.
 echo                                                             %COL%[1;4;34mNvidia Tweaks%COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Disable HDCP %HDCOF%              %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Disable Preemption %CMAOF%        %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m ProfileInspector %NPIOF%
+echo              %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable HDCP %HDCOF%               %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Disable Preemption %CMAOF%        %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m ProfileInspector %NPIOF%
 echo              %COL%[90mDisable copy protection technology    %COL%[90mDisable preemption requests from     %COL%[90mWill edit your Nvidia control panel
 echo              %COL%[90mof illegal High Definition content    %COL%[90mthe GPU scheduler                    %COL%[90mand add various tweaks
 echo.
-echo              %COL%[96m[%COL%[37m 13 %COL%[96m]%COL%[37m Disable Nvidia Telemetry %NVTOF%  %COL%[96m[%COL%[37m 14 %COL%[96m]%COL%[37m Nvidia Tweaks %NVIOF%             %COL%[96m[%COL%[37m 15 %COL%[96m]%COL%[37m Disable Write Combining %DWCOF%
+echo              %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Disable Nvidia Telemetry %NVTOF%  %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Nvidia Tweaks %NVIOF%             %COL%[96m[%COL%[37m 13 %COL%[96m]%COL%[37m Disable Write Combining %DWCOF%
 echo              %COL%[90mRemove built in Nvidia telemetry      %COL%[90mVarious essential tweaks for         %COL%[90mStops data from being combined
 echo              %COL%[90mfrom your computer and driver.        %COL%[90mNvidia graphics cards                %COL%[90mand temporarily stored
 echo.
@@ -479,14 +480,14 @@ if /i "%choice%"=="5" goto MSI
 if /i "%choice%"=="6" goto Affinity
 if /i "%choice%"=="7" goto W32PrioSep
 if /i "%choice%"=="8" goto MemOptimization
-if /i "%choice%"=="9" goto Mouse
+if /i "%choice%"=="9" goto DissableFSOandGameBar
 echo %NPIOF% | find "N/A" >nul && if "%choice%" geq "10" if "%choice%" leq "15" call :AssistantX Error "You don't have an NVIDIA GPU" && goto Tweaks
-if /i "%choice%"=="10" goto DisableHDCP
-if /i "%choice%"=="11" goto DisablePreemtion
-if /i "%choice%"=="12" goto ProfileInspector
-if /i "%choice%"=="13" goto NVTelemetry
-if /i "%choice%"=="14" goto NvidiaTweaks
-if /i "%choice%"=="15" goto DisableWriteCombining
+if /i "%choice%"=="9" goto DisableHDCP
+if /i "%choice%"=="10" goto DisablePreemtion
+if /i "%choice%"=="11" goto ProfileInspector
+if /i "%choice%"=="12" goto NVTelemetry
+if /i "%choice%"=="13" goto NvidiaTweaks
+if /i "%choice%"=="14" goto DisableWriteCombining
 if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto MainMenu
 if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
@@ -526,6 +527,44 @@ if /i "%choice%"=="3" goto DeleteHighPerformancePlan
 if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto Tweaks
 goto Tweaks
+
+:DissableFSOandGameBar
+if "%FSOOF%" == "%COL%[91mOFF" (
+	for /f "tokens=2 delims==" %%i in ('wmic os get TotalVisibleMemorySize /value') do set /a mem=%%i + 1024000
+		reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "AllowAutoGameMode" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "AutoGameModeEnabled" /t REG_DWORD /d "0" /f
+		reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "GamePanelStartupTipIndex" /t REG_DWORD /d "3" /f
+            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "ShowStartupPanel" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "UseNexusForGameBarEnabled" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR"  /v "AppCaptureEnabled" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_DSEBehavior" /t REG_DWORD /d "2" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_DXGIHonorFSEWindowsCompatible" /t REG_DWORD /d "1" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_EFSEFeatureFlags" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_Enabled" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_FSEBehavior" /t REG_DWORD /d "2" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_FSEBehaviorMode" /t REG_DWORD /d "2" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_HonorUserFSEBehaviorMode" /t REG_DWORD /d "1" /f
+            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR"  /v "AllowGameDVR" /t REG_DWORD /d "0" /f
+            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR"  /v "value" /t REG_DWORD /d "0" /f
+) >nul 2>&1 else (
+		reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "AllowAutoGameMode" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "AutoGameModeEnabled" /t REG_DWORD /d "0" /f
+		reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "GamePanelStartupTipIndex" /t REG_DWORD /d "3" /f
+            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "ShowStartupPanel" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "UseNexusForGameBarEnabled" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR"  /v "AppCaptureEnabled" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_DSEBehavior" /t REG_DWORD /d "2" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_DXGIHonorFSEWindowsCompatible" /t REG_DWORD /d "1" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_EFSEFeatureFlags" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_Enabled" /t REG_DWORD /d "0" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_FSEBehavior" /t REG_DWORD /d "2" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_FSEBehaviorMode" /t REG_DWORD /d "2" /f
+            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_HonorUserFSEBehaviorMode" /t REG_DWORD /d "1" /f
+            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR"  /v "AllowGameDVR" /t REG_DWORD /d "0" /f
+            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR"  /v "value" /t REG_DWORD /d "0" /f
+) >nul 2>&1
+goto tweaks
+
 
 :TweaksPG2
 cls
@@ -573,7 +612,7 @@ if /i "%choice%"=="10" call:Cleaner
 if /i "%choice%"=="11" call:gameBooster
 if /i "%choice%"=="12" call:softRestart
 if /i "%choice%"=="X" exit /b
-if /i "%choice%"=="B" goto MainMenu
+if /i "%choice%"=="B" goto TweaksPG1
 if /i "%choice%"=="N" (set "PG=TweaksPG1") & goto TweaksPG1
 goto TweaksPG2
 
@@ -607,6 +646,20 @@ if "%PWROF%" == "%COL%[91mOFF" (
 ) >nul 2>&1 else (
       powercfg -delete a1841308-3541-4fab-bc81-f71556f20b4a
 ) >nul 2>&1
+cls
+color A
+echo.
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 2
+color 06
 goto PowerPlanTW
 
 :MaxPowerPlan
