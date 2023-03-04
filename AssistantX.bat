@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.2.5
+set local=0.3
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -158,7 +158,7 @@ echo.
 echo.
 echo.
 echo.
-echo                                               %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Advanced           %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m More
+echo                                       %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Advanced    %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37mGame-Booster       %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m More
 echo.
 echo.
 echo.
@@ -167,17 +167,17 @@ echo.
 echo.
 echo                                                            %COL%[31m[ X to close ]%COL%[37m
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:1234567XD /n /m "%DEL%                                        Select a corresponding number to the options above > "
+%SYSTEMROOT%\System32\choice.exe /c:12345678XD /n /m "%DEL%                                        Select a corresponding number to the options above > "
 set choice=%errorlevel%
 if "%choice%"=="1" set PG=TweaksPG1 & goto Tweaks
 if "%choice%"=="2" goto GameSettings
 if "%choice%"=="3" goto HoneRenders
 if "%choice%"=="4" call:Comingsoon
 if "%choice%"=="5" call:Files
-if "%choice%"=="6" goto disclaimer2
-if "%choice%"=="7" goto More
+if "%choice%"=="6" goto AdvancedTW
+if "%choice%"=="7" call:gameBooster
+if "%choice%"=="8" goto More
 if "%choice%"=="8" exit /b
-if "%choice%"=="9" goto Dog
 goto MainMenu
 
 :HoneTitle 
@@ -249,7 +249,7 @@ echo                                                             %COL%[1;4;34mOt
 echo.
 echo              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m AIDA64                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m dfControl                    %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m qbittorrent
 echo.
-echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m WinRaR                     %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Uninstall Tool
+echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m WinRaR                     %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Uninstall Tool               %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Windows Digital Activation
 echo.
 echo.
 echo.
@@ -266,6 +266,7 @@ if /i "%choice%"=="3" call:dfControl
 if /i "%choice%"=="4" call:qbittorrent
 if /i "%choice%"=="5" call:WinRaR
 if /i "%choice%"=="6" call:UninstallTool
+if /i "%choice%"=="7" call:WinDigActivation
 if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto Files
 if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
@@ -284,7 +285,7 @@ start https://drive.google.com/file/d/1QxEu84KVq4uqSHq3ep-74iSz0exi0aGF/view?usp
 goto Files
 
 :WinTweaker
-start https://drive.google.com/file/d/189OCw0zmPXk14sk435uWWvDOQ4ODfl43/view?usp=sharing
+start https://disk.yandex.ru/d/a1tiMTlICDbdbw
 goto Files
 
 :QuickCpu
@@ -292,7 +293,7 @@ start https://drive.google.com/file/d/1G1XCfQpExH1eSUyhjBh75zkBSczhUf_M/view?usp
 goto Files
 
 :AuslogicsBoostSpeed
-start https://drive.google.com/file/d/1wWUCt7wlC1dt9XBMx6G-tI-N7YXCW3bw/view?usp=share_link
+start https://disk.yandex.ru/d/RIMpOB9u6EvCZg
 goto Files
 
 :Start11
@@ -329,6 +330,10 @@ goto FilesPG2
 
 :UninstallTool
 start https://drive.google.com/file/d/1Vjw_VCjep4TnQO85ZV6cnIzTpHAfql82/view?usp=sharing
+goto FilesPG2
+
+:WinDigActivation
+start https://disk.yandex.ru/d/lXYs3SuRmjt0tw
 goto FilesPG2
 
 :Comingsoon
@@ -582,7 +587,6 @@ echo.
 echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m All GPU Tweaks %ALLOF%             %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Optimize Intel iGPU %DSSOF%        %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m AMD GPU Tweaks %AMDOF%
 echo              %COL%[90mVarious essential tweaks for all     %COL%[90mIncrease dedicated video vram on     %COL%[90mConfigure AMD GPU to optimized
 echo              %COL%[90mGPU brands and manufacturers         %COL%[90ma intel iGPU                         %COL%[90msettings
-echo                                                               %COL%[1;4;34mBloat%COL%[0m
 echo.
 echo                                                        %COL%[1;4;34mMiscellaneous Tweaks%COL%[0m
 echo.
@@ -590,9 +594,9 @@ echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Reduce Audio Latency
 echo              %COL%[90mReduces Audio Latency  		  %COL%[91mComing Soon			       %COL%[90mDisable protections against memory
 echo              %COL%[91mDon't use on slow or old CPU's	  %COL%[90m				       %COL%[90mbased attacks that consume perf
 echo.
-echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Cleaner %BLANK%                   %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Game-Booster %BLANK%              %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Soft Restart %BLANK%
-echo              %COL%[90mRemove adware, unused devices, and   %COL%[90mSets GPU ^& CPU to high performance   %COL%[90mIf your PC has been running a while
-echo              %COL%[90mtemp files. Empties recycle bin.     %COL%[90mDisables fullscreen optimizations    %COL%[90muse this to receive a quick boost
+echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Cleaner %BLANK%                   %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Soft Restart %BLANK%
+echo              %COL%[90mRemove adware, unused devices, and   %COL%[90mIf your PC has been running a while
+echo              %COL%[90mtemp files. Empties recycle bin.     %COL%[90muse this to receive a quick boost
 echo.
 echo.
 echo.
@@ -1308,7 +1312,7 @@ start /B cmd /c "ipconfig /release & ipconfig /renew" >nul 2>&1
 goto Tweaks
 
 :NIC
-Reg query "HKCU\Software\Hone" /v "WifiDisclaimer2" >nul 2>&1 && goto NIC2
+Reg query "HKCU\Software\Hone" /v "Wifiadvancedtv" >nul 2>&1 && goto NIC2
 cls
 echo.
 echo.
@@ -1330,7 +1334,7 @@ echo.
 echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!" neq "i understand" goto Tweaks
-Reg add "HKCU\Software\Hone" /v "WifiDisclaimer2" /f >nul 2>&1
+Reg add "HKCU\Software\Hone" /v "Wifiadvancedtv" /f >nul 2>&1
 :NIC2
 cd %SYSTEMDRIVE%\Hone\HoneRevert
 if "%NICOF%" neq "%COL%[91mOFF" (
@@ -3377,8 +3381,8 @@ echo Vegas Pro 17-19 isn't installed...
 pause
 goto HoneRenders
 
-:Disclaimer2
-reg query "HKCU\Software\Hone" /v "Disclaimer2" >nul 2>&1 && goto Advanced
+:AdvancedTW
+reg query "HKCU\Software\Hone" /v "advancedtv" >nul 2>&1 && goto Advanced
 cls
 echo.
 echo.
@@ -3403,8 +3407,8 @@ echo                                                        %COL%[90m[ B for bac
 echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!"=="B" goto TweaksPG3
-if /i "!input!" neq "i agree" goto Disclaimer2
-reg add "HKCU\Software\Hone" /v "Disclaimer2" /f >nul 2>&1
+if /i "!input!" neq "i agree" goto advancedtv
+reg add "HKCU\Software\Hone" /v "advancedtv" /f >nul 2>&1
 
 :Advanced
 REM for /f "tokens=2 delims==" %%a in ('wmic path Win32_Battery Get BatteryStatus /value ^| findstr "BatteryStatus"') do set status=%%a
@@ -3795,66 +3799,6 @@ if "%DPSOF%" == "%COL%[91mOFF" (
 	)
 ) >nul 2>&1
 goto Advanced
-
-:dog
-cls
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo             @@@    @@@@@@@@@@@@@@   @@@
-echo         %@@@   @@@@              @@@   @@@@
-echo         %@@@   @@@@              @@@   @@@@
-echo         %@@@                           @@@@
-echo         %@@@                               @@@                     @@@
-echo      @@@,      @@@@       @@@                 @@@@              @@@   @@@@
-echo      @@@,      @@@@       @@@                 @@@@              @@@   @@@@
-echo      @@@,                                         @@@@@@@       @@@   @@@@
-echo      @@@,          @@@@@@@                               @@@@@@@@@@   @@@@
-echo      @@@,          @@@@@@@                               @@@@@@@@@@   @@@@
-echo      @@@,   @@@    @@@       @@@@                                     @@@@
-echo      @@@,      @@@@@@@@@@@@@@                                         @@@@
-echo      @@@,                                                             @@@@
-echo      @@@,                                                             @@@@
-echo      @@@,                                                             @@@@
-echo      @@@,                                                             @@@@
-echo      @@@,                                                             @@@@
-echo      @@@,                                                             @@@@
-echo      @@@,                                                          @@@
-echo         %@@@                                                       @@@
-echo         %@@@                                                       @@@
-echo         %@@@       @@@@@@@       @@@@@@@@@@@@@       @@@@@@@       @@@
-echo         %@@@       @@@@@@@       @@@       @@@       @@@@@@@       @@@
-echo         %@@@   @@@@   @@@@   @@@@          @@@    @@@    @@@    @@@
-echo         %@@@   @@@@   @@@@   @@@@          @@@    @@@    @@@    @@@
-echo             @@@           @@@                 @@@@          @@@@
-echo					      hi
-echo.
-echo.
-echo                  		  X to close
-echo.
-%SYSTEMROOT%\System32\choice.exe /c:XD /n /m "%DEL% ..."
-set choice=%errorlevel%
-if "%choice%"=="1" exit /b
-if "%choice%"=="2" goto Dog2
-goto dog
-
-:dog2
-cls
-echo So you want more dog?
-timeout /t 3 >nul 2>&1
-cls
-echo I don't have more dogs for you sorry
-timeout /t 3 >nul 2>&1
-cls
-echo Maybe come back at another time? I'll get some for ya
-timeout /t 3 >nul 2>&1
-cls
-echo bye
-timeout /t 2  >nul 2>&1
-exit /b
 
 :More
 cls
