@@ -19,7 +19,7 @@
 <h3 align="center">AssistantX</h3>
 
   <p align="center">
-    AssistantX is a free and open source desktop utility that aims to improve FPS, reduce input lag, and optimize network performance for video game titles and day-to-day productivity.
+    AssistantX is a free and desktop utility that aims to improve FPS, reduce input lag, and optimize network performance for video game titles and day-to-day productivity.
   <p align="center">
     <br />
     <br />

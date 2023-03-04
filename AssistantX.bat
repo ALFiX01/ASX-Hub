@@ -97,7 +97,7 @@ if "%LOCAL%" gtr "%LOCALTWO%" (
 	%SYSTEMROOT%\System32\choice.exe /c:YN /n /m "%DEL%                                >:"
 	set choice=!errorlevel!
 	if !choice! == 1 (
-		curl -L -o %0 "https://github.com/ALFiX01/AssistantX/releases/latest/download/AssistantX.bat" >nul 2>&1
+		curl -L -o %0 "https://github.com/ALFiX01/AssistantX/releases/download/Stable/AssistantX.bat" >nul 2>&1
 		call %0
 		exit /b
 	)
