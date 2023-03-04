@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\AssistantX" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.3.1
+set local=0.3.2
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -82,7 +82,7 @@ if "%LOCAL%" gtr "%LOCALTWO%" (
 	Mode 65,16
 	echo.
 	echo  --------------------------------------------------------------
-	echo                           Update found
+	echo                         beta Update found
 	echo  --------------------------------------------------------------
 	echo.
 	echo                    Your current version: %COL%[94m%LOCALTWO%%COL%[33m
