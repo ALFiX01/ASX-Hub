@@ -67,12 +67,12 @@ echo   Please enter "I agree" without quotes to continue:
 echo.
 echo.
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:YNyn /n /m "%DEL%                                >:"                                                            >: %COL%[92m"
+set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.2.3
+set local=0.2.4
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -134,8 +134,8 @@ echo set "firstlaunch=0" > %SYSTEMDRIVE%\Hone\HoneRevert\firstlaunch.bat
 :MainMenu
 Mode 130,45
 TITLE AssistantX Control Panel - v%localtwo%
-cls
 set "choice="
+cls
 echo.
 echo.
 call :HoneTitle
@@ -167,7 +167,7 @@ echo.
 echo.
 echo                                                            %COL%[31m[ X to close ]%COL%[37m
 echo.
-set /p choice="%DEL%                                         Select a corresponding number to the options above > "
+%SYSTEMROOT%\System32\choice.exe /c:1234567XD /n /m "%DEL%                                        Select a corresponding number to the options above > "
 set choice=%errorlevel%
 if "%choice%"=="1" set PG=TweaksPG1 & goto Tweaks
 if "%choice%"=="2" goto GameSettings
