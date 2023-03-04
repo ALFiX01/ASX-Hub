@@ -75,7 +75,7 @@ reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 set local=0.1.23
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
-curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/HoneCtrlVer" >nul 2>&1
+curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
 call "%TEMP%\Updater.bat"
 if "%LOCAL%" gtr "%LOCALTWO%" (
 	clsr
