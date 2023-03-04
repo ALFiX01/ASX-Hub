@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\AssistantX" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.3.2
+set local=0.4
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -82,7 +82,7 @@ if "%LOCAL%" gtr "%LOCALTWO%" (
 	Mode 65,16
 	echo.
 	echo  --------------------------------------------------------------
-	echo                         beta Update found
+	echo                           Update found
 	echo  --------------------------------------------------------------
 	echo.
 	echo                    Your current version: %COL%[94m%LOCALTWO%%COL%[33m
@@ -133,7 +133,7 @@ echo set "firstlaunch=0" > %SYSTEMDRIVE%\AssistantX\AssistantXRevert\firstlaunch
 
 :MainMenu
 Mode 130,45
-TITLE AssistantX Control Panel - v%localtwo%
+TITLE Control Panel - AssistantX v%localtwo%
 set "choice="
 cls
 echo.
@@ -152,12 +152,12 @@ echo.
 echo.
 echo.
 echo.
-echo                                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Media         %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[90m Privacy        %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Downloads
+echo                                    %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Media         %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[90m Fix Problem        %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Downloads
 echo.
 echo.
 echo.
 echo.
-echo                                       %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Advanced    %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Game-Booster       %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m More
+echo                                        %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Advanced    %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Game-Booster       %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m More
 echo.
 echo.
 echo.
@@ -167,12 +167,12 @@ echo.
 echo.
 echo                                                            %COL%[31m[ X to close ]%COL%[37m
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:12345678XD /n /m "%DEL%                                        Select a corresponding number to the options above > "
+%SYSTEMROOT%\System32\choice.exe /c:1234567XD /n /m "%DEL%                                        Select a corresponding number to the options above > "
 set choice=%errorlevel%
 if "%choice%"=="1" set PG=TweaksPG1 & goto Tweaks
 if "%choice%"=="2" goto GameSettings
 if "%choice%"=="3" goto AssistantXRenders
-if "%choice%"=="4" call:Comingsoon
+if "%choice%"=="4" call:FixProblem
 if "%choice%"=="5" call:Files
 if "%choice%"=="6" goto AdvancedTW
 if "%choice%"=="7" call:gameBooster
@@ -190,8 +190,9 @@ echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###
 echo                                                                                           %COL%[33m##      ## 
 echo.
 goto :eof
+
 :Files
-TITLE AssistantX Files Downloads - v%localtwo%
+TITLE Files Downloads panel - AssistantX v%localtwo%
 cls
 echo.
 echo                                                                                                                        %COL%[36mPage 1/2
@@ -236,7 +237,7 @@ if /i "%choice%"=="N" (set "PG=FilesPG2") & goto FilesPG2
 goto Downloads
 
 :FilesPG2
-TITLE AssistantX Files Downloads - v%localtwo%
+TITLE Files Downloads panel - AssistantX v%localtwo%
 cls
 echo.
 echo                                                                                                                        %COL%[36mPage 2/2
@@ -250,6 +251,8 @@ echo.
 echo              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m AIDA64                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m dfControl                    %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m qbittorrent
 echo.
 echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m WinRaR                     %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Uninstall Tool               %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Windows Digital Activation
+echo.
+echo              %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m DirectX                    %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Visual C++
 echo.
 echo.
 echo.
@@ -267,6 +270,8 @@ if /i "%choice%"=="4" call:qbittorrent
 if /i "%choice%"=="5" call:WinRaR
 if /i "%choice%"=="6" call:UninstallTool
 if /i "%choice%"=="7" call:WinDigActivation
+if /i "%choice%"=="8" call:DirectX
+if /i "%choice%"=="9" call:VisualC
 if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto Files
 if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
@@ -336,6 +341,14 @@ goto FilesPG2
 start https://disk.yandex.ru/d/lXYs3SuRmjt0tw
 goto FilesPG2
 
+:DirectX
+start https://drive.google.com/file/d/1Df-qAVa9ZJggAKQN5bvaLFBH-TWRqOtz/view?usp=sharing
+goto FilesPG2
+
+:VisualC
+start https://drive.google.com/file/d/1FsXOVWiTPIuSAFKYAInFvBR7MPYzsLGQ/view?usp=sharing
+goto FilesPG2
+
 :Comingsoon
 cls
 echo.
@@ -359,7 +372,7 @@ goto :eof
 
 :Tweaks
 Mode 130,45
-TITLE AssistantX Control Panel - v%localtwo%
+TITLE Control Panel - AssistantX v%localtwo%
 set "choice="
 set "BLANK=   "
 REM Check Values
@@ -450,19 +463,19 @@ echo                                                                            
 call :AssistantXTitle
 echo                                                               %COL%[1;4;34mTweaks%COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Power Plan Tweaks              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Disable Keys 
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Power Plan Panel              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Disable Keys 
 echo              %COL%[90mOpens the power optimization          %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
 echo              %COL%[90mmenu                                  %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
 echo.
-echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Timer Resolution %TMROF%           %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m MSI Mode %MSIOF%                   %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Affinity %AFFOF%
+echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Timer Resolution %TMROF%          %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m MSI Mode %MSIOF%                   %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Affinity %AFFOF%
 echo              %COL%[90mThis tweak changes how fast           %COL%[90mEnable MSI Mode for gpu and          %COL%[90mThis tweak will spread devices
 echo              %COL%[90myour cpu refreshes                    %COL%[90mnetwork adapters                     %COL%[90mon multiple cpu cores
 echo.
-echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m W32 Priority Seperation %BLANK%    %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Memory Optimization %ME2OF%        %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable FSO and GameBar     
-echo              %COL%[90mOptimizes the usage priority of       %COL%[90mOptimizes your fsutil, win
-echo              %COL%[90myour running services                 %COL%[90mstartup settings and more
+echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Disable Windows Telemetry     %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Memory Optimization %ME2OF%        %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable FSO and GameBar     
+echo              %COL%[90mDisables NVIDIA telemetry             %COL%[90mOptimizes your fsutil, win
+echo              %COL%[91mDangerous                             %COL%[90mstartup settings and more
 echo.
-echo                                                             %COL%[1;4;34mNvidia Tweaks%COL%[0m
+echo                                                            %COL%[1;4;34mNvidia Tweaks%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable HDCP %HDCOF%               %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Disable Preemption %CMAOF%        %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m ProfileInspector %NPIOF%
 echo              %COL%[90mDisable copy protection technology    %COL%[90mDisable preemption requests from     %COL%[90mWill edit your Nvidia control panel
@@ -477,13 +490,13 @@ echo.
 echo                                     %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         %COL%[36m[ N page two ]
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto PowerPlanTW
+if /i "%choice%"=="1" Call:PowerPlanPN
 if /i "%choice%"=="2" goto ServicesOptimization
 if /i "%choice%"=="3" goto Dsk
 if /i "%choice%"=="4" goto TimerRes
 if /i "%choice%"=="5" goto MSI
 if /i "%choice%"=="6" goto Affinity
-if /i "%choice%"=="7" goto W32PrioSep
+if /i "%choice%"=="7" goto DissWinTelemetry
 if /i "%choice%"=="8" goto MemOptimization
 if /i "%choice%"=="9" goto DissableFSOandGameBar
 echo %NPIOF% | find "N/A" >nul && if "%choice%" geq "10" if "%choice%" leq "15" call :AssistantX Error "You don't have an NVIDIA GPU" && goto Tweaks
@@ -498,8 +511,31 @@ if /i "%choice%"=="B" goto MainMenu
 if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
 goto Tweaks
 
-:PowerPlanTW
+:FixProblem
+TITLE Fix Problem panel - AssistantX v%localtwo%
 cls
+echo.
+echo.
+call :AssistantXTitle
+echo.
+echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
+echo                                        %COL%[90m    made to improve your day-to-day productivity
+echo.
+echo.
+echo.
+echo.
+echo                                  %COL%[31m This feature has not been finished yet but will be coming soon.
+echo.
+echo.
+echo.
+echo.
+echo                                                    %COL%[97m[ Press any key to go back ]%COL%[37m
+pause >nul
+goto :MainMenu
+
+:PowerPlanPN
+cls
+TITLE Power Plan panel - AssistantX v%localtwo%
 echo.
 call :AssistantXTitle
 echo.
@@ -641,7 +677,7 @@ echo     Completed
 echo.
 timeout 2
 color 06
-goto PowerPlanTW
+goto PowerPlanPN
 
 :DeletePowerSavingPlan
 echo %PWROF% | find "N/A" >nul && call :AssistantX Error "This power plan isn't recommended for batteries." && goto Tweaks
@@ -664,7 +700,7 @@ echo     Completed
 echo.
 timeout 2
 color 06
-goto PowerPlanTW
+goto PowerPlanPN
 
 :MaxPowerPlan
 echo %PWROF% | find "N/A" >nul && call :AssistantX Error "This power plan isn't recommended for batteries." && goto Tweaks
@@ -739,22 +775,12 @@ REM Mode 130,45
 REM goto Tweaks
 
 :Dsk
-if "%DSKOF%" == "%COL%[91mOFF" (
-   set "DSKOF=%COL%[91mON"
    reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "Flags" /t REG_SZ /d "506" /f
    reg add "HKCU\Control Panel\Accessibility\ToggleKeys" /v "Flags" /t REG_SZ /d "58" /f
    reg add Control Panel\Accessibility\Keyboard Response" /v "DelayBeforeAcceptance" /t REG_SZ /d "0" /f
    reg add Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatRate" /t REG_SZ /d "0" /f
    reg add Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatDelay" /t REG_SZ /d "0" /f
    reg add Control Panel\Accessibility\Keyboard Response" /v "Flags" /t REG_SZ /d "122" /f
-) >nul 2>&1 else (
-   reg add "HKCU\Control Panel\Accessibility\StickyKeys" /v "Flags" /t REG_SZ /d "498" /f
-   reg add "HKCU\Control Panel\Accessibility\ToggleKeys" /v "Flags" /t REG_SZ /d "58" /f
-   reg add Control Panel\Accessibility\Keyboard Response" /v "DelayBeforeAcceptance" /t REG_SZ /d "0" /f
-   reg add Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatRate" /t REG_SZ /d "0" /f
-   reg add Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatDelay" /t REG_SZ /d "0" /f
-   reg add Control Panel\Accessibility\Keyboard Response" /v "Flags" /t REG_SZ /d "122" /f
-) >nul 2>&1
 cls
 color A
 echo.
@@ -854,46 +880,28 @@ for /f %%i in ('wmic path Win32_NetworkAdapter get PNPDeviceID^| findstr /l "PCI
 ) >nul 2>&1
 goto Tweaks
 
-:W32PrioSep
+:DissWinTelemetry
 cls
+color A
 echo.
 echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
 echo.
+echo     Completed
 echo.
-echo                                                                                           %COL%[33m##      ##
-echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                           %COL%[33m##      ## 
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                    %COL%[96m[ %COL%[37m1 %COL%[96m] %COL%[37m26 Hex                                                   %COL%[96m[ %COL%[37m2 %COL%[96m] %COL%[37m28 Hex
-echo                    %COL%[90mDefault                                                        %COL%[90mMight be better
-echo                    %COL%[90mShort, Variable, High foreground boost.                        %COL%[90mShort, Fixed, No foreground boost.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                       [ press X to go back ]
-echo.
-echo.
-%SYSTEMROOT%\System32\choice.exe /c:12X /n /m "%DEL%                                                               >:"
-if %errorlevel% == 3 goto Tweaks
-if %errorlevel% == 1 reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "38" /f >nul 2>&1
-if %errorlevel% == 2 reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "40" /f >nul 2>&1
+timeout 2
+		reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching"  /v "SearchOrderConfig" /t REG_DWORD /d "0" /f
+            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"  /v "EnableLua" /t REG_DWORD /d "0" /f
+		reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR"  /v "value" /t REG_DWORD /d "0" /f
+            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowSharedUserAppData"  /v "value" /t REG_DWORD /d "0" /f
+            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowStore"  /v "value" /t REG_DWORD /d "0" /f 1
+            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance"  /v "MaintenanceDisabled" /t REG_DWORD /d "0" /f
+goto tweaks
+
 goto Tweaks
 
 :MemOptimization
@@ -1545,6 +1553,7 @@ DeviceCleanupCmd.exe *
 goto tweaks
 
 :gameBooster
+TITLE Game Booster panel - AssistantX v%localtwo%
 cls & echo Select the game location, you can do it a second time to revert the changes.
 set dialog="about:<input type=file id=FILE><script>FILE.click();new ActiveXObject
 set dialog=%dialog%('Scripting.FileSystemObject').GetStandardStream(1).WriteLine(FILE.value);
@@ -1601,6 +1610,7 @@ goto tweaks
 
 :GameSettings
 cls
+TITLE Game Settings panel - AssistantX v%localtwo%
 echo.
 echo.
 call :AssistantXTitle
@@ -1959,6 +1969,7 @@ set encoder=CPU
 goto done
 :done
 cls
+TITLE Media panel - AssistantX v%localtwo%
 echo.
 echo.
 echo                                                                                           %COL%[33m##      ##
@@ -3384,6 +3395,7 @@ goto AssistantXRenders
 :AdvancedTW
 reg query "HKCU\Software\AssistantX" /v "advancedtv" >nul 2>&1 && goto Advanced
 cls
+TITLE Advanced tweak panel - AssistantX v%localtwo%
 echo.
 echo.
 call :AssistantXTitle
@@ -3407,7 +3419,7 @@ echo                                                        %COL%[90m[ B for bac
 echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!"=="B" goto TweaksPG3
-if /i "!input!" neq "i agree" goto advancedtv
+if /i "!input!" neq "i agree" goto Advanced
 reg add "HKCU\Software\AssistantX" /v "advancedtv" /f >nul 2>&1
 
 :Advanced
@@ -3450,6 +3462,7 @@ for %%i in (DSCOF AUTOF DRIOF BCDOF NONOF CS0OF TOFOF PS0OF IDLOF CONG DPSOF) do
 	if "!NVIDIAGPU!" neq "Found" for %%g in (PS0OF DRIOF) do set "%%g=%COL%[93mN/A"
 ) >nul 2>&1
 cls
+TITLE Advanced Tweak panel - AssistantX v%localtwo%
 echo.
 echo.
 call :AssistantXTitle
@@ -3506,13 +3519,9 @@ echo.
 echo     Completed
 echo.
 timeout 2
-if "%TOFOF%" == "%COL%[91mOFF" (
 	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "PromptOnSecureDesktop" /t REG_DWORD /d 0 /f
       reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "ConsentPromptBehaviorAdmin" /t REG_DWORD /d 0 /f
       reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "SmartScreenEnabled" /t REG_SZ /d "Off" /f
-) >nul 2>&1 else (
-      reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "SmartScreenEnabled" /t REG_SZ /d "Off" /f
-) >nul 2>&1
 goto Advanced
 
 :NonBestEffortLimit
@@ -3801,6 +3810,7 @@ if "%DPSOF%" == "%COL%[91mOFF" (
 goto Advanced
 
 :More
+TITLE More panel - AssistantX v%localtwo%
 cls
 echo.
 echo.
@@ -3850,6 +3860,7 @@ if /i "%choice%"=="7" exit /b
 goto More
 
 :About
+TITLE About panel - AssistantX v%localtwo%
 cls
 echo.
 echo.
@@ -3876,6 +3887,7 @@ set choice=%errorlevel%
 if "%choice%"=="1" goto More
 
 :ViewDisclaimer
+TITLE Disclaimer panel - AssistantX v%localtwo%
 cls
 echo.
 echo.
@@ -3909,6 +3921,7 @@ set choice=%errorlevel%
 if "%choice%"=="1" goto More
 
 :Credits
+TITLE Credits panel - AssistantX v%localtwo%
 cls
 echo.
 echo.
@@ -3950,6 +3963,7 @@ set choice=%errorlevel%
 if "%choice%"=="1" goto More
 
 :Backup
+TITLE Backup panel - AssistantX v%localtwo%
 reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "SystemRestorePointCreationFrequency" /t REG_DWORD /d 0 /f >nul 2>&1
 powershell Enable-ComputerRestore -Drive 'C:\', 'D:\', 'E:\', 'F:\', 'G:\' >nul 2>&1
 powershell Checkpoint-Computer -Description 'AssistantX Restore Point' >nul 2>&1
