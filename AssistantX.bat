@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.1.23
+set local=0.2
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -133,7 +133,7 @@ echo set "firstlaunch=0" > %SYSTEMDRIVE%\Hone\HoneRevert\firstlaunch.bat
 
 :MainMenu
 Mode 130,45
-TITLE AssistantX Control Panel %localtwo%
+TITLE AssistantX Control Panel - v%localtwo%
 set "choice="
 cls
 echo.
@@ -153,7 +153,7 @@ echo.
 echo.
 echo.
 echo.
-echo                                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Media         %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[90m Privacy        %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[90m Aesthetics
+echo                                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Media         %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[90m Privacy        %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Downloads
 echo.
 echo.
 echo.
@@ -173,7 +173,7 @@ if "%choice%"=="1" set PG=TweaksPG1 & goto Tweaks
 if "%choice%"=="2" goto GameSettings
 if "%choice%"=="3" goto HoneRenders
 if "%choice%"=="4" call:Comingsoon
-if "%choice%"=="5" call:Comingsoon
+if "%choice%"=="5" call:Files
 if "%choice%"=="6" goto disclaimer2
 if "%choice%"=="7" goto More
 if "%choice%"=="8" exit /b
@@ -190,6 +190,142 @@ echo                                 %COL%[33m##  ##  ###  ###   ##  ##     ### 
 echo                                                                                          %COL%[33m##      ## 
 echo.
 goto :eof
+
+:Files
+TITLE AssistantX Files Downloads - v%localtwo%
+cls
+echo.
+echo                                                                                                                        %COL%[36mPage 1/2
+call :HoneTitle
+echo                                                          %COL%[1;4;34mFiles for Gamers%COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Discord                         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Epic Games Launcher         %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Steam 
+echo.
+echo                                                       %COL%[1;4;34mFiles for Optimization%COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Win Tweaker                     %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m QuickCpu                    %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Auslogics BoostSpeed
+echo.
+echo                                                    %COL%[1;4;34mFiles Personalization Windows %COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Start11                         %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m WinDynamicDesktop
+echo.
+echo                                                         %COL%[1;4;34mFiles Photo Editors %COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Paint.net 
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                     %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         %COL%[36m[ N page two ]
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="1" call:Discord
+if /i "%choice%"=="2" call:EGS
+if /i "%choice%"=="3" call:Steam
+if /i "%choice%"=="4" call:WinTweaker
+if /i "%choice%"=="5" call:QuickCpu
+if /i "%choice%"=="6" call:AuslogicsBoostSpeed
+if /i "%choice%"=="7" call:Start11
+if /i "%choice%"=="8" call:WinDynamicDesktop
+if /i "%choice%"=="9" call:PaintNet
+if /i "%choice%"=="X" exit /b
+if /i "%choice%"=="B" goto MainMenu
+if /i "%choice%"=="N" (set "PG=FilesPG2") & goto FilesPG2
+goto Downloads
+
+:FilesPG2
+TITLE AssistantX Files Downloads - v%localtwo%
+cls
+echo.
+echo                                                                                                                        %COL%[36mPage 2/2
+call :HoneTitle
+echo                                                   %COL%[1;4;34mFiles To watch movies and series%COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Zona 
+echo.
+echo                                                             %COL%[1;4;34mOthers Files%COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m AIDA64                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m dfControl                    %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m qbittorrent
+echo.
+echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m WinRaR
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                     %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         %COL%[36m[ N page two ]
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="1" call:Zona
+if /i "%choice%"=="2" call:AIDA64
+if /i "%choice%"=="3" call:dfControl
+if /i "%choice%"=="4" call:qbittorrent
+if /i "%choice%"=="5" call:WinRaR
+if /i "%choice%"=="X" exit /b
+if /i "%choice%"=="B" goto Files
+if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
+goto Downloads
+
+:Discord
+start https://drive.google.com/file/d/1fDLrntesGvsz594IjIxEbJbB2h35axX-/view?usp=sharing
+goto Files
+
+:EGS
+start https://drive.google.com/file/d/1pvH77U47CyfXOXvkeYSAByJlnbORHKUh/view?usp=share_link
+goto Files
+
+:Steam
+start https://drive.google.com/file/d/1QxEu84KVq4uqSHq3ep-74iSz0exi0aGF/view?usp=sharing
+goto Files
+
+:WinTweaker
+start https://drive.google.com/file/d/189OCw0zmPXk14sk435uWWvDOQ4ODfl43/view?usp=sharing
+goto Files
+
+:QuickCpu
+start https://drive.google.com/file/d/1G1XCfQpExH1eSUyhjBh75zkBSczhUf_M/view?usp=sharing
+goto Files
+
+:AuslogicsBoostSpeed
+start https://drive.google.com/file/d/1wWUCt7wlC1dt9XBMx6G-tI-N7YXCW3bw/view?usp=share_link
+goto Files
+
+:Start11
+start https://drive.google.com/file/d/16Ge9LwZv9HVtu1Q-otgbXO0AQMYcpUzU/view?usp=sharing
+goto Files
+
+call:WinDynamicDesktop
+start https://drive.google.com/file/d/1JNgFo0FVrIPrRsOGEmwqAVg77O0vxdeO/view?usp=sharing
+goto Files
+
+:PaintNet
+start https://drive.google.com/file/d/17rb9l9tF4t44YwPNTGpFs4GL-S7eKhCu/view?usp=sharing
+goto Files
+
+:Zona
+start https://drive.google.com/file/d/1CCGGnt2M0hZAU6OnAv7HmixRk6DTJlcE/view?usp=sharing
+goto Files
+
+:AIDA64
+start https://drive.google.com/file/d/1Wl0QvHsdlll9Ltjz3Klyg1HAJW77j7oO/view?usp=sharing
+goto Files
+
+:dfControl
+start https://disk.yandex.ru/d/iCwXLAW_vJENEg
+goto Files
+
+:qbittorrent
+start https://drive.google.com/file/d/12GPGt7kZRp5xiaPUikt9SEc6t0zNxFLY/view?usp=sharing
+goto Files
+
+:WinRaR
+start https://drive.google.com/file/d/1vZwKMKumJWj0Hy5leiJ1I8c3d1pYRdZK/view?usp=sharing
+goto Files
 
 :Comingsoon
 cls
@@ -214,7 +350,7 @@ goto :eof
 
 :Tweaks
 Mode 130,45
-TITLE AssistantX Control Panel %localtwo%
+TITLE AssistantX Control Panel - v%localtwo%
 set "choice="
 set "BLANK=   "
 REM Check Values
