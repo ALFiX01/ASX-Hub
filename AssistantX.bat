@@ -67,12 +67,12 @@ echo   Please enter "I agree" without quotes to continue:
 echo.
 echo.
 echo.
-set /p "input=%DEL%                                                            >: %COL%[92m"
+%SYSTEMROOT%\System32\choice.exe /c:YNyn /n /m "%DEL%                                >:"                                                            >: %COL%[92m"
 if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\Hone" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.2.1
+set local=0.2.3
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -134,8 +134,8 @@ echo set "firstlaunch=0" > %SYSTEMDRIVE%\Hone\HoneRevert\firstlaunch.bat
 :MainMenu
 Mode 130,45
 TITLE AssistantX Control Panel - v%localtwo%
-set "choice="
 cls
+set "choice="
 echo.
 echo.
 call :HoneTitle
@@ -167,7 +167,7 @@ echo.
 echo.
 echo                                                            %COL%[31m[ X to close ]%COL%[37m
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:1234567XD /n /m "%DEL%                                        Select a corresponding number to the options above > "
+set /p choice="%DEL%                                         Select a corresponding number to the options above > "
 set choice=%errorlevel%
 if "%choice%"=="1" set PG=TweaksPG1 & goto Tweaks
 if "%choice%"=="2" goto GameSettings
@@ -310,27 +310,27 @@ goto Files
 
 :Zona
 start https://drive.google.com/file/d/1CCGGnt2M0hZAU6OnAv7HmixRk6DTJlcE/view?usp=sharing
-goto Files
+goto FilesPG2
 
 :AIDA64
 start https://drive.google.com/file/d/1kz7nfvacA6rwqNl8dxf5QhAF61EC6Qnf/view?usp=sharing
-goto Files
+goto FilesPG2
 
 :dfControl
 start https://disk.yandex.ru/d/iCwXLAW_vJENEg
-goto Files
+goto FilesPG2
 
 :qbittorrent
 start https://drive.google.com/file/d/1LbjSYEij-Lspdj40Anqpo62DmXtGmYVB/view?usp=sharing
-goto Files
+goto FilesPG2
 
 :WinRaR
 start https://drive.google.com/file/d/1gskcAXypZJtJgb35SZmgdEmlHr_AKSEr/view?usp=sharing
-goto Files
+goto FilesPG2
 
 :UninstallTool
 start https://drive.google.com/file/d/1Vjw_VCjep4TnQO85ZV6cnIzTpHAfql82/view?usp=sharing
-goto Files
+goto FilesPG2
 
 :Comingsoon
 cls
