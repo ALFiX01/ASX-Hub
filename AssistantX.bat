@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\AssistantX" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.5
+set local=0.6
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -147,17 +147,18 @@ echo.
 echo.
 echo.
 echo.
-echo                                           %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Optimizations        %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Game Settings
+echo                                  %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Optimizations        %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Game Settings        %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Media
 echo.
 echo.
 echo.
 echo.
-echo                                    %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Media         %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[90m Fix Problem        %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Downloads
+echo                                  %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[90m Fix Problem          %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Downloads            %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m App Uninstall
 echo.
 echo.
 echo.
 echo.
-echo                                        %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Advanced    %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Game-Booster       %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m More
+echo                                  %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Advanced             %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Game-Booster         %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m More
+echo.
 echo.
 echo.
 echo.
@@ -167,17 +168,18 @@ echo.
 echo.
 echo                                                            %COL%[31m[ X to close ]%COL%[37m
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:1234567XD /n /m "%DEL%                                        Select a corresponding number to the options above > "
+%SYSTEMROOT%\System32\choice.exe /c:1234567890XD /n /m "%DEL%                                        Select a corresponding number to the options above > "
 set choice=%errorlevel%
 if "%choice%"=="1" set PG=TweaksPG1 & goto Tweaks
 if "%choice%"=="2" goto GameSettings
 if "%choice%"=="3" goto AssistantXRenders
 if "%choice%"=="4" call:FixProblem
 if "%choice%"=="5" call:Files
-if "%choice%"=="6" goto AdvancedTW
-if "%choice%"=="7" call:gameBooster
-if "%choice%"=="8" goto More
-if "%choice%"=="8" exit /b
+if "%choice%"=="6" call:AppUninstall
+if "%choice%"=="7" goto AdvancedTW
+if "%choice%"=="8" call:gameBooster
+if "%choice%"=="9" goto More
+if "%choice%"=="0" exit /b
 goto MainMenu
 
 :AssistantXTitle 
@@ -201,17 +203,22 @@ echo                                                          %COL%[1;4;34mFiles
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Discord                         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Steam                       %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Epic Games Launcher 
 echo.
+echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m MSI Afterburner
+echo.
 echo                                                       %COL%[1;4;34mFiles for Optimization%COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Win Tweaker                     %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m QuickCpu                    %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Auslogics BoostSpeed
+echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Win Tweaker                     %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m QuickCpu                    %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Auslogics BoostSpeed
 echo.
 echo                                                    %COL%[1;4;34mFiles Personalization Windows %COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Start11                         %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m WinDynamicDesktop
+echo              %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Start11                         %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m WinDynamicDesktop
 echo.
 echo                                                         %COL%[1;4;34mFiles Photo Editors %COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Paint.net 
+echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Paint.net 
+echo.
+echo.
+echo.
 echo.
 echo.
 echo.
@@ -225,12 +232,13 @@ set /p choice="%DEL%                                        %COL%[37mSelect a co
 if /i "%choice%"=="1" call:Discord
 if /i "%choice%"=="2" call:Steam
 if /i "%choice%"=="3" call:EGS
-if /i "%choice%"=="4" call:WinTweaker
-if /i "%choice%"=="5" call:QuickCpu
-if /i "%choice%"=="6" call:AuslogicsBoostSpeed
-if /i "%choice%"=="7" call:Start11
-if /i "%choice%"=="8" call:WinDynamicDesktop
-if /i "%choice%"=="9" call:PaintNet
+if /i "%choice%"=="4" call:MSIAfterburner
+if /i "%choice%"=="5" call:WinTweaker
+if /i "%choice%"=="6" call:QuickCpu
+if /i "%choice%"=="7" call:AuslogicsBoostSpeed
+if /i "%choice%"=="8" call:Start11
+if /i "%choice%"=="9" call:WinDynamicDesktop
+if /i "%choice%"=="10" call:PaintNet
 if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto MainMenu
 if /i "%choice%"=="N" (set "PG=FilesPG2") & goto FilesPG2
@@ -298,6 +306,10 @@ goto Files
 
 :Steam
 start https://drive.google.com/file/d/1QxEu84KVq4uqSHq3ep-74iSz0exi0aGF/view?usp=sharing
+goto Files
+
+:MSIAfterburner
+https://drive.google.com/file/d/1DyELRemvqrU_YI5yCP6MUFw00OHoN-UZ/view?usp=sharing
 goto Files
 
 :WinTweaker
@@ -518,6 +530,7 @@ echo              %COL%[90mfrom your computer and driver.        %COL%[90mNvidia
 echo.
 echo.
 echo.
+echo.
 echo                                     %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         %COL%[36m[ N page two ]
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
@@ -560,15 +573,205 @@ echo.
 echo.
 echo.
 echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
 echo                                                    %COL%[97m[ Press any key to go back ]%COL%[37m
 pause >nul
 goto :MainMenu
+
+:AppUninstall
+TITLE App Uninstall panel - AssistantX v%localtwo%
+cls
+echo.
+call :AssistantXTitle
+echo                                                          %COL%[1;4;34mUninstall method%COL%[0m
+echo.
+echo                                      %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Selective                         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Prepared  
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                                %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="1" call:Selective-M
+if /i "%choice%"=="2" call:Prepared-M
+if /i "%choice%"=="X" exit /b
+if /i "%choice%"=="B" goto MainMenu
+goto AppUninstall
+
+:Prepared-M
+TITLE Prepared Uninstall panel - AssistantX v%localtwo%
+powershell -executionpolicy -command "Get-AppxPackage -allusers *people* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *zunevideo* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *3dbuilder* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *skypeapp* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *solitaire* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *officehub* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *maps* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *bing* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *onenote* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *bingfinance* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *bingsports* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *bingnews* | Remove-AppxPackage"
+powershell -executionpolicy -command "Get-AppxPackage -allusers *Microsoft.549981C3F5F10* | Remove-AppxPackage"
+powershell -executionpolicy -command "Remove-Appxpackage Microsoft.GetHelp_8wekyb3d8bbwe"
+powershell -executionpolicy -command "Remove-AppxpackageMicrosoftTeams_22336.907.1742.9730_x64__8wekyb3d8bbwe"
+pause
+goto MainMenu
+
+:Selective-M
+cls
+TITLE Selective Uninstall panel - AssistantX v%localtwo%
+echo.
+call:AssistantXTitle
+echo.
+echo                                                           %COL%[1;4;34mUninstall Programm%COL%[0m
+echo.
+echo               %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m People                           %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Movie and TV                      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m 3D builder
+echo.
+echo               %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Skype                            %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Solitaire                         %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Office
+echo.
+echo               %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m maps                             %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Bing                              %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m OneNote
+echo.
+echo               %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Bing Finance                     %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Bing Sports                       %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Bing News
+echo.
+echo               %COL%[96m[%COL%[37m 13 %COL%[96m]%COL%[37m Cortana                         %COL%[96m[%COL%[37m 14 %COL%[96m]%COL%[37m GetHelp                          %COL%[96m[%COL%[37m 15 %COL%[96m]%COL%[37m MicrosoftTeams
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="1" call:iPeople
+if /i "%choice%"=="2" call:iMovie and TV
+if /i "%choice%"=="3" call:i3Dbuilder
+if /i "%choice%"=="4" call:iSkype
+if /i "%choice%"=="5" call:iSolitaire
+if /i "%choice%"=="6" call:iOffice
+if /i "%choice%"=="7" call:imaps
+if /i "%choice%"=="8" call:ibing
+if /i "%choice%"=="9" call:iOneNote
+if /i "%choice%"=="10" call:iBingFinance
+if /i "%choice%"=="11" call:iBingSports
+if /i "%choice%"=="12" call:iBingNews
+if /i "%choice%"=="13" call:iCortana
+if /i "%choice%"=="14" call:iGetHelp
+if /i "%choice%"=="15" call:iMicrosoftTeams
+if /i "%choice%"=="X" exit /b
+if /i "%choice%"=="B" goto Tweaks
+goto MainMenu
+
+:iPeople
+powershell -executionpolicy -command "Get-AppxPackage -allusers *people* | Remove-AppxPackage"
+goto Selective-M
+
+:iMovie and TV
+powershell -executionpolicy -command "Get-AppxPackage -allusers *zunevideo* | Remove-AppxPackage"
+goto Selective-M
+
+:i3Dbuilder
+powershell -executionpolicy -command "Get-AppxPackage -allusers *3dbuilder* | Remove-AppxPackage"
+goto Selective-M
+
+:iSkype
+powershell -executionpolicy -command "Get-AppxPackage -allusers *skypeapp* | Remove-AppxPackage"
+goto Selective-M
+
+:iSolitaire
+powershell -executionpolicy -command "Get-AppxPackage -allusers *solitaire* | Remove-AppxPackage"
+goto Selective-M
+
+:iOffice
+powershell -executionpolicy -command "Get-AppxPackage -allusers *officehub* | Remove-AppxPackage"
+goto Selective-M
+
+:imaps
+powershell -executionpolicy -command "Get-AppxPackage -allusers *maps* | Remove-AppxPackage"
+goto Selective-M
+
+:ibing
+powershell -executionpolicy -command "Get-AppxPackage -allusers *bing* | Remove-AppxPackage"
+goto Selective-M
+
+:iOneNote
+powershell -executionpolicy -command "Get-AppxPackage -allusers *onenote* | Remove-AppxPackage"
+goto Selective-M
+
+:iBingFinance
+powershell -executionpolicy -command "Get-AppxPackage -allusers *bingfinance* | Remove-AppxPackage"
+goto Selective-M
+
+:iBingSports
+powershell -executionpolicy -command "Get-AppxPackage -allusers *bingsports* | Remove-AppxPackage"
+goto Selective-M
+
+:iBingNews
+powershell -executionpolicy -command "Get-AppxPackage -allusers *bingnews* | Remove-AppxPackage"
+goto Selective-M
+
+:iCortana
+powershell -executionpolicy -command "Get-AppxPackage -allusers *Microsoft.549981C3F5F10* | Remove-AppxPackage"
+goto Selective-M
+
+:iGetHelp
+powershell -executionpolicy -command "Remove-Appxpackage Microsoft.GetHelp_8wekyb3d8bbwe"
+goto Selective-M
+
+:iMicrosoftTeams
+powershell -executionpolicy -command "Remove-AppxpackageMicrosoftTeams_22336.907.1742.9730_x64__8wekyb3d8bbwe"
+goto Selective-M
 
 :PowerPlanPN
 cls
 TITLE Power Plan panel - AssistantX v%localtwo%
 echo.
-call :AssistantXTitle
+call:AssistantXTitle
 echo.
 echo                                                           %COL%[1;4;34mPower Plan Tweaks%COL%[0m
 echo.
@@ -1268,6 +1471,16 @@ echo   %COL%[37mPlease enter "I understand" without quotes to continue:
 echo.
 echo.
 echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
 if /i "!input!" neq "i understand" goto Tweaks
 Reg add "HKCU\Software\AssistantX" /v "WifiDisclaimer" /f >nul 2>&1
@@ -1368,6 +1581,18 @@ echo.
 echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/AssistantX
 echo.
 echo   %COL%[37mPlease enter "I understand" without quotes to continue:
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
 echo.
 echo.
 echo.
@@ -1651,6 +1876,7 @@ echo.
 echo                                                               %COL%[94m%COL%[4mGames%COL%[0m
 echo.
 echo                                                         %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Minecraft
+echo.
 echo.
 echo.
 echo.
@@ -2023,6 +2249,20 @@ echo.
 echo              %COL%[96m[ %COL%[37m4 %COL%[96m]%COL%[37m Install A Video Editor (NLE)  %COL%[96m[ %COL%[37m5 %COL%[96m]%COL%[37m Project Settings              %COL%[96m[ %COL%[37m6 %COL%[96m]%COL%[37m Renders
 echo              %COL%[90mDownload ^& install a		  %COL%[90mAutomated Project settings	       %COL%[90mAutomated render settings
 echo		     %COL%[90mNon-Linear editing software	  %COL%[90mfor Vegas pro                        %COL%[90mfor Vegas pro
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
 echo.
 echo.
 echo.
@@ -3446,6 +3686,7 @@ echo     %COL%[96m1.%COL%[37m Even though we have an automatic restore point fea
 echo.
 echo     Please enter "I agree" (without quotes) to continue:
 echo.
+echo.
 echo                                                        %COL%[90m[ B for back ]
 echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
@@ -3516,6 +3757,11 @@ echo.
 echo              %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Nvidia Driver %DRIOF%              %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m BCDEdit %BCDOF%                    %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Disable Smartscreen
 echo              %COL%[90mInstall the best tweaked nvidia      %COL%[90mTweaks your windows boot config      %COL%[90mDisable Antivirus Smartscreen
 echo              %COL%[90mdriver for latency and fps           %COL%[90mdata to optimized settings
+echo.
+echo.
+echo.
+echo.
+echo.
 echo.
 echo.
 echo.
@@ -3877,6 +4123,9 @@ echo.
 echo.
 echo.
 echo.
+echo.
+echo.
+echo.
 echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]%COL%[37m
 echo.
 %SYSTEMROOT%\System32\choice.exe /c:12345BX /n /m "%DEL%                                        Select a corresponding number to the options above >"
@@ -3907,6 +4156,27 @@ echo.
 echo  About
 echo  Owned by ALFiX, Inc. Copyright Claimed.
 echo  This is a GUI for the Tweaks.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
 echo.
 echo.
 call :ColorText 8 "                                                      [ press X to go back ]"
@@ -3942,6 +4212,11 @@ echo.
 echo   For any questions and/or concerns, please join our discord: discord.gg/AssistantX
 echo.
 echo   Please enter "I agree" without quotes to continue:
+echo.
+echo.
+echo.
+echo.
+echo.
 echo.
 echo.
 echo.
@@ -3984,6 +4259,10 @@ echo.
 echo.
 echo %COL%[90m                                                          Credits to
 echo %COL%[97m                                                       Daniil B. - ALFiX
+echo.
+echo.
+echo.
+echo.
 echo.
 echo.
 echo.
