@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\AssistantX" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.4
+set local=0.5
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -199,7 +199,7 @@ echo                                                                            
 call :AssistantXTitle
 echo                                                          %COL%[1;4;34mFiles for Gamers%COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Discord                         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Epic Games Launcher         %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Steam 
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Discord                         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Steam                       %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Epic Games Launcher 
 echo.
 echo                                                       %COL%[1;4;34mFiles for Optimization%COL%[0m
 echo.
@@ -223,8 +223,8 @@ echo                                     %COL%[90m[ B for back ]         %COL%[3
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" call:Discord
-if /i "%choice%"=="2" call:EGS
-if /i "%choice%"=="3" call:Steam
+if /i "%choice%"=="2" call:Steam
+if /i "%choice%"=="3" call:EGS
 if /i "%choice%"=="4" call:WinTweaker
 if /i "%choice%"=="5" call:QuickCpu
 if /i "%choice%"=="6" call:AuslogicsBoostSpeed
@@ -244,15 +244,21 @@ echo                                                                            
 call :AssistantXTitle
 echo                                                   %COL%[1;4;34mFiles To watch movies and series%COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Zona 
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Zona
+echo.
+echo                                                             %COL%[1;4;34mFor devices%COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m GeForce Experience                 %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m NVIDIA Broadcast               %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m ThunderMaster
+echo.
+echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Logitech G hub                     %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m JBL Quantum ENGINE 
 echo.
 echo                                                             %COL%[1;4;34mOthers Files%COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m AIDA64                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m dfControl                    %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m qbittorrent
+echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m AIDA64                             %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m dfControl                      %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m qbittorrent
 echo.
-echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m WinRaR                     %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Uninstall Tool               %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Windows Digital Activation
+echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m WinRaR                            %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Uninstall Tool                %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Windows Digital Activation
 echo.
-echo              %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m DirectX                    %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Visual C++
+echo              %COL%[96m[%COL%[37m 13 %COL%[96m]%COL%[37m DirectX                           %COL%[96m[%COL%[37m 14 %COL%[96m]%COL%[37m Visual C++
 echo.
 echo.
 echo.
@@ -264,14 +270,19 @@ echo                                     %COL%[90m[ B for back ]         %COL%[3
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" call:Zona
-if /i "%choice%"=="2" call:AIDA64
-if /i "%choice%"=="3" call:dfControl
-if /i "%choice%"=="4" call:qbittorrent
-if /i "%choice%"=="5" call:WinRaR
-if /i "%choice%"=="6" call:UninstallTool
-if /i "%choice%"=="7" call:WinDigActivation
-if /i "%choice%"=="8" call:DirectX
-if /i "%choice%"=="9" call:VisualC
+if /i "%choice%"=="2" call:GeForceExperience
+if /i "%choice%"=="3" call:NVIDIABroadcast
+if /i "%choice%"=="4" call:ThunderMaster
+if /i "%choice%"=="5" call:LogitechGhub
+if /i "%choice%"=="6" call:JBLQuantumENGINE
+if /i "%choice%"=="7" call:AIDA64
+if /i "%choice%"=="8" call:dfControl
+if /i "%choice%"=="9" call:qbittorrent
+if /i "%choice%"=="10" call:WinRaR
+if /i "%choice%"=="11" call:UninstallTool
+if /i "%choice%"=="12" call:WinDigActivation
+if /i "%choice%"=="13" call:DirectX
+if /i "%choice%"=="14" call:VisualC
 if /i "%choice%"=="X" exit /b
 if /i "%choice%"=="B" goto Files
 if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
@@ -347,6 +358,26 @@ goto FilesPG2
 
 :VisualC
 start https://drive.google.com/file/d/1FsXOVWiTPIuSAFKYAInFvBR7MPYzsLGQ/view?usp=sharing
+goto FilesPG2
+
+:GeForceExperience
+start https://drive.google.com/file/d/1JyPu57jfK8_Mk0etpRbBdZIeQvnRl84k/view?usp=sharing
+goto FilesPG2
+
+:NVIDIABroadcast
+start https://drive.google.com/file/d/1LR0GkPIL8pnPNGQSaz3GUXnaPDD_jLu_/view?usp=sharing
+goto FilesPG2
+
+:ThunderMaster
+start https://drive.google.com/file/d/1SnCOlq1g_9dgyv-xq3bvTJc9qAJyhGus/view?usp=sharing
+goto FilesPG2
+
+:LogitechGhub
+start https://drive.google.com/file/d/1F1tmgmz7f-bmGk2Tmy4ykI7s6cY8_GbH/view?usp=sharing
+goto FilesPG2
+
+:JBLQuantumENGINE
+start https://drive.google.com/file/d/1N0B-FybUaNYFWaAqTg68hXDyCJAPKgux/view?usp=sharing
 goto FilesPG2
 
 :Comingsoon
