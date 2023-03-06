@@ -72,7 +72,7 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\AssistantX" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.6
+set local=0.6.1
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
 curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
@@ -168,7 +168,7 @@ echo.
 echo.
 echo                                                            %COL%[31m[ X to close ]%COL%[37m
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:1234567890XD /n /m "%DEL%                                        Select a corresponding number to the options above > "
+%SYSTEMROOT%\System32\choice.exe /c:1234567890XD /n /m "%DEL%                                         Select a corresponding number to the options above > "
 set choice=%errorlevel%
 if "%choice%"=="1" set PG=TweaksPG1 & goto Tweaks
 if "%choice%"=="2" goto GameSettings
@@ -588,7 +588,7 @@ echo.
 echo.
 echo.
 echo.
-echo                                                    %COL%[97m[ Press any key to go back ]%COL%[37m
+echo                                                       %COL%[97m[ Press any key to go back ]%COL%[37m
 pause >nul
 goto :MainMenu
 
