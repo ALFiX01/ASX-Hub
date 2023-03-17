@@ -22,6 +22,8 @@ mkdir %SYSTEMDRIVE%\AssistantX\Resources >nul 2>&1
 mkdir %SYSTEMDRIVE%\AssistantX\AssistantXRevert >nul 2>&1
 mkdir %SYSTEMDRIVE%\AssistantX\Drivers >nul 2>&1
 mkdir %SYSTEMDRIVE%\AssistantX\Renders >nul 2>&1
+mkdir %SYSTEMDRIVE%\AssistantX\Downloads >nul 2>&1
+mkdir %SYSTEMDRIVE%\AssistantX\AssistantAi >nul 2>&1
 cd %SYSTEMDRIVE%\AssistantX
 
 REM Run as Admin
@@ -45,8 +47,9 @@ cls
 echo.
 echo.
 call :AssistantXTitle
+TITLE Disclaimer - AssistantX v%localtwo%
 echo.
-echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
+echo                                              %COL%[90m  AssistantX is a free desktop utility
 echo                                        %COL%[90m     made to improve your day-to-day productivity
 echo.
 echo.
@@ -61,7 +64,7 @@ echo     %COL%[96m2.%COL%[37m If you don't know what a tweak is, do not use it a
 echo.
 echo     %COL%[96m3.%COL%[37m Even though we have an automatic restore point feature, we highly recommend making a manual restore point before running.
 echo.
-echo   For any questions and/or concerns, please join our discord: https://discord.gg/J7wghdhKsx
+echo   For any questions and/or concerns, please join our discord: discord.gg/J7wghdhKsx
 echo.
 echo   Please enter "I agree" without quotes to continue:
 echo.
@@ -72,10 +75,10 @@ if /i "!input!" neq "i agree" goto Disclaimer
 reg add "HKCU\Software\AssistantX" /v "Disclaimer" /f >nul 2>&1
 
 :CheckForUpdates
-set local=0.6.1
+set local=1.3
 set localtwo=%LOCAL%
 if exist "%TEMP%\Updater.bat" DEL /S /Q /F "%TEMP%\Updater.bat" >nul 2>&1
-curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AXCtrlVer" >nul 2>&1
+curl -g -L -# -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/AssistantXVersion" >nul 2>&1
 call "%TEMP%\Updater.bat"
 if "%LOCAL%" gtr "%LOCALTWO%" (
 	clsr
@@ -133,31 +136,26 @@ echo set "firstlaunch=0" > %SYSTEMDRIVE%\AssistantX\AssistantXRevert\firstlaunch
 
 :MainMenu
 Mode 130,45
-TITLE Control Panel - AssistantX v%localtwo%
 set "choice="
 cls
 echo.
 echo.
 call :AssistantXTitle
+TITLE Control Panel - AssistantX v%localtwo%
 echo.
-echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
+echo                                               %COL%[90m  AssistantX is a free desktop utility
 echo                                        %COL%[90m     made to improve your day-to-day productivity
 echo.
 echo.
 echo.
 echo.
 echo.
-echo                                  %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Optimizations        %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Game Settings        %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Media
+echo                                              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Optimizations              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Ai
 echo.
 echo.
 echo.
 echo.
-echo                                  %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[90m Fix Problem          %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Downloads            %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m App Uninstall
-echo.
-echo.
-echo.
-echo.
-echo                                  %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Advanced             %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Game-Booster         %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m More
+echo                                              %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m App Panel                  %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m More
 echo.
 echo.
 echo.
@@ -166,20 +164,21 @@ echo.
 echo.
 echo.
 echo.
-echo                                                            %COL%[31m[ X to close ]%COL%[37m
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:1234567890XD /n /m "%DEL%                                         Select a corresponding number to the options above > "
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                                            %COL%[31m[ X to Main Menu ]%COL%[37m       
+echo.
+%SYSTEMROOT%\System32\choice.exe /c:1234XD /n /m "%DEL%                                         Select a corresponding number to the options above > "
 set choice=%errorlevel%
 if "%choice%"=="1" set PG=TweaksPG1 & goto Tweaks
-if "%choice%"=="2" goto GameSettings
-if "%choice%"=="3" goto AssistantXRenders
-if "%choice%"=="4" call:FixProblem
-if "%choice%"=="5" call:Files
-if "%choice%"=="6" call:AppUninstall
-if "%choice%"=="7" goto AdvancedTW
-if "%choice%"=="8" call:gameBooster
-if "%choice%"=="9" goto More
-if "%choice%"=="0" exit /b
+if "%choice%"=="2" goto Ai
+if "%choice%"=="3" call:AppPanel
+if "%choice%"=="4" goto More
+if "%choice%"=="5" goto MainMenu
 goto MainMenu
 
 :AssistantXTitle 
@@ -193,31 +192,80 @@ echo                                                                            
 echo.
 goto :eof
 
-:Files
-TITLE Files Downloads panel - AssistantX v%localtwo%
+:AppPanel
 cls
 echo.
-echo                                                                                                                        %COL%[36mPage 1/2
+echo.
 call :AssistantXTitle
-echo                                                          %COL%[1;4;34mFiles for Gamers%COL%[0m
+TITLE App Panel - AssistantX v%localtwo%
+echo.
+echo.
+echo.
+echo.
+echo                               %COL%[96m[%COL%[37m R %COL%[96m]%COL%[37m Recommended apps                      %COL%[96m[%COL%[37m N %COL%[96m]%COL%[37m NO Recommended apps
+echo                               %COL%[90mList of programs recommended by us          %COL%[90mList of programs not recommended by us
+echo.
+echo.
+echo                                                      %COL%[96m[%COL%[37m U %COL%[96m]%COL%[37m App Uninstall panel
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                               %COL%[36m[ B for back ]        %COL%[31m[ X to Main Menu ]        %COL%[90m[ F to Download folder ]
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="R" goto AppRecommended
+if /i "%choice%"=="N" goto AppNORecommended
+if /i "%choice%"=="U" goto AppUninstall
+if /i "%choice%"=="X" goto MainMenu
+if /i "%choice%"=="F" call:DwFolder
+if /i "%choice%"=="B" goto MainMenu
+goto AppPanel
+
+:DwFolder
+start %SYSTEMDRIVE%\AssistantX\Downloads
+goto AppPanel
+
+:AppRecommended
+cls
+echo.
+echo                                                                                                                        %COL%[36mPage 1/3
+call :AssistantXTitle
+TITLE App Panel - AssistantX v%localtwo%
+echo.
+echo.
+echo.
+echo                                                             %COL%[1;4;34mFor Gamers%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Discord                         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Steam                       %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Epic Games Launcher 
 echo.
 echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m MSI Afterburner
 echo.
-echo                                                       %COL%[1;4;34mFiles for Optimization%COL%[0m
+echo                                                         %COL%[1;4;34mFor Optimization%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Win Tweaker                     %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m QuickCpu                    %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Auslogics BoostSpeed
 echo.
-echo                                                    %COL%[1;4;34mFiles Personalization Windows %COL%[0m
+echo                                                      %COL%[1;4;34mFor Personalization Windows %COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Start11                         %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m WinDynamicDesktop
 echo.
-echo                                                         %COL%[1;4;34mFiles Photo Editors %COL%[0m
+echo                                                            %COL%[1;4;34mPhoto Editors %COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Paint.net 
-echo.
-echo.
+echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Paint.net                      %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Adobe Photoshop            %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Topaz Photo AI
 echo.
 echo.
 echo.
@@ -226,7 +274,9 @@ echo.
 echo.
 echo.
 echo.
-echo                                     %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         %COL%[36m[ N page two ]
+echo.
+echo.
+echo                                  %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]         %COL%[36m[ N page two ]
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" call:Discord
@@ -239,18 +289,20 @@ if /i "%choice%"=="7" call:AuslogicsBoostSpeed
 if /i "%choice%"=="8" call:Start11
 if /i "%choice%"=="9" call:WinDynamicDesktop
 if /i "%choice%"=="10" call:PaintNet
-if /i "%choice%"=="X" exit /b
-if /i "%choice%"=="B" goto MainMenu
-if /i "%choice%"=="N" (set "PG=FilesPG2") & goto FilesPG2
+if /i "%choice%"=="11" call:Photoshop
+if /i "%choice%"=="12" call:TopazPhotoAi
+if /i "%choice%"=="X" goto MainMenu
+if /i "%choice%"=="B" goto AppPanel
+if /i "%choice%"=="N" (set "PG=AppRecommendedPG2") & goto AppRecommendedPG2
 goto Downloads
 
-:FilesPG2
-TITLE Files Downloads panel - AssistantX v%localtwo%
+:AppRecommendedPG2
 cls
 echo.
-echo                                                                                                                        %COL%[36mPage 2/2
+echo                                                                                                                        %COL%[36mPage 2/3
 call :AssistantXTitle
-echo                                                   %COL%[1;4;34mFiles To watch movies and series%COL%[0m
+TITLE Files Downloads Panel - AssistantX v%localtwo%
+echo                                                    %COL%[1;4;34mFor watch movies and series%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Zona
 echo.
@@ -260,21 +312,27 @@ echo              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m GeForce Experience  
 echo.
 echo              %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Logitech G hub                     %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m JBL Quantum ENGINE 
 echo.
-echo                                                             %COL%[1;4;34mOthers Files%COL%[0m
+echo                                                             %COL%[1;4;34mWeb Browsers%COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m AIDA64                             %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m dfControl                      %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m qbittorrent
-echo.
-echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m WinRaR                            %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Uninstall Tool                %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Windows Digital Activation
-echo.
-echo              %COL%[96m[%COL%[37m 13 %COL%[96m]%COL%[37m DirectX                           %COL%[96m[%COL%[37m 14 %COL%[96m]%COL%[37m Visual C++
+echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Microsoft Edge                     %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Chrome                         %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Firefox
 echo.
 echo.
+echo                                                            %COL%[1;4;34mFor Developers%COL%[0m
 echo.
+echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m GitHub Desktop                    %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Visual Studio Code            %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Pycharm
 echo.
 echo.
 echo.
 echo.
-echo                                     %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         %COL%[36m[ N page two ]
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                  %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]         %COL%[36m[ N page two ]
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" call:Zona
@@ -283,114 +341,365 @@ if /i "%choice%"=="3" call:NVIDIABroadcast
 if /i "%choice%"=="4" call:ThunderMaster
 if /i "%choice%"=="5" call:LogitechGhub
 if /i "%choice%"=="6" call:JBLQuantumENGINE
-if /i "%choice%"=="7" call:AIDA64
-if /i "%choice%"=="8" call:dfControl
-if /i "%choice%"=="9" call:qbittorrent
-if /i "%choice%"=="10" call:WinRaR
-if /i "%choice%"=="11" call:UninstallTool
-if /i "%choice%"=="12" call:WinDigActivation
-if /i "%choice%"=="13" call:DirectX
-if /i "%choice%"=="14" call:VisualC
-if /i "%choice%"=="X" exit /b
-if /i "%choice%"=="B" goto Files
-if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
+if /i "%choice%"=="7" call:Edge
+if /i "%choice%"=="8" call:Chrome
+if /i "%choice%"=="9" call:FireFox
+if /i "%choice%"=="10" call:GitHubDesktop
+if /i "%choice%"=="11" call:VScode
+if /i "%choice%"=="12" call:Pycharm
+if /i "%choice%"=="X" goto MainMenu
+if /i "%choice%"=="B" goto AppRecommended
+if /i "%choice%"=="N" (set "PG=AppRecommendedPG3") & goto AppRecommendedPG3
 goto Downloads
 
+:AppRecommendedPG3
+cls
+echo.
+echo                                                                                                                        %COL%[36mPage 3/3
+call :AssistantXTitle
+TITLE Files Downloads Panel - AssistantX v%localtwo%
+echo                                                             %COL%[1;4;34mOthers Files%COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m AIDA64                            %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m dfControl                     %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m qbittorrent
+echo.
+echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m WinRaR                            %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Uninstall Tool                %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Windows Digital Activation
+echo.
+echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m DirectX                           %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Visual C++                    %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Auslogics Driver Updater
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                  %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]         %COL%[36m[ N page two ]
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="1" call:AIDA64
+if /i "%choice%"=="2" call:dfControl
+if /i "%choice%"=="3" call:qbittorrent
+if /i "%choice%"=="4" call:WinRaR
+if /i "%choice%"=="5" call:UninstallTool
+if /i "%choice%"=="6" call:WinDigActivation
+if /i "%choice%"=="7" call:DirectX
+if /i "%choice%"=="8" call:VisualC
+if /i "%choice%"=="9" call:AuslogicsDriverUpdater
+if /i "%choice%"=="X" goto MainMenu
+if /i "%choice%"=="B" goto AppRecommended
+if /i "%choice%"=="N" (set "PG=AppRecommended") & goto AppRecommended
+goto Downloads
+
+:AppNORecommended
+cls
+echo.
+echo.
+call :AssistantXTitle
+TITLE App Panel - AssistantX v%localtwo%
+echo.
+echo.
+echo.
+echo                                                            %COL%[1;4;34mWeb Browsers%COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m YandexBrowser
+echo.
+echo                                                            %COL%[1;4;34mOthers Files%COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Ccleaner
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                               %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="1" call:YandexBrowser
+if /i "%choice%"=="2" call:Ccleaner
+if /i "%choice%"=="U" goto AppUninstall
+if /i "%choice%"=="X" goto MainMenu
+if /i "%choice%"=="B" goto AppPanel
+goto AppNORecommended
+
 :Discord
-start https://drive.google.com/file/d/1fDLrntesGvsz594IjIxEbJbB2h35axX-/view?usp=sharing
-goto Files
+echo %COL%[32m Discord download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\DiscordSetup.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/DiscordSetup.exe"
+echo %COL%[32m Discord download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\DiscordSetup.exe
+goto AppRecommended
 
 :EGS
-start https://drive.google.com/file/d/1pvH77U47CyfXOXvkeYSAByJlnbORHKUh/view?usp=share_link
-goto Files
+echo %COL%[32m Epic Games Launcher download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Epic.Games.msi "https://github.com/ALFiX01/AssistantX/releases/download/File/Epic.Games.msi"
+echo %COL%[32m Epic Games Launcher download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Epic.Games.msi
+goto AppRecommended
 
 :Steam
-start https://drive.google.com/file/d/1QxEu84KVq4uqSHq3ep-74iSz0exi0aGF/view?usp=sharing
-goto Files
+echo %COL%[32m Steam download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\SteamSetup.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/SteamSetup.exe"
+echo %COL%[32m Steam download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\SteamSetup.exe
+goto AppRecommended
 
 :MSIAfterburner
-https://drive.google.com/file/d/1DyELRemvqrU_YI5yCP6MUFw00OHoN-UZ/view?usp=sharing
-goto Files
+echo %COL%[32m MSI Afterburner download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\MSIAfterburnerSetup.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/MSIAfterburnerSetup.exe"
+echo %COL%[32m MSI Afterburner download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\MSIAfterburnerSetup.exe
+goto AppRecommended
 
 :WinTweaker
-start https://disk.yandex.ru/d/a1tiMTlICDbdbw
-goto Files
+echo %COL%[32m WinTweaker download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Win.Tweaker.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Win.Tweaker.exe"
+echo %COL%[32m WinTweaker download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Win.Tweaker.exe
+goto AppRecommended
 
 :QuickCpu
-start https://drive.google.com/file/d/1G1XCfQpExH1eSUyhjBh75zkBSczhUf_M/view?usp=sharing
-goto Files
+echo %COL%[32m QuickCpu download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\QuickCpuSetup.msi "https://github.com/ALFiX01/AssistantX/releases/download/File/QuickCpuSetup.msi"
+echo %COL%[32m QuickCpu download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\QuickCpuSetup.msi
+goto AppRecommended
 
 :AuslogicsBoostSpeed
-start https://disk.yandex.ru/d/RIMpOB9u6EvCZg
-goto Files
+echo %COL%[32m Auslogics Boost Speed download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Auslogics.BoostSpeed.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Auslogics.BoostSpeed.exe"
+echo %COL%[32m Auslogics Boost Speed download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Auslogics.BoostSpeed.exe
+goto AppRecommended
 
 :Start11
-start https://drive.google.com/file/d/16Ge9LwZv9HVtu1Q-otgbXO0AQMYcpUzU/view?usp=sharing
-goto Files
+echo %COL%[32m Start11 download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Start11-1.36.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Start11-1.36.exe"
+echo %COL%[32m Start11 download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Start11-1.36.exe
+goto AppRecommended
 
-call:WinDynamicDesktop
-start https://drive.google.com/file/d/1JNgFo0FVrIPrRsOGEmwqAVg77O0vxdeO/view?usp=sharing
-goto Files
+:WinDynamicDesktop
+echo %COL%[32m WinDynamicDesktop download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\WinDynamicDesktop.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/WinDynamicDesktop.exe"
+echo %COL%[32m WinDynamicDesktop download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\WinDynamicDesktop.exe
+goto AppRecommended
 
 :PaintNet
-start https://drive.google.com/file/d/17rb9l9tF4t44YwPNTGpFs4GL-S7eKhCu/view?usp=sharing
-goto Files
+echo %COL%[32m PaintNet download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\paintnet.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/paintnet.exe"
+echo %COL%[32m PaintNet download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\paintnet.exe
+goto AppRecommended
 
 :Zona
-start https://drive.google.com/file/d/1CCGGnt2M0hZAU6OnAv7HmixRk6DTJlcE/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m Zona download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\ZonaSetup.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/ZonaSetup.exe"
+echo %COL%[32m Zona download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\ZonaSetup.exe
+goto AppRecommendedPG2
 
 :AIDA64
-start https://drive.google.com/file/d/1kz7nfvacA6rwqNl8dxf5QhAF61EC6Qnf/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m AIDA64 download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\AIDA64.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/AIDA64.exe"
+echo %COL%[32m AIDA64 download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\AIDA64.exe
+goto AppRecommendedPG2
 
 :dfControl
-start https://disk.yandex.ru/d/iCwXLAW_vJENEg
-goto FilesPG2
+echo %COL%[32m dfControl download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\dfControl.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/dfControl.exe"
+echo %COL%[32m dfControl download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\dfControl.exe
+goto AppRecommendedPG2
 
 :qbittorrent
-start https://drive.google.com/file/d/1LbjSYEij-Lspdj40Anqpo62DmXtGmYVB/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m Qbittorrent download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\qbittorrent.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/qbittorrent.exe"
+echo %COL%[32m Qbittorrent download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\qbittorrent.exe
+goto AppRecommendedPG2
 
 :WinRaR
-start https://drive.google.com/file/d/1gskcAXypZJtJgb35SZmgdEmlHr_AKSEr/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m WinRaR download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\WinRAR.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/WinRAR.exe"
+echo %COL%[32m WinRaR download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\WinRAR.exe
+goto AppRecommendedPG2
 
 :UninstallTool
-start https://drive.google.com/file/d/1Vjw_VCjep4TnQO85ZV6cnIzTpHAfql82/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m UninstallTool download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Uninstall.Tool.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Uninstall.Tool.exe"
+echo %COL%[32m UninstallTool download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Uninstall.Tool.exe
+goto AppRecommendedPG2
 
 :WinDigActivation
-start https://disk.yandex.ru/d/lXYs3SuRmjt0tw
-goto FilesPG2
+echo %COL%[32m WinDigActivation download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\WinDigitalActivation.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/WinDigitalActivation.exe"
+echo %COL%[32m WinDigActivation download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\WinDigitalActivation.exe
+goto AppRecommendedPG2
 
 :DirectX
-start https://drive.google.com/file/d/1Df-qAVa9ZJggAKQN5bvaLFBH-TWRqOtz/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m DirectX download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\DirectX.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/DirectX.exe"
+echo %COL%[32m DirectX download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\DirectX.exe
+goto AppRecommendedPG2
 
 :VisualC
-start https://drive.google.com/file/d/1FsXOVWiTPIuSAFKYAInFvBR7MPYzsLGQ/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m VisualC download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Visual.C++.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Visual.C++.exe"
+echo %COL%[32m VisualC download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Visual.C++.exe
+goto AppRecommendedPG2
+
+:GitHubDesktop
+echo %COL%[32m GitHub Desktop download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\GitHubDesktop.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/GitHubDesktop.exe"
+echo %COL%[32m GitHub Desktop download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\GitHubDesktop.exe
+goto AppRecommendedPG2
+
+:AuslogicsDriverUpdater
+echo %COL%[32m Auslogics Driver Updater download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Auslogics.Driver.Updater.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Auslogics.Driver.Updater.exe"
+echo %COL%[32m Auslogics Driver Updater download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Auslogics.Driver.Updater.exe
+goto AppRecommendedPG2
 
 :GeForceExperience
-start https://drive.google.com/file/d/1JyPu57jfK8_Mk0etpRbBdZIeQvnRl84k/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m NVIDIA GeForce Experience download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\GeForce_Experience.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/GeForce_Experience.exe"
+echo %COL%[32m NVIDIA GeForce Experience download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\GeForce_Experience.exe
+goto AppRecommendedPG2
 
 :NVIDIABroadcast
-start https://drive.google.com/file/d/1LR0GkPIL8pnPNGQSaz3GUXnaPDD_jLu_/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m NVIDIA Broadcast download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\NVIDIA_Broadcast.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/NVIDIA_Broadcast.exe"
+echo %COL%[32m NVIDIA Broadcast download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\NVIDIA_Broadcast.exe
+goto AppRecommendedPG2
 
 :ThunderMaster
-start https://drive.google.com/file/d/1SnCOlq1g_9dgyv-xq3bvTJc9qAJyhGus/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m ThunderMaster download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Setup_ThunderMaster.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Setup_ThunderMaster.exe"
+echo %COL%[32m ThunderMaster download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Setup_ThunderMaster.exe
+goto AppRecommendedPG2
 
 :LogitechGhub
-start https://drive.google.com/file/d/1F1tmgmz7f-bmGk2Tmy4ykI7s6cY8_GbH/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m Logitech Ghub download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Logitech.Ghub.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Logitech.Ghub.exe"
+echo %COL%[32m Logitech Ghub download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Logitech.Ghub.exe
+goto AppRecommendedPG2
 
 :JBLQuantumENGINE
-start https://drive.google.com/file/d/1N0B-FybUaNYFWaAqTg68hXDyCJAPKgux/view?usp=sharing
-goto FilesPG2
+echo %COL%[32m JBLQuantumENGINE download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\JBL_QuantumENGINE.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/JBL_QuantumENGINE.exe"
+echo %COL%[32m JBLQuantumENGINE download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\JBL_QuantumENGINE.exe
+goto AppRecommendedPG2
+
+:Edge
+echo %COL%[32m Microsoft Edge download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\MicrosoftEdge.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/MicrosoftEdge.exe"
+echo %COL%[32m Microsoft Edge download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\MicrosoftEdge.exe
+goto AppRecommendedPG2
+
+:Chrome
+echo %COL%[32m Google Chrome download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Chrome.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Chrome.exe"
+echo %COL%[32m Google Chrome download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Chrome.exe
+goto AppRecommendedPG2
+
+:FireFox
+echo %COL%[32m Mozilla FireFox download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Firefox.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Firefox.exe"
+echo %COL%[32m Mozilla FireFox download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Firefox.exe
+goto AppRecommendedPG2
+
+:Photoshop
+echo %COL%[32m Adobe Photoshop download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Adobe.Photoshop.2022.v23.5.0.669.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Adobe.Photoshop.2022.v23.5.0.669.exe"
+echo %COL%[32m Adobe Photoshop download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Adobe.Photoshop.2022.v23.5.0.669.exe
+goto AppRecommended
+
+:YandexBrowser
+echo %COL%[32m YandexBrowser download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\Yandex.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Yandex.exe"
+echo %COL%[32m YandexBrowser download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\Yandex.exe
+goto AppNORecommended
+
+:Ccleaner
+echo %COL%[32m Ccleaner download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\CCleaner.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/CCleaner.exe"
+echo %COL%[32m Ccleaner download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\CCleaner.exe
+goto AppNORecommended
+
+:TopazPhotoAi
+mkdir %SYSTEMDRIVE%\AssistantX\Downloads\TopazPhotoAi >nul 2>&1
+cd %SYSTEMDRIVE%\AssistantX
+echo %COL%[32m Topaz Photo Ai download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\TopazPhotoAi\Topaz.Photo.AI.1.2.6.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Topaz.Photo.AI.1.2.6.exe"
+echo %COL%[32m File "Topaz.Photo.AI.1.2.6.exe" uploaded, 3 more files left %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\TopazPhotoAi\Topaz.Photo.AI.1.2.6-3.bin "https://github.com/ALFiX01/AssistantX/releases/download/File/Topaz.Photo.AI.1.2.6-3.bin"
+echo %COL%[32m File "Topaz.Photo.AI.1.2.6-3.bin" uploaded, 2 more files left %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\TopazPhotoAi\Topaz.Photo.AI.1.2.6-2.bin "https://github.com/ALFiX01/AssistantX/releases/download/File/Topaz.Photo.AI.1.2.6-2.bin"
+echo %COL%[32m File "Topaz.Photo.AI.1.2.6-2.bin" uploaded, 1 more files left %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\TopazPhotoAi\Topaz.Photo.AI.1.2.6-1.bin "https://github.com/ALFiX01/AssistantX/releases/download/File/Topaz.Photo.AI.1.2.6-1.bin"
+echo %COL%[32m Topaz Photo AI Download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\TopazPhotoAi
+goto AppNORecommended
+
+:VScode
+echo %COL%[32m Visual Studio Code download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\VSCode.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/VSCode.exe"
+echo %COL%[32m Visual Studio Code download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\VSCode.exe
+goto AppNORecommended
+
+:Pycharm
+echo %COL%[32m Pycharm download started %COL%[37m
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\pycharm.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/pycharm.exe"
+echo %COL%[32m Pycharm download complete %COL%[37m
+start %SYSTEMDRIVE%\AssistantX\Downloads\pycharm.exe
+goto AppNORecommended
 
 :Comingsoon
 cls
@@ -398,7 +707,7 @@ echo.
 echo.
 call :AssistantXTitle
 echo.
-echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
+echo                                               %COL%[90m AssistantX is a free desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -504,34 +813,37 @@ cls
 echo.
 echo                                                                                                                        %COL%[36mPage 1/2
 call :AssistantXTitle
+TITLE Optimization panel - AssistantX v%localtwo%
 echo                                                               %COL%[1;4;34mTweaks%COL%[0m
 echo.
 echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Power Plan Panel              %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m SvcHostSplitThreshold %MEMOF%      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Disable Keys 
-echo              %COL%[90mOpens the power optimization          %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
-echo              %COL%[90mmenu                                  %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
+echo              %COL%[90mOpens the power optimization        %COL%[90mChanges the split threshold for      %COL%[90mCSRSS is responsible for mouse input
+echo              %COL%[90mmenu                                %COL%[90mservice host to your RAM             %COL%[90mset to high to improve input latency
 echo.
 echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Timer Resolution %TMROF%          %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m MSI Mode %MSIOF%                   %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Affinity %AFFOF%
-echo              %COL%[90mThis tweak changes how fast           %COL%[90mEnable MSI Mode for gpu and          %COL%[90mThis tweak will spread devices
-echo              %COL%[90myour cpu refreshes                    %COL%[90mnetwork adapters                     %COL%[90mon multiple cpu cores
+echo              %COL%[90mThis tweak changes how fast         %COL%[90mEnable MSI Mode for gpu and          %COL%[90mThis tweak will spread devices
+echo              %COL%[90myour cpu refreshes                  %COL%[90mnetwork adapters                     %COL%[90mon multiple cpu cores
 echo.
 echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Disable Windows Telemetry     %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Memory Optimization %ME2OF%        %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable FSO and GameBar     
-echo              %COL%[90mDisables NVIDIA telemetry             %COL%[90mOptimizes your fsutil, win
-echo              %COL%[91mDangerous                             %COL%[90mstartup settings and more
+echo              %COL%[90mDisables Windows telemetry          %COL%[90mOptimizes your fsutil, win
+echo              %COL%[91mDangerous                           %COL%[90mstartup settings and more
 echo.
 echo                                                            %COL%[1;4;34mNvidia Tweaks%COL%[0m
 echo.
-echo              %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable HDCP %HDCOF%               %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Disable Preemption %CMAOF%        %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m ProfileInspector %NPIOF%
-echo              %COL%[90mDisable copy protection technology    %COL%[90mDisable preemption requests from     %COL%[90mWill edit your Nvidia control panel
-echo              %COL%[90mof illegal High Definition content    %COL%[90mthe GPU scheduler                    %COL%[90mand add various tweaks
+echo              %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable HDCP %HDCOF%              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Disable Preemption %CMAOF%        %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m ProfileInspector %NPIOF%
+echo              %COL%[90mDisable copy protection technology   %COL%[90mDisable preemption requests from     %COL%[90mWill edit your Nvidia control panel
+echo              %COL%[90mof illegal High Definition content   %COL%[90mthe GPU scheduler                    %COL%[90mand add various tweaks
 echo.
-echo              %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Disable Nvidia Telemetry %NVTOF%  %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Nvidia Tweaks %NVIOF%             %COL%[96m[%COL%[37m 13 %COL%[96m]%COL%[37m Disable Write Combining %DWCOF%
-echo              %COL%[90mRemove built in Nvidia telemetry      %COL%[90mVarious essential tweaks for         %COL%[90mStops data from being combined
-echo              %COL%[90mfrom your computer and driver.        %COL%[90mNvidia graphics cards                %COL%[90mand temporarily stored
-echo.
-echo.
+echo              %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Disable Nvidia Telemetry %NVTOF% %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Nvidia Tweaks %NVIOF%             %COL%[96m[%COL%[37m 13 %COL%[96m]%COL%[37m Disable Write Combining %DWCOF%
+echo              %COL%[90mRemove built in Nvidia telemetry     %COL%[90mVarious essential tweaks for         %COL%[90mStops data from being combined
+echo              %COL%[90mfrom your computer and driver.       %COL%[90mNvidia graphics cards                %COL%[90mand temporarily stored
 echo.
 echo.
-echo                                     %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         %COL%[36m[ N page two ]
+echo.
+echo.
+echo.
+echo.
+echo      %COL%[90m[ G for Game-Booster ]       %COL%[36m[ B for back ]       %COL%[31m[ X to Main Menu ]       %COL%[36m[ N page two ]       %COL%[90m[ A for Advanced Tweak ]
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" Call:PowerPlanPN
@@ -550,59 +862,79 @@ if /i "%choice%"=="11" goto ProfileInspector
 if /i "%choice%"=="12" goto NVTelemetry
 if /i "%choice%"=="13" goto NvidiaTweaks
 if /i "%choice%"=="14" goto DisableWriteCombining
-if /i "%choice%"=="X" exit /b
+if /i "%choice%"=="G" call:gameBooster
+if /i "%choice%"=="A" call:AdvancedTW
+if /i "%choice%"=="X" goto MainMenu
 if /i "%choice%"=="B" goto MainMenu
 if /i "%choice%"=="N" (set "PG=TweaksPG2") & goto TweaksPG2
 goto Tweaks
 
-:FixProblem
-TITLE Fix Problem panel - AssistantX v%localtwo%
+:TweaksPG2
 cls
 echo.
-echo.
+echo                                                                                                                        %COL%[36mPage 2/2
 call :AssistantXTitle
+TITLE Optimization Panel page 2 - AssistantX v%localtwo%
+echo                                                           %COL%[1;4;34mNetwork Tweaks%COL%[0m
 echo.
-echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
-echo                                        %COL%[90m    made to improve your day-to-day productivity
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Optimize TCP/IP %TCPOF%            %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Optimize NIC %NICOF%               %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Optimize Netsh %NETOF%
+echo              %COL%[90mTweaks your Internet Protocol        %COL%[90mOptimize your Network Card settings  %COL%[90mThis tweak will optimize your
+echo              %COL%[91mDon't use if you are using Wi-Fi     %COL%[91mDon't use if you are using Wi-Fi     %COL%[90mcomputer network configuration
 echo.
+echo                                                             %COL%[1;4;34mGPU ^& CPU%COL%[0m
 echo.
+echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m All GPU Tweaks %ALLOF%             %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Optimize Intel iGPU %DSSOF%        %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m AMD GPU Tweaks %AMDOF%
+echo              %COL%[90mVarious essential tweaks for all     %COL%[90mIncrease dedicated video vram on     %COL%[90mConfigure AMD GPU to optimized
+echo              %COL%[90mGPU brands and manufacturers         %COL%[90ma intel iGPU                         %COL%[90msettings
 echo.
+echo                                                        %COL%[1;4;34mMiscellaneous Tweaks%COL%[0m
 echo.
-echo                                  %COL%[31m This feature has not been finished yet but will be coming soon.
+echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Reduce Audio Latency %AUDOF%       %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Debloat %COL%[93mN/A                    %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable Mitigations %MITOF%
+echo              %COL%[90mReduces Audio Latency  		  %COL%[91mComing Soon			       %COL%[90mDisable protections against memory
+echo              %COL%[91mDon't use on slow or old CPU's	  %COL%[90m				       %COL%[90mbased attacks that consume perf
 echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
+echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Cleaner %BLANK%                   %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Soft Restart %BLANK%
+echo              %COL%[90mRemove adware, unused devices, and   %COL%[90mIf your PC has been running a while
+echo              %COL%[90mtemp files. Empties recycle bin.     %COL%[90muse this to receive a quick boost
 echo.
 echo.
 echo.
-echo                                                       %COL%[97m[ Press any key to go back ]%COL%[37m
-pause >nul
+echo.
+echo.
+echo.
+echo                                    %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]         %COL%[36m[ N page one ]
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="1" goto TCPIP
+if /i "%choice%"=="2" goto NIC
+if /i "%choice%"=="3" goto Netsh
+if /i "%choice%"=="4" goto AllGPUTweaks
+if /i "%choice%"=="5" goto Intel
+if /i "%choice%"=="6" goto AMD
+if /i "%choice%"=="7" goto AudioLatency
+if /i "%choice%"=="8" call:Comingsoon
+if /i "%choice%"=="9" goto Mitigations
+if /i "%choice%"=="10" call:Cleaner
+if /i "%choice%"=="11" call:gameBooster
+if /i "%choice%"=="12" call:softRestart
+if /i "%choice%"=="X" goto MainMenu
+if /i "%choice%"=="B" goto TweaksPG1
+if /i "%choice%"=="N" (set "PG=TweaksPG1") & goto TweaksPG1
+goto TweaksPG2
+
+:FixProblem
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\Downloads\FixProblem.zip "https://github.com/ALFiX01/AssistantX/releases/download/File/FixProblem.zip"
+start %SYSTEMDRIVE%\AssistantX\Downloads\FixProblem.zip
 goto :MainMenu
 
 :AppUninstall
-TITLE App Uninstall panel - AssistantX v%localtwo%
 cls
 echo.
 call :AssistantXTitle
-echo                                                          %COL%[1;4;34mUninstall method%COL%[0m
+TITLE App Uninstall Panel - AssistantX v%localtwo%
+echo                                                           %COL%[1;4;34mUninstall method%COL%[0m
 echo.
-echo                                      %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Selective                         %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Prepared  
-echo.
-echo.
-echo.
+echo                                    %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m  Elective                               %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Prepared 
 echo.
 echo.
 echo.
@@ -625,17 +957,20 @@ echo.
 echo.
 echo.
 echo.
-echo                                                %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
+echo.
+echo.
+echo.
+echo                                               %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" call:Selective-M
 if /i "%choice%"=="2" call:Prepared-M
-if /i "%choice%"=="X" exit /b
-if /i "%choice%"=="B" goto MainMenu
-goto AppUninstall
+if /i "%choice%"=="X" goto MainMenu
+if /i "%choice%"=="B" goto AppPanel
+goto AppPanel
 
 :Prepared-M
-TITLE Prepared Uninstall panel - AssistantX v%localtwo%
+TITLE Prepared Uninstall Panel - AssistantX v%localtwo%
 powershell -executionpolicy -command "Get-AppxPackage -allusers *people* | Remove-AppxPackage"
 powershell -executionpolicy -command "Get-AppxPackage -allusers *zunevideo* | Remove-AppxPackage"
 powershell -executionpolicy -command "Get-AppxPackage -allusers *3dbuilder* | Remove-AppxPackage"
@@ -650,15 +985,18 @@ powershell -executionpolicy -command "Get-AppxPackage -allusers *bingsports* | R
 powershell -executionpolicy -command "Get-AppxPackage -allusers *bingnews* | Remove-AppxPackage"
 powershell -executionpolicy -command "Get-AppxPackage -allusers *Microsoft.549981C3F5F10* | Remove-AppxPackage"
 powershell -executionpolicy -command "Remove-Appxpackage Microsoft.GetHelp_8wekyb3d8bbwe"
-powershell -executionpolicy -command "Remove-AppxpackageMicrosoftTeams_22336.907.1742.9730_x64__8wekyb3d8bbwe"
+powershell -executionpolicy -command "Remove-Appxpackage MicrosoftTeams_22336.907.1742.9730_x64__8wekyb3d8bbwe"
+powershell -executionpolicy -command "Remove-Appxpackage MicrosoftTeams_23034.1300.1846.7680_x64__8wekyb3d8bbwe"
+powershell -executionpolicy -command "Remove-Appxpackage Microsoft.PowerAutomateDesktop_1.0.65.0_x64__8wekyb3d8bbwe"
+powershell -executionpolicy -command "Remove-Appxpackage Microsoft.OneDriveSync_21220.1024.5.0_neutral__8wekyb3d8bbwe"
 pause
 goto MainMenu
 
 :Selective-M
 cls
-TITLE Selective Uninstall panel - AssistantX v%localtwo%
 echo.
 call:AssistantXTitle
+TITLE Selective Uninstall Panel - AssistantX v%localtwo%
 echo.
 echo                                                           %COL%[1;4;34mUninstall Programm%COL%[0m
 echo.
@@ -685,7 +1023,7 @@ echo.
 echo.
 echo.
 echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         
+echo                                                 %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]         
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" call:iPeople
@@ -703,7 +1041,7 @@ if /i "%choice%"=="12" call:iBingNews
 if /i "%choice%"=="13" call:iCortana
 if /i "%choice%"=="14" call:iGetHelp
 if /i "%choice%"=="15" call:iMicrosoftTeams
-if /i "%choice%"=="X" exit /b
+if /i "%choice%"=="X" goto MainMenu
 if /i "%choice%"=="B" goto Tweaks
 goto MainMenu
 
@@ -769,9 +1107,9 @@ goto Selective-M
 
 :PowerPlanPN
 cls
-TITLE Power Plan panel - AssistantX v%localtwo%
 echo.
 call:AssistantXTitle
+TITLE Power Plan Panel - AssistantX v%localtwo%
 echo.
 echo                                                           %COL%[1;4;34mPower Plan Tweaks%COL%[0m
 echo.
@@ -793,19 +1131,17 @@ echo.
 echo.
 echo.
 echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         
+echo                                                 %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]         
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" goto MaxPowerPlan
 if /i "%choice%"=="2" goto DeletePowerSavingPlan
 if /i "%choice%"=="3" goto DeleteHighPerformancePlan
-if /i "%choice%"=="X" exit /b
+if /i "%choice%"=="X" goto MainMenu
 if /i "%choice%"=="B" goto Tweaks
 goto Tweaks
 
 :DissableFSOandGameBar
-if "%FSOOF%" == "%COL%[91mOFF" (
-	for /f "tokens=2 delims==" %%i in ('wmic os get TotalVisibleMemorySize /value') do set /a mem=%%i + 1024000
 		reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "AllowAutoGameMode" /t REG_DWORD /d "0" /f
             reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "AutoGameModeEnabled" /t REG_DWORD /d "0" /f
 		reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "GamePanelStartupTipIndex" /t REG_DWORD /d "3" /f
@@ -821,82 +1157,13 @@ if "%FSOOF%" == "%COL%[91mOFF" (
             reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_HonorUserFSEBehaviorMode" /t REG_DWORD /d "1" /f
             reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR"  /v "AllowGameDVR" /t REG_DWORD /d "0" /f
             reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR"  /v "value" /t REG_DWORD /d "0" /f
-) >nul 2>&1 else (
-		reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "AllowAutoGameMode" /t REG_DWORD /d "0" /f
-            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "AutoGameModeEnabled" /t REG_DWORD /d "0" /f
-		reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "GamePanelStartupTipIndex" /t REG_DWORD /d "3" /f
-            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "ShowStartupPanel" /t REG_DWORD /d "0" /f
-            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\GameBar"  /v "UseNexusForGameBarEnabled" /t REG_DWORD /d "0" /f
-            reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR"  /v "AppCaptureEnabled" /t REG_DWORD /d "0" /f
-            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_DSEBehavior" /t REG_DWORD /d "2" /f
-            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_DXGIHonorFSEWindowsCompatible" /t REG_DWORD /d "1" /f
-            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_EFSEFeatureFlags" /t REG_DWORD /d "0" /f
-            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_Enabled" /t REG_DWORD /d "0" /f
-            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_FSEBehavior" /t REG_DWORD /d "2" /f
-            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_FSEBehaviorMode" /t REG_DWORD /d "2" /f
-            reg add "HKEY_CURRENT_USER\System\GameConfigStore"  /v "GameDVR_HonorUserFSEBehaviorMode" /t REG_DWORD /d "1" /f
-            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR"  /v "AllowGameDVR" /t REG_DWORD /d "0" /f
-            reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR"  /v "value" /t REG_DWORD /d "0" /f
-) >nul 2>&1
+            reg add "HKEY_CURRENT_USER\Software\Microsoft\GameBar"  /v "AutoGameModeEnabled" /t REG_DWORD /d "1" /f
 goto tweaks
 
-
-:TweaksPG2
-cls
-echo.
-echo                                                                                                                        %COL%[36mPage 2/2
-call :AssistantXTitle
-echo                                                           %COL%[1;4;34mNetwork Tweaks%COL%[0m
-echo.
-echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Optimize TCP/IP %TCPOF%            %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Optimize NIC %NICOF%               %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Optimize Netsh %NETOF%
-echo              %COL%[90mTweaks your Internet Protocol        %COL%[90mOptimize your Network Card settings  %COL%[90mThis tweak will optimize your
-echo              %COL%[91mDon't use if you are using Wi-Fi     %COL%[91mDon't use if you are using Wi-Fi     %COL%[90mcomputer network configuration
-echo.
-echo                                                             %COL%[1;4;34mGPU ^& CPU%COL%[0m
-echo.
-echo              %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m All GPU Tweaks %ALLOF%             %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Optimize Intel iGPU %DSSOF%        %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m AMD GPU Tweaks %AMDOF%
-echo              %COL%[90mVarious essential tweaks for all     %COL%[90mIncrease dedicated video vram on     %COL%[90mConfigure AMD GPU to optimized
-echo              %COL%[90mGPU brands and manufacturers         %COL%[90ma intel iGPU                         %COL%[90msettings
-echo.
-echo                                                        %COL%[1;4;34mMiscellaneous Tweaks%COL%[0m
-echo.
-echo              %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Reduce Audio Latency %AUDOF%       %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Debloat %COL%[93mN/A                    %COL%[96m[%COL%[37m 9 %COL%[96m]%COL%[37m Disable Mitigations %MITOF%
-echo              %COL%[90mReduces Audio Latency  		  %COL%[91mComing Soon			       %COL%[90mDisable protections against memory
-echo              %COL%[91mDon't use on slow or old CPU's	  %COL%[90m				       %COL%[90mbased attacks that consume perf
-echo.
-echo              %COL%[96m[%COL%[37m 10 %COL%[96m]%COL%[37m Cleaner %BLANK%                   %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Soft Restart %BLANK%
-echo              %COL%[90mRemove adware, unused devices, and   %COL%[90mIf your PC has been running a while
-echo              %COL%[90mtemp files. Empties recycle bin.     %COL%[90muse this to receive a quick boost
-echo.
-echo.
-echo.
-echo                                     %COL%[90m[ B for back ]         %COL%[31m[ X to close ]         %COL%[36m[ N page one ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto TCPIP
-if /i "%choice%"=="2" goto NIC
-if /i "%choice%"=="3" goto Netsh
-if /i "%choice%"=="4" goto AllGPUTweaks
-if /i "%choice%"=="5" goto Intel
-if /i "%choice%"=="6" goto AMD
-if /i "%choice%"=="7" goto AudioLatency
-if /i "%choice%"=="8" call:Comingsoon
-if /i "%choice%"=="9" goto Mitigations
-if /i "%choice%"=="10" call:Cleaner
-if /i "%choice%"=="11" call:gameBooster
-if /i "%choice%"=="12" call:softRestart
-if /i "%choice%"=="X" exit /b
-if /i "%choice%"=="B" goto TweaksPG1
-if /i "%choice%"=="N" (set "PG=TweaksPG1") & goto TweaksPG1
-goto TweaksPG2
-
 :DeleteHighPerformancePlan
+TITLE Removing the high performance plan - AssistantX v%localtwo%
 echo %PWROF% | find "N/A" >nul && call :AssistantX Error "This power plan isn't recommended for batteries." && goto Tweaks
-if "%PWROF%" == "%COL%[91mOFF" (
       powercfg -delete 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
-) >nul 2>&1 else (
-      powercfg -delete 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
-) >nul 2>&1
 cls
 color A
 echo.
@@ -914,12 +1181,9 @@ color 06
 goto PowerPlanPN
 
 :DeletePowerSavingPlan
+TITLE Removing the power saving plan - AssistantX v%localtwo%
 echo %PWROF% | find "N/A" >nul && call :AssistantX Error "This power plan isn't recommended for batteries." && goto Tweaks
-if "%PWROF%" == "%COL%[91mOFF" (
       powercfg -delete a1841308-3541-4fab-bc81-f71556f20b4a
-) >nul 2>&1 else (
-      powercfg -delete a1841308-3541-4fab-bc81-f71556f20b4a
-) >nul 2>&1
 cls
 color A
 echo.
@@ -937,12 +1201,23 @@ color 06
 goto PowerPlanPN
 
 :MaxPowerPlan
+TITLE Enabling maximum performance mode - AssistantX v%localtwo%
 echo %PWROF% | find "N/A" >nul && call :AssistantX Error "This power plan isn't recommended for batteries." && goto Tweaks
-if "%PWROF%" == "%COL%[91mOFF" (
       powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
-) >nul 2>&1 else (
-	powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
-) >nul 2>&1
+cls
+color A
+echo.
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 2
+color 06
 goto tweaks
 
 :ServicesOptimization
@@ -1255,37 +1530,6 @@ call :AssistantXCtrlRestart "Memory Optimization" "%ME2OF%"
 Mode 130,45
 goto Tweaks
 
-:Mouse
-cls
-if "%MOUOF%" neq "%COL%[91mOFF" (
-	reg add "HKEY_CURRENT_USER\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "0000000000000000156e000000000000004001000000000029dc0300000000000000280000000000" /f
-	reg add "HKEY_CURRENT_USER\Control Panel\Mouse" /v "SmoothMouseYCurve" /t REG_BINARY /d "0000000000000000fd11010000000000002404000000000000fc12000000000000c0bb0100000000" /f
-	goto tweaks
-) >nul 2>&1
-reg add "HKCU\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f >nul 2>&1
-reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "0" /f >nul 2>&1
-reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "0" /f >nul 2>&1
-reg add "HKCU\Control Panel\Mouse" /v "MouseSensitivity" /t REG_SZ /d "10" /f >nul 2>&1
-reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseYCurve" /t REG_BINARY /d "0000000000000000000038000000000000007000000000000000A800000000000000E00000000000" /f >nul 2>&1
-control.exe desk.cpl,Settings,@Settings
-:ChooseScale
-echo What is your current display scaling percentage? 100, 125, 150, 175, 200, 225, 250, 300, 350 (Don't put a %% symbol)
-set /p choice=" Scale > "
-if /i "%choice%"=="100" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "0000000000000000C0CC0C0000000000809919000000000040662600000000000033330000000000" /f >nul 2>&1 & goto MouseEnd
-if /i "%choice%"=="125" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "00000000000000000000100000000000000020000000000000003000000000000000400000000000" /f >nul 2>&1 & goto MouseEnd
-if /i "%choice%"=="150" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "0000000000000000303313000000000060662600000000009099390000000000C0CC4C0000000000" /f >nul 2>&1 & goto MouseEnd
-if /i "%choice%"=="175" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "00000000000000006066160000000000C0CC2C000000000020334300000000008099590000000000" /f >nul 2>&1 & goto MouseEnd
-if /i "%choice%"=="200" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "000000000000000090991900000000002033330000000000B0CC4C00000000004066660000000000" /f >nul 2>&1 & goto MouseEnd
-if /i "%choice%"=="225" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "0000000000000000C0CC1C0000000000809939000000000040665600000000000033730000000000" /f >nul 2>&1 & goto MouseEnd
-if /i "%choice%"=="250" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "00000000000000000000200000000000000040000000000000006000000000000000800000000000" /f >nul 2>&1 & goto MouseEnd
-if /i "%choice%"=="300" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "00000000000000006066260000000000C0CC4C000000000020337300000000008099990000000000" /f >nul 2>&1 & goto MouseEnd
-if /i "%choice%"=="350" reg add "HKCU\Control Panel\Mouse" /v "SmoothMouseXCurve" /t REG_BINARY /d "0000000000000000C0CC2C0000000000809959000000000040668600000000000033B30000000000" /f >nul 2>&1 & goto MouseEnd
-goto ChooseScale
-:MouseEnd
-call :AssistantXCtrlRestart "Mouse Tweaks" "%MOUOF%"
-Mode 130,45
-goto tweaks
-
 :DisableHDCP
 for /f %%a in ('reg query "HKLM\System\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}" /t REG_SZ /s /e /f "NVIDIA" ^| findstr "HKEY"') do (
 	if "%HDCOF%" == "%COL%[91mOFF" (
@@ -1457,7 +1701,7 @@ echo.
 echo.
 call :AssistantXTitle
 echo.
-echo                                        %COL%[90m AssistantXCtrl is a free and open-source desktop utility
+echo                                               %COL%[90m AssistantX is a free desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -1465,7 +1709,7 @@ echo.
 echo %COL%[91m  WARNING:
 echo %COL%[91m  This tweak is for Ethernet users only, if you're on Wi-Fi, do not run this tweak.
 echo.
-echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/AssistantX
+echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/J7wghdhKsx
 echo.
 echo   %COL%[37mPlease enter "I understand" without quotes to continue:
 echo.
@@ -1570,7 +1814,7 @@ echo.
 echo.
 call :AssistantXTitle
 echo.
-echo                                        %COL%[90m AssistantXCtrl is a free and open-source desktop utility
+echo                                               %COL%[90m AssistantX is a free and desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -1578,7 +1822,7 @@ echo.
 echo %COL%[91m  WARNING:
 echo %COL%[91m  This tweak is for ethernet users only, if you're on Wi-Fi, do not run this tweak.
 echo.
-echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/AssistantX
+echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/J7wghdhKsx
 echo.
 echo   %COL%[37mPlease enter "I understand" without quotes to continue:
 echo.
@@ -1809,7 +2053,7 @@ DeviceCleanupCmd.exe *
 goto tweaks
 
 :gameBooster
-TITLE Game Booster panel - AssistantX v%localtwo%
+TITLE Game Booster Panel - AssistantX v%localtwo%
 cls & echo Select the game location, you can do it a second time to revert the changes.
 set dialog="about:<input type=file id=FILE><script>FILE.click();new ActiveXObject
 set dialog=%dialog%('Scripting.FileSystemObject').GetStandardStream(1).WriteLine(FILE.value);
@@ -1864,19 +2108,26 @@ echo.
 %SYSTEMROOT%\System32\choice.exe /c:X /n /m "%DEL%                                >:"
 goto tweaks
 
-:GameSettings
+:Ai
 cls
-TITLE Game Settings panel - AssistantX v%localtwo%
+TITLE AI Panel - AssistantX v%localtwo%
 echo.
 echo.
-call :AssistantXTitle
+echo                                                                                %COL%[33m##      ##
+echo                        %COL%[33m####              ##         ##                   ##     ##    ##            ####    ##
+echo                       %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##            ##  ## 
+echo                       %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##              ######   ##
+echo                       %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##            ##  ##   ##
+echo                       %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##           ##  ##   ##
+echo                                                                                %COL%[33m##      ##
 echo.
 echo.
+echo                                                   %COL%[90m AssistantX Ai - free virtual assistant
+echo                                                           %COL%[90m Based on GPT-3.5 Turbo
 echo.
-echo                                                               %COL%[94m%COL%[4mGames%COL%[0m
 echo.
-echo                                                         %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Minecraft
 echo.
+echo                                %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Install/Update Ai                                 %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Launch Ai
 echo.
 echo.
 echo.
@@ -1897,1782 +2148,37 @@ echo.
 echo.
 echo.
 echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]%COL%[37m
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:1BX /n /m "%DEL%                                        Select a corresponding number to the options above >"
-set choice=%errorlevel%
-if "%choice%"=="1" goto Minecraft
-if "%choice%"=="2" goto MainMenu
-if "%choice%"=="3" exit /b
-
-:Minecraft
-if not exist "%APPDATA%\.minecraft\" call:AssistantXCtrlError "Can't find your Minecraft installation." & goto GameSettings
-cls
 echo.
 echo.
-echo.
-echo.
-echo                                                                                           %COL%[33m##      ##
-echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                           %COL%[33m##      ## 
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                      %COL%[1;4;34mSelect Minecraft Version%COL%[0m
-echo.
-echo.
-echo.
-echo.
-echo                       %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m 1.7.10                         %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m 1.8.9                          %COL%[96m[ %COL%[37m3 %COL%[96m] %COL%[37m 1.9 - latest
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]%COL%[37m
-echo.
-%SYSTEMROOT%\System32\choice.exe /c:123BX /n /m "%DEL%                                        Select a corresponding number to the options above >"
-set choice=%errorlevel%
-if %choice% == 1 goto 1.7.10
-if %choice% == 2 goto 1.8.9
-if %choice% == 3 goto 1.19.3
-if %choice% == 4 goto GameSettings
-if %choice% == 5 exit /b
-
-:1.7.10
-cd %APPDATA%\.minecraft\
-(
-	echo ofRenderDistanceChunks:4
-	echo ofFogType:3
-	echo ofFogStart:0.6
-	echo ofMipmapType:0
-	echo ofLoadFar:false
-	echo ofPreloadedChunks:0
-	echo ofOcclusionFancy:false
-	echo ofSmoothFps:false
-	echo ofSmoothWorld:false
-	echo ofAoLevel:0.0
-	echo ofClouds:3
-	echo ofCloudsHeight:0.0
-	echo ofTrees:1
-	echo ofGrass:0
-	echo ofDroppedItems:1
-	echo ofRain:3
-	echo ofWater:0
-	echo ofAnimatedWater:0
-	echo ofAnimatedLava:0
-	echo ofAnimatedFire:true
-	echo ofAnimatedPortal:true
-	echo ofAnimatedRedstone:false
-	echo ofAnimatedExplosion:true
-	echo ofAnimatedFlame:true
-	echo ofAnimatedSmoke:true
-	echo ofVoidParticles:false
-	echo ofWaterParticles:true
-	echo ofPortalParticles:true
-	echo ofPotionParticles:true
-	echo ofDrippingWaterLava:true
-	echo ofAnimatedTerrain:true
-	echo ofAnimatedTextures:true
-	echo ofAnimatedItems:true
-	echo ofRainSplash:false
-	echo ofLagometer:false
-	echo ofShowFps:false
-	echo ofAutoSaveTicks:28800
-	echo ofBetterGrass:3
-	echo ofConnectedTextures:3
-	echo ofWeather:false
-	echo ofSky:false
-	echo ofStars:false
-	echo ofSunMoon:true
-	echo ofVignette:1
-	echo ofChunkUpdates:1
-	echo ofChunkLoading:0
-	echo ofChunkUpdatesDynamic:false
-	echo ofTime:0
-	echo ofClearWater:true
-	echo ofDepthFog:false
-	echo ofAaLevel:0
-	echo ofProfiler:false
-	echo ofBetterSnow:false
-	echo ofSwampColors:false
-	echo ofRandomMobs:false
-	echo ofSmoothBiomes:false
-	echo ofCustomFonts:false
-	echo ofCustomColors:false
-	echo ofCustomSky:false
-	echo ofShowCapes:true
-	echo ofNaturalTextures:false
-	echo ofLazyChunkLoading:true
-	echo ofDynamicFov:false
-	echo ofDynamicLights:3
-	echo ofFullscreenMode:Default
-	echo ofFastMath:true
-	echo ofFastRender:true
-	echo ofTranslucentBlocks:1
-) > optionsof.txt
-goto MinecraftConfirmation
-
-:1.8.9
-cd %APPDATA%\.minecraft\
-(
-	echo ofFogType:3
-	echo ofFogStart:0.6
-	echo ofMipmapType:0
-	echo ofOcclusionFancy:false
-	echo ofSmoothFps:false
-	echo ofSmoothWorld:false
-	echo ofAoLevel:0.0
-	echo ofClouds:3
-	echo ofCloudsHeight:0.0
-	echo ofTrees:1
-	echo ofDroppedItems:1
-	echo ofRain:3
-	echo ofAnimatedWater:0
-	echo ofAnimatedLava:0
-	echo ofAnimatedFire:true
-	echo ofAnimatedPortal:true
-	echo ofAnimatedRedstone:false
-	echo ofAnimatedExplosion:true
-	echo ofAnimatedFlame:true
-	echo ofAnimatedSmoke:true
-	echo ofVoidParticles:false
-	echo ofWaterParticles:true
-	echo ofPortalParticles:true
-	echo ofPotionParticles:true
-	echo ofFireworkParticles:true
-	echo ofDrippingWaterLava:true
-	echo ofAnimatedTerrain:true
-	echo ofAnimatedTextures:true
-	echo ofRainSplash:false
-	echo ofLagometer:false
-	echo ofShowFps:false
-	echo ofAutoSaveTicks:28800
-	echo ofBetterGrass:3
-	echo ofConnectedTextures:3
-	echo ofWeather:false
-	echo ofSky:false
-	echo ofStars:false
-	echo ofSunMoon:true
-	echo ofVignette:1
-	echo ofChunkUpdates:1
-	echo ofChunkUpdatesDynamic:false
-	echo ofTime:0
-	echo ofClearWater:false
-	echo ofAaLevel:0
-	echo ofAfLevel:1
-	echo ofProfiler:false
-	echo ofBetterSnow:false
-	echo ofSwampColors:false
-	echo ofRandomEntities:false
-	echo ofSmoothBiomes:false
-	echo ofCustomFonts:false
-	echo ofCustomColors:false
-	echo ofCustomItems:false
-	echo ofCustomSky:true
-	echo ofShowCapes:true
-	echo ofNaturalTextures:false
-	echo ofEmissiveTextures:false
-	echo ofLazyChunkLoading:true
-	echo ofRenderRegions:true
-	echo ofSmartAnimations:true
-	echo ofDynamicFov:false
-	echo ofAlternateBlocks:false
-	echo ofDynamicLights:3
-	echo ofScreenshotSize:1
-	echo ofCustomEntityModels:false
-	echo ofCustomGuis:false
-	echo ofShowGlErrors:false
-	echo ofFullscreenMode:Default
-	echo ofFastMath:true
-	echo ofFastRender:true
-	echo ofTranslucentBlocks:1
-	echo key_of.key.zoom:29
-) > optionsof.txt
-goto MinecraftConfirmation
-
-:1.19.3
-cd %APPDATA%\.minecraft\
-(
-	echo ofFogType:3
-	echo ofFogStart:0.6
-	echo ofMipmapType:0
-	echo ofOcclusionFancy:false
-	echo ofSmoothFps:false
-	echo ofSmoothWorld:false
-	echo ofAoLevel:0.0
-	echo ofClouds:3
-	echo ofCloudsHeight:0.0
-	echo ofTrees:1
-	echo ofDroppedItems:1
-	echo ofRain:3
-	echo ofAnimatedWater:0
-	echo ofAnimatedLava:0
-	echo ofAnimatedFire:true
-	echo ofAnimatedPortal:true
-	echo ofAnimatedRedstone:false
-	echo ofAnimatedExplosion:true
-	echo ofAnimatedFlame:true
-	echo ofAnimatedSmoke:true
-	echo ofVoidParticles:false
-	echo ofWaterParticles:true
-	echo ofPortalParticles:true
-	echo ofPotionParticles:true
-	echo ofFireworkParticles:true
-	echo ofDrippingWaterLava:true
-	echo ofAnimatedTerrain:true
-	echo ofAnimatedTextures:true
-	echo ofRainSplash:false
-	echo ofLagometer:false
-	echo ofShowFps:false
-	echo ofAutoSaveTicks:28800
-	echo ofBetterGrass:3
-	echo ofConnectedTextures:3
-	echo ofWeather:false
-	echo ofSky:false
-	echo ofStars:fale
-	echo ofSunMoon:true
-	echo ofVignette:1
-	echo ofChunkUpdates:1
-	echo ofChunkUpdatesDynamic:false
-	echo ofTime:0
-	echo ofAaLevel:0
-	echo ofAfLevel:1
-	echo ofProfiler:false
-	echo ofBetterSnow:false
-	echo ofSwampColors:false
-	echo ofRandomEntities:false
-	echo ofCustomFonts:false
-	echo ofCustomColors:false
-	echo ofCustomItems:false
-	echo ofCustomSky:true
-	echo ofShowCapes:true
-	echo ofNaturalTextures:false
-	echo ofEmissiveTextures:false
-	echo ofLazyChunkLoading:true
-	echo ofRenderRegions:true
-	echo ofSmartAnimations:true
-	echo ofDynamicFov:false
-	echo ofAlternateBlocks:false
-	echo ofDynamicLights:3
-	echo ofScreenshotSize:1
-	echo ofCustomEntityModels:false
-	echo ofCustomGuis:false
-	echo ofShowGlErrors:false
-	echo ofFastMath:true
-	echo ofFastRender:true
-	echo ofTranslucentBlocks:0
-	echo ofChatBackground:3
-	echo ofChatShadow:false
-	echo ofTelemetry:2
-	echo key_of.key.zoom:key.keyboard.left.control
-) > optionsof.txt
-goto MinecraftConfirmation
-
-:MinecraftConfirmation
-cls
-echo.
-echo.
-echo.
-echo.
-echo                                                                                           %COL%[33m##      ##
-echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                           %COL%[33m##      ## 
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                   %COL%[37m Settings have been applied
-echo.
-echo.
-echo.
-echo.
-echo                                                          %COL%[90m[ B for back ]%COL%[37m
-echo.
-%SYSTEMROOT%\System32\choice.exe /c:B /n /m "%DEL%                                                               >:"
-goto GameSettings
-
-:AssistantXRenders
-REM Detect encoder for obs, blur, and ffmpeg settings
-for /F "tokens=*" %%n in ('WMIC path Win32_VideoController get Name ^| findstr "NVIDIA"') do set GPU_NAME=%%n
-echo %GPU_NAME% | find "NVIDIA" && set encoder=NVENC
-if not defined encoder goto next
-if %encoder% == NVENC goto done
-:next
-for /F "tokens=*" %%n in ('WMIC path Win32_VideoController get Name ^| findstr "AMD"') do set GPU_NAME=%%n
-echo %GPU_NAME% | find "AMD" && set encoder=AMF
-if not defined encoder goto next2
-if %encoder% == AMF goto done
-:next2
-set encoder=CPU
-goto done
-:done
-cls
-TITLE Media panel - AssistantX v%localtwo%
-echo.
-echo.
-echo                                                                                           %COL%[33m##      ##
-echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                           %COL%[33m##      ## 
-echo.
-echo                                                           %COL%[94m%COL%[4mOBS Settings%COL%[0m
-echo.
-echo              %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Install/Update OBS             %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Recording                      %COL%[96m[ %COL%[37m3 %COL%[96m]%COL%[37m Streaming
-echo              %COL%[90mAutomatically install or update      %COL%[90mAutomated recording settings for     %COL%[90mAutomated streaming settings for
-echo              %COL%[90mOBS using the official link          %COL%[90mOBS based on your preference         %COL%[90mOBS based on your preference
-echo.
-echo.
-echo                                                       %COL%[94m%COL%[4mVideo Editor Settings%COL%[0m
-echo.
-echo              %COL%[96m[ %COL%[37m4 %COL%[96m]%COL%[37m Install A Video Editor (NLE)  %COL%[96m[ %COL%[37m5 %COL%[96m]%COL%[37m Project Settings              %COL%[96m[ %COL%[37m6 %COL%[96m]%COL%[37m Renders
-echo              %COL%[90mDownload ^& install a		  %COL%[90mAutomated Project settings	       %COL%[90mAutomated render settings
-echo		     %COL%[90mNon-Linear editing software	  %COL%[90mfor Vegas pro                        %COL%[90mfor Vegas pro
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
+echo                                               %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" call:OBSInstall
-if /i "%choice%"=="2" goto Recording
-if /i "%choice%"=="3" goto Streaming
-if /i "%choice%"=="4" goto NLEInstall
-if /i "%choice%"=="5" goto ProjectSettings
-if /i "%choice%"=="6" goto RenderSettings
+if /i "%choice%"=="1" call:AIdownload
+if /i "%choice%"=="2" call:AIstart
 if /i "%choice%"=="B" goto MainMenu
-if /i "%choice%"=="X" exit /b
-goto AssistantXRenders
+if /i "%choice%"=="X" goto MainMenu
+goto Ai
 
-:OBSInstall
-REM Delete old OBS
-if exist "%SYSTEMDRIVE%\Program Files\obs-studio\uninstall.exe" start /w "" "%SYSTEMDRIVE%\Program Files\obs-studio\uninstall.exe" /S >nul 2>&1
-rmdir /s /q "%APPDATA%\obs-studio" >nul 2>&1
-REM get url to OBS
-for /f "skip=150 tokens=2" %%I in ('curl -s https://obsproject.com/') do set "OBS=%%I" & goto end
-:end
-REM Install OBS Silently
-curl -g -L -# -o "%TEMP%\OBS.exe" "%OBS:~6,-1%"
-start "" /D "%TEMP%" OBS -s
-goto :eof
+:AIdownload
+del /S /Q %SYSTEMDRIVE%\AssistantX\AssistantAi\Assistant.exe
+curl -g -L -# -o %SYSTEMDRIVE%\AssistantX\AssistantAi\Assistant.exe "https://github.com/ALFiX01/AssistantX/releases/download/File/Assistant.exe"
+goto Ai
 
-
-:Recording
-cls
-echo.
-echo.
-call :AssistantXTitle
-echo.
-echo              %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Quality                        %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Optimal                        %COL%[96m[ %COL%[37m3 %COL%[96m]%COL%[37m Performance
-echo              %COL%[90mSettings for the best                %COL%[90mThe best for performance             %COL%[90mSettings for the best
-echo              %COL%[90mquality in OBS                       %COL%[90mwithout losing much quality          %COL%[90mperformance in OBS
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto Quality
-if /i "%choice%"=="2" goto Optimal
-if /i "%choice%"=="3" goto Performance
-if /i "%choice%"=="B" goto AssistantXRenders
-if /i "%choice%"=="X" goto exit /b
-goto recording
-
-:Quality
-if not exist "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit" call:OBSInstall
-	cd "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit"
-	taskkill /f /im obs64.exe >nul 2>&1
-	Reg add "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit\obs64.exe" /t Reg_SZ /d "~ RUNASADMIN" /f >nul 2>&1
-	REM get monitor resolution
-	powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1)" > "%TEMP%\width.txt"
-	powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1 -Skip 1)" > "%TEMP%\height.txt"
-	set /p width=<"%TEMP%\width.txt"
-	set /p height=<"%TEMP%\height.txt"
-	cls & set /p FPS="What FPS would you like to record in? >: "
-	if %FPS% gtr 120 echo Warning: Recording at high FPS with the Quality preset can cause lag on weaker systems. && timeout 8 /nobreak
-if %encoder% == NVENC (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=jim_nvenc"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=!width!"
-		"OutputCY=!height!"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bilinear"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Full"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bf":2,"cqp":17,"keyint_sec":0,"lookahead":"false","multipass":"disabled","preset2":"p1","profile":"baseline","rate_control":"CQP"} >"%TEMP%\RecordEncoder.json"
-)
-
-if %encoder% == AMF (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=h264_texture_amf"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=!width!"
-		"OutputCY=!height!"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bilinear"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Full"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"cqp":18,"preset":"speed","profile":"baseline","rate_control":"CQP"} >"%TEMP%\RecordEncoder.json"
-)
-
-if %encoder% == CPU (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=obs_x264"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=!width!"
-		"OutputCY=!height!"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bilinear"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Full"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bitrate":40000,"preset":"faster","profile":"baseline","tune":"film"} >"%TEMP%\RecordEncoder.json"
-)
-move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-move /Y "%TEMP%\RecordEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto AssistantXRenders
-
-:Optimal
-if not exist "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit" call:OBSInstall
-	cd "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit"
-	taskkill /f /im obs64.exe >nul 2>&1
-	Reg add "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit\obs64.exe" /t Reg_SZ /d "~ RUNASADMIN" /f >nul 2>&1
-	REM get monitor resolution
-	powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1)" > "%TEMP%\width.txt"
-	powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1 -Skip 1)" > "%TEMP%\height.txt"
-	set /p width=<"%TEMP%\width.txt"
-	set /p height=<"%TEMP%\height.txt"
-	cls & set /p FPS="What FPS would you like to record in? >: "
-if %encoder% == NVENC (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=jim_nvenc"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=!width!"
-		"OutputCY=!height!"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bilinear"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Partial"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bf":0,"cqp":18,"keyint_sec":0,"lookahead":"false","multipass":"disabled","preset2":"p1","profile":"baseline","psycho_aq":"false","rate_control":"CQP"} >"%TEMP%\RecordEncoder.json"
-)
-
-if %encoder% == AMF (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=h264_texture_amf"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=!width!"
-		"OutputCY=!height!"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bilinear"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Partial"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"cqp":18,"preset":"speed","profile":"baseline","rate_control":"CQP"} >"%TEMP%\RecordEncoder.json"
-)
-
-if %encoder% == CPU (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=obs_x264"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=!width!"
-		"OutputCY=!height!"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bilinear"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Partial"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bitrate":30000,"preset":"veryfast","profile":"baseline","tune":"film"} >"%TEMP%\RecordEncoder.json"
-)
-move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-move /Y "%TEMP%\RecordEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto AssistantXRenders
-
-:Performance
-if not exist "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit" call:OBSInstall
-	cd "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit"
-	taskkill /f /im obs64.exe >nul 2>&1
-	Reg add "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit\obs64.exe" /t Reg_SZ /d "~ RUNASADMIN" /f >nul 2>&1
-	REM get monitor resolution
-	powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1)" > "%TEMP%\width.txt"
-	powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1 -Skip 1)" > "%TEMP%\height.txt"
-	set /p width=<"%TEMP%\width.txt"
-	set /p height=<"%TEMP%\height.txt"
-	cls & set /p FPS="What FPS would you like to record in? >: "
-if %encoder% == NVENC (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=jim_nvenc"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=1280"
-		"OutputCY=720"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bicubic"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Partial"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bf":0,"cqp":19,"keyint_sec":0,"lookahead":"false","multipass":"disabled","preset2":"p1","profile":"baseline","psycho_aq":"false","rate_control":"CQP"} >"%TEMP%\RecordEncoder.json"
-)
-
-if %encoder% == AMF (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=h264_texture_amf"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=1280"
-		"OutputCY=720"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bicubic"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Partial"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"cqp":18,"preset":"speed","profile":"baseline","rate_control":"CQP"} >"%TEMP%\RecordEncoder.json"
-)
-
-if %encoder% == CPU (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=obs_x264"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=1280"
-		"OutputCY=720"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bicubic"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Partial"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bitrate":25000,"preset":"ultrafast","profile":"baseline","tune":"fastdecode"} >"%TEMP%\RecordEncoder.json"
-)
-move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-move /Y "%TEMP%\RecordEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto AssistantXRenders
-
-
-:Streaming
-cls
-echo.
-echo.
-call :AssistantXTitle
-echo.
-echo                              %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Quality                                        %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Performance
-echo                              %COL%[90mSettings for the best                                %COL%[90mSettings for the best
-echo                              %COL%[90mquality in OBS                                       %COL%[90mperformance in OBS
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto Quality
-if /i "%choice%"=="2" goto Performance
-if /i "%choice%"=="B" goto AssistantXRenders
-if /i "%choice%"=="X" goto exit /b
-goto Streaming
-
-:Quality
-if not exist "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit" call:OBSInstall
-cd "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit"
-taskkill /f /im obs64.exe >nul 2>&1
-Reg add "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit\obs64.exe" /t Reg_SZ /d "~ RUNASADMIN" /f >nul 2>&1
-powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1)" > "%TEMP%\width.txt"
-powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1 -Skip 1)" > "%TEMP%\height.txt"
-set /p width=<"%TEMP%\width.txt"
-set /p height=<"%TEMP%\height.txt"
-cls & set /p FPS="What FPS would you like to record in? >: "
-if %encoder% == NVENC (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=jim_nvenc"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		"Encoder=jim_nvenc"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=!width!"
-		"OutputCY=!height!"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bilinear"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Full"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bitrate":6000,"multipass":"disabled","preset2":"p1","profile":"baseline"} >"%TEMP%\StreamEncoder.json"
-)
-
-if %encoder% == AMF (
-	(for %%i in (
-		"[AdvOut]"
-		"Encoder=h264_texture_amf"
-		"RecEncoder=h264_texture_amf"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=!width!"
-		"OutputCY=!height!"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bilinear"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Full"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"cqp":18,"preset":"speed","profile":"baseline","rate_control":"CQP"} >"%TEMP%\RecordEncoder.json"
-)
-
-if %encoder% == CPU (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=obs_x264"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		"Encoder=obs_x264"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=!width!"
-		"OutputCY=!height!"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bilinear"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Full"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bitrate":4000,"preset":"faster","profile":"baseline","tune":"film"} >"%TEMP%\StreamEncoder.json"
-)
-move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-move /Y "%TEMP%\StreamEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto AssistantXRenders
-
-
-:Performance
-if not exist "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit" call:OBSInstall
-cd "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit"
-taskkill /f /im obs64.exe >nul 2>&1
-Reg add "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" /v "%SYSTEMDRIVE%\Program Files\obs-studio\bin\64bit\obs64.exe" /t Reg_SZ /d "~ RUNASADMIN" /f >nul 2>&1
-powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1)" > "%TEMP%\width.txt"
-powershell -Command "((Get-CimInstance Win32_VideoController).VideoModeDescription.Split(' x ') | Where-Object {$_ -ne ''} | Select-Object -First 1 -Skip 1)" > "%TEMP%\height.txt"
-set /p width=<"%TEMP%\width.txt"
-set /p height=<"%TEMP%\height.txt"
-cls & set /p FPS="What FPS would you like to record in? >: "
-if %encoder% == NVENC (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=jim_nvenc"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		"Encoder=jim_nvenc"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=1280"
-		"OutputCY=720"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bicubic"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Partial"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bf":0,"bitrate":4500,"multipass":"disabled","preset2":"p1","profile":"baseline","psycho_aq":false} >"%TEMP%\StreamEncoder.json"
-)
-
-if %encoder% == AMF (
-	(for %%i in (
-		"[AdvOut]"
-		"Encoder=h264_texture_amf"
-		"RecEncoder=h264_texture_amf"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=1280"
-		"OutputCY=720"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bicubic"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Partial"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"cqp":18,"preset":"speed","profile":"baseline","rate_control":"CQP"} >"%TEMP%\RecordEncoder.json"
-)
-
-if %encoder% == CPU (
-	(for %%i in (
-		"[AdvOut]"
-		"RecEncoder=obs_x264"
-		"RecRB=true"
-		"TrackIndex=1"
-		"RecType=Standard"
-		"RecFormat=mp4"
-		"RecTracks=1"
-		"FLVTrack=1"
-		"FFOutputToFile=true"
-		"FFFormat="
-		"FFFormatMimeType="
-		"FFVEncoderId=0"
-		"FFVEncoder="
-		"FFAEncoderId=0"
-		"FFAEncoder="
-		"FFAudioMixes=1"
-		"VodTrackIndex=2"
-		"Encoder=obs_x264"
-		.
-		"[General]"
-		"Name=Untitled"
-		.
-		"[Video]"
-		"BaseCX=!width!"
-		"BaseCY=!height!"
-		"OutputCX=1280"
-		"OutputCY=720"
-		"FPSDen=1"
-		"FPSType=2"
-		"ScaleType=bicubic"
-		"FPSNum=!FPS!"
-		"ColorSpace=sRGB"
-		"ColorRange=Partial"
-		.
-		"[Output]"
-		"RecType=Standard"
-		"Mode=Advanced"
-	) do echo.%%~i)>"%TEMP%\Basic.ini"
-	echo.{"bitrate":4000,"preset":"ultrafast","profile":"baseline","tune":"fastdecode"} >"%TEMP%\StreamEncoder.json"
-)
-move /Y "%TEMP%\basic.ini" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-move /Y "%TEMP%\StreamEncoder.json" "%APPDATA%\obs-studio\basic\profiles\Untitled\" >nul 2>&1
-goto AssistantXRenders
-
-
-:upscale
-where /q ffmpeg.exe || if not exist %SYSTEMDRIVE%\ffmpeg call :ffmpeginstall
-cls
-echo.
-echo.
-call :AssistantXTitle
-echo.
-echo                            %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m 4k                                             %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m 8k
-echo                            %COL%[90mModify the scale of a video                          %COL%[90mModify the scale of a video
-echo                            %COL%[90mto turn it to 4k                                     %COL%[90mto turn it to 8k
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto 4k
-if /i "%choice%"=="2" goto 8k
-if /i "%choice%"=="B" goto AssistantXRenders
-if /i "%choice%"=="X" exit /b
-goto upscale
-
-:4k
-cls
-echo The path needs to be in between " " and have a simple name.
-echo.
-set /p "file= Print the path of the file you want to upscale or drag it in >> "
-rem where /q ffmpeg.exe with the double ampersand/pipe is used to check if ffmpeg is already in the path, since it might be installed in a directory other than the default
-if %encoder% == NVENC (
-where /q ffmpeg.exe && (
-		ffmpeg -i "%file%" -vf scale=3840:2160 -c:v h264_nvenc -preset slow -rc vbr -b:v 250M -cq 20 "%PUBLIC%\Desktop\4k.mp4" -y
-	) || (
-		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg.exe -i "%file%" -vf scale=3840:2160 -c:v h264_nvenc -preset slow -rc vbr -b:v 250M -cq 20 "%PUBLIC%\Desktop\4k.mp4" -y
-	)
-)
-
-if %encoder% == AMF (
-	where /q ffmpeg.exe && (
-		ffmpeg -i "%file%" -vf scale=3840:2160 -c:v hevc_amf -quality quality -qp_i 18 -qp_p 20 -qp_b 24 "%PUBLIC%\Desktop\4k.mp4" -y
-	) || (
-		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg.exe -i "%file%" -vf scale=3840:2160 -c:v hevc_amf -quality quality -qp_i 18 -qp_p 20 -qp_b 24 "%PUBLIC%\Desktop\4k.mp4" -y
-	)
-)
-
-if %encoder% == CPU (
-	where /q ffmpeg.exe && (
-
-		ffmpeg -i %file% -vf scale=3840:2160 -c:v libx264 -preset slow -crf 18 "%PUBLIC%\Desktop\4k.mp4" -y
-	) || (
-		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg -i %file% -vf scale=3840:2160 -c:v libx264 -preset slow -crf 18 "%PUBLIC%\Desktop\4k.mp4" -y
-	)
-)
-goto upscale
-
-:8k
-cls
-echo The path needs to be in between " " and have a simple name.
-echo.
-set /p "file= Print the path of the file you want to upscale or drag it in >> "
-rem where /q ffmpeg.exe with the double ampersand/pipe is used to check if ffmpeg is already in the path, since it might be installed in a directory other than the default
-if %encoder% == NVENC (
-where /q ffmpeg.exe && (
-		ffmpeg.exe -i "%file%" -vf scale=7680:4320 -c:v hevc_nvenc -preset slow -rc vbr -b:v 250M -cq 20 "%PUBLIC%\Desktop\8k.mp4" -y
-	) || (
-		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg.exe -i "%file%" -vf scale=7680:4320 -c:v hevc_nvenc -preset slow -rc vbr -b:v 250M -cq 20 "%PUBLIC%\Desktop\8k.mp4" -y
-	)
-)
-
-if %encoder% == AMF (
-	where /q ffmpeg.exe && (
-		ffmpeg -i "%file%" -vf scale=7680:4320 -c:v hevc_amf -quality quality -qp_i 18 -qp_p 20 -qp_b 24 "%PUBLIC%\Desktop\8k.mp4" -y
-	) || (
-		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg.exe -i "%file%" -vf scale=7680:4320 -c:v hevc_amf -quality quality -qp_i 18 -qp_p 20 -qp_b 24 "%PUBLIC%\Desktop\8k.mp4" -y
-	)
-)
-
-if %encoder% == CPU (
-	where /q ffmpeg.exe && (
-		ffmpeg.exe -i "%file%" -vf scale=7680:4320 -c:v libx264 -preset slow -crf 18 "%PUBLIC%\Desktop\8k.mp4" -y
-	) || (
-		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg.exe -i "%file%" -vf scale=7680:4320 -c:v libx264 -preset slow -crf 18 "%PUBLIC%\Desktop\8k.mp4" -y
-	)
-)
-goto upscale
-
-:compress
-rem check if ffmpeg is in path, if it isn't, check if it's in the default installation path, and if it isn't, install it
-where /q ffmpeg.exe || if not exist %SYSTEMDRIVE%\ffmpeg call :ffmpeginstall
-cls
-echo.
-echo.
-call :AssistantXTitle
-echo.
-echo                         %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Heavy                                          %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Light
-echo                         %COL%[90mCompress a video                     	 	     %COL%[90mCompress a video
-echo                         %COL%[90mto make it take up much less space                   %COL%[90mto make it take up less space
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto heavy
-if /i "%choice%"=="2" goto light
-if /i "%choice%"=="B" goto AssistantXRenders
-if /i "%choice%"=="X" exit /b
-goto compress
-
-:heavy
-cls
-echo The path needs to be in between " " and have a simple name.
-echo.
-set /p "file= Print the path of the file you want to compress or drag it in >> "
-	where /q ffmpeg.exe && (
-		ffmpeg -i "%file%" -vf "scale=-2:trunc(ih*0.75/2)*2" -c:v libx264 -preset slower -crf 23 -aq-mode 3 -c:a aac -b:a 128k "%PUBLIC%\Desktop\heavycompress.mp4" -y
-	) || (
-		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg.exe -i "%file%" -vf "scale=-2:trunc(ih*0.75/2)*2" -c:v libx264 -preset slower -crf 23 -aq-mode 3 -c:a aac -b:a 128k "%PUBLIC%\Desktop\heavycompress.mp4" -y
-	)
-goto compress
-
-:Light
-cls
-echo The path needs to be in between " " and have a simple name.
-echo.
-set /p "file= Print the path of the file you want to compress or drag it in >> "
-	where /q ffmpeg.exe && (
-		ffmpeg -i "%file%" -c:v libx264 -preset slow -crf 18 -aq-mode 3 -c:a aac -b:a 256k "%PUBLIC%\Desktop\lightcompress.mp4" -y
-	) || (
-		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg.exe -i "%file%" -c:v libx264 -preset slow -crf 18 -aq-mode 3 -c:a aac -b:a 256k "%PUBLIC%\Desktop\lightcompress.mp4" -y
-	)
-goto compress
-
-:PreviewLag
-if not exist %SYSTEMDRIVE%\ffmpeg ( call:ffmpeginstall )
-cls
-echo The path needs to be in between " " and have a simple name.
-echo.
-set /p "file= Print the path of the file you want use in vegas or drag it in (remember you need to replace it with the original file afterwards) >> "
-	where /q ffmpeg.exe && (
-		ffmpeg -i "%file%" -c:v libx264 -preset superfast -crf 23 -tune fastdecode -c:a copy "%PUBLIC%\Desktop\previewlag.mp4" -y
-	) || (
-		%SYSTEMDRIVE%\ffmpeg\bin\ffmpeg.exe -i "%file%" -c:v libx264 -preset superfast -crf 23 -tune fastdecode -c:a copy "%PUBLIC%\Desktop\previewlag.mp4" -y
-	)
-goto AssistantXRenders
-
-:ffmpeginstall
-cls
-curl -g -L -# -o "%TEMP%\ffmpeg.zip" "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip"
-powershell -Command "Expand-Archive -Path %TEMP%\ffmpeg.zip -DestinationPath %SYSTEMDRIVE%\ffmpeg"
-powershell -Command "Convert-Path '%SYSTEMDRIVE%\ffmpeg\ffmpeg-*-essentials_build\*' | ForEach-Object {Move-Item $_ '%SYSTEMDRIVE%\ffmpeg'}"
-powershell -Command "Convert-Path '%SYSTEMDRIVE%\ffmpeg\ffmpeg-*-essentials_build\' | Remove-Item"
-goto:eof
-
-:blurinstall
-rem delete old blur
-rmdir /s /q "%SYSTEMDRIVE%\program files (x86)\blur"
-cls
-curl -g -L -# -o "%TEMP%\blur.exe" "https://github.com/f0e/blur/releases/latest/download/blur-installer.exe"
-"%TEMP%\blur.exe" /SP /VERYSILENT /SUPPRESSMSGBOXES /NOCANCEL /NORESTART /ALLUSERS
-goto :eof
-
-:FPSGames
-cls
-echo.
-echo.
-call :AssistantXTitle
-echo.
-echo                    	     %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Accurate                                   %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m Smooth
-echo                     	     %COL%[90mAutomated Blur settings                          %COL%[90mAutomated Blur settings
-echo                     	     %COL%[90mfor the most precise results             	      %COL%[90mfor the smoothest results
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto Accurate
-if /i "%choice%"=="2" goto Smooth
-if /i "%choice%"=="B" goto AssistantXRenders
-if /i "%choice%"=="X" exit /b
-goto FPSGames
-
-:Accurate
-cls
-echo.
-echo.
-call :AssistantXTitle
-echo.
-echo					%COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m 60-120FPS                                   %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m 240FPS+
-echo					%COL%[90mAutomated Blur settings				  %COL%[90mAutomated Blur settings
-echo					%COL%[90mfor 60-120FPS clips				  %COL%[90mfor 240FPS+ clips
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto Accurate60120
-if /i "%choice%"=="2" goto Accurate240
-if /i "%choice%"=="B" goto FPSGames
-if /i "%choice%"=="X" exit /b
-goto Accurate
-
-:Accurate60120
-if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
-if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Nvidia/FPSAccurate60Nvidia.cfg"
-) else (
-set config=FPSAccurate60Nvidia.cfg
-goto skip
-)
-)
-
-if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60AMD.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60AMD.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Amd/FPSAccurate60AMD.cfg"
-) else (
-set config=FPSAccurate60AMD.cfg
-goto skip
-)
-)
-
-if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate60Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/60-120/Intel/FPSAccurate60Intel.cfg"
-) else (
-set config=FPSAccurate60Intel.cfg
-goto skip
-)
-)
-
-:Accurate240
-if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
-if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Nvidia/FPSAccurate240Nvidia.cfg"
-) else (
-set config=FPSAccurate240Nvidia.cfg
-goto skip
-)
-)
-
-if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240AMD.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240AMD.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Amd/FPSAccurate240Amd.cfg"
-) else (
-set config=FPSAccurate240AMD.cfg
-goto skip
-)
-)
-
-if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSAccurate240Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Accurate/240/Intel/FPSAccurate240Intel.cfg"
-) else (
-set config=FPSAccurate240Intel.cfg
-goto skip
-)
-)
-
-:Smooth
-if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
-if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothNvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothNvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Nvidia/FPSSmoothNvidia.cfg"
-) else (
-set config=FPSSmoothNvidia.cfg
-goto skip
-)
-)
-
-if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothAmd.cfg.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothAmd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Amd/FPSSmoothAmd.cfg"
-) else (
-set config=FPSSmoothAmd.cfg.cfg
-goto skip
-)
-)
-
-if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothIntel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\FPSSmoothIntel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/FPS/Smooth/Intel/FPSSmoothIntel.cfg"
-) else (
-set config=FPSSmoothIntel.cfg
-goto skip
-)
-)
-
-:MinecraftBlur
-cls
-echo.
-echo.
-call :AssistantXTitle
-echo.
-echo.
-echo.
-echo            	   %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Any			%COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m 240-360FPS			%COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m 480FPS+
-echo			   %COL%[90mAutomated Blur settings      %COL%[90mAutomated Blur settings    	 	%COL%[90mAutomated Blur settings
-echo			   %COL%[90mfor any clips        	%COL%[90mfor 240-360FPS clips            	%COL%[90mfor 480FPS+ clips
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto MinecraftAny
-if /i "%choice%"=="2" goto Minecraft240360
-if /i "%choice%"=="B" goto Minecraft480
-if /i "%choice%"=="X" exit /b
-goto MinecraftBlur
-
-:MinecraftAny
-if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
-if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyNvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyNvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Nvidia/MinecraftAnyNvidia.cfg"
-) else (
-set config=MinecraftAnyNvidia.cfg
-goto skip
-)
-)
-
-if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyAmd.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyAmd.cfg" "hhttps://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Amd/MinecraftAnyAmd.cfg"
-) else (
-set config=MinecraftAnyAmd.cfg
-goto skip
-)
-)
-
-if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyIntel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\MinecraftAnyIntel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/Any/Intel/MinecraftAnyIntel.cfg"
-) else (
-set config=MinecraftAnyIntel.cfg
-goto skip
-)
-)
-
-:Minecraft240360
-if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
-if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Nvidia/Minecraft240Nvidia.cfg"
-) else (
-set config=Minecraft240Nvidia.cfg
-goto skip
-)
-)
-
-if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Amd.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Amd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Amd/Minecraft240Amd.cfg"
-) else (
-set config=Minecraft240Amd.cfg
-goto skip
-)
-)
-
-if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft240Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/240-360/Intel/Minecraft240Intel.cfg"
-) else (
-set config=Minecraft240Intel.cfg
-goto skip
-)
-)
-
-:Minecraft480
-if not exist "%SYSTEMDRIVE%\Program Files (x86)\blur" call:blurinstall
-if %encoder% == NVENC (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Nvidia.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Nvidia.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Nvidia/Minecraft480Nvidia.cfg"
-) else (
-set config=Minecraft480Nvidia.cfg
-goto skip
-)
-)
-
-if %encoder% == AMF (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Amd.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Amd.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Amd/Minecraft480Amd.cfg"
-) else (
-set config=Minecraft480Amd.cfg
-goto skip
-)
-)
-
-if %encoder% == CPU (
-if not exist "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Intel.cfg" ( 
-curl -g -k -L -# -o "%SYSTEMDRIVE%\AssistantX\Renders\Minecraft480Intel.cfg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Minecraft/480+/Intel/Minecraft480Intel.cfg"
-) else (
-set config=Minecraft480Intel.cfg
-goto skip
-)
-)
-
-:skip
-cls
-echo The path needs to be in between " " and have a simple name.
-echo.
-set /p "file= Print the path of the file you want blurred into this window or drag it in >> "
-"%SYSTEMDRIVE%\program files (x86)\blur\blur.exe" -i %file% -c "%SYSTEMDRIVE%\AssistantX\Renders\%config%" -n -p -v
-goto AssistantXRenders
-
-:NLEInstall
-cls
-echo.
-echo.
-call :AssistantXTitle
-echo                       %COL%[90mUnfortunately, AssistantX cannot supply unofficial distributions of software. If you
-echo                       %COL%[90mcannot buy Vegas Pro, an alternative that we recommend is a freemium video editing software
-echo                       %COL%[90mcalled 'DaVinci Resolve' (note: this program does not contain render settings)^^!
-echo.
-echo.
-echo                           %COL%[96m[ %COL%[37m1 %COL%[96m]%COL%[37m Vegas Pro website                        %COL%[96m[ %COL%[37m2 %COL%[96m]%COL%[37m DaVinci Resolve website
-echo                           %COL%[90mPaid with supported renders                    %COL%[90mFree but unsupported renders
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" start https://www.vegascreativesoftware.com/us/vegas-pro/
-if /i "%choice%"=="2" start https://www.blackmagicdesign.com/products/davinciresolve
-if /i "%choice%"=="B" goto AssistantXRenders
-if /i "%choice%"=="X" exit /b
-goto NLEInstall
-
-:ProjectSettings
-cls
-if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 17.0" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties17.reg"
-) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 17" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties17.reg"
-) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 18" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
-) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 18.0" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
-) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 19.0" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
-) >nul 2>&1 else if exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 19" (
-	curl -g -k -L -# -o "%TEMP%\project.reg" "https://raw.githubusercontent.com/ALFiX01/AssistantX/main/Files/Settings/ProjectProperties18.reg"
-) >nul 2>&1 else echo Vegas Pro 17-19 isn't installed... & pause & goto AssistantXRenders
-taskkill /f /im Vegas170.exe >nul 2>&1
-taskkill /f /im Vegas180.exe >nul 2>&1
-taskkill /f /im Vegas190.exe >nul 2>&1
-curl -g -k -L -# -o "%TEMP%\AssistantX.veg" "https://github.com/ALFiX01/AssistantX/raw/main/Files/Settings/AssistantX.veg"
-reg import "%TEMP%\project.reg" >nul 2>&1
-start "" /D "%TEMP%\AssistantX.veg" >nul 2>&1
-goto AssistantXRenders
-
-:RenderSettings
-cls
-if not exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 17.0" goto NoVegas
-if not exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 18.0" goto NoVegas
-if not exist "%SYSTEMDRIVE%\Program Files\VEGAS\VEGAS Pro 19.0" goto NoVegas
-taskkill /f /im Vegas170.exe >nul 2>&1
-taskkill /f /im Vegas180.exe >nul 2>&1
-taskkill /f /im Vegas190.exe >nul 2>&1
-mkdir "%APPDATA%\VEGAS\Render Templates\avc" >nul 2>&1
-curl -g -k -L -# -o "%APPDATA%\VEGAS\Render Templates\avc\AssistantX.sft2" "https://cdn.discordapp.com/attachments/934698794933702666/987166340714471514/AssistantX.sft2"
-goto AssistantXRenders
-:NoVegas
-echo Vegas Pro 17-19 isn't installed...
-pause
-goto AssistantXRenders
+:AIstart
+start %SYSTEMDRIVE%\AssistantX\AssistantAi\Assistant.exe
+goto MainMenu
 
 :AdvancedTW
 reg query "HKCU\Software\AssistantX" /v "advancedtv" >nul 2>&1 && goto Advanced
 cls
-TITLE Advanced tweak panel - AssistantX v%localtwo%
+TITLE Advanced Optimization Panel - AssistantX v%localtwo%
 echo.
 echo.
 call :AssistantXTitle
 echo.
-echo                                        %COL%[90m AssistantX is a free and open-source desktop utility
-echo                                        %COL%[90m     made to improve your day-to-day productivity
+echo                                               %COL%[90m AssistantX is a free desktop utility
+echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
 echo.
@@ -3690,11 +2196,11 @@ echo.
 echo                                                        %COL%[90m[ B for back ]
 echo.
 set /p "input=%DEL%                                                            >: %COL%[92m"
-if /i "!input!"=="B" goto TweaksPG3
+if /i "!input!"=="B" goto TweaksPG1
 if /i "!input!" neq "i agree" goto Advanced
 reg add "HKCU\Software\AssistantX" /v "advancedtv" /f >nul 2>&1
 
-:Advanced
+:Advanced 
 REM for /f "tokens=2 delims==" %%a in ('wmic path Win32_Battery Get BatteryStatus /value ^| findstr "BatteryStatus"') do set status=%%a
 REM if %status% == 1 ( set Battery=DC ) else ( set Battery=AC )
 set "choice="
@@ -3713,7 +2219,7 @@ for %%i in (DSCOF AUTOF DRIOF BCDOF NONOF CS0OF TOFOF PS0OF IDLOF CONG DPSOF) do
 	reg query "HKCU\Software\AssistantX" /v "DUSBPowerSavings" || set "DPSOF=%COL%[91mOFF"
 	rem Nvidia Drivers
 	cd "%SYSTEMDRIVE%\Program Files\NVIDIA Corporation\NVSMI"
-	for /f "tokens=1 skip=1" %%a in ('nvidia-smi --query-gpu^=driver_version --format^=csv') do if "%%a" neq "528.24" set "DRIOF=%COL%[91mOFF"
+	for /f "tokens=1 skip=1" %%a in ('nvidia-smi --query-gpu^=driver_version --format^=csv') do if "%%a" neq "531.29" set "DRIOF=%COL%[91mOFF"
 	rem BCDEDIT
 	reg query "HKCU\Software\AssistantX" /v "BcdEditTweaks" || set "BCDOF=%COL%[91mOFF"
 	rem NonBestEffortLimit Tweak
@@ -3734,9 +2240,12 @@ for %%i in (DSCOF AUTOF DRIOF BCDOF NONOF CS0OF TOFOF PS0OF IDLOF CONG DPSOF) do
 	if "!NVIDIAGPU!" neq "Found" for %%g in (PS0OF DRIOF) do set "%%g=%COL%[93mN/A"
 ) >nul 2>&1
 cls
-TITLE Advanced Tweak panel - AssistantX v%localtwo%
+TITLE Advanced Tweak Panel - AssistantX v%localtwo%
 echo.
 echo.
+cls
+echo.
+echo                                                                                                                        %COL%[36mPage 1/2
 call :AssistantXTitle
 echo                                                           %COL%[1;4;34mNetwork Tweaks%COL%[0m
 echo.
@@ -3758,6 +2267,9 @@ echo              %COL%[96m[%COL%[37m 8 %COL%[96m]%COL%[37m Nvidia Driver %DRIOF
 echo              %COL%[90mInstall the best tweaked nvidia      %COL%[90mTweaks your windows boot config      %COL%[90mDisable Antivirus Smartscreen
 echo              %COL%[90mdriver for latency and fps           %COL%[90mdata to optimized settings
 echo.
+echo              %COL%[96m[%COL%[37m 11 %COL%[96m]%COL%[37m Old context menu              %COL%[96m[%COL%[37m 12 %COL%[96m]%COL%[37m Uninstall Widgets             %COL%[96m[%COL%[37m 13 %COL%[96m]%COL%[37m Disable background programs
+echo              %COL%[91mOnly for win 11                                                          %COL%[90m Disables programs running in
+echo.                                                                                      %COL%[90m the background
 echo.
 echo.
 echo.
@@ -3765,7 +2277,7 @@ echo.
 echo.
 echo.
 echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]%COL%[37m
+echo                                   %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]         %COL%[36m[ N page two ]
 echo.
 set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
 if /i "%choice%"=="1" goto NonBestEffortLimit
@@ -3778,8 +2290,61 @@ if /i "%choice%"=="7" goto DisableIdle
 if /i "%choice%"=="8" goto Driver
 if /i "%choice%"=="9" goto BCDEdit
 if /i "%choice%"=="10" goto Smartscreen
-if /i "%choice%"=="X" exit /b
-if /i "%choice%"=="B" goto MainMenu
+if /i "%choice%"=="11" goto OldContextMenu
+if /i "%choice%"=="12" goto WidgetUninstall
+if /i "%choice%"=="13" goto DisableBackgroundPrograms
+if /i "%choice%"=="N" goto AdvancedPG2
+if /i "%choice%"=="X" goto MainMenu
+if /i "%choice%"=="B" goto TweaksPG1
+goto Advanced
+
+:AdvancedPG2 
+cls
+TITLE Advanced Tweak Panel Page 2 - AssistantX v%localtwo%
+echo.
+echo.
+cls
+echo.
+echo                                                                                                                        %COL%[36mPage 2/2
+call :AssistantXTitle
+echo                                                           %COL%[1;4;34mOther Tweaks%COL%[0m
+echo.
+echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Disable all notifications
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                               %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]
+echo.
+set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
+if /i "%choice%"=="1" goto DisableAllNotifications
+if /i "%choice%"=="2" goto Autotuning
+if /i "%choice%"=="3" goto DSCPValue
+if /i "%choice%"=="X" goto MainMenu
+if /i "%choice%"=="B" goto Advanced
 goto Advanced
 
 :Smartscreen
@@ -3796,9 +2361,78 @@ echo.
 echo     Completed
 echo.
 timeout 2
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "PromptOnSecureDesktop" /t REG_DWORD /d 0 /f
+      reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "PromptOnSecureDesktop" /t REG_DWORD /d 0 /f
       reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "ConsentPromptBehaviorAdmin" /t REG_DWORD /d 0 /f
       reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "SmartScreenEnabled" /t REG_SZ /d "Off" /f
+goto Advanced
+
+:DisableAllNotifications
+cls
+color A
+echo.
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 2
+      reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\PushNotifications" /t REG_DWORD /d 0 /f
+goto AdvancedPG2
+
+:WidgetUninstall
+cls
+color A
+powershell -executionpolicy -command "winget uninstall "windows web experience pack""
+echo.
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 3
+goto Advanced
+
+:DisableBackgroundPrograms
+cls
+color A
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications" /v "GlobalUserDisabled" /t REG_DWORD /d 1 /f
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search" /v "BackgroundAppGlobalToggle" /t REG_DWORD /d 0 /f
+echo.
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 2
+goto Advanced
+
+:OldContextMenu
+cls
+color A
+reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f
+echo.
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 2
 goto Advanced
 
 :NonBestEffortLimit
@@ -3869,7 +2503,7 @@ echo.
 echo.
 call :AssistantXTitle
 echo.
-echo                                        %COL%[90m AssistantXCtrl is a free and open-source desktop utility
+echo                                               %COL%[90m AssistantX is a free desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -3877,7 +2511,7 @@ echo.
 echo %COL%[91m  WARNING:
 echo %COL%[91m  This tweak is for Wi-Fi users only, if you're on Ethernet, do not run this tweak.
 echo.
-echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/AssistantX
+echo   %COL%[37mFor any questions and/or concerns, please join our discord: discord.gg/J7wghdhKsx
 echo.
 echo   %COL%[37mPlease enter "I understand" without quotes to continue:
 echo.
@@ -3952,9 +2586,9 @@ echo Would you like to install?
 %SYSTEMROOT%\System32\choice.exe /c:YN /n /m "[Y] Yes  [N] No"
 if %errorlevel% == 2 goto Advanced
 cd "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-curl -LJ https://github.com/auraside/AssistantXCtrl/blob/main/Files/Driverinstall.bat?raw=true -o Driverinstall.bat 
+curl -LJ https://github.com/ALFiX01/AssistantX/blob/main/Files/Driverinstall.bat?raw=true -o Driverinstall.bat 
 title Executing DDU...
-curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\DDU.zip" "https://github.com/auraside/AssistantXCtrl/raw/main/Files/DDU.zip"
+curl -g -L -# -o "%SYSTEMDRIVE%\AssistantX\Resources\DDU.zip" "https://github.com/ALFiX01/AssistantX/releases/download/File/DDU.zip"
 powershell -NoProfile Expand-Archive '%SYSTEMDRIVE%\AssistantX\Resources\DDU.zip' -DestinationPath '%SYSTEMDRIVE%\AssistantX\Resources\DDU\' >nul 2>&1
 del "%SYSTEMDRIVE%\AssistantX\Resources\DDU.zip"
 cd %SYSTEMDRIVE%\AssistantX\Resources\DDU
@@ -4087,7 +2721,7 @@ if "%DPSOF%" == "%COL%[91mOFF" (
 goto Advanced
 
 :More
-TITLE More panel - AssistantX v%localtwo%
+TITLE More Panel - AssistantX v%localtwo%
 cls
 echo.
 echo.
@@ -4103,20 +2737,17 @@ echo                                                                            
 echo.
 echo.
 echo.
-echo                  %COL%[96m[ %COL%[37m1 %COL%[96m] %COL%[37mAbout                                                   %COL%[96m[ %COL%[37m2 %COL%[96m] %COL%[37mDisclaimer
+echo                                 %COL%[96m[ %COL%[37m1 %COL%[96m] %COL%[37mAbout                                            %COL%[96m[ %COL%[37m2 %COL%[96m] %COL%[37mDisclaimer
 echo.
 echo.
-echo                  %COL%[96m[ %COL%[37m3 %COL%[96m] %COL%[37mBackup                                                  %COL%[96m[ %COL%[37m4 %COL%[96m] %COL%[37mDiscord
-echo                  %COL%[90mBackup your current registry ^& create a
-echo                  %COL%[90mrestore point used to revert tweaks applied.
+echo                                 %COL%[96m[ %COL%[37m3 %COL%[96m] %COL%[37mBackup                                           %COL%[96m[ %COL%[37m4 %COL%[96m] %COL%[37mWe are on Discord
+echo                                 %COL%[90mBackup your current registry ^& create a
+echo                                 %COL%[90mrestore point used to revert tweaks applied.
 echo.
 echo.
-echo                  %COL%[96m[ %COL%[37m5 %COL%[96m] %COL%[37mCredits
+echo                                 %COL%[96m[ %COL%[37m5 %COL%[96m] %COL%[37mCredits                                          %COL%[96m[ %COL%[37m6 %COL%[96m] %COL%[37mClear Downloads
 echo.
-echo.
-echo.
-echo.
-echo.
+echo                                 %COL%[96m[ %COL%[37m7 %COL%[96m] %COL%[37mFix Problem
 echo.
 echo.
 echo.
@@ -4126,21 +2757,42 @@ echo.
 echo.
 echo.
 echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]%COL%[37m
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:12345BX /n /m "%DEL%                                        Select a corresponding number to the options above >"
+echo.
+echo.
+echo                                              %COL%[36m[ B for back ]         %COL%[31m[ X to Main Menu ]%COL%[37m
+echo.
+%SYSTEMROOT%\System32\choice.exe /c:1234567BX /n /m "%DEL%                                        Select a corresponding number to the options above >"
 set choice=%errorlevel%
 if "%choice%"=="1" goto About
 if "%choice%"=="2" goto ViewDisclaimer
 if "%choice%"=="3" call:Backup
 if "%choice%"=="4" goto Discord
 if "%choice%"=="5" goto Credits
-if /i "%choice%"=="6" goto MainMenu
-if /i "%choice%"=="7" exit /b
+if "%choice%"=="6" call:ClDownload
+if "%choice%"=="7" call:FixProblem
+if /i "%choice%"=="8" goto MainMenu
+if /i "%choice%"=="9" goto MainMenu
+goto More
+
+:ClDownload
+cls
+color A
+del /S /Q %SYSTEMDRIVE%\AssistantX\Downloads\
+echo.
+echo             ##
+echo            ##
+echo      ##   ##
+echo       ## ##
+echo        ##
+echo.
+echo     Completed
+echo.
+timeout 2
 goto More
 
 :About
-TITLE About panel - AssistantX v%localtwo%
+TITLE About Panel - AssistantX v%localtwo%
 cls
 echo.
 echo.
@@ -4153,9 +2805,10 @@ echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###
 echo                                                                                           %COL%[33m##      ## 
 echo.
 echo.
-echo  About
-echo  Owned by ALFiX, Inc. Copyright Claimed.
-echo  This is a GUI for the Tweaks.
+echo       About:
+echo       Owned by ALFiX, Inc. Copyright Claimed.
+echo       This is a GUI for the Tweaks.
+echo       %COL%[94m%LOCAL%
 echo.
 echo.
 echo.
@@ -4188,13 +2841,13 @@ set choice=%errorlevel%
 if "%choice%"=="1" goto More
 
 :ViewDisclaimer
-TITLE Disclaimer panel - AssistantX v%localtwo%
+TITLE Disclaimer Panel - AssistantX v%localtwo%
 cls
 echo.
 echo.
 call :AssistantXTitle
 echo.
-echo                                        %COL%[90m AssistantXCtrl is a free and open-source desktop utility
+echo                                               %COL%[90m AssistantX is a free desktop utility
 echo                                        %COL%[90m    made to improve your day-to-day productivity
 echo.
 echo.
@@ -4209,7 +2862,7 @@ echo     %COL%[96m2.%COL%[37m If you don't know what a tweak is, do not use it a
 echo.
 echo     %COL%[96m3.%COL%[37m Even though we have an automatic restore point feature, we highly recommend making a manual restore point before running.
 echo.
-echo   For any questions and/or concerns, please join our discord: discord.gg/AssistantX
+echo   For any questions and/or concerns, please join our discord: discord.gg/J7wghdhKsx
 echo.
 echo   Please enter "I agree" without quotes to continue:
 echo.
@@ -4227,7 +2880,7 @@ set choice=%errorlevel%
 if "%choice%"=="1" goto More
 
 :Credits
-TITLE Credits panel - AssistantX v%localtwo%
+TITLE Credits Panel - AssistantX v%localtwo%
 cls
 echo.
 echo.
@@ -4273,7 +2926,7 @@ set choice=%errorlevel%
 if "%choice%"=="1" goto More
 
 :Backup
-TITLE Backup panel - AssistantX v%localtwo%
+TITLE Backup Panel - AssistantX v%localtwo%
 reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "SystemRestorePointCreationFrequency" /t REG_DWORD /d 0 /f >nul 2>&1
 powershell Enable-ComputerRestore -Drive 'C:\', 'D:\', 'E:\', 'F:\', 'G:\' >nul 2>&1
 powershell Checkpoint-Computer -Description 'AssistantX Restore Point' >nul 2>&1
@@ -4286,8 +2939,6 @@ goto :eof
 
 :Discord
 start https://discord.gg/J7wghdhKsx
-goto More
-
 echo                       %COL%[33m########   ##   ###
 echo                       %COL%[33m##         ##  ####
 echo                       %COL%[33m##  ####   ## ## ##
@@ -4301,6 +2952,7 @@ echo                                  %COL%[33m######  ###  ###   ##  ###    ## 
 echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
 echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
 echo                                                                                           %COL%[33m##      ## 
+goto More
 
 :ColorText
 echo off
@@ -4362,343 +3014,5 @@ if /i "%choice%" == "y" (
 ) else (
 	goto restartchoice
 )
-
-:Aesthetics
-cls
-echo.
-echo.
-call :AssistantXTitle
-echo.
-echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m AUTO                 %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m MANUAL      %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m RESET
-echo              %COL%[90mApply all recommended         %COL%[90mCustomize your experience      %COL%[90mReset all Aesthetics
-echo              %COL%[90msettings automatically        %COL%[90mto your liking             %COL%[90mSettings to original
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto Auto
-if /i "%choice%"=="2" goto Manual
-if /i "%choice%"=="3" goto Reset
-if /i "%choice%"=="B" goto MainMenu
-if /i "%choice%"=="X" exit /b
-goto Aesthetics
-
-:Auto
-cls
-echo.
-call :AssistantXTitle
-echo                                                               %COL%[1;4;34mAesthetics Manual%COL%[0m
-echo.
-echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Auto Transparency
-echo              %COL%[90mApply recommended
-echo              %COL%[90mtransparency settings
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto TransparencyAuto
-if /i "%choice%"=="X" exit /b
-if /i "%choice%"=="B" goto Aesthetics
-goto Auto
-
-:TransparencyAuto
-if exist "%USERPROFILE%\Documents\systemtransparency.ini" del /Q "%USERPROFILE%\Documents\systemtransparency.ini" >nul 2>&1
-if exist "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Clear.exe" ( goto TransparencyAuto1 ) else ( goto TransparencyAuto11 ) >nul 2>&1
-:TransparencyAuto11
-cd "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-curl -g -LJ -# "https://github.com/auraside/AssistantXCtrl/raw/main/Files/Aesthetics/Clear.exe" -o "Clear.exe"
-:TransparencyAuto1
-cd %USERPROFILE%\documents
-(
-	echo [Settings]
-	echo trans=230
-	echo rclick=1
-	echo tbar=1
-	echo smenu=1
-	echo tool=1
-	echo explorer=1
-	echo notes=0
-	echo desktop=0
-	echo wmp=0
-	echo thumbs=0
-	echo op=
-	echo firefox=0
-	echo chrome=0
-	echo ie=0
-	echo deskbutton=0
-	echo mouseclock=0
-	echo alttabber=0
-) > systemtransparency.ini
-cd "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-start Clear.exe
-taskkill /f /im explorer.exe
-cd %SYSTEMROOT%
-start explorer.exe
-cls
-echo.
-echo.
-echo.
-echo                                                                                           %COL%[33m##      ##
-echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                           %COL%[33m##      ##
-echo.
-echo.
-echo.
-echo.
-echo                                                   %COL%[37m Settings have been applied
-echo.
-echo.
-echo.
-echo.
-echo                                                          %COL%[90m[ B for back ]%COL%[37m
-echo.
-%SYSTEMROOT%\System32\choice.exe /c:B /n /m "%DEL%                                                               >:"
-goto Auto
-
-:Manual
-cls
-echo.
-call :AssistantXTitle
-echo                                                               %COL%[1;4;34mAesthetics Manual%COL%[0m
-echo.
-echo              %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Transparency
-echo              %COL%[90mCustomize what you want
-echo              %COL%[90mto be transparent
-echo.
-echo.
-echo.
-echo.
-echo                                                 %COL%[90m[ B for back ]         %COL%[31m[ X to close ]
-echo.
-set /p choice="%DEL%                                        %COL%[37mSelect a corresponding number to the options above > "
-if /i "%choice%"=="1" goto TransparencySetup
-if /i "%choice%"=="X" exit /b
-if /i "%choice%"=="B" goto Aesthetics
-goto Manual
-
-:TransparencySetup
-if exist "%USERPROFILE%\Documents\systemtransparency.ini" del /Q "%USERPROFILE%\Documents\systemtransparency.ini" >nul 2>&1
-if exist "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Clear.exe" ( goto TransparencySetup1 ) else ( goto TransparencySetup11 ) >nul 2>&1
-:TransparencySetup11
-cd "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-curl -g -LJ -# "https://github.com/auraside/AssistantXCtrl/raw/main/Files/Aesthetics/Clear.exe" -o "Clear.exe"
-:TransparencySetup1
-cls
-echo.
-call :AssistantXTitle
-echo.
-echo Please select a transparency level, we recommend 200 or above (Lower = more transparent)
-echo.
-echo.
-echo %COL%[36m[ 100 ]         %COL%[36m[ 150 ]         %COL%[36m[ 200 ]         %COL%[36m[ 220 ]
-echo 	%COL%[36m[ 230 ]         %COL%[36m[ 240 ]         %COL%[36m[ 250 ]   
-echo. 
-echo 		     %COL%[90m[ B for back ]
-set /p choice="%DEL% "
-if /i "%choice%"=="100" set trans=100 & goto TransparencySetup2
-if /i "%choice%"=="150" set trans=150 & goto TransparencySetup2
-if /i "%choice%"=="200" set trans=200 & goto TransparencySetup2
-if /i "%choice%"=="220" set trans=220 & goto TransparencySetup2
-if /i "%choice%"=="230" set trans=230 & goto TransparencySetup2
-if /i "%choice%"=="240" set trans=240 & goto TransparencySetup2
-if /i "%choice%"=="250" set trans=250 & goto TransparencySetup2
-if /i "%choice%"=="B" goto Aesthetics
-goto TransparencySetup1
-
-:TransparencySetup2
-cls
-echo.
-call :AssistantXTitle
-echo.
-echo Do you want the right click menu to be transparent?
-echo.
-echo.
-echo %COL%[36m[ Y ]         %COL%[36m[ N ]         %COL%[90m[ B for back ]
-set "choice="
-%SYSTEMROOT%\System32\choice.exe /c:ynb /n /m "%DEL% > "
-set choice=%errorlevel%
-if "%choice%"=="1" set rclick=1 & goto TransparencySetup3
-if "%choice%"=="2" set rclick=0 & goto TransparencySetup3
-if /i "%choice%"=="3" goto Aesthetics
-goto TransparencySetup2
-
-
-:TransparencySetup3
-cls
-echo.
-call :AssistantXTitle
-echo.
-echo Do you want the Taskbar to be transparent?
-echo.
-echo.
-echo %COL%[36m[ Y ]         %COL%[36m[ N ]         %COL%[90m[ B for back ]
-set "choice="
-%SYSTEMROOT%\System32\choice.exe /c:ynb /n /m "%DEL% > "
-set choice=%errorlevel%
-if "%choice%"=="1" set tbar=1 & goto TransparencySetup4
-if "%choice%"=="2" set tbar=0 & goto TransparencySetup4
-if /i "%choice%"=="3" goto Aesthetics
-goto TransparencySetup3
-
-:TransparencySetup4
-cls
-echo.
-call :AssistantXTitle
-echo.
-echo Do you want the Start Menu to be transparent?
-echo.
-echo.
-echo %COL%[36m[ Y ]         %COL%[36m[ N ]         %COL%[90m[ B for back ]
-set "choice="
-%SYSTEMROOT%\System32\choice.exe /c:ynb /n /m "%DEL% > "
-set choice=%errorlevel%
-if "%choice%"=="1" set smenu=1 & goto TransparencySetup5
-if "%choice%"=="2" set smenu=0 & goto TransparencySetup5
-if /i "%choice%"=="3" goto Aesthetics
-goto TransparencySetup4
-
-:TransparencySetup5
-cls
-echo.
-call :AssistantXTitle
-echo.
-echo Do you want Explorer to be transparent?
-echo.
-echo.
-echo %COL%[36m[ Y ]         %COL%[36m[ N ]         %COL%[90m[ B for back ]
-set "choice="
-%SYSTEMROOT%\System32\choice.exe /c:ynb /n /m "%DEL% > "
-set choice=%errorlevel%
-if "%choice%"=="1" set explorer=1 & goto TransparencySetup6
-if "%choice%"=="2" set explorer=0 & goto TransparencySetup6
-if /i "%choice%"=="3" goto Aesthetics
-goto TransparencySetup5
-
-:TransparencySetup6
-cls
-echo.
-call :AssistantXTitle
-echo.
-echo Do you want Firefox to be transparent?
-echo.
-echo.
-echo %COL%[36m[ Y ]         %COL%[36m[ N ]         %COL%[90m[ B for back ]
-set "choice="
-%SYSTEMROOT%\System32\choice.exe /c:ynb /n /m "%DEL% > "
-set choice=%errorlevel%
-if "%choice%"=="1" set firefox=1 & goto TransparencySetup7
-if "%choice%"=="2" set firefox=0 & goto TransparencySetup7
-if /i "%choice%"=="3" goto Aesthetics
-goto TransparencySetup6
-
-:TransparencySetup7
-cls
-echo.
-call :AssistantXTitle
-echo.
-echo Do you want Google Chrome to be transparent?
-echo.
-echo.
-echo %COL%[36m[ Y ]         %COL%[36m[ N ]         %COL%[90m[ B for back ]
-set "choice="
-%SYSTEMROOT%\System32\choice.exe /c:ynb /n /m "%DEL% > "
-set choice=%errorlevel%
-if "%choice%"=="1" set chrome=1 & goto TransparencySetup8
-if "%choice%"=="2" set chrome=0 & goto TransparencySetup8
-if /i "%choice%"=="3" goto Aesthetics
-goto TransparencySetup7
-
-:TransparencySetup8
-cd %USERPROFILE%\documents
-(
-	echo [Settings]
-	echo trans=%trans%
-	echo rclick=%rclick%
-	echo tbar=%tbar%
-	echo smenu=%smenu%
-	echo tool=%rclick%
-	echo explorer=%explorer%
-	echo notes=0
-	echo desktop=0
-	echo wmp=0
-	echo thumbs=0
-	echo op=
-	echo firefox=%firefox%
-	echo chrome=%chrome%
-	echo ie=0
-	echo deskbutton=0
-	echo mouseclock=0
-	echo alttabber=0
-) > systemtransparency.ini
-cd "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-start Clear.exe
-taskkill /f /im explorer.exe
-cd %SYSTEMROOT%
-start explorer.exe
-cls
-echo.
-echo.
-echo.
-echo                                                                                           %COL%[33m##      ##
-echo                                   %COL%[33m####              ##         ##                   ##     ##    ##
-echo                                  %COL%[33m##  ##   ###  ###       ###  ####   ####  #####   ####     ##  ##
-echo                                  %COL%[33m######  ###  ###   ##  ###    ##   ## ##  ##  ##   ##        ##
-echo                                  %COL%[33m##  ##    ##   ##  ##    ##   ##   ## ##  ##  ##   ##      ##  ##
-echo                                  %COL%[33m##  ##  ###  ###   ##  ##     ###   ####  ##  ##   ###    ##    ##
-echo                                                                                           %COL%[33m##      ##
-echo.
-echo.
-echo.
-echo.
-echo                                                   %COL%[37m Settings have been applied
-echo.
-echo.
-echo.
-echo.
-echo                                                          %COL%[90m[ B for back ]%COL%[37m
-echo.
-%SYSTEMROOT%\System32\choice.exe /c:B /n /m "%DEL%                                                               >:"
-goto Manual
-
-:Reset
-if exist "%USERPROFILE%\Documents\systemtransparency.ini" del /Q "%USERPROFILE%\Documents\systemtransparency.ini" >nul 2>&1
-if exist "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Clear.exe" ( goto Reset1 ) else ( goto Reset2 ) >nul 2>&1
-:Reset1
-cd "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
-taskkill /IM Clear.exe /F >nul 2>&1
-Del /Q Clear.exe >nul 2>&1
-:Reset2
-taskkill /f /im explorer.exe >nul 2>&1
-cd %SYSTEMROOT% >nul 2>&1
-start explorer.exe >nul 2>&1
-goto Aesthetics
 
 goto :eof
