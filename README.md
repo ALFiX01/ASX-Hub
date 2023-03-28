@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ALFiX01/AssistantX">
-    <img src="[https://cdn.discordapp.com/attachments/1032718953149108304/1081676090386436206/seo.png" alt="Logo" width="80" height="80](https://media.discordapp.net/attachments/1032718953149108304/1090400929091690576/pho2to.png?width=671&height=671)">
+    <img src="https://media.discordapp.net/attachments/1032718953149108304/1090400929091690576/pho2to.png?width=671&height=671">
   </a>
 
 <h3 align="center">AssistantX</h3>
