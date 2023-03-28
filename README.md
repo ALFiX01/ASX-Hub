@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ALFiX01/AssistantX">
-    <img src="https://cdn.discordapp.com/attachments/1032718953149108304/1081676090386436206/seo.png" alt="Logo" width="80" height="80">
+    <img src="https://media.discordapp.net/attachments/1032718953149108304/1090400929091690576/pho2to.png?width=671&height=671">
   </a>
 
 <h3 align="center">AssistantX</h3>
@@ -94,7 +94,7 @@ Even though we have an automatic restore point feature some users have issues wi
 
 1. Download the latest AssistantX Version
    ```sh
-   https://github.com/ALFiX01/AssistantX/releases/download/0.3/AssistantX.bat
+   https://github.com/ALFiX01/AssistantX/releases/download/Stable/AssistantX.bat
    ```
 2. Right click AssistantX.bat and run it as admin
 
@@ -140,8 +140,6 @@ Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01
 * [Nvidia Profile Inspector](https://github.com/Orbmu2k/nvidiaProfileInspector)
 * [nvcleanstall](https://www.techpowerup.com/download/techpowerup-nvcleanstall/)
 * [NSudo](https://github.com/M2Team/NSudo)
-* [CRU](https://github.com/radamar/Custom-Resolution-Utility-ToastyX)
-* [Empty Standby List](https://wj32.org/wp/software/empty-standby-list/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -149,4 +147,4 @@ Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: https://media.discordapp.net/attachments/1032718953149108304/1081678377011908779/1s.png?width=936&height=671
+[product-screenshot]: https://media.discordapp.net/attachments/1032718953149108304/1090400068240166912/Preview.png?width=967&height=671
