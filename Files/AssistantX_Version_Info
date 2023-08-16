@@ -1,3 +1,6 @@
-set UpdateName=обновление
-set stablenum=JL15S1
-set local=2.4
+set UpdateName=исправление
+set stablenum=AU16S1
+set local=2.4.1
+
+rem обновление
+rem исправление
