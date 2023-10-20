@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ALFiX01/AssistantX">
-    <img src="https://media.discordapp.net/attachments/1019670072333189280/1164924498039017603/AssistantX_nv_logo.png?ex=6544fb7b&is=6532867b&hm=276eca73d838fd52e4fd1a2e44656da3195cdff4def998ac5c2638466332a513&=&width=671&height=671">
+    <img src="https://media.discordapp.net/attachments/1019670072333189280/1164924471250014268/computer2.png?ex=6544fb75&is=65328675&hm=93b11764344b98a3296e35b0c58b5a37f4d2b8674a7671dce3f414af56941f72&=">
   </a>
 
 <h3 align="center">AssistantX</h3>
