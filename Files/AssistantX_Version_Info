@@ -1,3 +1,3 @@
 set UpdateName=обновление
-set stablenum=OK20S1
-set local=3.1.2
+set stablenum=NV06S1
+set local=3.2.0
