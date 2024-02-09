@@ -522,10 +522,71 @@ del /f /q "%SystemRoot%\System32\smartscreen.dll" >nul 2>&1
 )
 
 REM ; Remove Data...
-for %%F in ("%AllUsersProfile%\Microsoft\Windows Defender Advanced Threat Protection" "%AllUsersProfile%\Microsoft\Windows Security Health" "%AllUsersProfile%\Microsoft\Storage Health" "%SystemDrive%\Program Files\Windows Defender" "%SystemDrive%\Program Files\Windows Defender Sleep" "%SystemDrive%\Program Files\Windows Defender Advanced Threat Protection" "%SystemDrive%\Program Files\Windows Security") do (
+for %%F in ("%AllUsersProfile%\Microsoft\Windows Defender Advanced Threat Protection" "%AllUsersProfile%\Microsoft\Windows Security Health" "%AllUsersProfile%\Microsoft\Storage Health" "%SystemDrive%\Program Files\Windows Defender" "%SystemDrive%\Program Files (x86)\Windows Defender" "%SystemDrive%\Program Files\Windows Defender Sleep" "%SystemDrive%\Program Files\Windows Defender Advanced Threat Protection" "%SystemDrive%\Program Files\Windows Security") do (
     if not exist "%%F" (
 	del /f /q "%%F" >nul 2>&1
     )
 )
+
+rem Остановка служб
+	sc stop WinDefend
+	sc stop SecurityHealthService
+	sc stop Sense
+	sc stop WdNisSvc
+	sc stop wscsvc
+	sc stop SgrmBroker
+	sc stop webthreatdefsvc
+	sc stop webthreatdefusersvc
+	
+rem Удаление служб
+	sc delete WinDefend
+	sc delete SecurityHealthService
+	sc delete Sense
+	sc delete WdNisSvc
+	sc delete wscsvc
+	sc delete SgrmBroker
+	sc delete webthreatdefsvc
+	sc delete webthreatdefusersvc
+
+	reg delete HKLM\System\ControlSet001\Services\EventLog\System\WinDefend /f 
+	reg delete HKLM\System\ControlSet001\Services\SecurityHealthService /f
+	reg delete HKLM\System\ControlSet001\Services\Sense /f
+	reg delete HKLM\System\ControlSet001\Services\WdNisSvc /f
+	reg delete HKLM\System\ControlSet001\Services\WinDefend /f
+	reg delete HKLM\System\ControlSet001\Services\wscsvc /f
+	reg delete HKLM\System\ControlSet001\Services\SgrmBroker /f
+	reg delete HKLM\System\ControlSet001\Services\webthreatdefsvc /f
+	reg delete HKLM\System\ControlSet001\Services\webthreatdefusersvc /f
+
+	reg delete HKLM\System\CurrentControlSet\Services\EventLog\System\WinDefend /f
+	reg delete HKLM\System\CurrentControlset\Services\SecurityHealthService /f
+	reg delete HKLM\System\CurrentControlset\Services\Sense /f
+	reg delete HKLM\System\CurrentControlset\Services\WdNisSvc /f
+	reg delete HKLM\System\CurrentControlset\Services\WinDefend /f
+	reg delete HKLM\System\CurrentControlset\Services\wscsvc /f
+	reg delete HKLM\System\CurrentControlset\Services\SgrmBroker /f
+	reg delete HKLM\System\CurrentControlset\Services\webthreatdefsvc /f
+	reg delete HKLM\System\CurrentControlset\Services\webthreatdefusersvc /f
+
+rem Удаляем задания из планировщика
+	rmdir /s /q "%SystemRoot%\System32\Tasks\Microsoft\Windows\Windows Defender" >nul 2>&1
+	schtasks /Delete /TN "Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance" /f >nul 2>&1
+	schtasks /Delete /TN "Microsoft\Windows\Windows Defender\Windows Defender Cleanup" /f >nul 2>&1
+	schtasks /Delete /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /f >nul 2>&1
+	schtasks /Delete /TN "Microsoft\Windows\Windows Defender\Windows Defender Verification" /f >nul 2>&1
+	schtasks /Delete /TN "Microsoft\Windows\AppID\SmartScreenSpecific" >nul 2>&1
+
+ rem Очистка контекстного меню
+	reg delete "HKCR\*\shellex\ContextMenuHandlers\EPP" /f
+	reg delete "HKCR\Directory\shellex\ContextMenuHandlers\EPP" /f
+	reg delete "HKCR\Drive\shellex\ContextMenuHandlers\EPP" /f
+	reg delete "HKLM\Software\Classes\CLSID\{09A47860-11B0-4DA5-AFA5-26D86198A780}" /f
+	reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved" /v "{09A47860-11B0-4DA5-AFA5-26D86198A780}" /f
+
+rem Удаление из автозапуска
+	reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "SecurityHealth" /f
+	reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run" /v "SecurityHealth" /f
+	reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Windows Defender" /f   
+
 cls
 echo   %COL%[37m██████████████████ 100%
