@@ -513,20 +513,22 @@ rmdir /s /q "%SystemDrive%\Program Files\PCHealthCheck" >nul 2>&1
 rmdir /s /q "%SystemDrive%\Program Files\Microsoft Update Health Tools" >nul 2>&1
 
 
-if exist "%SystemRoot%\System32\smartscreen.exe" (
-del /f /q "%SystemRoot%\System32\smartscreen.exe" >nul 2>&1
-)
 
-if exist "%SystemRoot%\System32\smartscreen.dll" (
-del /f /q "%SystemRoot%\System32\smartscreen.dll" >nul 2>&1
-)
 
 REM ; Remove Data...
-for %%F in ("%AllUsersProfile%\Microsoft\Windows Defender Advanced Threat Protection" "%AllUsersProfile%\Microsoft\Windows Security Health" "%AllUsersProfile%\Microsoft\Storage Health" "%SystemDrive%\Program Files\Windows Defender" "%SystemDrive%\Program Files (x86)\Windows Defender" "%SystemDrive%\Program Files\Windows Defender Sleep" "%SystemDrive%\Program Files\Windows Defender Advanced Threat Protection" "%SystemDrive%\Program Files\Windows Security" "%AllUsersProfile%\Microsoft\Windows Defender\Platform" ) do (
-    if not exist "%%F" (
+for %%F in ( "%SystemRoot%\System32\smartscreen.exe" "%SystemRoot%\System32\smartscreenps.dll" "%SystemRoot%\System32\smartscreen.dll" ) do (
+    if exist "%%F" (
 	del /f /q "%%F" >nul 2>&1
     )
 )
+
+
+for %%F in ("%AllUsersProfile%\Microsoft\Windows Defender Advanced Threat Protection" "%AllUsersProfile%\Microsoft\Windows Security Health" "%AllUsersProfile%\Microsoft\Storage Health" "%SystemDrive%\Program Files\Windows Defender" "%SystemDrive%\Program Files (x86)\Windows Defender" "%SystemDrive%\Program Files\Windows Defender Sleep" "%SystemDrive%\Program Files\Windows Defender Advanced Threat Protection" "%SystemDrive%\Program Files\Windows Security" "%AllUsersProfile%\Microsoft\Windows Defender\Platform" ) do (
+    if exist "%%F" (
+	rmdir /s /q "%%F" >nul 2>&1
+    )
+)
+
 
 rem Остановка служб
 	sc stop WinDefend
