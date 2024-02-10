@@ -523,7 +523,7 @@ for %%F in ( "%SystemRoot%\System32\smartscreen.exe" "%SystemRoot%\System32\smar
 )
 
 
-for %%F in ("%AllUsersProfile%\Microsoft\Windows Defender Advanced Threat Protection" "%AllUsersProfile%\Microsoft\Windows Security Health" "%AllUsersProfile%\Microsoft\Storage Health" "%SystemDrive%\Program Files\Windows Defender" "%SystemDrive%\Program Files (x86)\Windows Defender" "%SystemDrive%\Program Files\Windows Defender Sleep" "%SystemDrive%\Program Files\Windows Defender Advanced Threat Protection" "%SystemDrive%\Program Files\Windows Security" "%AllUsersProfile%\Microsoft\Windows Defender\Platform" ) do (
+for %%F in ("%AllUsersProfile%\Microsoft\Windows Defender Advanced Threat Protection" "%AllUsersProfile%\Microsoft\Windows Security Health" "%AllUsersProfile%\Microsoft\Storage Health" "%SystemDrive%\Program Files\Windows Defender" "%SystemDrive%\Program Files (x86)\Windows Defender" "%SystemDrive%\Program Files\Windows Defender Sleep" "%SystemDrive%\Program Files\Windows Defender Advanced Threat Protection" "%SystemDrive%\Program Files\Windows Security" "%AllUsersProfile%\Microsoft\Windows Defender" ) do (
     if exist "%%F" (
 	rmdir /s /q "%%F" >nul 2>&1
     )
