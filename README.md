@@ -73,7 +73,7 @@
 * [Batch](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands)
 * [Powershell](https://docs.microsoft.com/en-us/powershell/)
 * [CLI](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjQ46f--LD4AhWCIEQIHR5CDIMQFnoECAUQAQ&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FCommand-line_interface&usg=AOvVaw3Zaova7HVAG2DR4ROgZNEc)
-* [REG]()
+* REG
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -85,7 +85,7 @@
 
 ## Getting Started
 
-To run the optimizer is easy, all you need to do is double click AssistantX.bat and run it as admin
+To run the optimizer is easy, all you need to do is double click ASX Hub.exe and run it as admin
 
 ### Warning
 
@@ -94,11 +94,11 @@ Even though we have an automatic restore point feature some users have issues wi
 
 ### Installation
 
-1. Download the latest AssistantX Version
+1. Download the latest ASX Hub Version
    ```sh
    https://github.com/ALFiX01/AssistantX/releases/download/Stable/ASX.Hub.exe
    ```
-2. Right click AssistantX.bat and run it as admin
+2. Right click ASX Hub.exe and run it as admin
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -108,7 +108,7 @@ Even though we have an automatic restore point feature some users have issues wi
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-AssistantX can be used on any PC running windows 10 and above.
+ASX Hub can be used on any PC running windows 10 and above.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
