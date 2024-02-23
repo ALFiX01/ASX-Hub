@@ -16,10 +16,10 @@
     <img src="https://media.discordapp.net/attachments/1019670072333189280/1210654826090725406/W_Z_SM.png?ex=65eb592b&is=65d8e42b&hm=e2344dad68a046505b9fd47fe88a77da11bbc1b4cf8b502e8b16d8969a899555&=&format=webp&quality=lossless">
   </a>
 
-<h3 align="center">AssistantX</h3>
+<h3 align="center">ASX Hub</h3>
 
   <p align="center">
-    AssistantX is a free and desktop utility that aims to improve FPS, reduce input lag, and optimize network performance for video game titles and day-to-day productivity.
+    ASX Hub is a free and desktop utility that aims to improve FPS, reduce input lag, and optimize network performance for video game titles and day-to-day productivity.
   <p align="center">
     <br />
     <br />
@@ -94,7 +94,7 @@ Even though we have an automatic restore point feature some users have issues wi
 
 1. Download the latest AssistantX Version
    ```sh
-   https://github.com/ALFiX01/AssistantX/releases/download/Stable/AssistantX.bat
+   https://github.com/ALFiX01/AssistantX/releases/download/Stable/ASX.Hub.exe
    ```
 2. Right click AssistantX.bat and run it as admin
 
@@ -126,7 +126,7 @@ Distributed under the GNU AGPLv3  License. See `LICENSE.txt` for more informatio
 ## Contact
 
 Join the discord and create a ticket,
-https://discord.gg/J7wghdhKsx
+https://discord.gg/DHkRGNPfS8
 
 Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01/AssistantX)
 
