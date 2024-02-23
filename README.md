@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ALFiX01/AssistantX">
-    <img src="https://media.discordapp.net/attachments/1019670072333189280/1210654826090725406/W_Z_SM.png">
+    <img src="https://media.discordapp.net/attachments/1019670072333189280/1210654826090725406/W_Z_SM.png?ex=65eb592b&is=65d8e42b&hm=e2344dad68a046505b9fd47fe88a77da11bbc1b4cf8b502e8b16d8969a899555&=&format=webp&quality=lossless">
   </a>
 
 <h3 align="center">AssistantX</h3>
