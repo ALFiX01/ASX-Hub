@@ -147,4 +147,4 @@ Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: https://media.discordapp.net/attachments/1019670072333189280/1164924238260600892/image.png?ex=6544fb3d&is=6532863d&hm=ca1fd23a11efa7e049f72d70f6f612f908d73d570d2296e62e7bd805b01234dc&=&width=936&height=671
+[product-screenshot]: https://media.discordapp.net/attachments/1019670072333189280/1210655465025835048/image.png?ex=65eb59c3&is=65d8e4c3&hm=982c3941c48b33c271e33bd8848659f173dafa0d7cc035cdbf120f182e2f1b94&=&format=webp&quality=lossless&width=1044&height=671
