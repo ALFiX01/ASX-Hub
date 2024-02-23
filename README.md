@@ -73,6 +73,8 @@
 * [Batch](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands)
 * [Powershell](https://docs.microsoft.com/en-us/powershell/)
 * [CLI](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjQ46f--LD4AhWCIEQIHR5CDIMQFnoECAUQAQ&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FCommand-line_interface&usg=AOvVaw3Zaova7HVAG2DR4ROgZNEc)
+* [REG]()
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -128,7 +130,7 @@ Distributed under the GNU AGPLv3  License. See `LICENSE.txt` for more informatio
 Join the discord and create a ticket,
 https://discord.gg/DHkRGNPfS8
 
-Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01/AssistantX)
+<!-- Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01/AssistantX) -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
