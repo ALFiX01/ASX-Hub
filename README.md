@@ -113,17 +113,6 @@ ASX Hub can be used on any PC running windows 10 and above.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the GNU AGPLv3  License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Contact
 
