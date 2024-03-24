@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ALFiX01/AssistantX">
-    <img src="https://media.discordapp.net/attachments/1019670072333189280/1210654826090725406/W_Z_SM.png?ex=65eb592b&is=65d8e42b&hm=e2344dad68a046505b9fd47fe88a77da11bbc1b4cf8b502e8b16d8969a899555&=&format=webp&quality=lossless">
+    <img src="https://media.discordapp.net/attachments/1019670072333189280/1210654826090725406/W_Z_SM.png?ex=6610432b&is=65fdce2b&hm=6f681906a311ce8ce027fb616b7730dcd588aacc9fcab1518a36120045aa1ceb&=&format=webp&quality=lossless">
   </a>
 
 <h3 align="center">ASX Hub</h3>
@@ -149,4 +149,4 @@ https://discord.gg/DHkRGNPfS8
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: https://media.discordapp.net/attachments/1019670072333189280/1210655465025835048/image.png?ex=65eb59c3&is=65d8e4c3&hm=982c3941c48b33c271e33bd8848659f173dafa0d7cc035cdbf120f182e2f1b94&=&format=webp&quality=lossless&width=1044&height=671
+[product-screenshot]: https://media.discordapp.net/attachments/1019670072333189280/1210655465025835048/image.png?ex=661043c3&is=65fdcec3&hm=c0c33506ff82daeea3d8d99cc6baca60366ca6247485afb867959b8e22250734&=&format=webp&quality=lossless&width=1044&height=671
