@@ -1,4 +1,4 @@
-set stablenum=MR19S1
+set stablenum=AP02S1
 set UPDVER=5.0.0
-set betanum=3
+set betanum=4
 set DisplayBranch=Beta
