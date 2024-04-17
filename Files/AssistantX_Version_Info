@@ -1,3 +1,4 @@
 set stablenum=FB22S1
 set UPDVER=4.4.1
 set DisplayBranch=Stable
+set NecessaryUpdateInstall=Yes
