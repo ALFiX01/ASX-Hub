@@ -1,4 +1,4 @@
-set stablenum=FB22S1
-set UPDVER=4.4.1
+set stablenum=AP22S1
+set UPDVER=5.0.0
 set DisplayBranch=Stable
 set NecessaryUpdateInstall=Yes
