@@ -1,0 +1,686 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>ALFiX Zone - Центр</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a8275cd6-f3af-4be1-9b78-23b705014c38" class="page sans"><header><img class="page-cover-image" src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/For_Notion.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">📋</span></div><h1 class="page-title"><strong>ALFiX Zone - Центр</strong></h1><p class="page-description"></p></header><div class="page-body"><p id="280da648-28a4-4e5c-aef7-c86532ff3763" class="block-color-gray"><strong>ALFiX Zone — </strong>динамично развивающийся русскоязычный сервер для игр и общения!</p><p id="92400cd3-e8fb-46f2-95ba-123e5d8634dc" class=""><mark class="highlight-gray">Наша цель - создать самое комфортное discord сообщество.</mark></p><h1 id="99168bc7-2ad9-4d63-b4d1-97ba3adc8cea" class=""><strong>Обзор</strong></h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="8acfeaf4-baa8-4f9a-82e5-fb0adf91eb08"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%"><strong>Перед тем как приступить к исследованию ALFiX Zone, предлагаем взглянуть на краткое содержание наших возможностей и тд.</strong><ul id="f6b87e1c-0cf6-41b6-baed-c5298bf66d18" class="toggle"><li><details open=""><summary><strong>Оглавление</strong></summary><nav id="ee4684aa-6268-4da6-9168-5b6edd218c53" class="table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#99168bc7-2ad9-4d63-b4d1-97ba3adc8cea"><strong>Обзор</strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7b6a0722-07ae-4770-9d36-2cacc5572ae9">👥 Персонал</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#16d0e840-4296-46aa-a4b2-881b6f12af46">📘 Documents</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#501a47ee-f861-42fb-b5d6-2ff4380ff984">📑 Правила</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#381ca6d7-e73b-4d24-8219-083652bfd479"><strong>🔊 Голосовые каналы</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f0c08ef1-0040-428a-ba8d-34f2d1448981"><strong>🗨️ Текстовые каналы</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8d4c1fc9-bbfb-4b86-8783-921038213e58"><strong>⚙️ Общие правила</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fb9bc9b4-73ee-49b2-901b-46340662968d">Target audience(s)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ec19d1a7-fac7-44c3-804a-3ed342ea756a">Communication framework</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ae4a0d68-11c0-44c9-89b6-0ebb29ec4cb3">Key message</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0e24528a-2d0d-42ba-b37b-93e962281e75">Message priorities</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f258a3b2-37d3-496e-bfcf-d7a8d4eff54a">Other considerations</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e0fd5733-5d08-4f7e-b909-0ed56eeefb15">📨 Channel strategy</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8de15f22-cfe0-4473-8ad7-032b906e4b8a">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f9c2517c-d75b-45d3-91f1-3ba146414d8c">🚀 Execution</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#694ebaf9-1925-4976-8f25-a6a474164d87">Deliverables tracker</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7e33f8bd-ba6c-4d73-9e20-b04dd87d6fd5">📈 Campaign performance</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4ef2391b-a3ce-4a92-95cd-ee4b28d734c6">Conversions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bb151f37-879b-453f-a49c-1af11d9ebd91">Impressions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#adf529e0-13d3-47ca-9f58-fcc45c44af64">Web traffic</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4be22b61-556a-40ba-8ad7-081a3ca72ddc">Email</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#32de99d0-9b4c-4f11-a892-f110611608db">Internal Team Retro</a></div></nav></details></li></ul></div></figure><div id="23a7ec4e-c3d0-4f31-a5c1-6a529ee14de0" class="column-list"><div id="2b6790fe-b0a9-4b1d-be5e-48a48e11ee3d" style="width:50%" class="column"><h1 id="7b6a0722-07ae-4770-9d36-2cacc5572ae9" class="">👥 Персонал</h1><p id="22b87cea-0f66-413f-836c-7279bd11ecb4" class="">Список персонала сервера</p><table id="927fdf34-8a79-4263-b5ca-f54b3d24b005" class="simple-table"><tbody><tr id="e5fa7558-014e-4081-acc6-83ca05a3f2c2"><th id="IDgY" class="simple-table-header-color simple-table-header" style="width:220.65625px">Основатель</th><td id="k^nG" class="" style="width:455.65625px"><strong>alfix.pubg</strong></td></tr><tr id="0598b452-06dd-4b16-ac1f-cbb825fd1e2e"><th id="IDgY" class="simple-table-header-color simple-table-header" style="width:220.65625px">Высшая Администрация</th><td id="k^nG" class="" style="width:455.65625px"><strong>k1kom, towlats, banochka1620</strong></td></tr><tr id="04bacde3-bf3a-4935-a2a8-798ef62370e8"><th id="IDgY" class="simple-table-header-color simple-table-header" style="width:220.65625px">Администраторы</th><td id="k^nG" class="" style="width:455.65625px"><strong>alioshkared_war, dezzganss, valdemariys</strong></td></tr><tr id="b64e23df-7710-4a94-823a-a8b14d2dbb32"><th id="IDgY" class="simple-table-header-color simple-table-header" style="width:220.65625px">Модераторы</th><td id="k^nG" class="" style="width:455.65625px"><strong>ckpuno4ka, dejavu.shoka, evgenymx, .sispanda, tihiy54</strong></td></tr></tbody></table><p id="40546587-adfd-4d4f-b89f-fe5cdf9a5834" class="">
+</p></div><div id="bf5e2bdf-04c4-4f84-9473-ef009d30ba13" style="width:49.99999999999997%" class="column"><h1 id="16d0e840-4296-46aa-a4b2-881b6f12af46" class="">📘 Documents</h1><p id="995629f8-45c9-4c02-92ca-18a51d6980a4" class=""><strong>Ссылки на все ключевые документы, имеющие отношение к нам.</strong></p><figure id="a9d4565b-0c6e-4976-be6b-385ae6f22477" class="link-to-page"><a href="https://www.notion.so/Content-strategy-a9d4565b0c6e4976be6b385ae6f22477?pvs=21"><img class="icon" src="https://www.notion.so/icons/compose_gray.svg"/>Content strategy</a></figure><figure id="fef04230-87ec-4b8b-baeb-2c2d41918916" class="link-to-page"><a href="https://www.notion.so/fef0423087ec4b8bbaeb2c2d41918916?pvs=21"><img class="icon" src="https://www.notion.so/icons/target_gray.svg"/>Product roadmap</a></figure><figure id="b37d97f3-f469-4fe1-947b-a0c452929d6f" class="link-to-page"><a href="https://www.notion.so/b37d97f3f4694fe1947ba0c452929d6f?pvs=21"><img class="icon" src="https://www.notion.so/icons/document_gray.svg"/>Weekly product update</a></figure><figure id="b173070b-9244-4e2a-bc9c-b0e0d89868a0" class="link-to-page"><a href="https://www.notion.so/Performance-report-b173070b92444e2abc9cb0e0d89868a0?pvs=21"><img class="icon" src="https://www.notion.so/icons/activity_gray.svg"/>Performance report</a></figure><figure id="6e0f594e-e6b6-436d-b049-d18406537e1b" class="link-to-page"><a href="https://www.notion.so/Budget-plan-6e0f594ee6b6436db049d18406537e1b?pvs=21"><img class="icon" src="https://www.notion.so/icons/credit-card_gray.svg"/>Budget plan</a></figure><p id="4e02faa9-71a3-4b29-aaed-1886f2e71546" class="">
+</p></div></div><h1 id="501a47ee-f861-42fb-b5d6-2ff4380ff984" class="">📑 Правила</h1><hr id="ca32ea61-de9b-4072-b292-a4d0241f8844"/><p id="287f8008-9e9a-41eb-ba8c-682d3aa49134" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>🔊 Голосовые каналы</strong></summary><div class="indented"><p id="99233fb1-5e72-4f28-8aab-561b52cc8b33" class="">• <strong>Пункт 1.1 “</strong>Создание помех в общении<strong>”</strong></p><blockquote id="1d426260-7fc9-472c-b8f7-c62b1187c88d" class="">Строго запрещается создание помех, мешающих нормальному общению в голосовых каналах. Это включает в себя громкие звуки, эхо, и другие действия, мешающие общению.</blockquote><p id="5bf287ad-f2f5-46eb-b43a-8b05ff65d19c" class=""><br/>• <br/><strong>Пункт 1.2 “</strong>Использование внешних программ для модификации звука<strong>”</strong></p><blockquote id="c3031d40-373b-4083-b659-90d1890129de" class="">Запрещено использовать сторонние программы (например, SoundPad) для трансляции звуков через микрофон или изменения тембра голоса.</blockquote><p id="bb671d10-4e08-44b8-bfa5-42d14e5ab324" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>🗨️ Текстовые каналы</strong></summary><div class="indented"><p id="16909bd7-a04b-49b8-b5c9-5137e194b4d6" class="">• <strong>Пункт 2.1 “</strong>Беспричинное упоминание<strong>”</strong></p><blockquote id="acdbaedf-1c58-40ed-8638-056eba0903bf" class="">Запрещены беспричинные упоминания ролей или участников.</blockquote><p id="1e5cc13e-e164-4ad4-88f7-15ca0d3a9448" class=""><br/>• <br/><strong>Пункт 2.2 “</strong>Флуд и спам<strong>”</strong></p><blockquote id="d51e71b7-0e31-4c18-9ec0-48457d024ac9" class="">Запрещен флуд и спам в любых его проявлениях.</blockquote><p id="e18116a9-5c3a-4d28-aed0-15ba6eceaec0" class="">
+</p><p id="1b46af8d-3826-4c91-8432-acf4389d9a98" class="">• <strong>Пункт 2.3 “</strong>Флуд и спам<strong>”</strong></p><blockquote id="b825ada1-0f09-4025-a96d-d48a01ed8e2e" class="">Участникам рекомендуется соблюдать тематику обсуждений в соответствующих текстовых каналах.</blockquote><p id="781c2c0d-e95b-49f6-8ae6-2bbc6360792b" class="">
+</p><h3 id="3bfe9eb0-b4ef-4f3f-bcc2-fffb30c8f2cf" class=""></h3></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>⚙️ Общие правила</strong></summary><div class="indented"><p id="2ea1f1f0-1eef-4865-a257-ef17b8be7184" class="">• <strong>Пункт 2.1 “</strong>Беспричинное упоминание<strong>”</strong></p><blockquote id="fce7c06e-912c-4a2a-9eb9-457fb72c9b9e" class="">Запрещены беспричинные упоминания ролей или участников.</blockquote><p id="08b05a2b-6ca9-4e8b-a893-62f737d3bdb2" class=""><br/>• <br/><strong>Пункт 2.2 “</strong>Флуд и спам<strong>”</strong></p><blockquote id="2e750c8b-6375-43a8-bf0b-fb906a65ea56" class="">Запрещен флуд и спам в любых его проявлениях.</blockquote><p id="d819e67c-ace8-4f31-8797-c119ec5392fb" class="">
+</p><p id="91f1ae19-011f-4a06-8de2-8ae7ead2d4b2" class="">• <strong>Пункт 2.3 “</strong>Флуд и спам<strong>”</strong></p><blockquote id="6c69f567-4951-4369-82eb-50f2ebd5408a" class="">Участникам рекомендуется соблюдать тематику обсуждений в соответствующих текстовых каналах.</blockquote><p id="d66fff31-4d42-42ba-9441-766a4c99c82e" class="">
+</p><h3 id="50bbe1ca-6095-4704-aeb4-47cd969dafac" class=""></h3></div></details><h2 id="fb9bc9b4-73ee-49b2-901b-46340662968d" class="">Target audience(s)</h2><p id="31e7a151-27f1-4d00-939b-a0d3c308cd5c" class=""><mark class="highlight-gray">Provide a summary of your target audience(s) in as much detail as possible. The more defined your audience is, the more targeted your campaign will be. The toggle below includes a few additional questions to ask when narrowing in on your target audience.</mark></p><ul id="cea0a0c4-50f0-41b3-a2a6-2810d9f89dbc" class="block-color-gray toggle"><li><details open=""><summary>Additional audience insights:</summary><ul id="2fdc43a9-2e62-45a5-b728-69bc8c3aefec" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">What do they think and how do they behave?</mark></li></ul><ul id="1fdd02ff-21ca-4e16-8af1-2f6b581d7eda" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">What problem or challenge are we trying to solve for them?</mark></li></ul><ul id="a4d09b6f-c436-475a-8eb0-d39713854db2" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">What makes their experience with Notion unique?</mark></li></ul><ul id="8b62954a-f04a-416c-8320-2ebea7441bb0" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">Why are they not doing what we want them to?</mark></li></ul><ul id="0990d609-c943-4abf-877a-1df549bbf08c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">What challenges of theirs can Notion help solve?</mark></li></ul><ul id="1ee0d03b-0fa1-46b9-a8b6-062ee1919b90" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">What channels does this audience or community interact with most?</mark></li></ul><ul id="6a97fa91-bfaa-45c9-8cfd-a209a93079ed" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">What unique behaviors do we want to focus on as part of our marketing effort?</mark></li></ul></details></li></ul><p id="b1ac5fce-7272-4458-8ac0-ab4e249f8089" class="">The target audience will include personal users across various demographics and regions, with a focus on those who are seeking a more efficient and customizable productivity tool. </p><ul id="b14f22e4-7ecd-4ee9-b5b7-9ec42459babf" class="bulleted-list"><li style="list-style-type:disc">Prospects that don’t use Notion for Personal or Teams → <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Try Notion!</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></li></ul><ul id="69a61991-2346-433b-8548-92e87962d67e" class="bulleted-list"><li style="list-style-type:disc">Personal users that don’t use Notion at work → <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Plan personal and work goals with Notion!</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></li></ul><h2 id="ec19d1a7-fac7-44c3-804a-3ed342ea756a" class="">Communication framework</h2><p id="8fead214-9b12-4c48-ab0a-1db5e29ff959" class=""><mark class="highlight-gray">Define your key messages, including proof points and other considerations. Build out the </mark><code><mark class="highlight-gray">Get</mark></code><mark class="highlight-gray"> → </mark><code><mark class="highlight-gray">To</mark></code><mark class="highlight-gray"> → </mark><code><mark class="highlight-gray">By</mark></code><mark class="highlight-gray"> section to detail the order of operations. Make sure to define your Call-to-Action (CTA) here as well.</mark></p><div id="fb05f116-7964-4417-ab27-92db478391e7" class="column-list"><div id="d8c3f85a-9ee6-426d-a4ce-9212507c9461" style="width:33.333333333333336%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e9b40a67-b4a3-411d-b221-a6cd68846377"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%"><strong><strong><strong>Get</strong></strong></strong><p id="3271dd35-df4c-4456-b677-b229cea12354" class=""><mark class="highlight-gray"><em>The target audience</em></mark></p><ul id="bc23cc8e-2f19-4bce-a62b-e74d4d4f47ae" class="bulleted-list"><li style="list-style-type:disc">Students who are Notion users</li></ul></div></figure></div><div id="07d2b9ff-8ad5-4b4b-84ac-89b80220152f" style="width:33.333333333333336%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7f248310-b428-4cac-9267-32617de94745"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%"><strong>To</strong><p id="2713bb20-7f98-4adb-a43e-d9562e90e386" class=""><mark class="highlight-gray"><em>Take a certain action</em></mark></p><ul id="86afb119-809f-4d38-8cae-7028454f0378" class="bulleted-list"><li style="list-style-type:disc">Create their yearly planning boards</li></ul></div></figure></div><div id="133fa8eb-ab37-4015-a288-e6ec46c77072" style="width:33.33333333333333%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f9fcb8d0-0ad1-4e6d-b91e-35bbea68b9e2"><div style="font-size:1.5em"><span class="icon">3️⃣</span></div><div style="width:100%"><strong>By</strong><p id="32a7b00e-3ded-4de7-87eb-7a6be279fc8d" class=""><mark class="highlight-gray"><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em>Key messages and channels</em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></mark></p><ul id="aaa91c3f-f4a5-4e1e-a412-998e8b317b15" class="bulleted-list"><li style="list-style-type:disc">Sharing templates via email and on social media</li></ul></div></figure></div></div><h3 id="ae4a0d68-11c0-44c9-89b6-0ebb29ec4cb3" class="">Key message</h3><p id="5030c381-40a3-48c9-a585-8784aab25745" class=""><mark class="highlight-gray">The one key message you want your audience to take away from this campaign.</mark></p><p id="0f8c923c-1d9d-4154-b574-1234b0914156" class="">Notion is the best tool to help you plan, organize, and manage your life’s activities.</p><h3 id="0e24528a-2d0d-42ba-b37b-93e962281e75" class="">Message priorities</h3><p id="05daf8e6-0d02-4428-9eb2-92d4eeecd6f7" class=""><mark class="highlight-gray">Show how you’ll back up your Key Message.</mark></p><ol type="1" id="741a608e-ed39-4b19-af0c-699e8f235439" class="numbered-list" start="1"><li>Students can use Notion to organize their lives through docs, notes, and tasks</li></ol><ol type="1" id="553117e5-ddb0-4401-8d2f-2839fb5dd9f8" class="numbered-list" start="2"><li>Notion is both customizable and structured</li></ol><h3 id="f258a3b2-37d3-496e-bfcf-d7a8d4eff54a" class="">Other considerations</h3><p id="b473fc45-b23e-4cf0-a486-17340f65fc30" class=""><mark class="highlight-gray">Use this section to list risks, callouts, or other insights:</mark></p><ul id="e3551ef7-f5ae-4d58-b46f-2bd5995ef4d8" class="bulleted-list"><li style="list-style-type:disc">Don’t mention competitors’ names or attack competitors</li></ul><ul id="6427bc84-dbdf-4836-a0a9-9db097d4030e" class="bulleted-list"><li style="list-style-type:disc">Avoid jargon or acronyms—spell out terms completely</li></ul><ul id="f5c3500e-aa04-428b-b941-1c53fa7b0bd6" class="bulleted-list"><li style="list-style-type:disc">Avoid subjective statements like &quot;Notion is more pleasant to look at&quot;.</li></ul><h1 id="e0fd5733-5d08-4f7e-b909-0ed56eeefb15" class="">📨 Channel strategy</h1><hr id="99b1a977-e368-4a34-8115-e4e2b7bf7cf7"/><h2 id="8de15f22-cfe0-4473-8ad7-032b906e4b8a" class="">Overview</h2><p id="982d6a16-99d2-4ba2-abf5-bf5e44d55404" class=""><mark class="highlight-gray">Use this section to summarize at a glance the major campaign moments and deliverables. </mark></p><ul id="e51fe71b-a0e7-4360-99b9-7bc7bb43f019" class="bulleted-list"><li style="list-style-type:disc">Identify potential partners for cross-promotion, such as productivity and lifestyle influencers</li></ul><ul id="d38479e0-64c7-476e-a7ba-b75b5139fc3c" class="bulleted-list"><li style="list-style-type:disc">Create social media content that highlights Notion&#x27;s customization and collaboration features, targeting personal users who are seeking a more efficient productivity tool</li></ul><ul id="0936e298-a293-4b4e-b51b-e64b803ae5b5" class="bulleted-list"><li style="list-style-type:disc">Utilize email marketing to drive traffic to the site and showcase Notion&#x27;s organization and goal-setting features, including databases, to-do lists, and calendars</li></ul><ul id="1678952b-d146-484c-ad27-40842f64f3cd" class="bulleted-list"><li style="list-style-type:disc">Host webinars and workshops to educate new users on how to use Notion for personal productivity and organization</li></ul><ul id="60f257ec-0607-446d-b8e3-5626a2c0500d" class="bulleted-list"><li style="list-style-type:disc">Use targeted ads on social media platforms and search engines to reach potential users who are searching for productivity tools</li></ul><ul id="e98eb1e9-8aac-4a22-a45c-e9af87010642" class="bulleted-list"><li style="list-style-type:disc">Develop partnerships with relevant organizations or companies to offer Notion as a productivity tool for their employees or members</li></ul><p id="1ac92246-0b38-4aa2-b0c6-f3d444fcf696" class=""><strong>Campaign Moments Summary</strong></p><table id="ba9b9d2d-0ebc-4835-b049-de8766356880" class="simple-table"><thead class="simple-table-header"><tr id="84697995-d630-43ea-a889-0af697152245"><th id="T}=w" class="simple-table-header-color simple-table-header" style="width:232.79166666666666px">When</th><th id="j\?W" class="simple-table-header-color simple-table-header" style="width:611.7890625px">What</th><th id="^=O{" class="simple-table-header-color simple-table-header" style="width:266.7890625px">Channels</th></tr></thead><tbody><tr id="8e5a4e6a-aad0-4d01-bb1d-2f7b18297618"><td id="T}=w" class="" style="width:232.79166666666666px">December 14, 2022 </td><td id="j\?W" class="" style="width:611.7890625px">Publish blog post and other content deliverables</td><td id="^=O{" class="" style="width:266.7890625px">Content</td></tr><tr id="68680beb-f8fa-49e1-827f-8d52889fa191"><td id="T}=w" class="" style="width:232.79166666666666px">December 16, 2022</td><td id="j\?W" class="" style="width:611.7890625px">Launch social campaign </td><td id="^=O{" class="" style="width:266.7890625px">Social</td></tr><tr id="aa330e15-ef80-4145-8f0b-91e19c1e0590"><td id="T}=w" class="" style="width:232.79166666666666px">December 21, 2022</td><td id="j\?W" class="" style="width:611.7890625px">Kick off community campaign with partners and ambassadors</td><td id="^=O{" class="" style="width:266.7890625px">Community</td></tr></tbody></table><h2 id="f9c2517c-d75b-45d3-91f1-3ba146414d8c" class="">🚀 Execution</h2><div id="ffc10944-3ece-46c9-831c-ee6a8909241f" class="collection-content"><h4 class="collection-title">[Add brief name] Channel Strategy</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Channel Brief</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>Deliverable Summary</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Channel</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/globe_gray.svg" style="width:14px;height:14px"/></span>Distribution</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesPerson"><path d="M10.9536 7.90088C12.217 7.90088 13.2559 6.79468 13.2559 5.38525C13.2559 4.01514 12.2114 2.92017 10.9536 2.92017C9.70142 2.92017 8.65137 4.02637 8.65698 5.39087C8.6626 6.79468 9.69019 7.90088 10.9536 7.90088ZM4.4231 8.03003C5.52368 8.03003 6.42212 7.05859 6.42212 5.83447C6.42212 4.63843 5.51245 3.68945 4.4231 3.68945C3.33374 3.68945 2.41846 4.64966 2.41846 5.84009C2.42407 7.05859 3.32251 8.03003 4.4231 8.03003ZM1.37964 13.168H5.49561C4.87231 12.292 5.43384 10.6074 6.78711 9.51807C6.18628 9.14746 5.37769 8.87231 4.4231 8.87231C1.95239 8.87231 0.262207 10.6917 0.262207 12.1628C0.262207 12.7974 0.548584 13.168 1.37964 13.168ZM7.50024 13.168H14.407C15.4009 13.168 15.7322 12.8423 15.7322 12.2864C15.7322 10.8489 13.8679 8.88354 10.9536 8.88354C8.04492 8.88354 6.17505 10.8489 6.17505 12.2864C6.17505 12.8423 6.50635 13.168 7.50024 13.168Z"></path></svg></span>Owner</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesStatus"><path d="M8.75488 1.02344C8.75488 0.613281 8.41309 0.264648 8.00293 0.264648C7.59277 0.264648 7.25098 0.613281 7.25098 1.02344V3.11523C7.25098 3.51855 7.59277 3.86719 8.00293 3.86719C8.41309 3.86719 8.75488 3.51855 8.75488 3.11523V1.02344ZM3.91504 5.0293C4.20215 5.31641 4.69434 5.32324 4.97461 5.03613C5.26855 4.74902 5.26855 4.25684 4.98145 3.96973L3.53906 2.52051C3.25195 2.2334 2.7666 2.21973 2.47949 2.50684C2.19238 2.79395 2.18555 3.28613 2.47266 3.57324L3.91504 5.0293ZM10.9629 4.01758C10.6826 4.30469 10.6826 4.79688 10.9697 5.08398C11.2568 5.37109 11.749 5.36426 12.0361 5.07715L13.4854 3.62793C13.7725 3.34082 13.7725 2.84863 13.4785 2.55469C13.1982 2.27441 12.7061 2.27441 12.4189 2.56152L10.9629 4.01758ZM15.0234 8.78906C15.4336 8.78906 15.7822 8.44727 15.7822 8.03711C15.7822 7.62695 15.4336 7.28516 15.0234 7.28516H12.9385C12.5283 7.28516 12.1797 7.62695 12.1797 8.03711C12.1797 8.44727 12.5283 8.78906 12.9385 8.78906H15.0234ZM0.975586 7.28516C0.56543 7.28516 0.223633 7.62695 0.223633 8.03711C0.223633 8.44727 0.56543 8.78906 0.975586 8.78906H3.07422C3.48438 8.78906 3.83301 8.44727 3.83301 8.03711C3.83301 7.62695 3.48438 7.28516 3.07422 7.28516H0.975586ZM12.0361 10.9902C11.749 10.71 11.2568 10.71 10.9629 10.9971C10.6826 11.2842 10.6826 11.7764 10.9697 12.0635L12.4258 13.5127C12.7129 13.7998 13.2051 13.793 13.4922 13.5059C13.7793 13.2256 13.7725 12.7266 13.4854 12.4395L12.0361 10.9902ZM2.52051 12.4395C2.22656 12.7266 2.22656 13.2188 2.50684 13.5059C2.79395 13.793 3.28613 13.7998 3.57324 13.5127L5.02246 12.0703C5.31641 11.7832 5.31641 11.291 5.03613 11.0039C4.74902 10.7168 4.25684 10.71 3.96973 10.9971L2.52051 12.4395ZM8.75488 12.9658C8.75488 12.5557 8.41309 12.207 8.00293 12.207C7.59277 12.207 7.25098 12.5557 7.25098 12.9658V15.0576C7.25098 15.4609 7.59277 15.8096 8.00293 15.8096C8.41309 15.8096 8.75488 15.4609 8.75488 15.0576V12.9658Z"></path></svg></span>Status</th></tr></thead><tbody><tr id="c7d02bb0-8e59-4a65-ba3e-f3598b009565"><td class="cell-title"><a href="https://www.notion.so/2023-New-Year-s-Campaign-Content-c7d02bb08e594a65ba3ef3598b009565?pvs=21"><img class="icon" src="https://www.notion.so/icons/book-closed_gray.svg"/>[2023 New Year’s Campaign] Content</a></td><td class="cell-~yRV"></td><td class="cell-LhMl"><span class="selected-value select-value-color-default">Content</span></td><td class="cell-sFhS"></td><td class="cell-Pdep"><span class="user"><img src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/%5BAdd%20brief%20name%5D%20Channel%20Strategy%20ffc109443ece46c9831cee6a8909241f/%5B2023%20New%20Year%E2%80%99s%20Campaign%5D%20Content%20c7d02bb08e594a65ba3ef3598b009565/nate.jpg" class="icon user-icon"/>Nate Martins</span></td><td class="cell-ydrG"><span class="status-value select-value-color-gray"><div class="status-dot status-dot-color-gray"></div>Not started</span></td></tr><tr id="f4c0b9ab-cf8c-48b2-b49a-ecd247a3e544"><td class="cell-title"><a href="https://www.notion.so/2023-New-Year-s-Campaign-Social-Media-f4c0b9abcf8c48b2b49aecd247a3e544?pvs=21"><img class="icon" src="https://www.notion.so/icons/phone_gray.svg"/>[2023 New Year’s Campaign] Social Media</a></td><td class="cell-~yRV"></td><td class="cell-LhMl"><span class="selected-value select-value-color-default">Social Media</span></td><td class="cell-sFhS"></td><td class="cell-Pdep"><span class="user"><img src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/%5BAdd%20brief%20name%5D%20Channel%20Strategy%20ffc109443ece46c9831cee6a8909241f/%5B2023%20New%20Year%E2%80%99s%20Campaign%5D%20Social%20Media%20f4c0b9abcf8c48b2b49aecd247a3e544/avatar-01.png" class="icon user-icon"/>Alex Hao</span></td><td class="cell-ydrG"><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>In progress</span></td></tr><tr id="40e74bc3-ea9e-4cdc-83ba-0710a4fcaf79"><td class="cell-title"><a href="https://www.notion.so/2023-New-Year-s-Campaign-Community-40e74bc3ea9e4cdc83ba0710a4fcaf79?pvs=21"><img class="icon" src="https://www.notion.so/icons/geography_gray.svg"/>[2023 New Year’s Campaign] Community</a></td><td class="cell-~yRV"></td><td class="cell-LhMl"><span class="selected-value select-value-color-default">Community</span></td><td class="cell-sFhS"></td><td class="cell-Pdep"><span class="user"><img src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/%5BAdd%20brief%20name%5D%20Channel%20Strategy%20ffc109443ece46c9831cee6a8909241f/%5B2023%20New%20Year%E2%80%99s%20Campaign%5D%20Community%2040e74bc3ea9e4cdc83ba0710a4fcaf79/Ben-Notion.png" class="icon user-icon"/>Ben Lang</span></td><td class="cell-ydrG"><span class="status-value select-value-color-green"><div class="status-dot status-dot-color-green"></div>Done</span></td></tr></tbody></table><br/><br/></div><hr id="750c3378-0428-465a-b682-0a909850c6a0"/><h2 id="694ebaf9-1925-4976-8f25-a6a474164d87" class="">Deliverables tracker</h2><p id="4768f3fe-b810-4687-839d-31ed1b0580ac" class=""><mark class="highlight-gray">Use this section to track any actions or deliverables needed to launch the campaign. Use the “Channel” column to link deliverables to the relevant channel.</mark></p><div id="eb900d2c-f28f-4720-b982-04cd8f1bc725" class="collection-content"><h4 class="collection-title">Deliverables tracker</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>Deliverable</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesStatus"><path d="M8.75488 1.02344C8.75488 0.613281 8.41309 0.264648 8.00293 0.264648C7.59277 0.264648 7.25098 0.613281 7.25098 1.02344V3.11523C7.25098 3.51855 7.59277 3.86719 8.00293 3.86719C8.41309 3.86719 8.75488 3.51855 8.75488 3.11523V1.02344ZM3.91504 5.0293C4.20215 5.31641 4.69434 5.32324 4.97461 5.03613C5.26855 4.74902 5.26855 4.25684 4.98145 3.96973L3.53906 2.52051C3.25195 2.2334 2.7666 2.21973 2.47949 2.50684C2.19238 2.79395 2.18555 3.28613 2.47266 3.57324L3.91504 5.0293ZM10.9629 4.01758C10.6826 4.30469 10.6826 4.79688 10.9697 5.08398C11.2568 5.37109 11.749 5.36426 12.0361 5.07715L13.4854 3.62793C13.7725 3.34082 13.7725 2.84863 13.4785 2.55469C13.1982 2.27441 12.7061 2.27441 12.4189 2.56152L10.9629 4.01758ZM15.0234 8.78906C15.4336 8.78906 15.7822 8.44727 15.7822 8.03711C15.7822 7.62695 15.4336 7.28516 15.0234 7.28516H12.9385C12.5283 7.28516 12.1797 7.62695 12.1797 8.03711C12.1797 8.44727 12.5283 8.78906 12.9385 8.78906H15.0234ZM0.975586 7.28516C0.56543 7.28516 0.223633 7.62695 0.223633 8.03711C0.223633 8.44727 0.56543 8.78906 0.975586 8.78906H3.07422C3.48438 8.78906 3.83301 8.44727 3.83301 8.03711C3.83301 7.62695 3.48438 7.28516 3.07422 7.28516H0.975586ZM12.0361 10.9902C11.749 10.71 11.2568 10.71 10.9629 10.9971C10.6826 11.2842 10.6826 11.7764 10.9697 12.0635L12.4258 13.5127C12.7129 13.7998 13.2051 13.793 13.4922 13.5059C13.7793 13.2256 13.7725 12.7266 13.4854 12.4395L12.0361 10.9902ZM2.52051 12.4395C2.22656 12.7266 2.22656 13.2188 2.50684 13.5059C2.79395 13.793 3.28613 13.7998 3.57324 13.5127L5.02246 12.0703C5.31641 11.7832 5.31641 11.291 5.03613 11.0039C4.74902 10.7168 4.25684 10.71 3.96973 10.9971L2.52051 12.4395ZM8.75488 12.9658C8.75488 12.5557 8.41309 12.207 8.00293 12.207C7.59277 12.207 7.25098 12.5557 7.25098 12.9658V15.0576C7.25098 15.4609 7.59277 15.8096 8.00293 15.8096C8.41309 15.8096 8.75488 15.4609 8.75488 15.0576V12.9658Z"></path></svg></span>Status</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesPerson"><path d="M10.9536 7.90088C12.217 7.90088 13.2559 6.79468 13.2559 5.38525C13.2559 4.01514 12.2114 2.92017 10.9536 2.92017C9.70142 2.92017 8.65137 4.02637 8.65698 5.39087C8.6626 6.79468 9.69019 7.90088 10.9536 7.90088ZM4.4231 8.03003C5.52368 8.03003 6.42212 7.05859 6.42212 5.83447C6.42212 4.63843 5.51245 3.68945 4.4231 3.68945C3.33374 3.68945 2.41846 4.64966 2.41846 5.84009C2.42407 7.05859 3.32251 8.03003 4.4231 8.03003ZM1.37964 13.168H5.49561C4.87231 12.292 5.43384 10.6074 6.78711 9.51807C6.18628 9.14746 5.37769 8.87231 4.4231 8.87231C1.95239 8.87231 0.262207 10.6917 0.262207 12.1628C0.262207 12.7974 0.548584 13.168 1.37964 13.168ZM7.50024 13.168H14.407C15.4009 13.168 15.7322 12.8423 15.7322 12.2864C15.7322 10.8489 13.8679 8.88354 10.9536 8.88354C8.04492 8.88354 6.17505 10.8489 6.17505 12.2864C6.17505 12.8423 6.50635 13.168 7.50024 13.168Z"></path></svg></span>Assignee</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesPerson"><path d="M10.9536 7.90088C12.217 7.90088 13.2559 6.79468 13.2559 5.38525C13.2559 4.01514 12.2114 2.92017 10.9536 2.92017C9.70142 2.92017 8.65137 4.02637 8.65698 5.39087C8.6626 6.79468 9.69019 7.90088 10.9536 7.90088ZM4.4231 8.03003C5.52368 8.03003 6.42212 7.05859 6.42212 5.83447C6.42212 4.63843 5.51245 3.68945 4.4231 3.68945C3.33374 3.68945 2.41846 4.64966 2.41846 5.84009C2.42407 7.05859 3.32251 8.03003 4.4231 8.03003ZM1.37964 13.168H5.49561C4.87231 12.292 5.43384 10.6074 6.78711 9.51807C6.18628 9.14746 5.37769 8.87231 4.4231 8.87231C1.95239 8.87231 0.262207 10.6917 0.262207 12.1628C0.262207 12.7974 0.548584 13.168 1.37964 13.168ZM7.50024 13.168H14.407C15.4009 13.168 15.7322 12.8423 15.7322 12.2864C15.7322 10.8489 13.8679 8.88354 10.9536 8.88354C8.04492 8.88354 6.17505 10.8489 6.17505 12.2864C6.17505 12.8423 6.50635 13.168 7.50024 13.168Z"></path></svg></span>Contributors</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesDate"><path d="M3.29688 14.4561H12.7031C14.1797 14.4561 14.9453 13.6904 14.9453 12.2344V3.91504C14.9453 2.45215 14.1797 1.69336 12.7031 1.69336H3.29688C1.82031 1.69336 1.05469 2.45215 1.05469 3.91504V12.2344C1.05469 13.6973 1.82031 14.4561 3.29688 14.4561ZM3.27637 13.1162C2.70898 13.1162 2.39453 12.8154 2.39453 12.2207V5.9043C2.39453 5.30273 2.70898 5.00879 3.27637 5.00879H12.71C13.2842 5.00879 13.6055 5.30273 13.6055 5.9043V12.2207C13.6055 12.8154 13.2842 13.1162 12.71 13.1162H3.27637ZM6.68066 7.38086H7.08398C7.33008 7.38086 7.41211 7.30566 7.41211 7.05957V6.66309C7.41211 6.41699 7.33008 6.3418 7.08398 6.3418H6.68066C6.44141 6.3418 6.35938 6.41699 6.35938 6.66309V7.05957C6.35938 7.30566 6.44141 7.38086 6.68066 7.38086ZM8.92285 7.38086H9.31934C9.56543 7.38086 9.64746 7.30566 9.64746 7.05957V6.66309C9.64746 6.41699 9.56543 6.3418 9.31934 6.3418H8.92285C8.67676 6.3418 8.59473 6.41699 8.59473 6.66309V7.05957C8.59473 7.30566 8.67676 7.38086 8.92285 7.38086ZM11.1582 7.38086H11.5547C11.8008 7.38086 11.8828 7.30566 11.8828 7.05957V6.66309C11.8828 6.41699 11.8008 6.3418 11.5547 6.3418H11.1582C10.9121 6.3418 10.8301 6.41699 10.8301 6.66309V7.05957C10.8301 7.30566 10.9121 7.38086 11.1582 7.38086ZM4.44531 9.58203H4.84863C5.09473 9.58203 5.17676 9.50684 5.17676 9.26074V8.86426C5.17676 8.61816 5.09473 8.54297 4.84863 8.54297H4.44531C4.20605 8.54297 4.12402 8.61816 4.12402 8.86426V9.26074C4.12402 9.50684 4.20605 9.58203 4.44531 9.58203ZM6.68066 9.58203H7.08398C7.33008 9.58203 7.41211 9.50684 7.41211 9.26074V8.86426C7.41211 8.61816 7.33008 8.54297 7.08398 8.54297H6.68066C6.44141 8.54297 6.35938 8.61816 6.35938 8.86426V9.26074C6.35938 9.50684 6.44141 9.58203 6.68066 9.58203ZM8.92285 9.58203H9.31934C9.56543 9.58203 9.64746 9.50684 9.64746 9.26074V8.86426C9.64746 8.61816 9.56543 8.54297 9.31934 8.54297H8.92285C8.67676 8.54297 8.59473 8.61816 8.59473 8.86426V9.26074C8.59473 9.50684 8.67676 9.58203 8.92285 9.58203ZM11.1582 9.58203H11.5547C11.8008 9.58203 11.8828 9.50684 11.8828 9.26074V8.86426C11.8828 8.61816 11.8008 8.54297 11.5547 8.54297H11.1582C10.9121 8.54297 10.8301 8.61816 10.8301 8.86426V9.26074C10.8301 9.50684 10.9121 9.58203 11.1582 9.58203ZM4.44531 11.7832H4.84863C5.09473 11.7832 5.17676 11.708 5.17676 11.4619V11.0654C5.17676 10.8193 5.09473 10.7441 4.84863 10.7441H4.44531C4.20605 10.7441 4.12402 10.8193 4.12402 11.0654V11.4619C4.12402 11.708 4.20605 11.7832 4.44531 11.7832ZM6.68066 11.7832H7.08398C7.33008 11.7832 7.41211 11.708 7.41211 11.4619V11.0654C7.41211 10.8193 7.33008 10.7441 7.08398 10.7441H6.68066C6.44141 10.7441 6.35938 10.8193 6.35938 11.0654V11.4619C6.35938 11.708 6.44141 11.7832 6.68066 11.7832ZM8.92285 11.7832H9.31934C9.56543 11.7832 9.64746 11.708 9.64746 11.4619V11.0654C9.64746 10.8193 9.56543 10.7441 9.31934 10.7441H8.92285C8.67676 10.7441 8.59473 10.8193 8.59473 11.0654V11.4619C8.59473 11.708 8.67676 11.7832 8.92285 11.7832Z"></path></svg></span>Due</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesRelation"><path d="M13.1475 10.5869V3.72363C13.1475 3.25195 12.833 2.93066 12.3477 2.93066H5.48438C5.02637 2.93066 4.70508 3.27246 4.70508 3.67578C4.70508 4.07227 5.05371 4.40039 5.46387 4.40039H7.89746L10.8438 4.30469L9.59961 5.39844L3.08496 11.9199C2.92773 12.0771 2.8457 12.2686 2.8457 12.46C2.8457 12.8564 3.20801 13.2256 3.61816 13.2256C3.80957 13.2256 3.99414 13.1504 4.15137 12.9932L10.6729 6.47168L11.7803 5.22754L11.6641 8.05762V10.6074C11.6641 11.0176 11.9922 11.373 12.4023 11.373C12.8057 11.373 13.1475 11.0312 13.1475 10.5869Z"></path></svg></span>Channel Brief</th><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Channel</th></tr></thead><tbody><tr id="feb80c13-ffc3-4786-8c57-365a8a2a232d"><td class="cell-title"><a href="https://www.notion.so/Launch-community-contest-feb80c13ffc347868c57365a8a2a232d?pvs=21"><img class="icon" src="https://www.notion.so/icons/ticket-admission_gray.svg"/>Launch community contest</a></td><td class="cell-fC|m"><span class="status-value"><div class="status-dot"></div>Not started</span></td><td class="cell-p@_w"><span class="user"><img src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/Deliverables%20tracker%20eb900d2cf28f4720b98204cd8f1bc725/Launch%20community%20contest%20feb80c13ffc347868c57365a8a2a232d/Zoe.png" class="icon user-icon"/>Zoe Ludwig</span></td><td class="cell-cyey"><span class="user"><img src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/%5BAdd%20brief%20name%5D%20Channel%20Strategy%20ffc109443ece46c9831cee6a8909241f/%5B2023%20New%20Year%E2%80%99s%20Campaign%5D%20Community%2040e74bc3ea9e4cdc83ba0710a4fcaf79/Ben-Notion.png" class="icon user-icon"/>Ben Lang</span><span class="user"><img src="https://lh3.googleusercontent.com/a/ALm5wu23XCmbFVspSD7Jw4qT685oAYRi5rXaiwggH3RD=s100" class="icon user-icon"/>Drew Evans</span></td><td class="cell-CRa`"><time>@February 3, 2023</time></td><td class="cell-WhZT"><a href="https://www.notion.so/2023-New-Year-s-Campaign-Community-40e74bc3ea9e4cdc83ba0710a4fcaf79?pvs=21"><img class="icon" src="https://www.notion.so/icons/geography_gray.svg"/>[2023 New Year’s Campaign] Community</a></td><td class="cell-wv]L"><span class="selected-value select-value-color-purple">Community</span></td></tr><tr id="1648c38f-8eb1-40f7-a1f8-891d1032e9fe"><td class="cell-title"><a href="https://www.notion.so/LinkedIn-announcement-post-1648c38f8eb140f7a1f8891d1032e9fe?pvs=21"><img class="icon" src="https://www.notion.so/icons/alert_gray.svg"/>LinkedIn announcement post</a></td><td class="cell-fC|m"><span class="status-value select-value-color-yellow"><div class="status-dot status-dot-color-yellow"></div>In progress</span></td><td class="cell-p@_w"><span class="user"><img src="https://lh3.googleusercontent.com/a/ALm5wu23XCmbFVspSD7Jw4qT685oAYRi5rXaiwggH3RD=s100" class="icon user-icon"/>Drew Evans</span></td><td class="cell-cyey"><span class="user"><img src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/%5BAdd%20brief%20name%5D%20Channel%20Strategy%20ffc109443ece46c9831cee6a8909241f/%5B2023%20New%20Year%E2%80%99s%20Campaign%5D%20Content%20c7d02bb08e594a65ba3ef3598b009565/nate.jpg" class="icon user-icon"/>Nate Martins</span><span class="user"><img src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/Deliverables%20tracker%20eb900d2cf28f4720b98204cd8f1bc725/LinkedIn%20announcement%20post%201648c38f8eb140f7a1f8891d1032e9fe/steph_illo_profile.png" class="icon user-icon"/>Stephanie Hagio Chin</span></td><td class="cell-CRa`"><time>@February 8, 2023</time></td><td class="cell-WhZT"><a href="https://www.notion.so/2023-New-Year-s-Campaign-Social-Media-f4c0b9abcf8c48b2b49aecd247a3e544?pvs=21"><img class="icon" src="https://www.notion.so/icons/phone_gray.svg"/>[2023 New Year’s Campaign] Social Media</a></td><td class="cell-wv]L"><span class="selected-value select-value-color-green">Social Media</span></td></tr><tr id="90399ec1-faab-48f7-be62-32a115a35f03"><td class="cell-title"><a href="https://www.notion.so/Blog-post-90399ec1faab48f7be6232a115a35f03?pvs=21"><img class="icon" src="https://www.notion.so/icons/rename_gray.svg"/>Blog post</a></td><td class="cell-fC|m"><span class="status-value select-value-color-green"><div class="status-dot status-dot-color-green"></div>Complete</span></td><td class="cell-p@_w"><span class="user"><img src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/%5BAdd%20brief%20name%5D%20Channel%20Strategy%20ffc109443ece46c9831cee6a8909241f/%5B2023%20New%20Year%E2%80%99s%20Campaign%5D%20Content%20c7d02bb08e594a65ba3ef3598b009565/nate.jpg" class="icon user-icon"/>Nate Martins</span></td><td class="cell-cyey"><span class="user"><img src="ALFiX%20Zone%20-%20%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20a8275cd6f3af4be19b7823b705014c38/Deliverables%20tracker%20eb900d2cf28f4720b98204cd8f1bc725/LinkedIn%20announcement%20post%201648c38f8eb140f7a1f8891d1032e9fe/steph_illo_profile.png" class="icon user-icon"/>Stephanie Hagio Chin</span></td><td class="cell-CRa`"><time>@February 14, 2023</time></td><td class="cell-WhZT"><a href="https://www.notion.so/2023-New-Year-s-Campaign-Content-c7d02bb08e594a65ba3ef3598b009565?pvs=21"><img class="icon" src="https://www.notion.so/icons/book-closed_gray.svg"/>[2023 New Year’s Campaign] Content</a></td><td class="cell-wv]L"><span class="selected-value select-value-color-pink">Content</span></td></tr></tbody></table><br/><br/></div><h1 id="7e33f8bd-ba6c-4d73-9e20-b04dd87d6fd5" class="">📈 Campaign performance</h1><hr id="6290fab7-ddc1-4a68-9d3d-639fbb66ec29"/><p id="1d8e006b-455a-46e5-a179-fe0ecca89462" class=""><mark class="highlight-gray">Add post-campaign performance reports and metrics here.</mark></p><figure class="callout" style="white-space:pre-wrap;display:flex" id="b0c0587d-76e4-4e59-a1a6-5bfa25ee4960"><div style="font-size:1.5em"><span class="icon">✨</span></div><div style="width:100%"><strong>Overall goal:</strong></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="eac2ffe5-a588-4e3f-a44e-59b9657e6c02"><div style="font-size:1.5em"><span class="icon">✍️</span></div><div style="width:100%"><strong>Executive Summary</strong></div></figure><h2 id="4ef2391b-a3ce-4a92-95cd-ee4b28d734c6" class="">Conversions</h2><hr id="23687b8b-b910-4082-9b45-38a4ce59c00b"/><h2 id="bb151f37-879b-453f-a49c-1af11d9ebd91" class="">Impressions</h2><hr id="f20bbdce-9832-43c1-9269-527050dedd25"/><h2 id="adf529e0-13d3-47ca-9f58-fcc45c44af64" class="">Web traffic</h2><hr id="966ed5aa-22f9-496c-bbfa-84575b83f04c"/><h2 id="4be22b61-556a-40ba-8ad7-081a3ca72ddc" class="">Email</h2><hr id="2010e4d2-d359-4431-9470-739f5fa97016"/><h2 id="32de99d0-9b4c-4f11-a892-f110611608db" class="">Internal Team Retro</h2><hr id="92f5e489-9fe7-457d-a0df-380a24311236"/><p id="fa1f8710-e925-4307-a260-3bb7106f157e" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
