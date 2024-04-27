@@ -1,4 +1,4 @@
-[Adblock Plus 0.1.1]
+[Adblock Plus 0.2.0]
 ! Title: ASX ads filter
 ! Version: 201510132349
 ! Last modified: Sat, 27.04.2024
@@ -15,3 +15,38 @@ torshina.me##.KOOKI-popup
 ||torshina.me/images/Banners/jan2024_0000_med.png$image
 ||torshina.me/images/Banners/jan2024_0014_%D0%BA%D0%B5%D0%B8%CC%86%D1%81-3%20(1).png
 torshina.me##.text-center.card-banner.mb-4.card
+
+! RU Privacy Block
+@@||afisha.ru/proxy/videonetworkproxy.ashx?$xmlhttprequest
+@@||criteo.net/js/ld/publishertag.js$domain=novayagazeta.ru
+@@||dict.rambler.ru/fcgi-bin/$xmlhttprequest,domain=rambler.ru
+@@||fplay.online/log_event$~third-party,xmlhttprequest
+@@||k12-company.ru^*/statistics.js$script
+@@||krok8.com/wp-content/plugins/pageviews/pageviews.min.js$script,~third-party
+@@||labrc.pw/advstats/$xmlhttprequest
+@@||mc.yandex.ru/metrika/tag.js$script,domain=auto.yandex|coddyschool.com
+@@||mealty.ru/js/ga_events.js$~third-party
+@@||mycargo.rzd.ru/dst/scripts/common/analytics-helper.js$~third-party
+@@||online.bcs.ru^*/piwik.bcs.js$script
+@@||openfpcdn.io/fingerprintjs/v3/iife.min.js$script,domain=mos03education.ru
+@@||pay.citylink.pro/stats/services/$~third-party
+@@||pladform.ru/dive/$xmlhttprequest
+@@||pladform.ru/player$subdocument
+@@||planetazdorovo.ru/pics/transparent_pixel.png$image,~third-party
+@@||playep.pro/log_event$~third-party,xmlhttprequest
+@@||player.fc-zenit.ru/msi/geoip?$xmlhttprequest
+@@||player.smotrim.ru/js/piwik.js$~third-party
+@@||player.vgtrk.com/js/stat.js?
+@@||playy.online/log_event$~third-party,xmlhttprequest
+@@||plplayer.online/log_event$~third-party,xmlhttprequest
+@@||rtr-vesti.ru/pvc_cdn/js/stat.js$domain=player.vgtrk.com
+@@||smotrim.ru/js/stat.js$script
+@@||swa.mail.ru/cgi-bin/counters?$script
+@@||toplay.biz/log_event$~third-party,xmlhttprequest
+@@||ucoz.net/cgi/uutils.fcg?$script,third-party
+@@||wargag.ru/public/js/counter.js?
+@@||widget.myrentacar.me^$script,subdocument
+@@||yandex.ru/metrika/tag.js$script,domain=kuchenland.ru
+@@||yandex.ru/metrika/watch.js$domain=alean.ru|anoncer.net|nabortu.ru|samozapis-spb.ru|tv.yandex.ru|tvrain.ru
+@@||yandex.ru/watch/$xmlhttprequest,domain=anoncer.net
+@@||yandex.ru/webvisor/$xmlhttprequest,domain=anoncer.net
