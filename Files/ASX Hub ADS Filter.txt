@@ -1,8 +1,8 @@
-[Adblock Plus 2.0]
+[Adblock Plus 0.1]
 ! Title: ASX ads filter
 ! Version: 201510132349
-! Last modified: Wed, 20.03.2024
-! Expires: 2 hours
+! Last modified: Sat, 27.04.2024
+! Expires: 1 hours
 ! ----------------------------------------------------
 ! Это список для блокировки некоторую рекламу на сайтах,
 ! которая не блокируется "обычными" списками
@@ -10,3 +10,5 @@
 
 auto.creavite.co##.bottom-0.md\:bottom-5.md\:right-7.md\:hover\:shadow-xl.w-full.md\:max-w-md.max-w-none.transition-shadow.md\:shadow-lg.shadow-\[0_-10px_15px_-3px_rgb\(0\,0\,0\,0\.1\)\].py-5.px-8.bg-white.rounded-md.fixed.z-\[200\]
 
+torshina.me##.KOOKI-popup
+||torshina.me/images/Banners/jan2024_0000_med.png$image
