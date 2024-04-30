@@ -17,7 +17,7 @@ torshina.me##.KOOKI-popup
 torshina.me##.text-center.card-banner.mb-4.card
 
 ! www.dns-shop.ru
-www.dns-shop.ru##div.products-list__banner:nth-of-type(1)
+dns-shop.ru##.products-list__banner
 
 ! RU Privacy Block
 @@||afisha.ru/proxy/videonetworkproxy.ashx?$xmlhttprequest
