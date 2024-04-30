@@ -10,11 +10,14 @@
 
 auto.creavite.co##.bottom-0.md\:bottom-5.md\:right-7.md\:hover\:shadow-xl.w-full.md\:max-w-md.max-w-none.transition-shadow.md\:shadow-lg.shadow-\[0_-10px_15px_-3px_rgb\(0\,0\,0\,0\.1\)\].py-5.px-8.bg-white.rounded-md.fixed.z-\[200\]
 
-! https://torshina.me
+! torshina.me
 torshina.me##.KOOKI-popup
 ||torshina.me/images/Banners/jan2024_0000_med.png$image
 ||torshina.me/images/Banners/jan2024_0014_%D0%BA%D0%B5%D0%B8%CC%86%D1%81-3%20(1).png
 torshina.me##.text-center.card-banner.mb-4.card
+
+! www.dns-shop.ru
+www.dns-shop.ru##div.products-list__banner:nth-of-type(1)
 
 ! RU Privacy Block
 @@||afisha.ru/proxy/videonetworkproxy.ashx?$xmlhttprequest
