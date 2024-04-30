@@ -1,7 +1,7 @@
-[Adblock Plus 0.2.0]
+[Adblock Plus 0.2.1]
 ! Title: ASX ads filter
 ! Version: 201510132349
-! Last modified: Sat, 27.04.2024
+! Last modified: Thu, 30.04.2024
 ! Expires: 1 hours
 ! ----------------------------------------------------
 ! Это список для блокировки некоторую рекламу на сайтах,
