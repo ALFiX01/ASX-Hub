@@ -20,7 +20,6 @@ torshina.me##.text-center.card-banner.mb-4.card
 dns-shop.ru##.products-list__banner
 
 ! www.mvideo.ru
-mvideo.ru##mvid-root:nth-child(5) > div.app:first-child > mvid-primary-layout.ng-star-inserted:last-child > mvid-layout.ng-star-inserted > div.layout.layout_bg-transparent > main.layout__content.layout__content_full-width:nth-child(2) > ng-component.ng-star-inserted:nth-child(2) > div.mp-wrapper.ng-star-inserted:last-child > mvid-promo-and-day-products-collection.ng-star-inserted:first-child > mvid-promotions-block.promo.block.ng-star-inserted:first-child
 mvideo.ru##mvid-root:nth-child(5) > div.app:first-child > mvid-primary-layout.ng-star-inserted:last-child > mvid-layout.ng-star-inserted > div.layout.layout_bg-transparent > main.layout__content.layout__content_full-width:nth-child(2) > ng-component.ng-star-inserted:nth-child(2) > div.mp-wrapper.ng-star-inserted:last-child > mvid-banners-2.page-carousel-padding.ng-star-inserted:nth-child(8)
 
 ! RU Privacy Block
