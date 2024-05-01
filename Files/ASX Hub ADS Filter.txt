@@ -22,6 +22,9 @@ dns-shop.ru##.products-list__banner
 ! www.mvideo.ru
 mvideo.ru##mvid-root:nth-child(5) > div.app:first-child > mvid-primary-layout.ng-star-inserted:last-child > mvid-layout.ng-star-inserted > div.layout.layout_bg-transparent > main.layout__content.layout__content_full-width:nth-child(2) > ng-component.ng-star-inserted:nth-child(2) > div.mp-wrapper.ng-star-inserted:last-child > mvid-banners-2.page-carousel-padding.ng-star-inserted:nth-child(8)
 
+! vk.com
+vk.com###feed_filters > div.page_block.apps_feedRightAppsBlock.apps_feedRightAppsBlock_single_app.apps_feedRightAppsBlock_single_app--promo:last-child
+
 ! RU Privacy Block
 @@||afisha.ru/proxy/videonetworkproxy.ashx?$xmlhttprequest
 @@||criteo.net/js/ld/publishertag.js$domain=novayagazeta.ru
