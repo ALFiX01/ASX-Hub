@@ -32,51 +32,24 @@
 </div>
 
 
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
 
 
-### Built With
+### Создано с помоью
 
 * [Batch](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands)
 * [Powershell](https://docs.microsoft.com/en-us/powershell/)
 * [CLI](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjQ46f--LD4AhWCIEQIHR5CDIMQFnoECAUQAQ&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FCommand-line_interface&usg=AOvVaw3Zaova7HVAG2DR4ROgZNEc)
-* REG
+* [REG](https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/windows-registry-advanced-users)
 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
 
 
@@ -85,54 +58,43 @@
 
 ## Getting Started
 
-To run the optimizer is easy, all you need to do is double click ASX Hub.exe and run it as admin
+Запустить ASX Hub легко: все, что вам нужно сделать, это дважды щелкнуть ASX Hub.exe
 
 ### Warning
 
-Even though we have an automatic restore point feature some users have issues with it, we **highly recommend** [making a manual restore point](https://support.microsoft.com/en-us/windows/create-a-system-restore-point-77e02e2a-3298-c869-9974-ef5658ea3be9) before launch.
+Несмотря на то, что у нас есть функция автоматической точки восстановления, у некоторых пользователей возникают с ней проблемы, мы **настоятельно рекомендуем** [создать точку восстановления вручную](https://support.microsoft.com/en-us/windows/create-a-system-restore-point-77e02e2a-3298-c869-9974-ef5658ea3be9) перед запуском.
 
 
-### Installation
+### Установка
 
-1. Download the latest ASX Hub Version
+1. Загрузите последнюю версию установщика ASX Hub
    ```sh
-   https://github.com/ALFiX01/AssistantX/releases/download/Stable/ASX.Hub.exe
+   https://github.com/ALFiX01/AssistantX/blob/main/Setup.exe
    ```
-2. Right click ASX Hub.exe and run it as admin
+2. Щелкните правой кнопкой мыши Setup.exe и запустите его
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
 
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Использование
 
-ASX Hub can be used on any PC running windows 10 and above.
+ASX Hub можно использовать на любом ПК под управлением Windows 10 и выше.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
 
 <!-- CONTACT -->
-## Contact
+## Контакты
 
-Join the discord and create a ticket,
+Присоединяйтесь к нашему дискорду,
 https://discord.gg/DHkRGNPfS8
 
 <!-- Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01/AssistantX) -->
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* [Nvidia Profile Inspector](https://github.com/Orbmu2k/nvidiaProfileInspector)
-* [nvcleanstall](https://www.techpowerup.com/download/techpowerup-nvcleanstall/)
-* [NSudo](https://github.com/M2Team/NSudo)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
 
 
