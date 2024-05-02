@@ -33,9 +33,9 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## О проекте
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![ASX Hub Screen Shot][product-screenshot]](https://example.com)
 
 <p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
@@ -56,7 +56,7 @@
 <!-- GETTING STARTED -->
 
 
-## Getting Started
+## Как начать использование
 
 Запустить ASX Hub легко: все, что вам нужно сделать, это дважды щелкнуть ASX Hub.exe
 
