@@ -37,8 +37,6 @@
 
 [![ASX Hub Screen Shot][product-screenshot]](https://example.com)
 
-<p align="right">(<a href="#top">вернуться наверх</a>)</p>
-
 
 
 ### Создано с помощью
@@ -49,7 +47,6 @@
 * [REG](https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/windows-registry-advanced-users)
 
 
-<p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
 
 
@@ -70,7 +67,6 @@
 1. Загрузите последнюю версию установщика ASX Hub [(Нажмите здесь чтобы Скачать)](https://github.com/ALFiX01/ASX_Hub/raw/main/ASX%20Setup.exe)
 2. Щелкните правой кнопкой мыши "ASX Setup.exe" и запустите его
 
-<p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
 
 
@@ -80,7 +76,6 @@
 
 ASX Hub можно использовать на любом ПК под управлением Windows 10 и выше.
 
-<p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
 
 <!-- CONTACT -->
@@ -90,9 +85,6 @@ ASX Hub можно использовать на любом ПК под упра
 https://discord.gg/DHkRGNPfS8
 
 <!-- Project Link: [https://github.com/ALFiX01/ASX_Hub](https://github.com/ALFiX01/ASX_Hub) -->
-
-<p align="right">(<a href="#top">вернуться наверх</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
