@@ -41,7 +41,7 @@
 
 
 
-### Создано с помоью
+### Создано с помощью
 
 * [Batch](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands)
 * [Powershell](https://docs.microsoft.com/en-us/powershell/)
