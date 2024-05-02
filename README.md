@@ -12,8 +12,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/ALFiX01/AssistantX">
-    <img src="https://github.com/ALFiX01/AssistantX/blob/main/Files/Images/Icon.png?raw=true">
+  <a href="https://github.com/ALFiX01/ASX_Hub">
+    <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/Icon.png?raw=true">
   </a>
 
 <h3 align="center">ASX Hub</h3>
@@ -25,9 +25,9 @@
     <br />
     <br />
     <br />
-    <a href="https://github.com/ALFiX01/AssistantX/issues">Report Bug</a>
+    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Report Bug</a>
     ·
-    <a href="https://github.com/ALFiX01/AssistantX/issues">Request Feature</a>
+    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Request Feature</a>
   </p>
 </div>
 
@@ -69,7 +69,7 @@
 
 1. Загрузите последнюю версию установщика ASX Hub
    ```sh
-   https://github.com/ALFiX01/AssistantX/blob/main/Setup.exe
+   https://github.com/ALFiX01/ASX_Hub/blob/main/Setup.exe
    ```
 2. Щелкните правой кнопкой мыши Setup.exe и запустите его
 
@@ -92,7 +92,7 @@ ASX Hub можно использовать на любом ПК под упра
 Присоединяйтесь к нашему дискорду,
 https://discord.gg/DHkRGNPfS8
 
-<!-- Project Link: [https://github.com/ALFiX01/AssistantX](https://github.com/ALFiX01/AssistantX) -->
+<!-- Project Link: [https://github.com/ALFiX01/ASX_Hub](https://github.com/ALFiX01/ASX_Hub) -->
 
 <p align="right">(<a href="#top">вернуться наверх</a>)</p>
 
@@ -100,4 +100,4 @@ https://discord.gg/DHkRGNPfS8
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: https://github.com/ALFiX01/AssistantX/blob/main/Files/Images/MainMenu.png?raw=true
+[product-screenshot]: https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/MainMenu.png?raw=true
