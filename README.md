@@ -19,7 +19,7 @@
 <h3 align="center">ASX Hub</h3>
 
   <p align="center">
-    ASX Hub is a free and desktop utility that aims to improve FPS, reduce input lag, and optimize network performance for video game titles and day-to-day productivity.
+    ASX Hub — бесплатная утилита для ПК с Windows 10/11, целью которой является повышение FPS, упрощение настройки ОС, Скачивание программ и тд.
   <p align="center">
     <br />
     <br />
@@ -138,4 +138,4 @@ https://discord.gg/DHkRGNPfS8
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: https://media.discordapp.net/attachments/1019670072333189280/1210655465025835048/image.png?ex=661043c3&is=65fdcec3&hm=c0c33506ff82daeea3d8d99cc6baca60366ca6247485afb867959b8e22250734&=&format=webp&quality=lossless&width=1044&height=671
+[product-screenshot]: https://github.com/ALFiX01/AssistantX/blob/main/Files/Images/MainMenu.png?raw=true
