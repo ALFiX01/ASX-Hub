@@ -1,92 +1,62 @@
 <div id="top"></div>
+
 <!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
+*** Спасибо, что ознакомились с Best-README-Template. Если у вас есть предложения,
+*** которые могли бы улучшить этот документ, пожалуйста, сделайте fork репозитория и создайте pull request
+*** или просто откройте issue с тегом "enhancement".
+*** Не забудьте поставить звездочку проекту!
+*** Спасибо ещё раз! Теперь создайте что-то ПОТРЯСАЮЩЕЕ! :D
 -->
 
-
-
-<!-- PROJECT LOGO -->
+<!-- ЛОГОТИП ПРОЕКТА -->
 <br />
 <div align="center">
   <a href="https://github.com/ALFiX01/ASX_Hub">
-    <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/Icon.png?raw=true">
+    <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/Icon.png?raw=true" alt="Логотип ASX Hub">
   </a>
 
-<h3 align="center">ASX Hub</h3>
+  <h3 align="center">ASX Hub</h3>
 
   <p align="center">
-    ASX Hub — бесплатная утилита для ПК с Windows 10/11, целью которой является повышение FPS, упрощение настройки ОС, Скачивание программ и тд.
-  <p align="center">
+    Инновационный инструмент с открытым исходным кодом для повышения производительности вашего компьютера.
     <br />
-    <br />
-    <br />
-    <br />
-    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Report Bug</a>
+    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Сообщить о баге</a>
     ·
-    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Request Feature</a>
+    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Запросить функцию</a>
   </p>
 </div>
 
-
-<!-- ABOUT THE PROJECT -->
+<!-- О ПРОЕКТЕ -->
 ## О проекте
 
-[![ASX Hub Screen Shot][product-screenshot]](https://example.com)
+**ASX Hub** — это инструмент с открытым исходным кодом, созданный для оптимизации и автоматизации процесса настройки вашего компьютера. Он упрощает установку и конфигурацию необходимых программ, повышая общую производительность системы.
 
+![Скриншот ASX Hub](https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/MainMenu.png?raw=true)
 
+## Важно
 
-### Создано с помощью
+Автор **ASX Hub** не несет ответственности за любые повреждения, возникшие в результате использования программы.
 
-* [Batch](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands)
-* [Powershell](https://docs.microsoft.com/en-us/powershell/)
-* [CLI](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjQ46f--LD4AhWCIEQIHR5CDIMQFnoECAUQAQ&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FCommand-line_interface&usg=AOvVaw3Zaova7HVAG2DR4ROgZNEc)
-* [REG](https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/windows-registry-advanced-users)
+## ❓ Как начать использование
 
+Чтобы начать работу с ASX Hub, достаточно запустить `ASX Hub.exe` с помощью двойного клика.
 
+### 🚨 Внимание
 
+Рекомендуется создать точку восстановления системы перед использованием программы, несмотря на наличие функции автоматического создания точек восстановления. [Узнайте, как создать точку восстановления](https://support.microsoft.com/ru-ru/windows/создайте-точку-восстановления-77e02e2a-3298-c869-9974-ef5658ea3be9).
 
+## 💻 Требования
 
-<!-- GETTING STARTED -->
-
-
-## Как начать использование
-
-Запустить ASX Hub легко: все, что вам нужно сделать, это дважды щелкнуть ASX Hub.exe
-
-### Warning
-
-Несмотря на то, что у нас есть функция автоматической точки восстановления, у некоторых пользователей возникают с ней проблемы, мы **настоятельно рекомендуем** [создать точку восстановления вручную](https://support.microsoft.com/en-us/windows/create-a-system-restore-point-77e02e2a-3298-c869-9974-ef5658ea3be9) перед запуском.
-
+- Операционная система Windows 10 или 11
+- Интернет-соединение
+- Права администратора
 
 ### Установка
 
-1. Загрузите последнюю версию установщика ASX Hub [(Нажмите здесь чтобы Скачать)](https://github.com/ALFiX01/ASX_Hub/raw/main/ASX%20Setup.exe)
-2. Щелкните правой кнопкой мыши "ASX Setup.exe" и запустите его
+1. Загрузите последнюю версию ASX Hub с [GitHub](https://github.com/ALFiX01/ASX_Hub/raw/main/ASX%20Setup.exe).
+2. Запустите скачанный файл `ASX Setup.exe` с правами администратора.
 
-
-
-
-
-<!-- USAGE EXAMPLES -->
-## Использование
-
-ASX Hub можно использовать на любом ПК под управлением Windows 10 и выше.
-
-
-
-<!-- CONTACT -->
 ## Контакты
 
-Присоединяйтесь к нашему дискорду,
-https://discord.gg/DHkRGNPfS8
-
-<!-- Project Link: [https://github.com/ALFiX01/ASX_Hub](https://github.com/ALFiX01/ASX_Hub) -->
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/MainMenu.png?raw=true
+Присоединяйтесь к нашему сообществу в Discord:
+[Присоединиться к Discord!](https://discord.gg/DHkRGNPfS8)
