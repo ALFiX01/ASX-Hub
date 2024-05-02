@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ALFiX01/AssistantX">
-    <img src="https://media.discordapp.net/attachments/1019670072333189280/1210654826090725406/W_Z_SM.png?ex=6610432b&is=65fdce2b&hm=6f681906a311ce8ce027fb616b7730dcd588aacc9fcab1518a36120045aa1ceb&=&format=webp&quality=lossless">
+    <img src="https://github.com/ALFiX01/AssistantX/blob/main/Files/Images/Icon.png?raw=true">
   </a>
 
 <h3 align="center">ASX Hub</h3>
