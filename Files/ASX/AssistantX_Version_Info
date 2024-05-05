@@ -1,4 +1,4 @@
-set stablenum=MA01S1
-set UPDVER=5.0.1
+set stablenum=MA05S1
+set UPDVER=5.0.2
 set DisplayBranch=Stable
 set NecessaryUpdateInstall=Yes
