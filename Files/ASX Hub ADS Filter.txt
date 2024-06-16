@@ -1,7 +1,7 @@
-[Adblock Plus 0.2.2]
+[Adblock Plus 0.2.3]
 ! Title: ASX ads filter
 ! Version: 201510132349
-! Last modified: Thu, 30.04.2024
+! Last modified: Sun, 16.06.2024
 ! Expires: 1 hours
 ! ----------------------------------------------------
 ! Это список для блокировки некоторую рекламу на сайтах,
@@ -24,6 +24,9 @@ mvideo.ru##mvid-root:nth-child(5) > div.app:first-child > mvid-primary-layout.ng
 
 ! vk.com
 vk.com###feed_filters > div.page_block.apps_feedRightAppsBlock.apps_feedRightAppsBlock_single_app.apps_feedRightAppsBlock_single_app--promo:last-child
+
+! yandex.ru
+yandex.ru##.JustifierRowLayout-Incut
 
 ! RU Privacy Block
 @@||afisha.ru/proxy/videonetworkproxy.ashx?$xmlhttprequest
