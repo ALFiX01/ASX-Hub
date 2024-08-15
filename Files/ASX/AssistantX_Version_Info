@@ -1,4 +1,3 @@
 set stablenum=IU01S1
 set UPDVER=5.0.3
 set DisplayBranch=Stable
-set NecessaryUpdateInstall=Yes

@@ -2,4 +2,3 @@ set stablenum=AP09S1
 set UPDVER=5.0.0
 set betanum=5
 set DisplayBranch=Beta
-set NecessaryUpdateInstall=Yes
