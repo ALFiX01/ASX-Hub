@@ -1,3 +1,4 @@
 set stablenum=IU01S1
 set UPDVER=5.0.3
+set GZVER=0.1
 set DisplayBranch=Stable
