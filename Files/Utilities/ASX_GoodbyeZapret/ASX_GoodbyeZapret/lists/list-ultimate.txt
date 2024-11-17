@@ -149049,7 +149049,3 @@ cdn2.frankerfacez.com
 cdn.frankerfacez.com
 api.ffzap.com
 api.frankerfacez.com
-chat.openai.com
-intercomcdn.com
-oaistatic.com
-oaiusercontent.com
