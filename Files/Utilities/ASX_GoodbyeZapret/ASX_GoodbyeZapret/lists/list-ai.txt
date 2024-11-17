@@ -1,0 +1,15 @@
+chat.openai.com
+intercomcdn.com
+oaistatic.com
+oaiusercontent.com
+ab.chatgpt.com
+bing.com
+bing.net
+microsoft.com
+msn.com
+live.com
+cloudflare.com
+microsoftonline.com
+bingapis.com
+cloud.microsoft
+office.com
