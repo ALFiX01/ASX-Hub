@@ -5,7 +5,7 @@ chcp 65001 >nul
 cd /d "%~dp0"
 set BIN=%~dp0bin\
 
-set LIST_TITLE=ZAPRET: YouTube Fix MGTS
+set LIST_TITLE=GoodbyeZapret: YouTube Fix MGTS
 set LIST_PATH=%~dp0lists\list-youtube.txt
 
 start "%LIST_TITLE%" /min "%BIN%winws.exe" ^

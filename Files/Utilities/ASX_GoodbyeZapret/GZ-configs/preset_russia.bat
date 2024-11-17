@@ -5,7 +5,7 @@ chcp 65001 >nul
 cd /d "%~dp0"
 set BIN=%~dp0bin\
 
-set LIST_TITLE=ZAPRET: preset_russia (http,https,quic)
+set LIST_TITLE=GoodbyeZapret: preset_russia (http,https,quic)
 set LIST_PATH=%~dp0lists\list-ultimate.txt
 set DISCORD_IPSET_PATH=%~dp0lists\ipset-discord.txt
 

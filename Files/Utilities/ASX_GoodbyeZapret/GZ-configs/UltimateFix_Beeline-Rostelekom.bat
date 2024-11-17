@@ -5,7 +5,7 @@ chcp 65001 >nul
 cd /d "%~dp0"
 set BIN=%~dp0bin\
 
-set LIST_TITLE=ZAPRET: Ultimate Fix Beeline-Rostelekom-Infolink
+set LIST_TITLE=GoodbyeZapret: Ultimate Fix Beeline-Rostelekom-Infolink
 set LIST_PATH=%~dp0lists\list-ultimate.txt
 set DISCORD_IPSET_PATH=%~dp0lists\ipset-discord.txt
 
