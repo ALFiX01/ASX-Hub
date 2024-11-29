@@ -1,4 +1,4 @@
-set "VersionNumberList=NR16S1,NR16S2"
+set "VersionNumberList=NR16S1 NR16S2"
 set UPDVER=1.0.0
 set "FullVersionName=1.0"
 set DisplayBranch=Stable
