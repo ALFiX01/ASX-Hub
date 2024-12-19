@@ -61,8 +61,8 @@
 
 ## Установка
 
-1. Скачайте последнюю версию ASX Hub с [этой ссылки](https://github.com/ALFiX01/ASX_Hub/raw/main/ASX%20Setup.exe).
-2. Запустите загруженный установочный файл `ASX Setup.exe` от имени администратора и следуйте инструкциям на экране.
+1. Скачайте последнюю версию ASX Hub с [этой ссылки](https://github.com/ALFiX01/ASX-Hub/releases/download/Stable/ASX.Hub.exe).
+2. Запустите загруженный установочный файл `ASX Hub.exe` и следуйте инструкциям на экране.
 
 <p align="right"><a href="#top">вернуться в начало</a></p>
 
