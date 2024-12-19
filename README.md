@@ -8,7 +8,8 @@
   </a>
   
 ![GitHub Release](https://img.shields.io/github/v/release/ALFiX01/ASX-Hub)
-![GitLab Release](https://img.shields.io/gitlab/v/release/ASX-Hub)
+![GitHub last commit](https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub)
+
 
 
 
