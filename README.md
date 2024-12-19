@@ -7,11 +7,7 @@
     <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/Icon.png?raw=true" alt="ASX Hub Logo" width="150">
   </a>
   
-  "standard-version": {
-    "scripts": {
-      "postchangelog": "cat package.json | grep '\"version\"' > VERSION"
-    }
-  }
+![GitHub Release Name](https://img.shields.io/github/release/ALFiX01/ASX-Hub)
 
   <h3 align="center">ASX Hub</h3>
 
