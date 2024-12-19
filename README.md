@@ -7,8 +7,9 @@
     <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/Icon.png?raw=true" alt="ASX Hub Logo" width="150">
   </a>
   
-![GitHub Release Name](https://img.shields.io/github/release/ALFiX01/ASX-Hub)
-![GitHub Release (by tag)](https://img.shields.io/github/v/release/ALFiX01/ASX-Hub?label=stable&sort=semver)
+![GitHub Release](https://img.shields.io/github/v/release/ALFiX01/ASX-Hub)
+![GitLab Release](https://img.shields.io/gitlab/v/release/ASX-Hub)
+
 
 
   <h3 align="center">ASX Hub</h3>
