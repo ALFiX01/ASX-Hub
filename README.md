@@ -9,7 +9,7 @@
   
 ![GitHub Release](https://img.shields.io/github/v/release/ALFiX01/ASX-Hub)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub)
-![GitHub tag status](https://img.shields.io/github/checks-status/ALFiX01/ASX-Hub/Stable)
+![GitHub branch status](https://img.shields.io/github/checks-status/ALFiX01/ASX-Hub/Stable)
 
 
 
