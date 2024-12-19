@@ -8,6 +8,8 @@
   </a>
   
 ![GitHub Release Name](https://img.shields.io/github/release/ALFiX01/ASX-Hub)
+![GitHub Release (by tag)](https://img.shields.io/github/v/release/ALFiX01/ASX-Hub?label=stable&sort=semver)
+
 
   <h3 align="center">ASX Hub</h3>
 
