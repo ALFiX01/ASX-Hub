@@ -6,6 +6,8 @@
   <a href="https://github.com/ALFiX01/ASX_Hub">
     <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/Icon.png?raw=true" alt="ASX Hub Logo" width="150">
   </a>
+  
+![](https://img.shields.io/github/release/pandao/editor.md.svg)
 
   <h3 align="center">ASX Hub</h3>
 
