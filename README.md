@@ -11,9 +11,6 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub)
 ![GitHub License](https://img.shields.io/github/license/ALFiX01/ASX-Hub)
 
-
-
-
   <h3 align="center">ASX Hub</h3>
 
   <p align="center">
@@ -72,6 +69,12 @@
 2. Запустите загруженный файл `ASX Hub.exe` и следуйте инструкциям на экране.
 
 <p align="right"><a href="#top">вернуться в начало</a></p>
+
+---
+
+## Обновления
+
+Описание всех изменений и обновлений доступно в [CHANGELOG.md](https://github.com/ALFiX01/ASX_Hub/blob/main/CHANGELOG.md).
 
 ---
 
