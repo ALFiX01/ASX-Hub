@@ -6,7 +6,6 @@
   <a href="https://github.com/ALFiX01/ASX_Hub">
     <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/Icon.png?raw=true" alt="ASX Hub Logo" width="150">
   </a>
-  
   <h3 align="center">ASX Hub</h3>
 
 ![GitHub Release](https://img.shields.io/github/v/release/ALFiX01/ASX-Hub)
