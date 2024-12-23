@@ -6,12 +6,11 @@
   <a href="https://github.com/ALFiX01/ASX_Hub">
     <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/Icon.png?raw=true" alt="ASX Hub Logo" width="150">
   </a>
-  
+  <h3 align="center">ASX Hub</h3>
+
 ![GitHub Release](https://img.shields.io/github/v/release/ALFiX01/ASX-Hub)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub)
 ![GitHub License](https://img.shields.io/github/license/ALFiX01/ASX-Hub)
-
-  <h3 align="center">ASX Hub</h3>
 
   <p align="center">
     Инновационный инструмент с открытым исходным кодом для повышения производительности вашего ПК.
