@@ -1,4 +1,4 @@
-set "VersionNumberList=DC05S1 DC05S2 DC23D1"
+set "VersionNumberList=DC05S1 DC05S2 DC23D2"
 set UPDVER=1.0.1
 set "FullVersionName=1.0.1"
 set DisplayBranch=Stable
