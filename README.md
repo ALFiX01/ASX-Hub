@@ -67,6 +67,12 @@
 1. Скачайте [последнюю версию ASX Hub](https://github.com/ALFiX01/ASX-Hub/releases/download/Stable/ASX.Hub.exe).
 2. Запустите загруженный файл `ASX Hub.exe` и следуйте инструкциям на экране.
 
+или
+
+3. Щелкните правой кнопкой мыши меню «Пуск». Выберите "PowerShell" и вставьте следующую команду:
+<pre><code>irm bit.ly/ASX-Hub | iex</code></pre>
+
+
 <p align="right"><a href="#top">вернуться в начало</a></p>
 
 ---
@@ -84,3 +90,8 @@
 - [Присоединиться к Discord](https://discord.gg/MreKhdN2Ns)
 
 <p align="right"><a href="#top">вернуться в начало</a></p>
+
+
+<h2>🔑 Ключевые слова</h2>
+
+ASX, ASX-hub, windows10debloater, windows11debloater, windows-optimization, Application Installation, System Optimization, Windows Tools, Automation, System Customization, Software Updates, PowerShell Scripts, Developer Tools, Windows Applications, windows-tweaks, windows-optimization-tool, tweaks, tweaker, Privacy, Security, privacy-policy, download, Customization Tool, Windows Tweaks, System Tweaks, PC Optimization, Windows Tweaks Installer, Windows Optimization, Windows Customization Tool, System Utility for Windows, Performance Tweaks Windows, Registry Tweaks Windows, System Optimization Tool, Open Source Tweaks Tool, GitHub Tweaks Project, ASX, ASX-хаб, windows10debloater, windows11debloater, оптимизация Windows, Установка приложений, Оптимизация системы, Инструменты Windows, Автоматизация, Настройка системы, Обновления программного обеспечения, Сценарии PowerShell, Инструменты разработчика, Приложения Windows, настройки Windows, инструмент для оптимизации Windows, настройки, твикер, Конфиденциальность, Безопасность, политика конфиденциальности, загрузка, Инструмент настройки, Настройки Windows, Настройки системы, Оптимизация ПК, Установщик настроек Windows, Оптимизация Windows, Инструмент настройки Windows, Утилита для Windows, Настройки производительности Windows, Реестровые настройки Windows, Инструмент оптимизации системы, Инструмент настройки с открытым исходным кодом, Проект GitHub для настройки
