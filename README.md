@@ -15,9 +15,9 @@
   <p align="center">
     Инновационный инструмент с открытым исходным кодом для повышения производительности вашего ПК.
     <br />
-    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Сообщить о баге</a>
+    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Сообщить о проблеме</a>
     ·
-    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Предложить улучшение</a>
+    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Предложить идею</a>
   </p>
 </div>
 
