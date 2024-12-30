@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ALFiX01/ASX_Hub">
-    <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/design.png?raw=true" alt="ASX Hub Logo" width="150">
+    <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/design.png?raw=true" alt="ASX Hub Logo" width="450">
   </a>
   <h3 align="center">ASX Hub</h3>
 
