@@ -1,4 +1,4 @@
-set "VersionNumberList=YN01S1"
+set "VersionNumberList=YN01S1 YN01S2"
 set UPDVER=1.1.1
 set "FullVersionName=1.1.1"
 set DisplayBranch=Stable
