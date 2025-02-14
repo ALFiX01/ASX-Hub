@@ -1,4 +1,4 @@
-set "VersionNumberList=YN13S1 YN13S2"
-set UPDVER=1.1.3
-set "FullVersionName=1.1.3"
+set "VersionNumberList=FB14S1 FB14S2"
+set UPDVER=1.2.0
+set "FullVersionName=1.2.0"
 set DisplayBranch=Stable
