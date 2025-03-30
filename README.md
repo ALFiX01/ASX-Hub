@@ -12,7 +12,6 @@
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub)](https://github.com/ALFiX01/ASX-Hub/commits/main)
 [![GitHub License](https://img.shields.io/github/license/ALFiX01/ASX-Hub)](https://github.com/ALFiX01/ASX-Hub/blob/main/LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/ALFiX01/ASX-Hub)](https://github.com/ALFiX01/ASX-Hub/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/ALFiX01/ASX-Hub)](https://github.com/ALFiX01/ASX-Hub/network)
 
   <p>
     Инновационный инструмент с открытым исходным кодом для оптимизации и настройки производительности вашего ПК.
