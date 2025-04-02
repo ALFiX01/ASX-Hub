@@ -13,12 +13,12 @@
 
   <!-- Бейджи отлично смотрятся здесь -->
   <p>
-    <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest"><img src="https://img.shields.io/github/v/release/ALFiX01/ASX-Hub?style=flat-square" alt="GitHub Release"></a>
-    <a href="https://github.com/ALFiX01/ASX-Hub/commits/main"><img src="https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub?style=flat-square" alt="GitHub Last Commit"></a>
-    <a href="https://github.com/ALFiX01/ASX-Hub/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ALFiX01/ASX-Hub?style=flat-square" alt="GitHub License"></a>
-    <a href="https://github.com/ALFiX01/ASX-Hub/stargazers"><img src="https://img.shields.io/github/stars/ALFiX01/ASX-Hub?style=flat-square" alt="GitHub Stars"></a>
+    <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest"><img src="https://img.shields.io/github/v/release/ALFiX01/ASX-Hub?style=plastic" alt="GitHub Release"></a>
+    <a href="https://github.com/ALFiX01/ASX-Hub/commits/main"><img src="https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub?style=plastic" alt="GitHub Last Commit"></a>
+    <a href="https://github.com/ALFiX01/ASX-Hub/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ALFiX01/ASX-Hub?style=plastic" alt="GitHub License"></a>
+    <a href="https://github.com/ALFiX01/ASX-Hub/stargazers"><img src="https://img.shields.io/github/stars/ALFiX01/ASX-Hub?style=plastic" alt="GitHub Stars"></a>
     <!-- Можно добавить счетчик загрузок, если настроить -->
-    <a href="https://github.com/ALFiX01/ASX-Hub/releases"><img src="https://img.shields.io/github/downloads/ALFiX01/ASX-Hub/total?style=flat-square" alt="GitHub Downloads"></a> -->
+    <a href="https://github.com/ALFiX01/ASX-Hub/releases"><img src="https://img.shields.io/github/downloads/ALFiX01/ASX-Hub/total?style=plastic" alt="GitHub Downloads"></a>
   </p>
 
   <!-- Ссылки на баги и предложения остались, это хорошо -->
