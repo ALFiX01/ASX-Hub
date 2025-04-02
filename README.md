@@ -23,12 +23,6 @@
     
   </p>
 
-  <!-- Ссылки на баги и предложения остались, это хорошо -->
-  <p>
-    <a href="https://github.com/ALFiX01/ASX_Hub/issues">Сообщить о проблеме</a>
-    ·
-    <a href="https://github.com/ALFiX01/ASX_Hub/discussions">Предложить улучшение</a>
-  </p>
 </div>
 
 ---
