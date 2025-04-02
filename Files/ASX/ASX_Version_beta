@@ -1,5 +1,5 @@
-set VersionNumber=NR08S1
-set UPDVER=1.0.0
-set "FullVersionName=1.0 beta 3"
-set betanum=3
+set VersionNumber=AP02S1
+set UPDVER=1.3.0
+set "FullVersionName=1.3 beta 0"
+set betanum=0
 set DisplayBranch=Beta
