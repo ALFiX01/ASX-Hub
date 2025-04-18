@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/ALFiX01/ASX_Hub">
-    <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/design.png?raw=true" alt="ASX Hub Logo Banner" width="900">
+    <img src="https://github.com/ALFiX01/ASX_Hub/blob/main/Files/Images/design.png?raw=true" alt="ASX Hub Logo Banner" >
   </a>
 
   <br />
