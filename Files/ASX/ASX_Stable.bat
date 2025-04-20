@@ -102,13 +102,13 @@ echo 📌 Запуск ASX Hub >> "!ASX-Directory!\Files\Logs\%date%.txt"
 
 REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
-set "Version=1.4.0"
-set "FullVersionNameCurrent=1.4.0"
+set "Version=1.4.1"
+set "FullVersionNameCurrent=1.4.1"
 set "VersionNumberCurrent=AP17S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=17.04.2025"
+set "DateUpdate=19.04.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -1124,32 +1124,6 @@ if /i "%AutoControlDirectory%"=="On" (
     REM echo [DEBUG] %TIME% - skip_AutoControlDirectory >> "%ASX-Directory%\Files\Logs\%date%.txt"
     goto skip_AutoControlDirectory
 )
-
-
-REM Подсчет количества папок в директории Restore
-set "folder_count=0"
-for /d %%D in ("%ASX-Directory%\Files\Restore\*") do set /a folder_count+=1
-
-if %folder_count% gtr 2 (
-    REM Создаем временный файл для сортировки папок по дате
-    dir /ad /b /o-d "%ASX-Directory%\Files\Restore\*" > "%TEMP%\folders.txt"
-    
-    REM Пропускаем первые 2 строки (самые новые папки)
-    set "line_count=0"
-    for /f "skip=2" %%F in (%TEMP%\folders.txt) do (
-        rd /s /q "%ASX-Directory%\Files\Restore\%%F" >nul 2>&1
-        if errorlevel 1 (
-            echo [ERROR] %TIME% - Ошибка при удалении старой папки "%%F" из Restore >> "%ASX-Directory%\Files\Logs\%date%.txt"
-            set /a "error_on_loading_6+=1"
-        ) else (
-            echo [INFO ] %TIME% - Удалена старая папка "%%F" из Restore >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        )
-    )
-    
-    REM Удаляем временный файл
-    del "%TEMP%\folders.txt" >nul 2>&1
-)
-
 
 :: Удаляем файлы логов старше указанного в реестре количества дней и логируем
 ( 
@@ -5909,9 +5883,8 @@ rem chcp 65001 >nul 2>&1
 echo [INFO ] %TIME% - Открыта панель ":DeleteMicrosoftApps_Warn" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 set PageName=DeleteMicrosoftApps_Warn
 
-TITLE Очистка ненужных файлов - ASX Hub
+TITLE Предупреждение перед автоматическим удалением лишних приложений Microsoft - ASX Hub
 cls
-echo.
 echo.
 echo.
 echo.
@@ -5942,9 +5915,12 @@ echo.
 echo.
 echo.
 echo.
-echo                                       %COL%[90mДля запуска автоматического удаления программ необходимо подтверждение
+echo                                       %COL%[37mДля запуска автоматического удаления программ необходимо подтверждение.
 echo.
-echo.
+echo                        %COL%[96mБудут удалены:%COL%[90m
+echo                        3DBuilder, Bing, BingFinance, BingSports, BingWeather, OneConnect, Paint, StickyNotes, SoundRecorder, 
+echo                        MixedRealityPortal, 3DViewer, Feedback, Messaging, MicrosoftOfficeHub, OneNote, People, Skype,
+echo                        Solitaire Collection, Photos, Phone, Maps, FeedbackHub и SoundRecorder.
 echo.
 echo.
 echo.
@@ -5961,6 +5937,7 @@ echo [INFO ] %TIME% - Вызван "DeleteMicrosoftApps" >> "%ASX-Directory%\Fil
 if not exist "%ASX-Directory%\Files\Resources\Scripts" md "%ASX-Directory%\Files\Resources\Scripts" >nul 2>&1
 curl -L -o "%ASX-Directory%\Files\Resources\Scripts\Delete_MicrosoftOffice.ps1" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Scripts/Delete_MicrosoftOffice.ps1" >nul 2>&1
 cls
+TITLE Автоматическое удаление лишних приложений Microsoft - ASX Hub
 echo.
 echo  Идет процесс удаления лишних программ от Microsoft
 chcp 850 >nul 2>&1
@@ -5969,20 +5946,15 @@ PowerShell -Command "Get-AppxPackage -allusers *bing* | Remove-AppxPackage" >> "
 PowerShell -Command "Get-AppxPackage -allusers *bingfinance* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *bingsports* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *BingWeather* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-
 PowerShell -Command "Get-AppxPackage *Microsoft.OneConnect* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage *Microsoft.MSPaint* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage *Microsoft.MicrosoftStickyNotes* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage *soundrecorder* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage *zunevideo* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage *Microsoft.MixedReality.Portal* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage *Microsoft.Microsoft3DViewer* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "get-appxpackage *feedback* | remove-appxpackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 
 PowerShell -Command "Get-AppxPackage -allusers *CommsPhone* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *Drawboard PDF* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *Facebook* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *Getstarted* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *Microsoft.Messaging* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *MicrosoftOfficeHub* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *Office.OneNote* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
@@ -5991,13 +5963,10 @@ PowerShell -Command "Get-AppxPackage -allusers *people* | Remove-AppxPackage" >>
 PowerShell -Command "Get-AppxPackage -allusers *SkypeApp* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *solit* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *Sway* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *Twitter* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *WindowsAlarms* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *WindowsPhone* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *WindowsMaps* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *WindowsFeedbackHub* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 PowerShell -Command "Get-AppxPackage -allusers *WindowsSoundRecorder* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *windowscommunicationsapps* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 chcp 65001 >nul 2>&1
 
 if exist "%ASX-Directory%\Files\Resources\Scripts\Delete_MicrosoftOffice.ps1" (
@@ -9657,10 +9626,9 @@ if "%WinVer%"=="Windows 11" (
     echo                                                            %COL%[37m---------------------------
     echo                                                            %COL%[36m[ %COL%[37m6  %COL%[36m] %COL%[37mСоздание бэкапа %COL%[90m^(ASX Revert^)
     echo                                                            %COL%[36m[ %COL%[37m7  %COL%[36m] %COL%[37mУдаление WinDefender %COL%[90m^(PEGASUS^)
-    echo                                                            %COL%[36m[ %COL%[37m8  %COL%[36m] %COL%[37mОбход блокировок %COL%[90m^(GoodbyeZapret^)
-    echo                                                            %COL%[36m[ %COL%[37m9  %COL%[36m] %COL%[37mПросмотр и удаление драйверов %COL%[90m^(DriverFinder^)
+    echo                                                            %COL%[36m[ %COL%[37m8  %COL%[36m] %COL%[37mПросмотр и удаление драйверов %COL%[90m^(DriverFinder^)
     if "%ASX_Utilites_Download_mark%"=="Yes" (
-        echo                                                            %COL%[36m[ %COL%[37m10 %COL%[36m] %COL%[37mСторонние утилиты
+        echo                                                            %COL%[36m[ %COL%[37m9 %COL%[36m] %COL%[37mСторонние утилиты
     )
     echo.
 ) else (
@@ -9685,10 +9653,9 @@ if "%WinVer%"=="Windows 11" (
     echo                                                            %COL%[37m---------------------------
     echo                                                            %COL%[36m[ %COL%[37m7  %COL%[36m] %COL%[37mСоздание бэкапа %COL%[90m^(ASX Revert^)
     echo                                                            %COL%[36m[ %COL%[37m8  %COL%[36m] %COL%[37mУдаление WinDefender %COL%[90m^(PEGASUS^)
-    echo                                                            %COL%[36m[ %COL%[37m9  %COL%[36m] %COL%[37mОбход блокировок %COL%[90m^(GoodbyeZapret^)
-    echo                                                            %COL%[36m[ %COL%[37m10 %COL%[36m] %COL%[37mПросмотр и удаление драйверов %COL%[90m^(DriverFinder^)
+    echo                                                            %COL%[36m[ %COL%[37m9 %COL%[36m] %COL%[37mПросмотр и удаление драйверов %COL%[90m^(DriverFinder^)
     if "%ASX_Utilites_Download_mark%"=="Yes" (
-        echo                                                            %COL%[36m[ %COL%[37m11 %COL%[36m] %COL%[37mСторонние утилиты
+        echo                                                            %COL%[36m[ %COL%[37m10 %COL%[36m] %COL%[37mСторонние утилиты
     )
 )
 
@@ -9726,11 +9693,8 @@ if "%WinVer%"=="Windows 11" (
         call :PEGASUS_Menu_Prepare
     ) else if /i "%choice%"=="8" (
         set "history=ASX_Utilites;!history!"
-        call :GoodbyeZapret_Menu
-    ) else if /i "%choice%"=="9" (
-        set "history=ASX_Utilites;!history!"
         call :DriverFinder_Menu
-    ) else if /i "%choice%"=="10" (
+    ) else if /i "%choice%"=="9" (
         if "%ASX_Utilites_Download_mark%"=="Yes" (
             set "history=ASX_Utilites;!history!"
             call :ASX_Utilites_Download
@@ -9766,11 +9730,8 @@ if "%WinVer%"=="Windows 11" (
         call :PEGASUS_Menu_Prepare
     ) else if /i "%choice%"=="9" (
         set "history=ASX_Utilites;!history!"
-        call :GoodbyeZapret_Menu
-    ) else if /i "%choice%"=="10" (
-        set "history=ASX_Utilites;!history!"
         call :DriverFinder_Menu
-    ) else if /i "%choice%"=="11" (
+    ) else if /i "%choice%"=="10" (
         if "%ASX_Utilites_Download_mark%"=="Yes" (
             set "history=ASX_Utilites;!history!"
             call :ASX_Utilites_Download
@@ -12791,52 +12752,6 @@ if /i "%choice%"=="B" goto GoBack
 goto GoBack
 
 
-
-:GoodbyeZapret_Menu
-cls
-TITLE GoodbyeZapret Menu - ASX Hub
-echo.
-echo.
-echo.
-echo                                            %COL%[90m:::      ::::::::  :::    :::          :::    ::: :::    ::: :::::::::
-echo                                         :+: :+:   :+:    :+: :+:    :+:          :+:    :+: :+:    :+: :+:    :+:
-echo                                       +:+   +:+  +:+         +:+  +:+           +:+    +:+ +:+    +:+ +:+    +:+
-echo                                     +#++:++#++: +#++:++#++   +#++:+            +#++:++#++ +#+    +:+ +#++:++#+
-echo                                    +#+     +#+        +#+  +#+  +#+           +#+    +#+ +#+    +#+ +#+    +#+
-echo                                   #+#     #+# #+#    #+# #+#    #+#          #+#    #+# #+#    #+# #+#    #+#
-echo                                  ###     ###  ########  ###    ###          ###    ###  ########  #########%COL%[37m
-echo.
-
-if exist "%SystemDrive%\GoodbyeZapret\Launcher.exe" (
-    start "" "%SystemDrive%\GoodbyeZapret\Launcher.exe"
-) else (
-    echo         - Скачивание GoodbyeZapret
-curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\GoodbyeZapret.zip" "https://github.com/ALFiX01/GoodbyeZapret/releases/latest/download/GoodbyeZapret.zip" >nul 2>&1
-
-if exist "%ASX-Directory%\Files\Resources\ASX_Utilites\GoodbyeZapret.zip" (
-    echo         - Распаковка GoodbyeZapret
-	chcp 850 >nul 2>&1
-    powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Resources\ASX_Utilites\GoodbyeZapret.zip"' -DestinationPath '"%SystemDrive%\GoodbyeZapret"' >nul 2>&1
-    chcp 65001 >nul 2>&1
-    timeout /t 1 >nul
-    del "%ASX-Directory%\Files\Resources\ASX_Utilites\GoodbyeZapret.zip" >nul 2>&1
-    echo         - Запуск GoodbyeZapret
-    start "" "%SystemDrive%\GoodbyeZapret\Launcher.exe"
-    timeout /t 2 >nul
-    goto GoBack
-) else (
-    echo     %COL%[91m Ошибка: Не удалось скачать файл GoodbyeZapret.zip. Проверьте подключение к интернету и доступность URL.%COL%[37m
-    echo.
-    echo         %COL%[90m Нажмите любую клавишу для продолжения...
-    pause >nul 2>&1
-    goto GoBack
-)
-)
-echo.
-echo         %COL%[90m Нажмите любую клавишу чтобы вернуться обратно...
-pause >nul 2>&1
-goto GoBack
-
 REM ================================================================================================
 
 
@@ -13648,12 +13563,12 @@ echo.
 echo       %COL%[36mОписание обновления %COL%[37m%FullVersionNameCurrent%%COL%[37m
 echo       %COL%[97m!dashes!
 echo.
-echo          %COL%[36m1.%COL%[37m PEGASUS v2.0
-echo          %COL%[36m2.%COL%[37m На панель конфиденциальности добавлены новые пункты.
-echo          %COL%[36m2.%COL%[37m Некоторые уведомления от Ассистента стали более подробными.
-echo          %COL%[36m3.%COL%[37m Оптимизация кода.
-echo          %COL%[36m4.%COL%[37m Передела логика взаимодействия с утилитой GoodbyeZapret.
-echo          %COL%[36m5.%COL%[37m Исправление косяков и недочётов.
+echo          %COL%[36m1.%COL%[37m Оптимизация создания файлов восстановления через ASX Revert.
+echo          %COL%[36m2.%COL%[37m Добавлено Предупреждение перед удалением лишних приложений Microsoft.
+echo.
+echo.
+echo.
+echo.
 echo.
 echo.
 echo.
@@ -13758,7 +13673,33 @@ echo           - Копирование служб реестра...
 title Создание файла восстановления служб [1/1]
 REG export HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services "%RegBackupPath%\Services.Reg" /y >nul
 
-echo           - Создание файлов восстановления завершено%COL%[90m
+echo           - Создание файлов восстановления завершено
+
+REM Подсчет количества папок в директории Restore
+set "folder_count=0"
+for /d %%D in ("%ASX-Directory%\Files\Restore\*") do set /a folder_count+=1
+
+if %folder_count% gtr 2 (
+    REM Создаем временный файл для сортировки папок по дате
+    dir /ad /b /o-d "%ASX-Directory%\Files\Restore\*" > "%TEMP%\folders.txt"
+    
+    REM Пропускаем первые 2 строки (самые новые папки)
+    set "line_count=0"
+    for /f "skip=2" %%F in (%TEMP%\folders.txt) do (
+        rd /s /q "%ASX-Directory%\Files\Restore\%%F" >nul 2>&1
+        if errorlevel 1 (
+            echo [ERROR] %TIME% - Ошибка при удалении старой папки "%%F" из Restore >> "%ASX-Directory%\Files\Logs\%date%.txt"
+            set /a "error_on_loading_6+=1"
+        ) else (
+            echo           - Удаление старых файлов восстановления завершено%COL%[90m
+            echo [INFO ] %TIME% - Удалена старая папка "%%F" из Restore >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        )
+    )
+    
+    REM Удаляем временный файл
+    del "%TEMP%\folders.txt" >nul 2>&1
+)
+
 title Cоздание файлов восстановления ЗАВЕРШЕНО
 goto GoBack
 
