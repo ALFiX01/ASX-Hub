@@ -38,9 +38,10 @@
 :: Any tampering with the program code is forbidden (Запрещены любые вмешательства)
 
 :: Запуск от имени администратора
-reg add HKLM /F >nul 2>&1
+net session >nul 2>&1
 if %errorlevel% neq 0 (
-    start "" /wait /I /min powershell -NoProfile -Command "start -verb runas '%~s0'" 
+    echo Requesting administrative privileges...
+    start "" /wait /I /min powershell -NoProfile -Command "Start-Process -FilePath '%~s0' -Verb RunAs"
     exit /b
 )
 
@@ -180,7 +181,7 @@ if "%UAC_chek%"=="Error" (
     echo.
     echo %COL%[91m^[ОШИБКА^] Произошёл некорректный запуск.%COL%[97m
     echo.
-    echo Причина: %COL%[91mКонтроль учётных записей ^(UAC^) отключён или настроен неправильно.%COL%[97m
+    echo Причина: %COL%[91mКонтроль учётных записей ^(UAC^) настроен неправильно.%COL%[97m
 	echo.
 	echo.
     echo %COL%[37mASX Hub уже попытался внести необходимые изменения в реестр.
@@ -839,13 +840,13 @@ if "%WiFi%"=="On" (
         )
     )
 
-    if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX\PyDebloatX.exe" (
+    if not exist "%ASX-Directory%\Files\Utilites\PyDebloatX\PyDebloatX.exe" (
         title Загрузка отсутствующих компонентов...
         echo [INFO ] %TIME% - Загрузка отсутствующего компонента PyDebloatX.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX" (
-            md "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX" >nul 2>&1
+        if not exist "%ASX-Directory%\Files\Utilites\PyDebloatX" (
+            md "%ASX-Directory%\Files\Utilites\PyDebloatX" >nul 2>&1
         )
-        curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX\PyDebloatX.exe" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Utilities/PyDebloatX/PyDebloatX.exe" >nul 2>&1
+        curl -g -L -# -o "%ASX-Directory%\Files\Utilites\PyDebloatX\PyDebloatX.exe" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Utilities/PyDebloatX/PyDebloatX.exe" >nul 2>&1
         if errorlevel 1 (
             echo [ERROR] %TIME% - Ошибка при загрузке компонента PyDebloatX.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
             set /a "error_on_loading_1+=1"
@@ -865,27 +866,27 @@ if "%WiFi%"=="On" (
         )
     )
 
-    if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder\DriverFinder.exe" (
+    if not exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" (
         title Загрузка отсутствующих компонентов...
         echo [INFO ] %TIME% - Загрузка отсутствующего компонента DriverFinder.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder" (
-            md "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder" >nul 2>&1
+        if not exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" (
+            md "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" >nul 2>&1
         )
-        curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder\DriverFinder.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder.exe" >nul 2>&1
-        curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder\DriverFinder_FindService.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder_FindService.exe" >nul 2>&1
+        curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder.exe" >nul 2>&1
+        curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder_FindService.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder_FindService.exe" >nul 2>&1
         if errorlevel 1 (
             echo [ERROR] %TIME% - Ошибка при загрузке компонентов DriverFinder >> "%ASX-Directory%\Files\Logs\%date%.txt"
             set /a "error_on_loading_1+=1"
         )
     )
 
-    if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_FileSorter\FileSorter.exe" (
+    if not exist "%ASX-Directory%\Files\Utilites\ASX_FileSorter\FileSorter.exe" (
         title Загрузка отсутствующих компонентов...
         echo [INFO ] %TIME% - Загрузка отсутствующего компонента FileSorter.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_FileSorter" (
-            md "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_FileSorter" >nul 2>&1
+        if not exist "%ASX-Directory%\Files\Utilites\ASX_FileSorter" (
+            md "%ASX-Directory%\Files\Utilites\ASX_FileSorter" >nul 2>&1
         )
-        curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_FileSorter\FileSorter.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_FileSorter/FileSorter.exe" >nul 2>&1
+        curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_FileSorter\FileSorter.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_FileSorter/FileSorter.exe" >nul 2>&1
         if errorlevel 1 (
             echo [ERROR] %TIME% - Ошибка при загрузке компонента FileSorter.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
             set /a "error_on_loading_1+=1"
@@ -2867,14 +2868,14 @@ goto GoBack
 :CleanDevice
 echo [INFO ] %TIME% - Вызван ":CleanDevice" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 reg add "%SaveData%\ParameterFunction" /v "CleanDevice" /f >nul 2>&1
-md "%ASX-Directory%\Files\Resources\ASX_Utilites\DeviceClean" >nul 2>&1
-curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\DeviceClean\DeviceClean-RunAdmin.exe" "https://github.com/ALFiX01/ASX-Hub/releases/download/File/DeviceClean-RunAdmin.exe" >nul 2>&1
+md "%ASX-Directory%\Files\Utilites\DeviceClean" >nul 2>&1
+curl -g -L -# -o "%ASX-Directory%\Files\Utilites\DeviceClean\DeviceClean-RunAdmin.exe" "https://github.com/ALFiX01/ASX-Hub/releases/download/File/DeviceClean-RunAdmin.exe" >nul 2>&1
     IF %ERRORLEVEL% NEQ 0 (
         echo Ошибка: Не удалось скачать файл DeviceClean-RunAdmin.exe. Проверьте подключение к интернету и доступность URL.
 		echo [ERROR] %TIME% - Ошибка при загрузке DeviceClean-RunAdmin.exe. >> "%ASX-Directory%\Files\Logs\%date%.txt"
         goto GoBack
     )	
-start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\DeviceClean\DeviceClean-RunAdmin.exe"
+start "" "%ASX-Directory%\Files\Utilites\DeviceClean\DeviceClean-RunAdmin.exe"
 goto GoBack
 
 :FastBoot
@@ -6049,7 +6050,7 @@ for /F "tokens=*" %%i in ('reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVer
 )
 
 REM Проверка Autoruns
-if exist "%ASX-Directory%\Files\Resources\ASX_Utilites\Autoruns\Autoruns.exe" (
+if exist "%ASX-Directory%\Files\Utilites\Autoruns\Autoruns.exe" (
     set AutorunsInstalled=Yes
 )
 
@@ -9005,9 +9006,9 @@ goto GoBack
 call :ASX_Hub_Downloads_Title 
 set "FileName=Rapr.exe"
 set "FileNameZip=DriverStoreExplorer.zip"
-set "FilePatch=%ASX-Directory%\Files\Resources\ASX_Utilites\DriverStoreExplorer\%FileName%"
+set "FilePatch=%ASX-Directory%\Files\Utilites\DriverStoreExplorer\%FileName%"
 set "FilePatchZip=%ASX-Directory%\Files\Downloads\%FileNameZip%"
-set "FilePatchZipDestination=%ASX-Directory%\Files\Resources\ASX_Utilites\DriverStoreExplorer"
+set "FilePatchZipDestination=%ASX-Directory%\Files\Utilites\DriverStoreExplorer"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
     start %FilePatch%
@@ -9036,15 +9037,15 @@ goto GoBack
 :Autoruns
 call :ASX_Hub_Downloads_Title 
 set "FileName=Autoruns.exe"
-set "FilePatch=%ASX-Directory%\Files\Resources\ASX_Utilites\Autoruns\%FileName%"
+set "FilePatch=%ASX-Directory%\Files\Utilites\Autoruns\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
     start %FilePatch%
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m 
-    md "%ASX-Directory%\Files\Resources\ASX_Utilites\Autoruns" >nul 2>&1
-    curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\Autoruns\%FileName%" "https://github.com/ALFiX01/ASX-Hub/releases/download/File/%FileName%" >nul 2>&1
+    md "%ASX-Directory%\Files\Utilites\Autoruns" >nul 2>&1
+    curl -g -L -# -o "%ASX-Directory%\Files\Utilites\Autoruns\%FileName%" "https://github.com/ALFiX01/ASX-Hub/releases/download/File/%FileName%" >nul 2>&1
     title Скачивание файлов [1/1]
     echo     %COL%[36m └ Скачивание завершено, проверка файла %COL%[37m
     title Проверка файлов [0/1]
@@ -9154,15 +9155,15 @@ goto GoBack
 :Wumt
 call :ASX_Hub_Downloads_Title 
 set "FileName=wumt.exe"
-set "FilePatch=%ASX-Directory%\Files\Resources\ASX_Utilites\WindowsUpdate-MiniTool\%FileName%"
+set "FilePatch=%ASX-Directory%\Files\Utilites\WindowsUpdate-MiniTool\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
     start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
-    md "%ASX-Directory%\Files\Resources\ASX_Utilites\WindowsUpdate-MiniTool" >nul 2>&1
+    md "%ASX-Directory%\Files\Utilites\WindowsUpdate-MiniTool" >nul 2>&1
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
-    curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\WindowsUpdate-MiniTool\%FileName%" "https://github.com/ALFiX01/ASX-Hub/releases/download/File/%FileName%" >nul 2>&1
+    curl -g -L -# -o "%ASX-Directory%\Files\Utilites\WindowsUpdate-MiniTool\%FileName%" "https://github.com/ALFiX01/ASX-Hub/releases/download/File/%FileName%" >nul 2>&1
     title Скачивание файлов [1/1]
     echo     %COL%[36m └ Скачивание завершено, проверка файла %COL%[37m
     title Проверка файлов [0/1]
@@ -9308,18 +9309,18 @@ goto GoBack
 :AppUninstall
 cls
 call :ASX_Hub_Downloads_Title 
-IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX\PyDebloatX.exe" (
-    start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX\PyDebloatX.exe"
+IF EXIST "%ASX-Directory%\Files\Utilites\PyDebloatX\PyDebloatX.exe" (
+    start "" "%ASX-Directory%\Files\Utilites\PyDebloatX\PyDebloatX.exe"
 ) ELSE (
     title Скачивание нелбходимых файлов [0/1]
-	md "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX" >nul 2>&1
-    curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX\PyDebloatX.exe" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Utilities/PyDebloatX/PyDebloatX.exe" >nul 2>&1
+	md "%ASX-Directory%\Files\Utilites\PyDebloatX" >nul 2>&1
+    curl -g -L -# -o "%ASX-Directory%\Files\Utilites\PyDebloatX\PyDebloatX.exe" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Utilities/PyDebloatX/PyDebloatX.exe" >nul 2>&1
     IF %ERRORLEVEL% NEQ 0 (
         TITLE Ошибка: Не удалось скачать файл PyDebloatX.exe. Проверьте подключение к интернету и доступность URL.
         goto GoBack
     )
     title Скачивание нелбходимых файлов [1/1]
-	start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX\PyDebloatX.exe"
+	start "" "%ASX-Directory%\Files\Utilites\PyDebloatX\PyDebloatX.exe"
 )
 goto GoBack
 
@@ -9557,27 +9558,27 @@ set PageName=ASX_Utilites
 set choice=NoInput
 
 REM Проверка наличия файлов в указанной директории
-IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\DriverStoreExplorer\Rapr.exe" (
+IF EXIST "%ASX-Directory%\Files\Utilites\DriverStoreExplorer\Rapr.exe" (
     set ASX_Utilites_Download_mark=Yes
 ) ELSE (
     REM Проверка наличия файла Autoruns.exe в указанной директории
-    IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\Autoruns\Autoruns.exe" (
+    IF EXIST "%ASX-Directory%\Files\Utilites\Autoruns\Autoruns.exe" (
         set ASX_Utilites_Download_mark=Yes
     ) ELSE (
         REM Проверка наличия файла VibranceGUI.exe в указанной директории
-        IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\VibranceGUI\VibranceGUI.exe" (
+        IF EXIST "%ASX-Directory%\Files\Utilites\VibranceGUI\VibranceGUI.exe" (
             set ASX_Utilites_Download_mark=Yes
         ) ELSE (
             REM Проверка наличия файла ShutUp10.exe в указанной директории
-            IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\ShutUp10\ShutUp10.exe" (
+            IF EXIST "%ASX-Directory%\Files\Utilites\ShutUp10\ShutUp10.exe" (
                 set ASX_Utilites_Download_mark=Yes
             ) ELSE (
                 REM Проверка наличия файла wumt.exe в указанной директории
-                IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\Windows Update MiniTool\wumt.exe" (
+                IF EXIST "%ASX-Directory%\Files\Utilites\Windows Update MiniTool\wumt.exe" (
                     set ASX_Utilites_Download_mark=Yes
                 ) ELSE (
                     REM Проверка наличия файла PyDebloatX.exe в указанной директории
-                    IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\PyDebloatX\PyDebloatX.exe" (
+                    IF EXIST "%ASX-Directory%\Files\Utilites\PyDebloatX\PyDebloatX.exe" (
                         set ASX_Utilites_Download_mark=Yes
                     ) ELSE (
                         REM Установка переменной в случае отсутствия всех файлов
@@ -9779,22 +9780,22 @@ set ShutUp10Mark=No
 set WumtMark=No
 set DeviceCleanMark=No
 
-IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\Autoruns\Autoruns.exe" (
+IF EXIST "%ASX-Directory%\Files\Utilites\Autoruns\Autoruns.exe" (
     set AutorunsMark=Yes
 )
-IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\DriverStoreExplorer\Rapr.exe" (
+IF EXIST "%ASX-Directory%\Files\Utilites\DriverStoreExplorer\Rapr.exe" (
     set DriverStoreExplorerMark=Yes
 )
-IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\VibranceGUI\VibranceGUI.exe" (
+IF EXIST "%ASX-Directory%\Files\Utilites\VibranceGUI\VibranceGUI.exe" (
     set VibranceGUIMark=Yes
 )
-IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\ShutUp10\ShutUp10.exe" (
+IF EXIST "%ASX-Directory%\Files\Utilites\ShutUp10\ShutUp10.exe" (
     set ShutUp10Mark=Yes
 )
-IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\Windows Update MiniTool\wumt.exe" (
+IF EXIST "%ASX-Directory%\Files\Utilites\Windows Update MiniTool\wumt.exe" (
     set WumtMark=Yes
 )
-IF EXIST "%ASX-Directory%\Files\Resources\ASX_Utilites\DeviceClean\DeviceClean-RunAdmin.exe" (
+IF EXIST "%ASX-Directory%\Files\Utilites\DeviceClean\DeviceClean-RunAdmin.exe" (
     set DeviceCleanMark=Yes
 )
 
@@ -9881,12 +9882,12 @@ echo.
 echo                                                      %COL%[36m[ B - Назад ]       %COL%[91m[ X - Главное меню ]%COL%[90m
 echo.
 set /p choice="%DEL%                                                                      >: "
-if /i "%choice%"=="%AutorunsChoice%" ( start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\Autoruns\Autoruns.exe")
-if /i "%choice%"=="%DriverStoreExplorerChoice%" ( start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\DriverStoreExplorer\Rapr.exe" )
-if /i "%choice%"=="%VibranceGUIChoice%" ( start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\VibranceGUI\VibranceGUI.exe" )
-if /i "%choice%"=="%ShutUp10Choice%" ( start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\ShutUp10\ShutUp10.exe" )
-if /i "%choice%"=="%WumtChoice%" ( start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\Windows Update MiniTool\wumt.exe" )
-if /i "%choice%"=="%DeviceCleanChoice%" ( start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\DeviceClean\DeviceClean-RunAdmin.exe" )
+if /i "%choice%"=="%AutorunsChoice%" ( start "" "%ASX-Directory%\Files\Utilites\Autoruns\Autoruns.exe")
+if /i "%choice%"=="%DriverStoreExplorerChoice%" ( start "" "%ASX-Directory%\Files\Utilites\DriverStoreExplorer\Rapr.exe" )
+if /i "%choice%"=="%VibranceGUIChoice%" ( start "" "%ASX-Directory%\Files\Utilites\VibranceGUI\VibranceGUI.exe" )
+if /i "%choice%"=="%ShutUp10Choice%" ( start "" "%ASX-Directory%\Files\Utilites\ShutUp10\ShutUp10.exe" )
+if /i "%choice%"=="%WumtChoice%" ( start "" "%ASX-Directory%\Files\Utilites\Windows Update MiniTool\wumt.exe" )
+if /i "%choice%"=="%DeviceCleanChoice%" ( start "" "%ASX-Directory%\Files\Utilites\DeviceClean\DeviceClean-RunAdmin.exe" )
 if /i "%choice%"=="C" ( set "history=ASX_Utilites_Download;!history!" && goto ASX_CMD )
 if /i "%choice%"=="с" ( set "history=ASX_Utilites_Download;!history!" && goto ASX_CMD )
 if /i "%choice%"=="X" ( set "history=ASX_Utilites_Download;!history!" && goto MainMenu )
@@ -9912,14 +9913,14 @@ IF EXIST "%ASX-Directory%\Files\Resources\ASX_Win11CompChk\ASX_Win11CompChk.exe"
 goto GoBack
 
 :DriverFinder_Menu
-if exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder\DriverFinder.exe" (
-    "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder\DriverFinder.exe"
+if exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" (
+    "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe"
 ) else (
     title Загрузка отсутствующих компонентов...
     echo [INFO ] %TIME% - Загрузка отсутствующего компонента DriverFinder.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-	if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder" md "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder" >nul 2>&1
-    curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder\DriverFinder.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder.exe" >nul 2>&1
-    curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder\DriverFinder_FindService.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder_FindService.exe" >nul 2>&1
+	if not exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" md "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" >nul 2>&1
+    curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder.exe" >nul 2>&1
+    curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder_FindService.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder_FindService.exe" >nul 2>&1
     if errorlevel 1 (
         echo [ERROR] %TIME% - Ошибка при загрузке компонента DriverFinder.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
         set /a "error_on_loading_1+=1"
@@ -10531,16 +10532,16 @@ reg add "HKEY_CURRENT_USER\Console" /v "FaceName" /t REG_SZ /d "__DefaultTTFont_
 goto GoBack
 
 :ASX_PC_PowerCheck
-if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_PC_PowerCheck" (
-    mkdir "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_PC_PowerCheck" 2>nul
+if not exist "%ASX-Directory%\Files\Utilites\ASX_PC_PowerCheck" (
+    mkdir "%ASX-Directory%\Files\Utilites\ASX_PC_PowerCheck" 2>nul
     if errorlevel 1 (
         echo [ERROR] %TIME% - Не удалось создать директорию ASX_PC_PowerCheck >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
 )
 
-if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_PC_PowerCheck\ASX_PC_PowerCheck.exe" (
+if not exist "%ASX-Directory%\Files\Utilites\ASX_PC_PowerCheck\ASX_PC_PowerCheck.exe" (
     echo [INFO ] %TIME% - Загрузка ASX_PC_PowerCheck.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-    curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_PC_PowerCheck\ASX_PC_PowerCheck.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_PC_PowerCheck/ASX_PC_PowerCheck.exe" >nul 2>&1
+    curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_PC_PowerCheck\ASX_PC_PowerCheck.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_PC_PowerCheck/ASX_PC_PowerCheck.exe" >nul 2>&1
     if errorlevel 1 (
         echo [ERROR] %TIME% - Ошибка при загрузке ASX_PC_PowerCheck.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
         echo Не удалось загрузить утилиту. Проверьте подключение к интернету и попробуйте снова.
@@ -10549,9 +10550,9 @@ if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_PC_PowerCheck\ASX
     )
 )
 
-if exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_PC_PowerCheck\ASX_PC_PowerCheck.exe" (
+if exist "%ASX-Directory%\Files\Utilites\ASX_PC_PowerCheck\ASX_PC_PowerCheck.exe" (
     echo [INFO ] %TIME% - Запуск ASX_PC_PowerCheck.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-    start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_PC_PowerCheck\ASX_PC_PowerCheck.exe"
+    start "" "%ASX-Directory%\Files\Utilites\ASX_PC_PowerCheck\ASX_PC_PowerCheck.exe"
 ) else (
     echo [ERROR] %TIME% - Файл ASX_PC_PowerCheck.exe не найден >> "%ASX-Directory%\Files\Logs\%date%.txt"
     echo Файл утилиты не найден. Попробуйте перезапустить ASX Hub.
@@ -11647,13 +11648,13 @@ goto GoBack
 
 
 :ASX_sorter
-if exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_FileSorter\FileSorter.exe" (
-    "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_FileSorter\FileSorter.exe"
+if exist "%ASX-Directory%\Files\Utilites\ASX_FileSorter\FileSorter.exe" (
+    "%ASX-Directory%\Files\Utilites\ASX_FileSorter\FileSorter.exe"
 ) else (
     title Загрузка отсутствующих компонентов...
     echo [INFO ] %TIME% - Загрузка отсутствующего компонента FileSorter.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-	if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_FileSorter" md "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_FileSorter" >nul 2>&1
-    curl -g -L -# -o "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_FileSorter\FileSorter.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_FileSorter/FileSorter.exe" >nul 2>&1
+	if not exist "%ASX-Directory%\Files\Utilites\ASX_FileSorter" md "%ASX-Directory%\Files\Utilites\ASX_FileSorter" >nul 2>&1
+    curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_FileSorter\FileSorter.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_FileSorter/FileSorter.exe" >nul 2>&1
     if errorlevel 1 (
         echo [ERROR] %TIME% - Ошибка при загрузке компонента FileSorter.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
         set /a "error_on_loading_1+=1"
@@ -12519,9 +12520,9 @@ for /f "tokens=2*" %%a in ('reg query "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX
 color 0a
 echo  Загрузка PEGASUS
 
-if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS" ( 
-    rd "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS" >nul 2>&1
-    md "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS" >nul 2>&1
+if not exist "%ASX-Directory%\Files\Utilites\PEGASUS" ( 
+    rd "%ASX-Directory%\Files\Utilites\PEGASUS" >nul 2>&1
+    md "%ASX-Directory%\Files\Utilites\PEGASUS" >nul 2>&1
     curl -g -L -# -o "%ASX-Directory%\Files\Downloads\PEGASUS.zip" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Utilities/PEGASUS/PEGASUS.zip" >nul 2>&1
     IF %ERRORLEVEL% NEQ 0 (
         echo Ошибка: Не удалось скачать файл PEGASUS.zip. Проверьте подключение к интернету и доступность URL.
@@ -12529,7 +12530,7 @@ if not exist "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS" (
         goto GoBack
     )
     chcp 850 >nul 2>&1 
-    powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\PEGASUS.zip"' -DestinationPath '"%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS"' >nul 2>&1
+    powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\PEGASUS.zip"' -DestinationPath '"%ASX-Directory%\Files\Utilites\PEGASUS"' >nul 2>&1
     chcp 65001 >nul 2>&1
 )
 
@@ -12658,12 +12659,12 @@ if defined RevertMode (
     if "%RevertMode%"=="избирательный" (
         reg delete "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\ParameterFunction" /v "Pegasus_DisableMode" /f >nul 2>&1
         cls
-        call "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS\Scripts\Revert-Defender_and_smartscreen.bat"
+        call "%ASX-Directory%\Files\Utilites\PEGASUS\Scripts\Revert-Defender_and_smartscreen.bat"
         REM Запуск PEGASUS с избирательным отключением Windows Defender
     ) else (
         reg delete "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\ParameterFunction" /v "Pegasus_DisableMode" /f >nul 2>&1
         cls
-        call "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS\Scripts\Revert-WinDefender.bat"
+        call "%ASX-Directory%\Files\Utilites\PEGASUS\Scripts\Revert-WinDefender.bat"
         REM Запуск PEGASUS с полным отключением Windows Defender
     )
 )
@@ -12675,17 +12676,17 @@ goto GoBack
 if "%DisableMode%"=="избирательный" (
     reg add "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\ParameterFunction" /v "Pegasus_DisableMode" /t REG_SZ /d "избирательный" /f >nul 2>&1
     cls
-    call "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS\Scripts\Disable-Defender_and_smartscreen.bat"
+    call "%ASX-Directory%\Files\Utilites\PEGASUS\Scripts\Disable-Defender_and_smartscreen.bat"
     REM Запуск PEGASUS с избирательным отключением Windows Defender
 ) else (
     reg add "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\ParameterFunction" /v "Pegasus_DisableMode" /t REG_SZ /d "полный" /f >nul 2>&1
     cls
-    call "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS\Scripts\FullDisable-WinDefender.bat"
+    call "%ASX-Directory%\Files\Utilites\PEGASUS\Scripts\FullDisable-WinDefender.bat"
     REM Запуск PEGASUS с полным отключением Windows Defender
 )
 del "%ASX-Directory%\Files\Downloads\PEGASUS.zip" >nul
 call:RestoreCreate
-start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS\PEGASUS_start.bat"
+start "" "%ASX-Directory%\Files\Utilites\PEGASUS\PEGASUS_start.bat"
 set "operation_name=Отключение Windows Defender с помощью PEGASUS"
 call:Complete_notice
 goto GoBack
@@ -12699,7 +12700,7 @@ echo.
 echo  Если вы хотите продолжить, нажмите любую клавишу.
 pause
 call:RestoreCreate
-start "" "%ASX-Directory%\Files\Resources\ASX_Utilites\PEGASUS\PEGASUS_start.bat"
+start "" "%ASX-Directory%\Files\Utilites\PEGASUS\PEGASUS_start.bat"
 set "operation_name=Удаление Windows Defender с помощью PEGASUS"
 call:Complete_notice
 goto GoBack
@@ -13392,7 +13393,7 @@ set /a "StartupCount-=1"
 
 :: if not defined DriverFinder_Count (
 ::     set "DriverFinder_Count=1"
-::     "%ASX-Directory%\Files\Resources\ASX_Utilites\ASX_DriverFinder\DriverFinder_FindService.exe"
+::     "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder_FindService.exe"
 :: ) else (
 ::     set /a "DriverFinder_Count+=1"
 :: )
@@ -13564,8 +13565,8 @@ echo       %COL%[36mОписание обновления %COL%[37m%FullVersionN
 echo       %COL%[97m!dashes!
 echo.
 echo          %COL%[36m1.%COL%[37m Оптимизация создания файлов восстановления через ASX Revert.
-echo          %COL%[36m2.%COL%[37m Добавлено Предупреждение перед удалением лишних приложений Microsoft.
-echo.
+echo          %COL%[36m2.%COL%[37m Улучшен алгоритм запуска от имени администратора.
+echo          %COL%[36m3.%COL%[37m Добавлено Предупреждение перед удалением лишних приложений Microsoft.
 echo.
 echo.
 echo.
