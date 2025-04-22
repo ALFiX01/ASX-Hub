@@ -103,13 +103,13 @@ echo 📌 Запуск ASX Hub >> "!ASX-Directory!\Files\Logs\%date%.txt"
 
 REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
-set "Version=1.4.1"
+set "Version=1.5.0"
 set "FullVersionNameCurrent=1.4.1"
 set "VersionNumberCurrent=AP17S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=20.04.2025"
+set "DateUpdate=22.04.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -9646,7 +9646,7 @@ if "%WinVer%"=="Windows 11" (
     REM --- Windows 11: пункт "Совместимость" не нужен ---
     echo                                                            %COL%[36mОптимизация и обслуживание:
     echo                                                            %COL%[37m---------------------------
-    echo                                                            %COL%[36m[ %COL%[37m1  %COL%[36m] %COL%[37mОчистка мусора
+    echo                                                            %COL%[36m[ %COL%[37m1  %COL%[36m] %COL%[37mОчистка мусора %COL%[90m^(PC Cleaner^)
     echo                                                            %COL%[36m[ %COL%[37m2  %COL%[36m] %COL%[37mСортировка файлов
     echo.
     echo.
@@ -9672,7 +9672,7 @@ if "%WinVer%"=="Windows 11" (
     REM --- Не Windows 11: включаем пункт "Совместимость ПК с Win11" ---
     echo                                                            %COL%[36mОптимизация и обслуживание:
     echo                                                            %COL%[37m---------------------------
-    echo                                                            %COL%[36m[ %COL%[37m1  %COL%[36m] %COL%[37mОчистка мусора
+    echo                                                            %COL%[36m[ %COL%[37m1  %COL%[36m] %COL%[37mОчистка мусора %COL%[90m^(PC Cleaner^)
     echo                                                            %COL%[36m[ %COL%[37m2  %COL%[36m] %COL%[37mСортировка файлов
     echo                                                            %COL%[36m[ %COL%[37m3  %COL%[36m] %COL%[37mСовместимость ПК с Win 11
     echo.
@@ -11371,316 +11371,16 @@ if /i "%choice%"=="и" goto GoBack
 goto ASX_cleaner_Warn
 
 :ASX_cleaner
-if not exist "%ASX-Directory%\Files\Logs\ASX_cleaner" md "%ASX-Directory%\Files\Logs\ASX_cleaner" >nul 2>&1
-
-echo [INFO ] %TIME% - Вызван "ASX_cleaner" >> "%ASX-Directory%\Files\Logs\%date%.txt"
-echo [INFO ] %TIME% - Логи "ASX_cleaner" будут доступны в "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt" >> "%ASX-Directory%\Files\Logs\%date%.txt"
-cls
-TITLE Очистка ненужных файлов - ASX Hub
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                            %COL%[90m:::      ::::::::  :::    :::          :::    ::: :::    ::: :::::::::
-echo                                         :+: :+:   :+:    :+: :+:    :+:          :+:    :+: :+:    :+: :+:    :+:
-echo                                       +:+   +:+  +:+         +:+  +:+           +:+    +:+ +:+    +:+ +:+    +:+
-echo                                     +#++:++#++: +#++:++#++   +#++:+            +#++:++#++ +#+    +:+ +#++:++#+
-echo                                    +#+     +#+        +#+  +#+  +#+           +#+    +#+ +#+    +#+ +#+    +#+
-echo                                   #+#     #+# #+#    #+# #+#    #+#          #+#    #+# #+#    #+# #+#    #+#
-echo                                  ###     ###  ########  ###    ###          ###    ###  ########  #########
-echo.
-echo.
-set /a DelFileCount=0
-set /a DelFolderCount=0
-set /a ErrorCount=0
-echo                                          %COL%[37mНажмите любую клавишу, чтобы запустить процесс очистки...
-echo.
-pause >nul
-echo   %COL%[96mЗапускаю процесс очистки...%COL%[37
-echo.
-title Очистка [1/3]
-echo. >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-echo [INFO ] %TIME% - Очистка [1/3] запущена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-
-rem Очистка корзины и удаление файлов 
-chcp 850 >nul 2>&1
-for /f "tokens=*" %%a in ('powershell -Command "Get-ChildItem -Path 'C:\$Recycle.Bin' -Force -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName"') do (
-    set /a DelFileCount+=1
-)
-powershell -Command "Clear-RecycleBin -Confirm:$false -ErrorAction SilentlyContinue"
-chcp 65001 >nul 2>&1
-
-for %%a in ("%WinDir%\Temp\*.*" "%systemdrive%*.tmp" "%systemdrive%*._mp" "%systemdrive%*.gid" "%SYSTEMDRIVE%\AMD\*.*" "%SYSTEMDRIVE%\NVIDIA\*.*" "%SYSTEMDRIVE%\INTEL\*.*" "%LocalAppData%\Microsoft\Windows\Explorer\thumbcache_*.db" "%LocalAppData%\Microsoft\Windows\Explorer\*.db" "%systemdrive%\*.log" "%systemdrive%\*.old" "%windir%\*.bak" "%windir%\Logs\CBS\CbsPersist*.log" "%windir%\Logs\MoSetup\*.log" "%windir%\Panther\*.log" "%windir%\logs\*.log" "%systemdrive%\*.trace" "%WinDir%\Prefetch\*.*" "%Temp%\*.*" "%AppData%\Temp\*.*" "%AppData%\Microsoft\Windows\Recent\*" "%HomePath%\AppData\LocalLow\Temp\*.*" "%LocalAppData%\Microsoft\Windows\INetCache\." "%AppData%\Local\Microsoft\Windows\INetCookies\." "%AppData%\Discord\Cache\." "%AppData%\Discord\Code Cache\." "%ProgramFiles(x86)%\Steam\Dumps" "%ProgramFiles(x86)%\Steam\Traces" "%ProgramFiles(x86)%\Steam\appcache\*.log" "%localappdata%\Microsoft\Windows\WebCache\*.log" "%ProgramData%\Microsoft\Windows Defender\Network Inspection System\Support\*.log" "%ProgramData%\Microsoft\Windows Defender\Scans\History\CacheManager" "%ProgramData%\Microsoft\Windows Defender\Scans\History\ReportLatency\Latency" "%ProgramData%\Microsoft\Windows Defender\Scans\History\Service\*.log" "%ProgramData%\Microsoft\Windows Defender\Scans\MetaStore" "%ProgramData%\Microsoft\Windows Defender\Support" "%ProgramData%\Microsoft\Windows Defender\Scans\History\Results\Quick" "%ProgramData%\Microsoft\Windows Defender\Scans\History\Results\Resource") do (
-    if exist "%%a" (
-        del /s /f /q "%%a" >nul 2>&1
-        if !errorlevel! equ 0 (
-            echo [INFO ] - Файл %%a удален
-            echo [INFO ] %TIME% - Файл %%a удален >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-            set /a DelFileCount+=1
-        ) else (
-            echo [ERROR] - Файл %%a не может быть удален
-            echo [ERROR] %TIME% - Файл %%a не может быть удален >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-            set /a ErrorCount+=1
-        )
-    ) else (
-        echo [WARN ] - Файл %%a не существует
-        echo [WARN ] %TIME% - Файл %%a не существует >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    )
-)
-
-title Очистка [2/3]
-echo [INFO ] %TIME% - Очистка [2/3] запущена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-for %%a in ("%WinDir%\Temp" "%WinDir%\Prefetch" "%Temp%" "%AppData%\Temp" "%systemdrive%\windows.old" "%ASX-Directory%\Files\Downloads" "%SystemDrive%\OneDriveTemp" "%ProgramData%\Microsoft\Diagnosis" "%ProgramData%\Microsoft\Network" "%ProgramData%\Microsoft\Search" "%LocalAppData%\Microsoft\Windows\AppCache" "%LocalAppData%\Microsoft\Windows\History" "%LocalAppData%\Microsoft\Windows\WebCache") do (
-    if exist "%%a" (
-        rmdir /s /q "%%a" >nul 2>&1
-        md %%a >nul 2>&1
-        if !errorlevel! equ 0 (
-            echo [INFO ] - Папка %%a очищена
-            echo [INFO ] %TIME% - Папка %%a очищена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-            set /a DelFolderCount+=1
-        ) else (
-            echo [ERROR] - Папка %%a не может быть очищена
-            echo [ERROR] %TIME% - Папка %%a не может быть очищена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-            set /a ErrorCount+=1
-        )
-    ) else (
-        echo [WARN ] - Папка %%a не существует
-        echo [WARN ] %TIME% - Папка %%a не существует >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    )
-)
-
-
-rem Очистка папки Центра обновления Windows
-net stop wuauserv >nul 2>&1
-if !errorlevel! equ 0 (
-    echo [INFO ] - Служба Windows Update успешно остановлена
-    echo [INFO ] %TIME% - Служба Windows Update успешно остановлена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
+if exist "%ASX-Directory%\Files\Utilites\PC_Cleaner\ASX-PC-Cleaner.exe" (
+    start "" "%ASX-Directory%\Files\Utilites\PC_Cleaner\ASX-PC-Cleaner.exe"
 ) else (
-    echo [ERROR] - Ошибка при остановке службы Windows Update
-    echo [ERROR] %TIME% - Ошибка при остановке службы Windows Update >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    set /a ErrorCount+=1
+    echo         - Скачивание PC Cleaner
+    curl -g -L -# -o "%ASX-Directory%\Files\Utilites\PC_Cleaner\ASX-PC-Cleaner.exe" "https://github.com/ALFiX01/ASX-PC-Cleaner/raw/refs/heads/main/Files/PC_cleaner/ASX-PC-Cleaner.exe" >nul 2>&1
+    start "" "%ASX-Directory%\Files\Utilites\PC_Cleaner\ASX-PC-Cleaner.exe"
 )
-
-net stop cryptSvc >nul 2>&1
-if !errorlevel! equ 0 (
-    echo [INFO ] - Служба Cryptographic Services успешно остановлена
-    echo [INFO ] %TIME% - Служба Cryptographic Services успешно остановлена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-) else (
-    echo [ERROR] - Ошибка при остановке службы Cryptographic Services
-    echo [ERROR] %TIME% - Ошибка при остановке службы Cryptographic Services >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    set /a ErrorCount+=1
-)
-
-net stop bits >nul 2>&1
-if !errorlevel! equ 0 (
-    echo [INFO ] - Служба Background Intelligent Transfer Service успешно остановлена
-    echo [INFO ] %TIME% - Служба Background Intelligent Transfer Service успешно остановлена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-) else (
-    echo [ERROR] - Ошибка при остановке службы Background Intelligent Transfer Service
-    echo [ERROR] %TIME% - Ошибка при остановке службы Background Intelligent Transfer Service >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    set /a ErrorCount+=1
-)
-
-net stop msiserver >nul 2>&1
-if !errorlevel! equ 0 (
-    echo [INFO ] - Служба Windows Installer успешно остановлена
-    echo [INFO ] %TIME% - Служба Windows Installer успешно остановлена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-) else (
-    echo [ERROR] - Ошибка при остановке службы Windows Installer
-    echo [ERROR] %TIME% - Ошибка при остановке службы Windows Installer >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    set /a ErrorCount+=1
-)
-
-echo [INFO ] - Очистка папки Центра обновления Windows...
-rd /s /q "%systemdrive%\Windows\SoftwareDistribution"
-if !errorlevel! equ 0 (
-    echo [INFO ] - Папка %systemdrive%\Windows\SoftwareDistribution успешно удалена
-    echo [INFO ] %TIME% - Папка %systemdrive%\Windows\SoftwareDistribution успешно удалена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-) else (
-    echo [ERROR] - Ошибка при удалении папки %systemdrive%\Windows\SoftwareDistribution
-    echo [ERROR] %TIME% - Ошибка при удалении папки %systemdrive%\Windows\SoftwareDistribution >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    set /a ErrorCount+=1
-)
-md "%systemdrive%\Windows\SoftwareDistribution"
-
-echo [INFO ] - Перезапуск служб, связанных с Центром обновления Windows...
-net start wuauserv >nul 2>&1
-if !errorlevel! equ 0 (
-    echo [INFO ] - Служба Windows Update успешно запущена
-    echo [INFO ] %TIME% - Служба Windows Update успешно запущена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-) else (
-    echo [ERROR] - Ошибка при запуске службы Windows Update
-    echo [ERROR] %TIME% - Ошибка при запуске службы Windows Update >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    set /a ErrorCount+=1
-)
-
-net start cryptSvc >nul 2>&1
-if !errorlevel! equ 0 (
-    echo [INFO ] - Служба Cryptographic Services успешно запущена
-    echo [INFO ] %TIME% - Служба Cryptographic Services успешно запущена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-) else (
-    echo [ERROR] - Ошибка при запуске службы Cryptographic Services
-    echo [ERROR] %TIME% - Ошибка при запуске службы Cryptographic Services >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    set /a ErrorCount+=1
-)
-
-net start bits >nul 2>&1
-if !errorlevel! equ 0 (
-    echo [INFO ] - Служба Background Intelligent Transfer Service успешно запущена
-    echo [INFO ] %TIME% - Служба Background Intelligent Transfer Service успешно запущена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-) else (
-    echo [ERROR] - Ошибка при запуске службы Background Intelligent Transfer Service
-    echo [ERROR] %TIME% - Ошибка при запуске службы Background Intelligent Transfer Service >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    set /a ErrorCount+=1
-)
-
-net start msiserver >nul 2>&1
-if !errorlevel! equ 0 (
-    echo [INFO ] - Служба Windows Installer успешно запущена
-    echo [INFO ] %TIME% - Служба Windows Installer успешно запущена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-) else (
-    echo [ERROR] - Ошибка при запуске службы Windows Installer
-    echo [ERROR] %TIME% - Ошибка при запуске службы Windows Installer >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    set /a ErrorCount+=1
-)
-rem Очистка папки Центра обновления Windows (конец)
-
-
-
-rem Очистка кэша видеокарты
-wmic path win32_VideoController get name | findstr /i "NVIDIA" >nul
-if %errorlevel% equ 0 (
-    for %%a in ("%USERPROFILE%\AppData\LocalLow\NVIDIA\PerDriverVersion\DXCache\*.*" ) do (
-        if exist "%%a" (
-            del /s /f /q "%%a" >nul 2>&1
-            if !errorlevel! equ 0 (
-                echo [INFO ] - Файл %%a удален
-                echo [INFO ] %TIME% - Файл %%a удален >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-                set /a DelFileCount+=1
-            ) else (
-                echo [ERROR] - Файл %%a не может быть удален
-                echo [ERROR] %TIME% - Файл %%a не может быть удален >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-                set /a ErrorCount+=1
-            )
-        ) else (
-            echo [WARN ] - Файл %%a не существует
-            echo [WARN ] %TIME% - Файл %%a не существует >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-        )
-    )
-) else (
-    wmic path win32_VideoController get name | findstr /i "AMD" >nul
-    if %errorlevel% equ 0 (
-        for %%a in ("%USERPROFILE%\AppData\Local\AMD\DxCache\*.*" ) do (
-            if exist "%%a" (
-                del /s /f /q "%%a" >nul 2>&1
-                if !errorlevel! equ 0 (
-                    echo [INFO ] - Файл %%a удален
-                    echo [INFO ] %TIME% - Файл %%a удален >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-                    set /a DelFileCount+=1
-                ) else (
-                    echo [ERROR] - Файл %%a не может быть удален
-                    echo [ERROR] %TIME% - Файл %%a не может быть удален >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-                    set /a ErrorCount+=1
-                )
-            ) else (
-                echo [WARN ] - Файл %%a не существует
-                echo [WARN ] %TIME% - Файл %%a не существует >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-            )
-        )
-        mkdir "%USERPROFILE%\AppData\Local\AMD\DxCache" >nul 2>&1
-    ) else (
-        echo [WARN ] - Не обнаружено видеокарт NVIDIA или AMD
-        echo [WARN ] %TIME% - Не обнаружено видеокарт NVIDIA или AMD >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-    )
-)
-
-
-title Очистка [3/3]
-echo [INFO ] %TIME% - Очистка [3/3] запущена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-
-    :: Create registry keys for auto-selection of all cleanup options
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Active Setup Temp Folders" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\BranchCache" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\D3D Shader Cache" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Delivery Optimization Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Device Driver Packages" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Downloaded Program Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Internet Cache Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Language Pack" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Offline Pages Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Old ChkDsk Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Previous Installations" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Recycle Bin" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\RetailDemo Offline Content" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Service Pack Cleanup" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Setup Log Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\System error memory dump files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\System error minidump files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Temporary Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Update Cleanup" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Upgrade Discarded Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\User file versions" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Windows Defender" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Windows Error Reporting Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Windows ESD installation files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Windows Upgrade Log Files" /v "StateFlags65535" /t REG_DWORD /d 2 /f >nul 2>&1
-    :: First try running directly
-    cleanmgr /sagerun:65535    
-    :: Runs disk cleanup with predefined settings (StateFlags65535) to clean temporary files, system files, and other cleanup tasks    
-    :: If direct execution fails, try with full path
-    if !errorlevel! neq 0 (
-        echo Retrying with full path...
-        %SystemRoot%\System32\cleanmgr.exe /sagerun:65535
-    )
-    
-    :: Check final execution status
-    if !errorlevel! equ 0 (
-        echo Disk cleanup completed successfully.
-    ) else (
-        echo Error: Disk cleanup failed with code !errorlevel!
-        echo Attempting to launch Disk Cleanup manually...
-        start cleanmgr.exe
-    )
-
-echo [INFO ] %TIME% - Очистка завершена >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-
-timeout 1 /nobreak >nul
-cls
-echo.
-echo.
-echo.
-echo.
-echo.
-echo                                            %COL%[90m:::      ::::::::  :::    :::          :::    ::: :::    ::: :::::::::
-echo                                         :+: :+:   :+:    :+: :+:    :+:          :+:    :+: :+:    :+: :+:    :+:
-echo                                       +:+   +:+  +:+         +:+  +:+           +:+    +:+ +:+    +:+ +:+    +:+
-echo                                     +#++:++#++: +#++:++#++   +#++:+            +#++:++#++ +#+    +:+ +#++:++#+
-echo                                    +#+     +#+        +#+  +#+  +#+           +#+    +#+ +#+    +#+ +#+    +#+
-echo                                   #+#     #+# #+#    #+# #+#    #+#          #+#    #+# #+#    #+# #+#    #+#
-echo                                  ###     ###  ########  ###    ###          ###    ###  ########  #########
-echo.
-echo         %COL%[37mОтчет о проделанной очистке%COL%[37m
-echo         ---------------------------
-echo         %COL%[92mПроцесс очистки завершен
-echo         %COL%[93mУдалено %DelFileCount% файлов и %DelFolderCount% папок%COL%[37m
-echo         %COL%[31mПроизошло ошибок: %ErrorCount%%COL%[37m
-echo.
-echo.
-echo         %COL%[90mВы вернётесь назад автоматически через 10 секунд.
-timeout 11 /nobreak >nul
-echo [INFO ] %TIME% - Отчет о проделанной очистки >> "%ASX-Directory%\Files\Logs\%date%.txt"
-echo [INFO ] %TIME% - Удалено %DelFileCount% файлов и %DelFolderCount% папок >> "%ASX-Directory%\Files\Logs\%date%.txt"
-echo [INFO ] %TIME% - Всего ошибок при удалении файлов/папок: %ErrorCount% >> "%ASX-Directory%\Files\Logs\%date%.txt"
-echo [INFO ] %TIME% - Завершено ASX_cleaner >> "%ASX-Directory%\Files\Logs\%date%.txt"
-REM Дублирование логов в логи ASX_cleaner
-echo [INFO ] %TIME% - Отчет о проделанной очистки >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-echo [INFO ] %TIME% - Удалено %DelFileCount% файлов и %DelFolderCount% папок >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-echo [INFO ] %TIME% - Всего ошибок при удалении файлов/папок: %ErrorCount% >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-echo [INFO ] %TIME% - Завершено ASX_cleaner >> "%ASX-Directory%\Files\Logs\ASX_cleaner\%date%.txt"
-
 goto GoBack
+
+
 
 
 :ASX_sorter
