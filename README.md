@@ -7,7 +7,7 @@
 
   <br />
 
-  <p><strong>Централизованное управление и кастомизация Windows — удобно, мощно, гибко.</strong></p>
+  <p><strong>Централизованное управление и кастомизация Windows — Максимум контроля. Минимум усилий.</strong></p>
 
   <p>
     <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest"><img src="https://img.shields.io/github/v/release/ALFiX01/ASX-Hub?style=plastic" alt="GitHub Release"></a>
