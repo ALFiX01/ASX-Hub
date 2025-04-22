@@ -172,7 +172,7 @@ for %%i in (
 )
 
 rem Если ошибка была то сообщить
-if "%UAC_chek%"=="Error" (
+if "%UAC_Check%"=="Error" (
     echo [ERROR] %TIME% - Обнаружены ошибки при настройке UAC. Требуется перезапуск системы. >> "%ASX-Directory%\Files\Logs\%date%.txt"
     set /a "error_on_loading_2+=1"
     cls
@@ -518,6 +518,8 @@ REM set "year=%DATE:~6,4%"
 REM set "month=%DATE:~3,2%"
 set "day=%DATE:~0,2%"
 set "hour=%time:~0,2%"
+if "%hour%"==" " set "hour=0"
+if "%hour%"=="" set "hour=0"
 
 title Загрузка...
 
@@ -560,8 +562,13 @@ if errorlevel 1 (
 )
 echo [INFO ] %TIME% - Имя пользователя определено как "%CustomUserName%" >> "%ASX-Directory%\Files\Logs\%date%.txt"    
 
-REM Уже включено выше в скрипте, повторное включение не требуется
-REM setlocal EnableDelayedExpansion
+REM Получаем текущий час (24-часовой формат)
+for /f "tokens=1 delims=:" %%a in ("%time%") do set "hour=%%a"
+REM Удаляем ведущий ноль
+if "!hour:~0,1!"=="0" set "hour=!hour:~1!"
+
+REM Проверка на пустое значение часа
+if not defined hour set "hour=0"
 
 REM Определяем тип приветствия в зависимости от времени суток
 set "timeType=night"
@@ -576,10 +583,6 @@ if %hour% LSS 3 (
 ) else (
     set "timeType=night"
 )
-
-REM Проверка на пустое значение часа (может произойти при запуске в полночь)
-if "%hour%"==" " set "hour=0"
-if "%hour%"=="" set "hour=0"
 
 REM Задаем варианты приветствий для каждого времени суток
 set "morning[0]=Доброе утро, %CustomUserName%. Надеюсь, вы чувствуете себя отлично."
@@ -606,11 +609,12 @@ set "night[3]=Доброй ночи, %CustomUserName%. Может, чашечк�
 set "night[4]=Доброй ночи, %CustomUserName%. Надеюсь, вы найдете время для отдыха."
 set "night_count=5"
 
-REM Выбираем случайное сообщение из соответствующего набора
 REM Защита от ошибки деления на ноль
 if !%timeType%_count! LEQ 0 set "%timeType%_count=1"
 set /a "randomIndex=%random% %% !%timeType%_count!"
-set "HiMessage=!%timeType%[%randomIndex%]!"
+
+REM Получаем приветствие через call set
+call set "HiMessage=%%%timeType%[!randomIndex!]%%"
 
 REM Проверка на пустое сообщение
 if "!HiMessage!"=="" (
@@ -645,14 +649,12 @@ REM ----- ОБНОВЛЕНИЯ -----
 :UpdateCheck
 echo [INFO ] %TIME% - Проверка обновлений >> "%ASX-Directory%\Files\Logs\%date%.txt"
 
-:: Разделение версии на Major, Minor и Patch
+REM Разделение версии
 for /f "tokens=1-3 delims=." %%a in ("%Version%") do (
     set "Major=%%a"
     set "Minor=%%b"
     set "Patch=%%c"
 )
-
-:: Если Patch равен нулю, установить версию без Patch
 if "%Patch%"=="0" set "Version=%Major%.%Minor%"
 
 :: Проверка подключения к интернету
@@ -716,9 +718,9 @@ if "%ASX_Version_OLD%" NEQ "%Version%" (
 :: Установка ветки обновлений
 set "FileVerCheckName=ASX_Version"
 
-
-:: Проверка флага NoUpd и переход к процессу загрузки, если он установлен
+:: Проверка флага NoUpd
 if %NoUpd% equ 1 (
+    REM Переход к процессу загрузки
     echo [INFO ] %TIME% - Пропуск проверки обновлений ^(NoUpd=1^) >> "%ASX-Directory%\Files\Logs\%date%.txt"
     goto loading_procces
 )
@@ -748,12 +750,21 @@ if "%CheckUpdateOnWinStartUp%"=="On" (
     )
 )
 
+:: Проверка наличия curl
+where curl >nul 2>&1
+if errorlevel 1 (
+    echo [ERROR] %TIME% - Не найден curl, обновление невозможно >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    goto loading_procces
+)
+
 
 TITLE Проверка обновлений
 echo [INFO ] %TIME% - Проверка обновлений >> "%ASX-Directory%\Files\Logs\%date%.txt"
 
-:: Загрузка нового файла Updater.bat
+:: Очистка старого файла
 if exist "%TEMP%\Updater.bat" del /s /q /f "%TEMP%\Updater.bat" >nul 2>&1
+
+:: Загрузка нового файла Updater.bat
 curl -s -o "%TEMP%\Updater.bat" "https://raw.githubusercontent.com/ALFiX01/ASX-Hub/main/Files/ASX/%FileVerCheckName%" 
 if errorlevel 1 (
     echo [ERROR] %TIME% - Ошибка связи с сервером проверки обновлений >> "%ASX-Directory%\Files\Logs\%date%.txt"
@@ -794,6 +805,7 @@ if not defined VersionNumberList (
 echo "%VersionNumberList%" | findstr /i "%VersionNumberCurrent%" >nul
 if errorlevel 1 (
     echo [INFO ] %TIME% - Доступно обновление v%UPDVER% >> "%ASX-Directory%\Files\Logs\%date%.txt"    
+    goto Update_screen
 ) else (
     set "VersionFound=1"
     title Загрузка...
@@ -1278,7 +1290,7 @@ if "%WinVer%"=="Unsupported" (
 
 title Загрузка [9/10]
 
-:chekS
+:CheckS
 if /i "!screen!" neq "Disclaimer" (
 	echo [INFO ] %TIME% - Перенаправлено на панель MainMenu >> "%ASX-Directory%\Files\Logs\%date%.txt"
 	goto MainMenu 
@@ -5999,6 +6011,7 @@ set choice=NoInput
 rem Считаем количество записей автозагрузки в реестре
 set StartUpAppcount=0
 
+REM Считаем только значения, а не заголовки
 for /f "tokens=*" %%A in ('reg query "HKLM\Software\Microsoft\Windows\CurrentVersion\Run"') do set /a StartUpAppcount+=1
 for /f "tokens=*" %%A in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"') do set /a StartUpAppcount+=1
 
@@ -6015,6 +6028,20 @@ set DiscordInstalled=No
 set UninstallToolInstalled=No
 set AutorunsInstalled=No
 set qBittorrentInstalled=No
+set WindowsActivated=Yes
+
+REM --- Проверка активации Windows ---
+rem slmgr /xpr выводит информацию о статусе активации
+rem Ищем строку "активирована на постоянной основе" (может отличаться в разных версиях/переводах)
+rem Используем findstr /V "фраза" для поиска строк, которые НЕ содержат фразу
+rem Если найдена хоть одна строка БЕЗ фразы, ERRORLEVEL будет 0, значит не активирована на постоянной основе
+cscript //Nologo %windir%\system32\slmgr.vbs /dli 2>nul | findstr /I "имеет лицензию" >nul
+if %ERRORLEVEL%==0 (
+    set WindowsActivated=Yes
+    echo %COL%[90m[ INFO  ]%COL%[37m %TIME% - Обнаружено: Windows активирована любой тип. >> "%ASX-Directory%\Files\Logs%date%.txt"
+) else (
+    echo %COL%[90m[ INFO  ]%COL%[37m %TIME% - Обнаружено: Windows не активирована. >> "%ASX-Directory%\Files\Logs%date%.txt"
+)
 
 REM Проверка NVIDIA App (поиск по ключевым словам)
 for /F "tokens=*" %%i in ('reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" /s /f "Приложение NVIDIA" ^| findstr /I "DisplayName"') do (
@@ -6064,21 +6091,19 @@ REM Определяем тип видеокарты и вендора
 set "gpu_type=Unknown"
 set "gpu_vendor=Unknown"
 
-REM Определение интересов пользователя
+REM --- Определение интересов пользователя ---
 set "interest_count=0"
-
 if "%SteamInstalled%"=="Yes" (
     set /a interest_count+=1
     set "interest!interest_count!=GAME"
-    if "%DiscordInstalled%"=="Yes" (
+)
+if "%DiscordInstalled%"=="Yes" (
     set /a interest_count+=1
     set "interest!interest_count!=COMMUNICATION"
 )
-) else if "%DiscordInstalled%"=="Yes" (
+if %StartUpAppcount% GEQ 8 (
     set /a interest_count+=1
-    set "interest!interest_count!=GAME"
-    set /a interest_count+=1
-    set "interest!interest_count!=COMMUNICATION"
+    set "interest!interest_count!=TWEAK"
 )
 
 REM Сохранение интересов в реестре
@@ -6137,6 +6162,11 @@ if %StartUpAppcount% GEQ 8 (
 )
 
 REM Общие рекомендации
+if "%WindowsActivated%"=="No" (
+    echo                      %COL%[36m[ %COL%[37m%choiceCounter%  %COL%[36m] %COL%[37mWin Digital activation
+    set WinActivatedChoice=%choiceCounter%
+    set /A choiceCounter+=1
+)
 if "%SteamInstalled%"=="No" (
     echo                      %COL%[36m[ %COL%[37m%choiceCounter%  %COL%[36m] %COL%[37mSteam
     set SteamChoice=%choiceCounter%
@@ -6168,6 +6198,7 @@ echo.
 echo.
 echo.
 echo.
+echo.
 
 if %choiceCounter% equ 1 (
     echo                                                   %COL%[90mРекомендации по установке программ отсутствуют%COL%[37m
@@ -6191,6 +6222,11 @@ echo.
 set /p choice="%DEL%                                                                      >: "
 
 REM Реакция на выбор пользователя
+if "%WindowsActivated%"=="No" (
+    if /i "%choice%"=="%WinActivatedChoice%" (
+        set "history=AppInstall_Recommendations;!history!" && goto WinDigActivation
+    )
+)
 if /i "%choice%"=="%NvidiaAppChoice%" (
     set "history=AppInstall_Recommendations;!history!" && goto NvidiaApp
 )
@@ -13565,9 +13601,9 @@ echo       %COL%[36mОписание обновления %COL%[37m%FullVersionN
 echo       %COL%[97m!dashes!
 echo.
 echo          %COL%[36m1.%COL%[37m Оптимизация создания файлов восстановления через ASX Revert.
-echo          %COL%[36m2.%COL%[37m Улучшен алгоритм запуска от имени администратора.
-echo          %COL%[36m3.%COL%[37m Добавлено Предупреждение перед удалением лишних приложений Microsoft.
-echo.
+echo          %COL%[36m2.%COL%[37m Улучшены рекомендации на панели рекомендованных программ.
+echo          %COL%[36m3.%COL%[37m Улучшен алгоритм запуска от имени администратора.
+echo          %COL%[36m4.%COL%[37m Добавлено Предупреждение перед удалением лишних приложений Microsoft.
 echo.
 echo.
 echo.
