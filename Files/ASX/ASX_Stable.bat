@@ -5624,21 +5624,21 @@ echo.
 echo.
 echo                                                      %COL%[36m[ B - Назад ]       %COL%[91m[ X - Главное меню ]%COL%[90m
 echo.
-%SYSTEMROOT%\System32\choice.exe /c:123CсXчBи /n /m "%DEL%                                                                      >: " 
+%SYSTEMROOT%\System32\choice.exe /c:1234CсXчBи /n /m "%DEL%                                                                      >: " 
 set choice=%errorlevel%
 if "%choice%"=="1" ( Start https://alfix-inc.yonote.ru/share/c09b6731-f1e2-4fe4-a924-f420ecef3972 )
 if "%choice%"=="2" ( Start https://alfix-inc.yonote.ru/share/8e24ecd0-aadb-4a1e-83f4-b66d76710d2c )
 if "%choice%"=="3" ( Start https://alfix-inc.yonote.ru/share/bf2a0a30-f29e-4dc0-a9ef-52b034503497 )
 if "%choice%"=="4" ( Start https://discord.gg/MreKhdN2Ns )
 
-if "%choice%"=="4" ( set "history=WebResources;!history!" && goto ASX_CMD )
 if "%choice%"=="5" ( set "history=WebResources;!history!" && goto ASX_CMD )
+if "%choice%"=="6" ( set "history=WebResources;!history!" && goto ASX_CMD )
 
-if "%choice%"=="6" goto MainMenu
 if "%choice%"=="7" goto MainMenu
+if "%choice%"=="8" goto MainMenu
 
-if "%choice%"=="8" goto GoBack
 if "%choice%"=="9" goto GoBack
+if "%choice%"=="10" goto GoBack
 goto WebResources
 
 :Exp_tweaks
@@ -9665,7 +9665,7 @@ if "%WinVer%"=="Windows 11" (
     echo                                                            %COL%[36m[ %COL%[37m7  %COL%[36m] %COL%[37mУдаление WinDefender %COL%[90m^(PEGASUS^)
     echo                                                            %COL%[36m[ %COL%[37m8  %COL%[36m] %COL%[37mПросмотр и удаление драйверов %COL%[90m^(DriverFinder^)
     if "%ASX_Utilites_Download_mark%"=="Yes" (
-        echo                                                            %COL%[36m[ %COL%[37m9 %COL%[36m] %COL%[37mСторонние утилиты
+        echo                                                            %COL%[36m[ %COL%[37m9  %COL%[36m] %COL%[37mСторонние утилиты
     )
     echo.
 ) else (
@@ -9690,7 +9690,7 @@ if "%WinVer%"=="Windows 11" (
     echo                                                            %COL%[37m---------------------------
     echo                                                            %COL%[36m[ %COL%[37m7  %COL%[36m] %COL%[37mСоздание бэкапа %COL%[90m^(ASX Revert^)
     echo                                                            %COL%[36m[ %COL%[37m8  %COL%[36m] %COL%[37mУдаление WinDefender %COL%[90m^(PEGASUS^)
-    echo                                                            %COL%[36m[ %COL%[37m9 %COL%[36m] %COL%[37mПросмотр и удаление драйверов %COL%[90m^(DriverFinder^)
+    echo                                                            %COL%[36m[ %COL%[37m9  %COL%[36m] %COL%[37mПросмотр и удаление драйверов %COL%[90m^(DriverFinder^)
     if "%ASX_Utilites_Download_mark%"=="Yes" (
         echo                                                            %COL%[36m[ %COL%[37m10 %COL%[36m] %COL%[37mСторонние утилиты
     )
