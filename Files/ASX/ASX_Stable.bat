@@ -109,7 +109,7 @@ set "VersionNumberCurrent=AP17S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=22.04.2025"
+set "DateUpdate=23.04.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -5627,9 +5627,9 @@ echo.
 %SYSTEMROOT%\System32\choice.exe /c:123CсXчBи /n /m "%DEL%                                                                      >: " 
 set choice=%errorlevel%
 if "%choice%"=="1" ( Start https://alfix-inc.yonote.ru/share/c09b6731-f1e2-4fe4-a924-f420ecef3972 )
-if "%choice%"=="2" ( Start https://alfix-inc.yonote.ru/share/8e24ecd0-aadb-4a1e-83f4-b66d76710d2c)
-if "%choice%"=="3" ( Start https://alfix-inc.yonote.ru/share/bf2a0a30-f29e-4dc0-a9ef-52b034503497)
-if "%choice%"=="4" ( Start https://discord.gg/MreKhdN2Ns)
+if "%choice%"=="2" ( Start https://alfix-inc.yonote.ru/share/8e24ecd0-aadb-4a1e-83f4-b66d76710d2c )
+if "%choice%"=="3" ( Start https://alfix-inc.yonote.ru/share/bf2a0a30-f29e-4dc0-a9ef-52b034503497 )
+if "%choice%"=="4" ( Start https://discord.gg/MreKhdN2Ns )
 
 if "%choice%"=="4" ( set "history=WebResources;!history!" && goto ASX_CMD )
 if "%choice%"=="5" ( set "history=WebResources;!history!" && goto ASX_CMD )
@@ -10190,7 +10190,7 @@ echo                                                       %COL%[36m[ %COL%[37m4
 echo                                                       %COL%[36m[ %COL%[37m5  %COL%[36m] %COL%[37mПеренести ASX в другое место
 echo                                                       %COL%[36m[ %COL%[37m6  %COL%[36m] %COL%[37mАктуализировать пути ярлыков
 echo                                                       %COL%[36m[ %COL%[37m7  %COL%[36m] %COL%[37mУдалить ASX Hub
-echo                                                       %COL%[36m[ %COL%[37m8  %COL%[36m] %COL%[37mИзметить Имя пользователя ASX
+echo                                                       %COL%[36m[ %COL%[37m8  %COL%[36m] %COL%[37mИзменить Имя пользователя ASX
 echo                                                       %COL%[36m[ %COL%[37m9  %COL%[36m] %COL%[37mДобавить ярлык ASX на рабочий стол
 echo                                                       %COL%[36m[ %COL%[37m10 %COL%[36m] %COL%[37mОткрыть Центр восстановления ASX Revert
 echo.
@@ -13303,8 +13303,8 @@ echo.
 echo          %COL%[36m1.%COL%[37m Оптимизация создания файлов восстановления через ASX Revert.
 echo          %COL%[36m2.%COL%[37m Улучшены рекомендации на панели рекомендованных программ.
 echo          %COL%[36m3.%COL%[37m Улучшен алгоритм запуска от имени администратора.
-echo          %COL%[36m4.%COL%[37m Добавлено Предупреждение перед удалением лишних приложений Microsoft.
-echo.
+echo          %COL%[36m4.%COL%[37m Исправлена опечатка в пункте в настройках ASX.
+echo          %COL%[36m5.%COL%[37m Добавлено Предупреждение перед удалением лишних приложений Microsoft.
 echo.
 echo.
 echo.
