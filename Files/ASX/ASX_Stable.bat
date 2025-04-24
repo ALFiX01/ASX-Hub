@@ -351,7 +351,7 @@ REM проверка наличия EXE 👇
 if not exist "%ASX-Directory%\ASX Hub.exe" (
 	title Загрузка отсутствующих компонентов...
     echo [INFO ] %TIME% - Загрузка отсутствующего компонента ASX Hub.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-	curl -g -L -# -o "%ASX-Directory%\ASX Hub.exe" "https://github.com/ALFiX01/ASX-Hub/releases/latest/download/ASX.Hub.exe" >nul 2>&1    
+	curl -g -L -# -o "%ASX-Directory%\ASX Hub.exe" "https://github.com/ALFiX01/ASX-Hub/releases/latest/download/ASX.Hub.exe" >nul 2>&1
 	if errorlevel 1 (
 		echo [ERROR] %TIME% - Ошибка при загрузке ASX Hub.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
 		set /a error_on_setup+=1
@@ -5721,6 +5721,53 @@ if /i "%choice%"=="ч" ( set "history=Exp_tweaks;!history!" && goto MainMenu )
 if /i "%choice%"=="B" goto GoBack
 if /i "%choice%"=="и" goto GoBack
 if /i "%choice%"=="NoInput" goto WrongInput
+goto Exp_tweaks
+
+:AnalyzeBrowserHistory
+cls
+
+if not exist "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" (
+    echo  Скачиваю BrowsingHistoryView.exe
+    curl -g -L -# -o "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources\BrowsingHistoryView.exe" >nul 2>&1
+)
+echo  Экспортирую данные браузеров в файл BrowserHistory.txt
+"%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" /scomma "%ASX-Directory%\Files\Resources\BrowserHistory.txt"
+
+timeout /t 3 >nul
+
+set "file=%ASX-Directory%\Files\Resources\BrowserHistory.txt"
+
+REM Ключевые слова по категориям
+set "Movies=movie film cinema netflix hulu kino youtube"
+set "Games=pubg cs rust fortnite minecraft steam epic"
+set "Tweaker=msconfig regedit sysinternals processhacker autoruns overclock tuning tweak sdi snappy latencymon reshade radeon msi afterburner nvidia driver booster"
+
+REM Очистка старых данных
+reg delete "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data" /f >nul 2>&1
+echo  Запускаю анализ истории BrowserHistory.txt...
+set "interestIndex=1"
+
+for %%C in (Movies Games Tweaker) do (
+    set "categoryName=%%C"
+    set "keywords=!%%C!"
+    set "found="
+
+    for %%W in (!keywords!) do (
+        findstr /i /c:"%%W" "!file!" >nul 2>&1
+        if !errorlevel! neq 1 (
+            echo ✓ Found keyword "%%W" for category !categoryName!
+            set "found=1"
+        )
+    )
+
+    if defined found (
+        reg add "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data" /v User_Interests!interestIndex! /t REG_SZ /d !categoryName! /f >nul
+        echo  Обнаружен интерес к категории !categoryName!
+        set /a interestIndex+=1
+    )
+)
+echo Завершено
+pause
 goto Exp_tweaks
 
 :Cursor_win11
@@ -13133,6 +13180,7 @@ set /a "StartupCount-=1"
 :: ) else (
 ::     set /a "DriverFinder_Count+=1"
 :: )
+
 
 GOTO :EOF
 
