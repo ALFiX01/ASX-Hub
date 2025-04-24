@@ -5689,7 +5689,7 @@ echo            2 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Создать Рез�
 echo.
 echo            3 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Новый метод полного удаления OneDrive
 echo.
-echo.
+echo            4 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Поиск интересов исходя из истории браузера
 echo.
 echo.
 echo.
@@ -5713,6 +5713,7 @@ set /p choice="%DEL%                                                            
 if /i "%choice%"=="1" ( set "history=Exp_tweaks;!history!" && goto Cursor_win11 )
 if /i "%choice%"=="2" ( set "history=Exp_tweaks;!history!" && goto Driver_copy )
 if /i "%choice%"=="3" ( set "history=Exp_tweaks;!history!" && goto OneDrive-test-version )
+if /i "%choice%"=="4" ( set "history=Exp_tweaks;!history!" && goto AnalyzeBrowserHistory )
 
 if /i "%choice%"=="C" ( set "history=Exp_tweaks;!history!" && goto ASX_CMD )
 if /i "%choice%"=="с" ( set "history=Exp_tweaks;!history!" && goto ASX_CMD )
@@ -5725,7 +5726,6 @@ goto Exp_tweaks
 
 :AnalyzeBrowserHistory
 cls
-
 if not exist "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" (
     echo  Скачиваю BrowsingHistoryView.exe
     curl -g -L -# -o "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources\BrowsingHistoryView.exe" >nul 2>&1
@@ -5743,7 +5743,7 @@ set "Games=pubg cs rust fortnite minecraft steam epic"
 set "Tweaker=msconfig regedit sysinternals processhacker autoruns overclock tuning tweak sdi snappy latencymon reshade radeon msi afterburner nvidia driver booster"
 
 REM Очистка старых данных
-reg delete "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data" /f >nul 2>&1
+reg delete "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\User_Interests_test" /f >nul 2>&1
 echo  Запускаю анализ истории BrowserHistory.txt...
 set "interestIndex=1"
 
@@ -5755,13 +5755,13 @@ for %%C in (Movies Games Tweaker) do (
     for %%W in (!keywords!) do (
         findstr /i /c:"%%W" "!file!" >nul 2>&1
         if !errorlevel! neq 1 (
-            echo ✓ Found keyword "%%W" for category !categoryName!
+            REM echo ✓ Found keyword "%%W" for category !categoryName!
             set "found=1"
         )
     )
 
     if defined found (
-        reg add "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data" /v User_Interests!interestIndex! /t REG_SZ /d !categoryName! /f >nul
+        reg add "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\User_Interests_test" /v User_Interests!interestIndex! /t REG_SZ /d !categoryName! /f >nul
         echo  Обнаружен интерес к категории !categoryName!
         set /a interestIndex+=1
     )
