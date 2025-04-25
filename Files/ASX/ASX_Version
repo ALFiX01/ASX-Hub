@@ -1,4 +1,4 @@
-set "VersionNumberList=AP17S1 AP17S2"
+set "VersionNumberList=AP17S1 AP17S2 AP25S1"
 set UPDVER=1.4.0
 set "FullVersionName=1.4.0"
 set DisplayBranch=Stable

@@ -104,12 +104,12 @@ echo 📌 Запуск ASX Hub >> "!ASX-Directory!\Files\Logs\%date%.txt"
 REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
 set "Version=1.5.0"
-set "FullVersionNameCurrent=1.4.1"
-set "VersionNumberCurrent=AP17S1"
+set "FullVersionNameCurrent=1.5.0"
+set "VersionNumberCurrent=AP25S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=23.04.2025"
+set "DateUpdate=25.04.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -1965,6 +1965,7 @@ goto FastOpimizePage
 REM Exp_tweaks
 :Exp_tweaks_warn
 cls
+TITLE Дисклеймер. Экспериментальные твики - ASX Hub
 echo.
 echo.
 echo.
@@ -5726,11 +5727,15 @@ goto Exp_tweaks
 
 :AnalyzeBrowserHistory
 cls
+:: Загрузка BrowsingHistoryView.exe, если отсутствует
 if not exist "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" (
-    echo  Скачиваю BrowsingHistoryView.exe
-    curl -g -L -# -o "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources\BrowsingHistoryView.exe" >nul 2>&1
+    echo  %COL%[37mСкачиваю необходимый компонент...
+    curl -g -L -s -o "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources/BrowsingHistoryView.exe"
+    if errorlevel 1 (
+        echo  ERROR Не удалось скачать необходимый компонент
+    )
 )
-echo  Экспортирую данные браузеров в файл BrowserHistory.txt
+echo  %COL%[37mЭкспортирую данные...
 "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" /scomma "%ASX-Directory%\Files\Resources\BrowserHistory.txt"
 
 timeout /t 3 >nul
@@ -5738,35 +5743,43 @@ timeout /t 3 >nul
 set "file=%ASX-Directory%\Files\Resources\BrowserHistory.txt"
 
 REM Ключевые слова по категориям
-set "Movies=movie film cinema netflix hulu kino youtube"
-set "Games=pubg cs rust fortnite minecraft steam epic"
-set "Tweaker=msconfig regedit sysinternals processhacker autoruns overclock tuning tweak sdi snappy latencymon reshade radeon msi afterburner nvidia driver booster"
+set "Categories=Movies Games Tweaker Social"
+set "Movies=movie film cinema netflix hulu kino youtube vod disney amazonprime hbo kinopoisk ivi okko сериал фильм кино мультфильм трейлер"
+set "Games=pubg csgo rust fortnite minecraft steam epic roblox dota lol valorant cyberpunk genshin overwatch warzone игровой гейминг геймер игра"
+set "Tweaker=msconfig regedit sysinternals processhacker autoruns overclock tuning tweak sdi snappy latencymon reshade radeon msi afterburner nvidia driver booster оптимизация настройка производительность разгон утилита"
+set "Social=facebook instagram twitter tiktok telegram discord whatsapp vkontakte odnoklassniki соцсеть чат мессенджер"
 
 REM Очистка старых данных
 reg delete "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\User_Interests_test" /f >nul 2>&1
-echo  Запускаю анализ истории BrowserHistory.txt...
+echo  Запускаю анализ...
+echo.
 set "interestIndex=1"
 
-for %%C in (Movies Games Tweaker) do (
+for %%C in (%Categories%) do (
     set "categoryName=%%C"
     set "keywords=!%%C!"
-    set "found="
+    set "keywordCount=0"
 
     for %%W in (!keywords!) do (
         findstr /i /c:"%%W" "!file!" >nul 2>&1
-        if !errorlevel! neq 1 (
-            REM echo ✓ Found keyword "%%W" for category !categoryName!
-            set "found=1"
+        if !errorlevel! equ 0 (
+            set /a keywordCount+=1
+            REM echo ✓ Found keyword "%%W" for category !categoryName! (Count: !keywordCount!)
         )
     )
 
-    if defined found (
+    if !keywordCount! geq 2 (
         reg add "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\User_Interests_test" /v User_Interests!interestIndex! /t REG_SZ /d !categoryName! /f >nul
-        echo  Обнаружен интерес к категории !categoryName!
-        set /a interestIndex+=1
+        if !errorlevel! equ 0 (
+            echo   %COL%[92mОбнаружен интерес к категории !categoryName! ^(Уверенность: !keywordCount!^) %COL%[37m
+            set /a interestIndex+=1
+        ) else (
+            echo   %COL%[91mОшибка записи категории !categoryName! в реестр %COL%[37m
+        )
     )
 )
-echo Завершено
+echo.
+echo  Завершено
 pause
 goto Exp_tweaks
 
