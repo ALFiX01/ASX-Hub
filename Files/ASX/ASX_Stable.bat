@@ -41,7 +41,8 @@
 net session >nul 2>&1
 if %errorlevel% neq 0 (
     echo Requesting administrative privileges...
-    start "" /wait /I /min powershell -NoProfile -Command "Start-Process -FilePath '%~s0' -Verb RunAs"
+    REM start "" /wait /I /min powershell -NoProfile -Command "Start-Process -FilePath '%~s0' -Verb RunAs"
+    powershell -Command "Start-Process 'cmd.exe' -ArgumentList '/c \"\"%~f0\" admin\"' -Verb RunAs"
     exit /b
 )
 
@@ -13363,7 +13364,7 @@ echo       %COL%[97m!dashes!
 echo.
 echo          %COL%[36m1.%COL%[37m Оптимизация создания файлов восстановления через ASX Revert.
 echo          %COL%[36m2.%COL%[37m Улучшены рекомендации на панели рекомендованных программ.
-echo          %COL%[36m3.%COL%[37m Улучшен алгоритм запуска от имени администратора.
+echo          %COL%[36m3.%COL%[37m Новый алгоритм запуска от имени администратора.
 echo          %COL%[36m4.%COL%[37m Исправлена опечатка в пункте в настройках ASX.
 echo          %COL%[36m5.%COL%[37m Исправлены многочисленные баги и недочёты.
 echo          %COL%[36m6.%COL%[37m Добавлено Предупреждение перед удалением лишних приложений Microsoft.
