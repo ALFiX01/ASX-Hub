@@ -11,40 +11,15 @@ if %errorlevel% neq 0 (
 chcp 65001 >nul 2>&1
 setlocal EnableDelayedExpansion
 
-REM Установка переменной Directory
+REM Setting the Directory variable
 reg query "HKCU\Software\ALFiX inc.\ASX\Settings" /v "Directory" >nul 2>&1
 if errorlevel 1 (
-    REM Если ключ не существует, создаем его и директорию
-    if not exist "%ProgramFiles%" (
-        echo Ошибка 02: Директория Program Files не найдена.
-        echo Проверьте целостность системы Windows.
-        pause
-        exit /b 1
-    )
-    reg add "HKCU\Software\ALFiX inc.\ASX\Settings" /t REG_SZ /v "Directory" /d "%ProgramFiles%\ASX" /f >nul 2>&1
-    set "ASX-Directory=%ProgramFiles%\ASX"
-    
-    REM Создаем структуру директорий
-    if not exist "!ASX-Directory!\Files\Logs" (
-        md "!ASX-Directory!\Files\Logs" >nul 2>&1
-    )
+    REM If the key does not exist, create it and the directory
 ) else (
-    REM Если ключ существует, получаем значение
+    REM If the key exists, gets the value
     for /f "tokens=2*" %%a in ('reg query "HKCU\Software\ALFiX inc.\ASX\Settings" /v "Directory" 2^>nul ^| find /i "Directory"') do set "ASX-Directory=%%b"
-    
-    if not exist "!ASX-Directory!" (
-        REM Если директория не существует, создаем ее и устанавливаем флаг первого запуска
-        md "!ASX-Directory!\Files\Logs" >nul 2>&1
-        reg add "HKCU\Software\ALFiX inc.\ASX\Settings" /v "Firstlaunch" /t REG_SZ /d "Yes" /f >nul 2>&1
-        set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
-        call:ASX_First_launch
-        echo [INFO ] %TIME% - Создана директория !ASX-Directory! >> "!ASX-Directory!\Files\Logs\%date%.txt"
-    ) else (
-        REM Проверка структуры директорий
-        if not exist "!ASX-Directory!\Files\Temp" md "!ASX-Directory!\Files\Temp" >nul 2>&1
-    )
 )
 
-	echo  Включение журнала буфера обмена
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Clipboard" /v "EnableClipboardHistory" /t REG_DWORD /d 1 /f >nul 2>&1
-    echo  Успешно
+echo  Включение журнала буфера обмена
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Clipboard" /v "EnableClipboardHistory" /t REG_DWORD /d 1 /f >nul 2>&1
+echo  Успешно
