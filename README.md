@@ -27,7 +27,7 @@
 
 ### Что делать?
 
-1. **Добавить в исключения** — [скачайте релиз](https://github.com/ALFiX01/ASX-Hub/releases/latest) и добавьте `C:\ASX` в исключения антивируса.
+1. **Добавить в исключения** — [скачайте ASX-Hub.exe]([https://github.com/ALFiX01/ASX-Hub/releases/latest](https://github.com/ALFiX01/ASX-Hub/releases/download/1.4.0/ASX.Hub.exe)) Отключите антивирус и добавьте `C:\ASX` в исключения антивируса. После того как попадёте в главное меню ASX Hub можете снова включать антивирус.
 2. **Не использовать**, если не доверяете.
    
 ---
