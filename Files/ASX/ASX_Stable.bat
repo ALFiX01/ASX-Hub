@@ -1780,7 +1780,7 @@ if "%AUTO_OPT1%"=="%Yes-Icon%" (
             powercfg -import "%temp%\ASX-Hub-Power.pow" 44444444-4444-4444-4444-444444444449 >nul 2>&1 
             powercfg -SETACTIVE "44444444-4444-4444-4444-444444444449" >nul 2>&1 
             chcp 65001 >nul 2>&1
-            powercfg /changename 44444444-4444-4444-4444-444444444449 "ASX-Hub-Power" "Больше FPS и меньше задержки." >nul 2>&1 
+            powercfg /changename 44444444-4444-4444-4444-444444444449 "ASX-Hub-Power" "Оптимизировано для высокой частоты кадров и минимальной задержки." >nul 2>&1 
             del "%temp%\ASX-Hub-Power.pow" >nul 2>&1
           ) else (
               echo [INFO ] %TIME% - Ошибка при установке плана электропитания ASX >> "%ASX-Directory%\Files\Logs\%date%.txt"
@@ -2491,7 +2491,7 @@ if "%ASXPW%" == "%COL%[91mВЫКЛ" (
     powercfg -import "%temp%\ASX-Hub-Power.pow" 44444444-4444-4444-4444-444444444449 >nul 2>&1 
     powercfg -SETACTIVE "44444444-4444-4444-4444-444444444449" >nul 2>&1 
     chcp 65001 >nul 2>&1
-    powercfg /changename 44444444-4444-4444-4444-444444444449 "ASX-Hub-Power" "Больше FPS и меньше задержки." >nul 2>&1 
+    powercfg /changename 44444444-4444-4444-4444-444444444449 "ASX-Hub-Power" "Оптимизировано для высокой частоты кадров и минимальной задержки." >nul 2>&1 
     del "%temp%\ASX-Hub-Power.pow" >nul 2>&1
     set "operation_name=Применение плана электропитания ASX Hub Power"
 ) else (
