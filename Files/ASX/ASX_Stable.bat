@@ -1507,8 +1507,25 @@ goto TweaksPanel
 :FastOpimizePage
 cls
 
+:: Создание директории, если её нет
+if not exist "%ASX-Directory%\Files\Resources\FastOptimizeScripts" ( 
+    echo  Отсутствуют необходимые компоненты. Выполняю загрузку...
+    echo.
+    mkdir "%ASX-Directory%\Files\Resources\FastOptimizeScripts"
+)
 
+:: Список файлов
+set "files=ASX-Power.bat Cortana.bat StickyKeys.bat Mouse.bat Wallpaper.bat GameBar.bat ContextMenu.bat UAC.bat SmartScreenNotification.bat WindowsDefenderNotification.bat Clipboard.bat Spectre-Meldown-DownFall.bat MapAutoUpdate.bat"
 
+:: Проверка существования файлов и загрузка отсутствующих
+for %%f in (%files%) do (
+    if not exist "%ASX-Directory%\Files\Resources\FastOptimizeScripts\%%f" (
+        echo  Загрузка: %%f
+        curl -g -L -# -o "%ASX-Directory%\Files\Resources\FastOptimizeScripts\%%f" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Scripts/FastOptimizeScripts/%%f" >nul 2>&1
+    )
+)
+
+cls
 echo Анализ системы...
 TITLE Быстрая оптимизация Windows - ASX Hub
 echo [INFO ] %TIME% - Открыта панель ":FastOpimizePage" >> "%ASX-Directory%\Files\Logs\%date%.txt"
@@ -1768,68 +1785,69 @@ echo.
 
 REM ASX-Power
 if "%AUTO_OPT1%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\ASX-Power.bat"
 )
 
 REM Cortana
 if "%AUTO_OPT2%"=="%Yes-Icon%" (
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Cortana.bat"
 )
 
 REM StickyKeys
 if "%AUTO_OPT3%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\StickyKeys.bat"
 )
 
 REM Mouse
 if "%AUTO_OPT4%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Mouse.bat"
 )
 
 REM Wallpaper
 if "%AUTO_OPT5%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Wallpaper.bat"
 )
 
 REM GameBar
 if "%AUTO_OPT6%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\GameBar.bat"
 )
 
 REM ContextMenu
 if "%WinVer%"=="Windows 11" (
     if "%AUTO_OPT7%"=="%Yes-Icon%" (
-
+        call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\ContextMenu.bat"
     )
 )
 
 REM UAC
 if "%AUTO_OPT8%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\UAC.bat"
 )
 
 REM SmartScreenNotification
 if "%AUTO_OPT9%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\SmartScreenNotification.bat"
 )
 
 REM WindowsDefenderNotification
 if "%AUTO_OPT10%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\WindowsDefenderNotification.bat"
 )
 
 REM Clipboard
 if "%AUTO_OPT11%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Clipboard.bat"
 )
 
 REM Spectre, Meldown, DownFall
 if "%AUTO_OPT12%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Spectre-Meldown-DownFall.bat"
 )
 
 REM MapAutoUpdate
 if "%AUTO_OPT13%"=="%Yes-Icon%" (
-
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\MapAutoUpdate.bat"
 )
 
 echo.
@@ -5604,19 +5622,22 @@ goto Exp_tweaks
 :AnalyzeBrowserHistory
 cls
 :: Загрузка BrowsingHistoryView.exe, если отсутствует
-if not exist "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" (
+if not exist "%ASX-Directory%\Files\Resources\BrowsingHistory" (
+    md "%ASX-Directory%\Files\Resources\BrowsingHistory" >nul 2>&1
+)
+if not exist "%ASX-Directory%\Files\Resources\BrowsingHistory\BrowsingHistoryView.exe" (
     echo  %COL%[37mСкачиваю необходимый компонент...
-    curl -g -L -s -o "%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources/BrowsingHistoryView.exe"
+    curl -g -L -s -o "%ASX-Directory%\Files\Resources\BrowsingHistory\BrowsingHistoryView.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources/BrowsingHistoryView.exe"
     if errorlevel 1 (
         echo  ERROR Не удалось скачать необходимый компонент
     )
 )
 echo  %COL%[37mЭкспортирую данные...
-"%ASX-Directory%\Files\Resources\BrowsingHistoryView.exe" /scomma "%ASX-Directory%\Files\Resources\BrowserHistory.txt"
+"%ASX-Directory%\Files\Resources\BrowsingHistory\BrowsingHistoryView.exe" /scomma "%ASX-Directory%\Files\Resources\BrowsingHistory\BrowserHistory.txt"
 
 timeout /t 3 >nul
 
-set "file=%ASX-Directory%\Files\Resources\BrowserHistory.txt"
+set "file=%ASX-Directory%\Files\Resources\BrowsingHistory\BrowserHistory.txt"
 
 REM Ключевые слова по категориям
 set "Categories=Movies Games Tweaker Social"
@@ -5656,6 +5677,7 @@ for %%C in (%Categories%) do (
 )
 echo.
 echo  Завершено
+echo.
 pause
 goto Exp_tweaks
 
