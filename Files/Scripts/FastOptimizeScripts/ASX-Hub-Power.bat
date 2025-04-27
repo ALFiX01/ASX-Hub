@@ -46,8 +46,8 @@ if errorlevel 1 (
 )
 
 
-echo [INFO ] %TIME% - Активация плана электропитания ASX >> "%ASX-Directory%\Files\Logs\%date%.txt"
-echo Активация плана электропитания ASX
+echo [INFO ] %TIME% - Активация плана электропитания ASX-Power >> "%ASX-Directory%\Files\Logs\%date%.txt"
+echo Активация плана электропитания ASX-Power
   chcp 850 >nul 2>&1	
   powercfg -restoredefaultschemes
   chcp 65001 >nul 2>&1
@@ -55,7 +55,7 @@ echo Активация плана электропитания ASX
   if %errorlevel% equ 0 (
       for %%A in ("%temp%\ASX-Power.pow") do (
         if %%~zA gtr 6144 (
-          echo [INFO ] %TIME% - Установка плана электропитания ASX прошла успешно >> "%ASX-Directory%\Files\Logs\%date%.txt"
+          echo [INFO ] %TIME% - Установка плана электропитания ASX-Power прошла успешно >> "%ASX-Directory%\Files\Logs\%date%.txt"
           echo Успешно
           chcp 850 >nul 2>&1
           powercfg /d 44444444-4444-4444-4444-444444444449 >nul 2>&1 
@@ -65,12 +65,12 @@ echo Активация плана электропитания ASX
           REM powercfg /changename 44444444-4444-4444-4444-444444444449 "ASX Power" "Оптимизировано для высокой частоты кадров и минимальной задержки." >nul 2>&1 
           del "%temp%\ASX-Power.pow" >nul 2>&1
         ) else (
-            echo [INFO ] %TIME% - Ошибка при установке плана электропитания ASX >> "%ASX-Directory%\Files\Logs\%date%.txt"
-            echo Ошибка при установке плана электропитания ASX %COL%[37m
+            echo [INFO ] %TIME% - Ошибка при установке плана электропитания ASX-Power >> "%ASX-Directory%\Files\Logs\%date%.txt"
+            echo Ошибка при установке плана электропитания ASX-Power %COL%[37m
         )
       )
   ) else (
-      echo [ERROR] %TIME% - Ошибка при загрузке плана электропитания ASX >> "%ASX-Directory%\Files\Logs\%date%.txt"
-      echo Ошибка: Загрузка файла плана электропитания ASX не удалась. %COL%[37m
+      echo [ERROR] %TIME% - Ошибка при загрузке плана электропитания ASX-Power >> "%ASX-Directory%\Files\Logs\%date%.txt"
+      echo Ошибка: Загрузка файла плана электропитания ASX-Power не удалась. %COL%[37m
   )
   pause >nul 2>&1
