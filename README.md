@@ -79,4 +79,31 @@
 #### Способ 2: PowerShell (альтернатива)
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://bit.ly/ASX-Hub'))
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://bit.ly/ASX-Hub'))```
+---
+
+## ⚠️ Предупреждение об антивирусах
+
+> **Возможные срабатывания антивирусов**
+
+Некоторые компоненты GoodbyeZapret, в частности **WinDivert**, могут определяться как `HackTool` или `RiskTool`.
+
+### Почему?
+
+Программа перехватывает и модифицирует сетевой трафик — это может быть воспринято как подозрительная активность.
+
+Кроме того, **лаунчер проекта (`Launcher.exe`) вносит изменения в реестр Windows**. Это необходимо для:
+
+- сохранения пользовательских параметров запуска,
+- настройки автозапуска,
+- изменения параметров контроля учётных записей (UAC).
+
+Подобные действия часто вызывают срабатывание защитных систем как потенциально опасное поведение, несмотря на отсутствие вредоносной активности.
+
+### Что делать?
+
+1. **Добавить в исключения** — [скачайте релиз](https://github.com/ALFiX01/GoodbyeZapret/releases/latest) и добавьте `C:\GoodbyeZapret` в исключения антивируса.
+2. **Собрать самостоятельно** — [скомпилируйте из исходников](https://github.com/ALFiX01/GoodbyeZapret).
+3. **Не использовать**, если не доверяете.
+
+---
