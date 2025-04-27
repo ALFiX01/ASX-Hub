@@ -50,4 +50,3 @@ echo Активация плана электропитания ASX-Power
       echo [ERROR] %TIME% - Ошибка при загрузке плана электропитания ASX-Power >> "%ASX-Directory%\Files\Logs\%date%.txt"
       echo Ошибка: Загрузка файла плана электропитания ASX-Power не удалась. %COL%[37m
   )
-pause

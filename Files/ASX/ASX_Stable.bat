@@ -1785,7 +1785,7 @@ echo.
 
 REM ASX-Power
 if "%AUTO_OPT1%"=="%Yes-Icon%" (
-    start "" "%ASX-Directory%\Files\Resources\FastOptimizeScripts\ASX-Power.bat"
+    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\ASX-Power.bat"
 )
 
 REM Cortana

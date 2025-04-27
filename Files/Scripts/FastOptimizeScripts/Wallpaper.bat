@@ -48,4 +48,3 @@ if errorlevel 1 (
 	echo  Отключение сжатия обоев...
 	reg add "HKCU\Control Panel\Desktop" /v "JPEGImportQuality" /t REG_DWORD /d 256 /f >nul 2>&1
     echo  Успешно
-  pause >nul 2>&1

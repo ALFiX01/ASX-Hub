@@ -48,4 +48,3 @@ if errorlevel 1 (
 	echo  Выключение Автообновления карт
     reg add "HKEY_LOCAL_MACHINE\SYSTEM\Maps" /v "AutoUpdateEnabled" /t REG_DWORD /d 0 /f >nul 2>&1
     echo  Успешно
-  pause >nul 2>&1

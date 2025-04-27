@@ -48,4 +48,3 @@ if errorlevel 1 (
 	echo  Включение журнала буфера обмена
     reg add "HKEY_CURRENT_USER\Software\Microsoft\Clipboard" /v "EnableClipboardHistory" /t REG_DWORD /d 1 /f >nul 2>&1
     echo  Успешно
-  pause >nul 2>&1

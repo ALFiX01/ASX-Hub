@@ -50,4 +50,3 @@ if errorlevel 1 (
 	taskkill /f /im explorer.exe
     start explorer.exe
     echo  Успешно
-  pause >nul 2>&1

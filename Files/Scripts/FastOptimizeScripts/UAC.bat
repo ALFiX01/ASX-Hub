@@ -55,4 +55,3 @@ if errorlevel 1 (
  	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "ValidateAdminCodeSignatures" /T REG_DWORD /d 0 >nul 2>&1       
  	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "FilterAdministratorToken" /T REG_DWORD /d 0 >nul 2>&1   
     echo  Успешно
-  pause >nul 2>&1

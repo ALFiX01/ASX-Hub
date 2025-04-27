@@ -52,4 +52,3 @@ if errorlevel 1 (
     reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
     reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications" /F /V "DisableNotifications" /T REG_DWORD /d 1 >nul 2>&1
     echo  Успешно
-  pause >nul 2>&1

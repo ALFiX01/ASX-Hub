@@ -50,4 +50,3 @@ if errorlevel 1 (
     reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Associations" /v LowRiskFileTypes /t REG_SZ /d ".exe;.bat;.cmd;.reg;.vbs;.msi;.msp;.com;.ps1;.ps2;.cpl" /f >nul 2>&1
     reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3" /F /V "1806" /T REG_DWORD /d 0 >nul 2>&1
     echo  Успешно
-  pause >nul 2>&1
