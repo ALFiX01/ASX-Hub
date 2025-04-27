@@ -1506,6 +1506,9 @@ goto TweaksPanel
 
 :FastOpimizePage
 cls
+
+
+
 echo Анализ системы...
 TITLE Быстрая оптимизация Windows - ASX Hub
 echo [INFO ] %TIME% - Открыта панель ":FastOpimizePage" >> "%ASX-Directory%\Files\Logs\%date%.txt"
@@ -1763,198 +1766,70 @@ echo.
 echo Выполняется процесс автоматической оптимизации и настройки...
 echo.
 
+REM ASX-Power
 if "%AUTO_OPT1%"=="%Yes-Icon%" (
-    echo [INFO ] %TIME% - Активация плана электропитания ASX >> "%ASX-Directory%\Files\Logs\%date%.txt"
-	echo Активация плана электропитания ASX
-    chcp 850 >nul 2>&1	
-    powercfg -restoredefaultschemes
-    chcp 65001 >nul 2>&1
-    curl -g -L -s -o "%temp%\ASX-Power.pow" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/PowerPlan/ASX-Power.pow"
-    if %errorlevel% equ 0 (
-        for %%A in ("%temp%\ASX-Power.pow") do (
-          if %%~zA gtr 6144 (
-            echo [INFO ] %TIME% - Установка плана электропитания ASX прошла успешно >> "%ASX-Directory%\Files\Logs\%date%.txt"
-            echo Успешно
-            chcp 850 >nul 2>&1
-            powercfg /d 44444444-4444-4444-4444-444444444449 >nul 2>&1 
-            powercfg -import "%temp%\ASX-Power.pow" 44444444-4444-4444-4444-444444444449 >nul 2>&1 
-            powercfg -SETACTIVE "44444444-4444-4444-4444-444444444449" >nul 2>&1 
-            chcp 65001 >nul 2>&1
-            powercfg /changename 44444444-4444-4444-4444-444444444449 "ASX-Hub-Power" "Оптимизировано для высокой частоты кадров и минимальной задержки." >nul 2>&1 
-            del "%temp%\ASX-Power.pow" >nul 2>&1
-          ) else (
-              echo [INFO ] %TIME% - Ошибка при установке плана электропитания ASX >> "%ASX-Directory%\Files\Logs\%date%.txt"
-              echo Ошибка при установке плана электропитания ASX %COL%[37m
-          )
-        )
-    ) else (
-        echo [ERROR] %TIME% - Ошибка при загрузке плана электропитания ASX >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        echo Ошибка: Загрузка файла плана электропитания ASX не удалась. %COL%[37m
-    )
+
 )
 
+REM Cortana
 if "%AUTO_OPT2%"=="%Yes-Icon%" (
-	echo Отключение Cortana
-	reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f >nul 2>&1
-    :: Disable Cortana via Group Policy
-    REG add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f >nul 2>&1
-
-    :: Stop Cortana process
-    taskkill /f /im Cortana.exe >nul 2>&1
-
-    REM Переменная для хранения пути к папке с Cortana.exe
-    set "cortana_path="
-
-    :: Перебираем все папки внутри C:\Program Files\WindowsApps\
-    for /d %%d in ("%ProgramFiles%\WindowsApps\*") do (
-        :: Проверяем, есть ли в текущей папке файл Cortana.exe
-        if exist "%%d\Cortana.exe" (
-            set "cortana_path=%%d"
-            :: Выводим путь к папке с Cortana.exe
-            echo [INFO ] %TIME% - Файл Cortana.exe найден в папке: !cortana_path! >> "%ASX-Directory%\Files\Logs\%date%.txt"
-            :: Take ownership of the folder
-            takeown /f "!cortana_path!" /r /d y >nul 2>&1
-            icacls "!cortana_path!" /grant %username%:F /t >nul 2>&1
-            :: Удаляем папку
-            rmdir /s /q "!cortana_path!" >nul 2>&1
-            :: Проверяем, удалена ли папка
-            if exist "!cortana_path!" (
-                echo [ERROR] %TIME% - Папка !cortana_path! не была удалена. >> "%ASX-Directory%\Files\Logs\%date%.txt"
-            ) else (
-                echo [INFO ] %TIME% - Папка !cortana_path! успешно удалена. >> "%ASX-Directory%\Files\Logs\%date%.txt"
-            )
-        )
-    )
-
-    reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CanCortanaBeEnabled" /t REG_DWORD /d 0 /f >nul 2>&1
-
-    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Preferences" /v "ModelDownloadAllowed" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCloudSearch" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowSearchToUseLocation" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "ConnectedSearchUseWeb" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "DisableWebSearch" /t REG_DWORD /d "1" /f >nul 2>&1
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization" /v "RestrictImplicitInkCollection" /t REG_DWORD /d "1" /f >nul 2>&1
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization" /v "RestrictImplicitTextCollection" /t REG_DWORD /d "1" /f >nul 2>&1
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization\TrainedDataStore" /v "HarvestContacts" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings" /v "AcceptedPrivacyPolicy" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Windows Search" /v "CortanaConsent" /t REG_DWORD /d "0" /f >nul 2>&1
-
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "BingSearchEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "CortanaEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTaskbarMode" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowCortanaButton" /t REG_DWORD /d "0" /f >nul 2>&1
-    taskkill /f /im explorer.exe >nul 2>&1
-    start explorer.exe >nul 2>&1
-    echo Успешно
 )
 
+REM StickyKeys
 if "%AUTO_OPT3%"=="%Yes-Icon%" (
-	echo Отключение залипания клавиш
-    reg add "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v "Flags" /t REG_SZ /d "0" /f >nul 2>&1
-    reg add "HKEY_CURRENT_USER\Control Panel\Accessibility\SoundSentry" /v "Flags" /t REG_SZ /d "0" /f >nul 2>&1
-    reg add "HKCU\Control Panel\Accessibility\Keyboard Response" /v "DelayBeforeAcceptance" /t REG_SZ /d "0" /f >nul 2>&1
-    reg add "HKCU\Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatRate" /t REG_SZ /d "0" /f >nul 2>&1
-    reg add "HKCU\Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatDelay" /t REG_SZ /d "0" /f >nul 2>&1
-    reg add "HKCU\Control Panel\Accessibility\Keyboard Response" /v "Flags" /t REG_SZ /d "122" /f >nul 2>&1
-    reg add "HKCU\Control Panel\Accessibility\ToggleKeys" /v "Flags" /t REG_SZ /d "58" /f >nul 2>&1
-    echo Успешно
+
 )
 
+REM Mouse
 if "%AUTO_OPT4%"=="%Yes-Icon%" (
-	echo Отключение повышенной точности установки указателя мыши
-    reg add "HKCU\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f >nul 2>&1
-    reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "0" /f >nul 2>&1
-    reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "0" /f >nul 2>&1
-    echo Успешно
+
 )
 
+REM Wallpaper
 if "%AUTO_OPT5%"=="%Yes-Icon%" (
-	echo Отключение сжатия обоев...
-	reg add "HKCU\Control Panel\Desktop" /v "JPEGImportQuality" /t REG_DWORD /d 256 /f >nul 2>&1
-    echo Успешно
+
 )
 
+REM GameBar
 if "%AUTO_OPT6%"=="%Yes-Icon%" (
-	echo Отключение FSO и GameBar
-	reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AutoGameModeEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "GamePanelStartupTipIndex" /t REG_DWORD /d "3" /f >nul 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "UseNexusForGameBarEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg delete "HKCU\System\GameConfigStore" /v "Win32_AutoGameModeDefaultProfile" /f >nul 2>&1
-    reg delete "HKCU\System\GameConfigStore" /v "Win32_GameModeRelatedProcesses" /f >nul 2>&1
-    reg add "HKCU\System\GameConfigStore" /v "GameDVR_DSEBehavior" /t REG_DWORD /d "2" /f >nul 2>&1
-    reg add "HKCU\System\GameConfigStore" /v "GameDVR_DXGIHonorFSEWindowsCompatible" /t REG_DWORD /d "1" /f >nul 2>&1
-    reg add "HKCU\System\GameConfigStore" /v "GameDVR_EFSEFeatureFlags" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKCU\System\GameConfigStore" /v "GameDVR_Enabled" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKCU\System\GameConfigStore" /v "GameDVR_FSEBehavior" /t REG_DWORD /d "2" /f >nul 2>&1
-    reg add "HKCU\System\GameConfigStore" /v "GameDVR_FSEBehaviorMode" /t REG_DWORD /d "2" /f >nul 2>&1
-    reg add "HKCU\System\GameConfigStore" /v "GameDVR_HonorUserFSEBehaviorMode" /t REG_DWORD /d "1" /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v "AllowGameDVR" /t REG_DWORD /d "0" /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR" /v "value" /t REG_DWORD /d "0" /f >nul 2>&1
-    echo Успешно
+
 )
 
+REM ContextMenu
 if "%WinVer%"=="Windows 11" (
     if "%AUTO_OPT7%"=="%Yes-Icon%" (
-	    echo Установка старого контекстного меню из Windows 10
-	    reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /ve /t REG_SZ /d "" /f >nul 2>&1
-	    taskkill /f /im explorer.exe
-        start explorer.exe
-        echo Успешно
+
     )
 )
 
+REM UAC
 if "%AUTO_OPT8%"=="%Yes-Icon%" (
-    echo Отключение UAC
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "ConsentPromptBehaviorAdmin" /T REG_DWORD /d 0 >nul 2>&1
-    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "ConsentPromptBehaviorUser" /T REG_DWORD /d 3 >nul 2>&1
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "EnableInstallerDetection" /T REG_DWORD /d 1 >nul 2>&1
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "EnableLUA" /T REG_DWORD /d 1 >nul 2>&1
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "EnableVirtualization" /T REG_DWORD /d 1 >nul 2>&1
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "PromptOnSecureDesktop" /T REG_DWORD /d 0 >nul 2>&1
- 	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "ValidateAdminCodeSignatures" /T REG_DWORD /d 0 >nul 2>&1       
- 	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "FilterAdministratorToken" /T REG_DWORD /d 0 >nul 2>&1   
-    echo Успешно
+
 )
 
+REM SmartScreenNotification
 if "%AUTO_OPT9%"=="%Yes-Icon%" (
-	echo Отключение уведомлений о запуске приложений
-    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Security" /F /V "DisableSecuritySettingsCheck" /T REG_DWORD /d 1 >nul 2>&1
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Associations" /v LowRiskFileTypes /t REG_SZ /d ".exe;.bat;.cmd;.reg;.vbs;.msi;.msp;.com;.ps1;.ps2;.cpl" /f >nul 2>&1
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3" /F /V "1806" /T REG_DWORD /d 0 >nul 2>&1
-    echo Успешно
+
 )
 
+REM WindowsDefenderNotification
 if "%AUTO_OPT10%"=="%Yes-Icon%" (
-	echo Отключение уведомлений от Windows Defender
-    reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Windows Defender Security Center\Notifications" /F /V "DisableNotifications" /T REG_DWORD /d 1 >nul 2>&1
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications" /F /V "DisableNotifications" /T REG_DWORD /d 1 >nul 2>&1
-    echo Успешно
+
 )
 
+REM Clipboard
 if "%AUTO_OPT11%"=="%Yes-Icon%" (
-	echo Включение журнала буфера обмена
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Clipboard" /v "EnableClipboardHistory" /t REG_DWORD /d 1 /f >nul 2>&1
-    echo Успешно
+
 )
 
+REM Spectre, Meldown, DownFall
 if "%AUTO_OPT12%"=="%Yes-Icon%" (
-	echo Выключение Spectre, Meldown, DownFall
-    Reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettings" /t REG_DWORD /d "1" /f >nul 2>&1
-    Reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "33554432" /f >nul 2>&1
-    Reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f >nul 2>&1
-    echo Успешно
+
 )
 
+REM MapAutoUpdate
 if "%AUTO_OPT13%"=="%Yes-Icon%" (
-	echo Выключение Автообновления карт
-    reg add "HKEY_LOCAL_MACHINE\SYSTEM\Maps" /v "AutoUpdateEnabled" /t REG_DWORD /d 0 /f >nul 2>&1
-    echo Успешно
+
 )
 
 echo.
