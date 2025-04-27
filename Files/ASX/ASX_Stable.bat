@@ -26,7 +26,7 @@
 ::ZQ0/vhVqMQ3MEVWAtB9wSA==
 ::Zg8zqx1/OA3MEVWAtB9wSA==
 ::dhA7pRFwIByZRRnk
-::Zh4grVQjdCuDJOl7RaKA9quH/eQy7NtmtmmtA9RLEVpWEpCtilLtyFVrAoivE9hTwlDmSdgewntYlM5MQVtOewC4ZwA6lVhHpHeMOMmg4kG0dmm63gsYDmc6gnvV7A==
+::Zh4grVQjdCuDJOlERJKA/6q0/NQy7dtkt1esMlgr08u0mg01QeADNrzP27aCJaBeqlPhZ4Uk2XRmrs4eHxJXcC76IFoIiF169kyQNYmZqwqB
 ::YB416Ek+ZW8=
 ::
 ::
@@ -106,11 +106,11 @@ REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
 set "Version=1.5.0"
 set "FullVersionNameCurrent=1.5.0"
-set "VersionNumberCurrent=AP25S1"
+set "VersionNumberCurrent=AP27S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=25.04.2025"
+set "DateUpdate=27.04.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
