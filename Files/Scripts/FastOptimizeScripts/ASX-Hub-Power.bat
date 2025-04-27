@@ -51,19 +51,19 @@ echo Активация плана электропитания ASX
   chcp 850 >nul 2>&1	
   powercfg -restoredefaultschemes
   chcp 65001 >nul 2>&1
-  curl -g -L -s -o "%temp%\ASX-Hub-Power.pow" "https://github.com/ALFiX01/ASX-Hub/releases/download/File/ASX.Hub-Power.pow"
+  curl -g -L -s -o "%temp%\ASX-Power.pow" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/PowerPlan/ASX-Power.pow"
   if %errorlevel% equ 0 (
-      for %%A in ("%temp%\ASX-Hub-Power.pow") do (
+      for %%A in ("%temp%\ASX-Power.pow") do (
         if %%~zA gtr 6144 (
           echo [INFO ] %TIME% - Установка плана электропитания ASX прошла успешно >> "%ASX-Directory%\Files\Logs\%date%.txt"
           echo Успешно
           chcp 850 >nul 2>&1
           powercfg /d 44444444-4444-4444-4444-444444444449 >nul 2>&1 
-          powercfg -import "%temp%\ASX-Hub-Power.pow" 44444444-4444-4444-4444-444444444449 >nul 2>&1 
+          powercfg -import "%temp%\ASX-Power.pow" 44444444-4444-4444-4444-444444444449 >nul 2>&1 
           powercfg -SETACTIVE "44444444-4444-4444-4444-444444444449" >nul 2>&1 
           chcp 65001 >nul 2>&1
-          powercfg /changename 44444444-4444-4444-4444-444444444449 "ASX Power" "Оптимизировано для высокой частоты кадров и минимальной задержки." >nul 2>&1 
-          del "%temp%\ASX-Hub-Power.pow" >nul 2>&1
+          REM powercfg /changename 44444444-4444-4444-4444-444444444449 "ASX Power" "Оптимизировано для высокой частоты кадров и минимальной задержки." >nul 2>&1 
+          del "%temp%\ASX-Power.pow" >nul 2>&1
         ) else (
             echo [INFO ] %TIME% - Ошибка при установке плана электропитания ASX >> "%ASX-Directory%\Files\Logs\%date%.txt"
             echo Ошибка при установке плана электропитания ASX %COL%[37m
