@@ -4476,7 +4476,7 @@ echo.
 echo                                                                     %COL%[90m[%COL%[96m1 %COL%[90m/ 1%COL%[90m]
 echo.
 echo          %COL%[36mКАСТОМИЗАЦИЯ
-echo          %COL%[97m------------
+echo          %COL%[97m------------%COL%[37m
 echo            1 %COL%[36m[%COL%[37m %BLEX% %COL%[36m]%COL%[37m Размытый фон проводника
 echo            2 %COL%[36m[%COL%[37m %SFE% %COL%[36m]%COL%[37m Показывать расширения файлов
 echo            3 %COL%[36m[%COL%[90m Н/Д  %COL%[36m]%COL%[37m Установить %COL%[36m%THEME% %COL%[37mтему для всех программ
@@ -4498,9 +4498,9 @@ echo           13 %COL%[36m[%COL%[37m %WTUL% %COL%[36m]%COL%[37m Удалить 
 echo.
 echo.
 echo.
-echo.
-echo.
-echo.
+echo          %COL%[36mПУНКТЫ
+echo          %COL%[97m------%COL%[37m
+echo          %COL%[36m[%COL%[37m CS %COL%[36m]%COL%[37m Меню выбора кастомного курсора мыши
 echo.
 echo.
 echo.
@@ -4538,6 +4538,9 @@ if /i "%choice%"=="11" ( set "history=WinCustomization;!history!" && goto Disabl
 if /i "%choice%"=="12" ( set "history=OptimizationCenterPG1;!history!" && goto MSRT_in_WindowsUpdate )
 if /i "%choice%"=="13" ( set "history=OptimizationCenterPG1;!history!" && goto WidgetUninstall )
 
+if /i "%choice%"=="Cs" ( set "history=OptimizationCenterPG1;!history!" && goto Cursor_menu )
+if /i "%choice%"=="сы" ( set "history=OptimizationCenterPG1;!history!" && goto Cursor_menu )
+
 if /i "%choice%"=="C" ( set "history=WinCustomization;!history!" && goto ASX_CMD )
 if /i "%choice%"=="с" ( set "history=WinCustomization;!history!" && goto ASX_CMD )
 if /i "%choice%"=="X" ( set "history=WinCustomization;!history!" && goto MainMenu )
@@ -4547,6 +4550,168 @@ if /i "%choice%"=="и" goto GoBack
 if /i "%choice%"=="NoInput" goto WrongInput
 call:WrongInput
 goto WinCustomization
+
+
+:Cursor_menu
+for %%i in (C_W11 ) do (set "%%i=%COL%[92mВКЛ ") >nul 2>&1
+
+REM Cursor_win11_L
+reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Arrow" | find "%ASX-Directory%\Files\Resources\Cursor_win11_L\pointer.cur" || set "C_W11=%COL%[91mВЫКЛ"	
+
+
+TITLE Cursor_menu - ASX Hub
+echo [INFO ] %TIME% - Открыта панель ":Cursor_menu" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+set "choice="
+mode con: cols=146 lines=45 >nul 2>&1
+set PageName=Cursor_menu
+
+echo.
+echo.
+echo.
+echo                                        %COL%[90m::::::::::: :::       ::: ::::::::::     :::     :::    ::: ::::::::
+echo                                           :+:     :+:       :+: :+:          :+: :+:   :+:   :+: :+:    :+:
+echo                                          +:+     +:+       +:+ +:+         +:+   +:+  +:+  +:+  +:+
+echo                                         +#+     +#+  +:+  +#+ +#++:++#   +#++:++#++: +#++:++   +#++:++#++
+echo                                        +#+     +#+ +#+#+ +#+ +#+        +#+     +#+ +#+  +#+         +#+
+echo                                       #+#      #+#+# #+#+#  #+#        #+#     #+# #+#   #+# #+#    #+#
+echo                                      ###       ###   ###   ########## ###     ### ###    ### ########
+echo.
+echo.
+echo.
+echo.
+echo.
+echo           %COL%[36mКУРСОРЫ
+echo           %COL%[97m-------%COL%[37m
+echo            1 %COL%[36m[%COL%[37m %C_W11% %COL%[36m]%COL%[37m Стильный курсор Win11
+echo.
+echo            2 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m 2
+echo.
+echo            3 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m 3
+echo.
+echo            4 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m 4
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo                                                      %COL%[36m[ B - Назад ]       %COL%[91m[ X - Главное меню ]%COL%[90m
+echo.
+set /p choice="%DEL%                                                                      >: "
+if /i "%choice%"=="1" ( set "history=Exp_tweaks;!history!" && goto Cursor-win11 )
+if /i "%choice%"=="2" ( set "history=Exp_tweaks;!history!" && goto Cursor-win11 )
+if /i "%choice%"=="3" ( set "history=Exp_tweaks;!history!" && goto Cursor-win11 )
+if /i "%choice%"=="4" ( set "history=Exp_tweaks;!history!" && goto Cursor-win11 )
+
+if /i "%choice%"=="C" ( set "history=Exp_tweaks;!history!" && goto ASX_CMD )
+if /i "%choice%"=="с" ( set "history=Exp_tweaks;!history!" && goto ASX_CMD )
+if /i "%choice%"=="X" ( set "history=Exp_tweaks;!history!" && goto MainMenu )
+if /i "%choice%"=="ч" ( set "history=Exp_tweaks;!history!" && goto MainMenu )
+if /i "%choice%"=="B" goto GoBack
+if /i "%choice%"=="и" goto GoBack
+if /i "%choice%"=="NoInput" goto WrongInput
+goto Cursor_menu
+
+
+:Cursor-win11
+echo [INFO ] %TIME% - Вызван ":Cursor-win11" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+if not exist "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15" (
+curl -g -L -# -o "%ASX-Directory%\Files\Downloads\Cursor_win11_L.zip" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Resources/Windows_Customization/Cursors/Cursor_win11/Cursor_win11_L.zip" >nul 2>&1
+    IF %ERRORLEVEL% NEQ 0 (
+        echo Ошибка: Не удалось скачать файл Cursor_win11_L.zip. Проверьте подключение к интернету и доступность URL.
+		echo [ERROR] %TIME% - Ошибка при загрузке Cursor_win11_L.zip >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        goto GoBack
+    )
+    chcp 850 >nul 2>&1
+    powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\Cursor_win11_L.zip"' -DestinationPath '"%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Cursor_win11_L"' >nul 2>&1	
+    chcp 65001 >nul 2>&1
+)
+
+del "%ASX-Directory%\Files\Downloads\Cursor_win11_L.zip" /Q
+   
+:: Обновление реестра для изменения курсора мыши
+reg add "HKCU\Control Panel\Cursors" /v Arrow /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\pointer.cur" /f >nul 2>&1
+reg add "HKCU\Control Panel\Cursors" /v AppStarting /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\working.ani" /f >nul 2>&1
+reg add "HKCU\Control Panel\Cursors" /v Hand /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\link.cur" /f >nul 2>&1
+reg add "HKCU\Control Panel\Cursors" /v Help /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\help.cur" /f >nul 2>&1
+reg add "HKCU\Control Panel\Cursors" /v No /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\unavailable.cur" /f >nul 2>&1
+reg add "HKCU\Control Panel\Cursors" /v Person /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\person.cur" /f >nul 2>&1
+reg add "HKCU\Control Panel\Cursors" /v Pin /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\pin.cur" /f >nul 2>&1
+reg add "HKCU\Control Panel\Cursors" /v Wait /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\busy.ani" /f >nul 2>&1
+
+:: Применение изменений
+RUNDLL32.EXE user32.dll, UpdatePerUserSystemParameters
+control main.cpl,,1
+set "operation_name=Установка стильного курсора win 11"
+call:Complete_notice
+goto GoBack
+
+:Cursor-VS_15
+echo [INFO ] %TIME% - Вызван ":Cursor-VS_15" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+if not exist "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15" (
+    curl -g -L -# -o "%ASX-Directory%\Files\Downloads\VS_15.zip" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Resources/Windows_Customization/Cursors/VS_15/VS_15.zip" >nul 2>&1
+    IF %ERRORLEVEL% NEQ 0 (
+        echo Ошибка: Не удалось скачать файл VS_15.zip. Проверьте подключение к интернету и доступность URL.
+		echo [ERROR] %TIME% - Ошибка при загрузке VS_15.zip >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        goto GoBack
+    )
+    chcp 850 >nul 2>&1
+    powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\VS_15.zip"' -DestinationPath '"%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15"' >nul 2>&1	
+    chcp 65001 >nul 2>&1
+)
+
+:: Название схемы и папка
+set CUR_DIR=Cursors\VS Cursor 15.0
+set SCHEME_NAME=VS Cursor 15.0
+
+:: Путь к системной папке курсоров
+set DEST_DIR=%SystemRoot%\%CUR_DIR%
+
+:: Создать папку назначения (если её нет)
+if not exist "%DEST_DIR%" (
+    mkdir "%DEST_DIR%"
+)
+
+:: Копировать файлы курсоров
+copy /Y "pointer.cur" "%DEST_DIR%"
+copy /Y "help.cur" "%DEST_DIR%"
+copy /Y "work.ani" "%DEST_DIR%"
+copy /Y "busy.ani" "%DEST_DIR%"
+copy /Y "cross.cur" "%DEST_DIR%"
+copy /Y "text.cur" "%DEST_DIR%"
+copy /Y "hand.cur" "%DEST_DIR%"
+copy /Y "unavailable.cur" "%DEST_DIR%"
+copy /Y "vert.cur" "%DEST_DIR%"
+copy /Y "horz.cur" "%DEST_DIR%"
+copy /Y "dgn1.cur" "%DEST_DIR%"
+copy /Y "dgn2.cur" "%DEST_DIR%"
+copy /Y "move.cur" "%DEST_DIR%"
+copy /Y "alternate.cur" "%DEST_DIR%"
+copy /Y "link.cur" "%DEST_DIR%"
+copy /Y "pin.cur" "%DEST_DIR%"
+copy /Y "person.cur" "%DEST_DIR%"
+
+:: Импортировать схему курсоров в реестр
+reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%SystemRoot%\%CUR_DIR%\pointer.cur,%SystemRoot%\%CUR_DIR%\help.cur,%SystemRoot%\%CUR_DIR%\work.ani,%SystemRoot%\%CUR_DIR%\busy.ani,%SystemRoot%\%CUR_DIR%\cross.cur,%SystemRoot%\%CUR_DIR%\text.cur,%SystemRoot%\%CUR_DIR%\hand.cur,%SystemRoot%\%CUR_DIR%\unavailable.cur,%SystemRoot%\%CUR_DIR%\vert.cur,%SystemRoot%\%CUR_DIR%\horz.cur,%SystemRoot%\%CUR_DIR%\dgn1.cur,%SystemRoot%\%CUR_DIR%\dgn2.cur,%SystemRoot%\%CUR_DIR%\move.cur,%SystemRoot%\%CUR_DIR%\alternate.cur,%SystemRoot%\%CUR_DIR%\link.cur,%SystemRoot%\%CUR_DIR%\pin.cur,%SystemRoot%\%CUR_DIR%\person.cur" /f
+
+echo Установка завершена. Выберите курсор "%SCHEME_NAME%" в настройках указателя мыши.
+pause
+
+set "operation_name=Установка курсора VS_15"
+call:Complete_notice
+goto GoBack
+
 
 :DisableWelcomeExperience
 echo [INFO ] %TIME% - Вызван ":DisableWelcomeExperience" >> "%ASX-Directory%\Files\Logs\%date%.txt"
@@ -5541,25 +5706,11 @@ REM for %%i in (ADOFF DOMAC ) do (set "%%i=%COL%[91mВЫКЛ") >nul 2>&1
 REM for %%i in (DLNVT CWINT DATAS SPYMD ) do (set "%%i=%COL%[90mН/Д ") >nul 2>&1
 for %%i in (C_W11 ) do (set "%%i=%COL%[92mВКЛ ") >nul 2>&1
 
-	REM Power throttling
- 	reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Arrow" | find "%ASX-Directory%\Files\Resources\Cursor_win11_L\pointer.cur" || set "C_W11=%COL%[91mВЫКЛ"	
-	REM game priority
-REM 	reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Priority" | find "0x2" || set "PGMT=%COL%[92mВКЛ "	
-	REM Настройки Chrome
-REM 	reg query "%SaveData%\ParameterFunction" /v "Chrometweaks" >nul 2>&1 || set "CTW=%COL%[91mВЫКЛ"
-	REM Настройки Edge
-REM 	reg query "%SaveData%\ParameterFunction" /v "Edgetweaks" >nul 2>&1 || set "ETW=%COL%[91mВЫКЛ"
-
 TITLE Экспериментальные твики - ASX Hub
 echo [INFO ] %TIME% - Открыта панель ":Exp_tweaks" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 set "choice="
 mode con: cols=146 lines=45 >nul 2>&1
 set PageName=Exp_tweaks
-
-REM echo  Создание резервной копии файлов пользователя...
-REM xcopy "%USERPROFILE%\Documents" "%backupdir%\Documents" /E /I /H /Y
-REM xcopy "%USERPROFILE%\Desktop" "%backupdir%\Desktop" /E /I /H /Y
-REM xcopy "%USERPROFILE%\Pictures" "%backupdir%\Pictures" /E /I /H /Y
 
 echo.
 echo.
@@ -5578,13 +5729,11 @@ echo.
 echo.
 echo           %COL%[36mЭкспериментальные твики
 echo           %COL%[97m-----------------------%COL%[37m
-echo            1 %COL%[36m[%COL%[37m %C_W11% %COL%[36m]%COL%[37m Стильный курсор Win11
+echo            1 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Создать Резервную копию драйверов
 echo.
-echo            2 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Создать Резервную копию драйверов
+echo            2 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Новый метод полного удаления OneDrive
 echo.
-echo            3 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Новый метод полного удаления OneDrive
-echo.
-echo            4 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Поиск интересов
+echo            3 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Поиск интересов
 echo.
 echo.
 echo.
@@ -5605,10 +5754,9 @@ echo.
 echo                                                      %COL%[36m[ B - Назад ]       %COL%[91m[ X - Главное меню ]%COL%[90m
 echo.
 set /p choice="%DEL%                                                                      >: "
-if /i "%choice%"=="1" ( set "history=Exp_tweaks;!history!" && goto Cursor_win11 )
-if /i "%choice%"=="2" ( set "history=Exp_tweaks;!history!" && goto Driver_copy )
-if /i "%choice%"=="3" ( set "history=Exp_tweaks;!history!" && goto OneDrive-test-version )
-if /i "%choice%"=="4" ( set "history=Exp_tweaks;!history!" && goto AnalyzeBrowserHistory )
+if /i "%choice%"=="1" ( set "history=Exp_tweaks;!history!" && goto Driver_copy )
+if /i "%choice%"=="2" ( set "history=Exp_tweaks;!history!" && goto OneDrive-test-version )
+if /i "%choice%"=="3" ( set "history=Exp_tweaks;!history!" && goto AnalyzeBrowserHistory )
 
 if /i "%choice%"=="C" ( set "history=Exp_tweaks;!history!" && goto ASX_CMD )
 if /i "%choice%"=="с" ( set "history=Exp_tweaks;!history!" && goto ASX_CMD )
@@ -5680,37 +5828,6 @@ echo  Завершено
 echo.
 pause
 goto Exp_tweaks
-
-:Cursor_win11
-echo [INFO ] %TIME% - Вызван ":Cursor_win11" >> "%ASX-Directory%\Files\Logs\%date%.txt"
-    curl -g -L -# -o "%ASX-Directory%\Files\Downloads\Cursor_win11_L.zip" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Windows_Customization/Cursors/Cursor_win11_L.zip" >nul 2>&1
-    IF %ERRORLEVEL% NEQ 0 (
-        echo Ошибка: Не удалось скачать файл Cursor_win11_L.zip. Проверьте подключение к интернету и доступность URL.
-		echo [ERROR] %TIME% - Ошибка при загрузке Cursor_win11_L.zip >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        goto GoBack
-    )
-	chcp 850 >nul 2>&1
-	powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\Cursor_win11_L.zip"' -DestinationPath '"%ASX-Directory%\Files\Resources\Cursor_win11_L"' >nul 2>&1	
-	chcp 65001 >nul 2>&1
-	title Настройка файлов [1/1]	
-	del "%ASX-Directory%\Files\Downloads\Cursor_win11_L.zip" /Q
-   
-:: Обновление реестра для изменения курсора мыши
-reg add "HKCU\Control Panel\Cursors" /v Arrow /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\pointer.cur" /f >nul 2>&1
-reg add "HKCU\Control Panel\Cursors" /v AppStarting /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\working.ani" /f >nul 2>&1
-reg add "HKCU\Control Panel\Cursors" /v Hand /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\link.cur" /f >nul 2>&1
-reg add "HKCU\Control Panel\Cursors" /v Help /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\help.cur" /f >nul 2>&1
-reg add "HKCU\Control Panel\Cursors" /v No /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\unavailable.cur" /f >nul 2>&1
-reg add "HKCU\Control Panel\Cursors" /v Person /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\person.cur" /f >nul 2>&1
-reg add "HKCU\Control Panel\Cursors" /v Pin /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\pin.cur" /f >nul 2>&1
-reg add "HKCU\Control Panel\Cursors" /v Wait /t REG_SZ /d "%ASX-Directory%\Files\Resources\Cursor_win11_L\busy.ani" /f >nul 2>&1
-:: Применение изменений
-RUNDLL32.EXE user32.dll, UpdatePerUserSystemParameters
-control main.cpl,,1
-set "operation_name=Установка стильного курсора"
-call:Complete_notice
-goto GoBack
-
 
 :Driver_copy
 echo [INFO ] %TIME% - Вызван ":Driver_copy" >> "%ASX-Directory%\Files\Logs\%date%.txt"
