@@ -4615,7 +4615,7 @@ echo                                                      %COL%[36m[ B - Наз�
 echo.
 set /p choice="%DEL%                                                                      >: "
 if /i "%choice%"=="1" ( set "history=Cursor_menu;!history!" && goto Cursor-Windows11_Concept )
-if /i "%choice%"=="c1" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/Cursor_win11/Preview.png?raw=true )
+if /i "%choice%"=="c1" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/Windows11_Concept/Preview.png?raw=true )
 if /i "%choice%"=="2" ( set "history=Cursor_menu;!history!" && goto Cursor-VS_15 )
 if /i "%choice%"=="c2" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/VS_15/Preview.png?raw=true )
 
