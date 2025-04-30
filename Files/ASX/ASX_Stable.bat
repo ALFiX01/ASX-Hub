@@ -4664,8 +4664,6 @@ copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11
 copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\help.cur" "%DEST_DIR%"
 copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\work.ani" "%DEST_DIR%"
 copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\busy.ani" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\cross.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\text.cur" "%DEST_DIR%"
 copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\hand.cur" "%DEST_DIR%"
 copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\unavailable.cur" "%DEST_DIR%"
 copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\vert.cur" "%DEST_DIR%"
@@ -4679,7 +4677,7 @@ copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11
 copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\person.cur" "%DEST_DIR%"
 
 :: Импортировать схему курсоров в реестр
-reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%DEST_DIR%\pointer.cur,%DEST_DIR%\help.cur,%DEST_DIR%\work.ani,%DEST_DIR%\busy.ani,%DEST_DIR%\cross.cur,%DEST_DIR%\text.cur,%DEST_DIR%\hand.cur,%DEST_DIR%\unavailable.cur,%DEST_DIR%\vert.cur,%DEST_DIR%\horz.cur,%DEST_DIR%\dgn1.cur,%DEST_DIR%\dgn2.cur,%DEST_DIR%\move.cur,%DEST_DIR%\alternate.cur,%DEST_DIR%\link.cur,%DEST_DIR%\pin.cur,%DEST_DIR%\person.cur" /f
+reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%DEST_DIR%\pointer.cur,%DEST_DIR%\help.cur,%DEST_DIR%\work.ani,%DEST_DIR%\busy.ani,%DEST_DIR%\hand.cur,%DEST_DIR%\unavailable.cur,%DEST_DIR%\vert.cur,%DEST_DIR%\horz.cur,%DEST_DIR%\dgn1.cur,%DEST_DIR%\dgn2.cur,%DEST_DIR%\move.cur,%DEST_DIR%\alternate.cur,%DEST_DIR%\link.cur,%DEST_DIR%\pin.cur,%DEST_DIR%\person.cur" /f
 
 echo Установка завершена. Выберите курсор "%SCHEME_NAME%" в настройках указателя мыши.
 echo.
