@@ -4492,7 +4492,6 @@ echo            8 %COL%[36m[%COL%[37m %NetworkExplorer% %COL%[36m]%COL%[37m Пу
 echo            9 %COL%[36m[%COL%[37m %TaskBarDate% %COL%[36m]%COL%[37m Показать день недели на панели задач
 echo           10 %COL%[36m[%COL%[37m %IconArrow% %COL%[36m]%COL%[37m Стрелки на ярлыках
 echo           11 %COL%[36m[%COL%[37m %DSWE% %COL%[36m]%COL%[37m Отключить экран приветствия Windows
-
 echo           12 %COL%[36m[%COL%[37m %MSRT% %COL%[36m]%COL%[37m Исключить средство удаления вредоносных программ из обновлений Windows
 echo           13 %COL%[36m[%COL%[37m %WTUL% %COL%[36m]%COL%[37m Удалить виджеты
 echo.
@@ -4535,11 +4534,11 @@ if /i "%choice%"=="8" ( set "history=WinCustomization;!history!" && call:Network
 if /i "%choice%"=="9" ( set "history=WinCustomization;!history!" && call:TaskBarDate )
 if /i "%choice%"=="10" ( set "history=WinCustomization;!history!" && call:IconArrowOnShortcut )
 if /i "%choice%"=="11" ( set "history=WinCustomization;!history!" && goto DisableWelcomeExperience )
-if /i "%choice%"=="12" ( set "history=OptimizationCenterPG1;!history!" && goto MSRT_in_WindowsUpdate )
-if /i "%choice%"=="13" ( set "history=OptimizationCenterPG1;!history!" && goto WidgetUninstall )
+if /i "%choice%"=="12" ( set "history=WinCustomization;!history!" && goto MSRT_in_WindowsUpdate )
+if /i "%choice%"=="13" ( set "history=WinCustomization;!history!" && goto WidgetUninstall )
 
-if /i "%choice%"=="Cs" ( set "history=OptimizationCenterPG1;!history!" && goto Cursor_menu )
-if /i "%choice%"=="сы" ( set "history=OptimizationCenterPG1;!history!" && goto Cursor_menu )
+if /i "%choice%"=="Cs" ( set "history=WinCustomization;!history!" && goto Cursor_menu )
+if /i "%choice%"=="сы" ( set "history=WinCustomization;!history!" && goto Cursor_menu )
 
 if /i "%choice%"=="C" ( set "history=WinCustomization;!history!" && goto ASX_CMD )
 if /i "%choice%"=="с" ( set "history=WinCustomization;!history!" && goto ASX_CMD )
@@ -4554,7 +4553,7 @@ goto WinCustomization
 
 :Cursor_menu
 cls
-for %%i in (C_W11 C_VS15 ) do (set "%%i=%COL%[37m") >nul 2>&1
+for %%i in (C_W11 C_VS15 C_VS20 ) do (set "%%i=%COL%[37m") >nul 2>&1
 REM Cursor_win11_L
 reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Arrow" | find "%ASX-Directory%\Files\Resources\Cursor_win11_L\pointer.cur" && set "C_W11=%COL%[36m[%COL%[37m %COL%[92mАКТИВЕН %COL%[36m] %COL%[37m"
 
@@ -4587,15 +4586,13 @@ echo.
 echo.
 echo           %COL%[36mКУРСОРЫ
 echo           %COL%[97m-------%COL%[37m
-echo           %COL%[96m 1 %COL%[37m Стильный курсор Win11 %C_W11% %COL%[90m ^[C1 - предпросмотр^] %COL%[37m
+echo           %COL%[96m 1. %COL%[37m Стильный курсор Win11 %C_W11% %COL%[90m ^[C1 - предпросмотр^] %COL%[37m
 echo.
-echo           %COL%[96m 2 %COL%[37m VS Cursor 15.0 %C_VS15% %COL%[90m ^[C2 - предпросмотр^] %COL%[37m
+echo           %COL%[96m 2. %COL%[37m VS Cursor 15.0 %C_VS15% %COL%[90m ^[C2 - предпросмотр^] %COL%[37m
 echo.
-echo           %COL%[96m 3 %COL%[37m 
+echo           %COL%[96m 3. %COL%[37m VS Cursor 20.0 %C_VS20% %COL%[90m ^[C3 - предпросмотр^] %COL%[37m
 echo.
-echo           %COL%[96m 4 %COL%[37m 
-echo.
-echo.
+echo           %COL%[96m 4. %COL%[37m 
 echo.
 echo.
 echo.
@@ -4611,7 +4608,9 @@ echo.
 echo.
 echo.
 echo.
-echo                                                      %COL%[36m[ B - Назад ]       %COL%[91m[ X - Главное меню ]%COL%[90m
+echo                                                         %COL%[90m[ D - Вернуть стандартный курсор ]
+echo.
+echo                                                      %COL%[36m[ B - Назад ]       %COL%[91m[ X - Главное меню ]%COL%[37m
 echo.
 set /p choice="%DEL%                                                                      >: "
 if /i "%choice%"=="1" ( set "history=Cursor_menu;!history!" && goto Cursor-Windows11_Concept )
@@ -4619,8 +4618,13 @@ if /i "%choice%"=="c1" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/File
 if /i "%choice%"=="2" ( set "history=Cursor_menu;!history!" && goto Cursor-VS_15 )
 if /i "%choice%"=="c2" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/VS_15/Preview.png?raw=true )
 
-if /i "%choice%"=="3" ( set "history=Cursor_menu;!history!" && goto Cursor-win11 )
+if /i "%choice%"=="3" ( set "history=Cursor_menu;!history!" && goto Cursor-VS_20 )
+if /i "%choice%"=="c3" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/VS_20/Preview.png?raw=true )
+
 if /i "%choice%"=="4" ( set "history=Cursor_menu;!history!" && goto Cursor-win11 )
+
+if /i "%choice%"=="D" ( set "history=Cursor_menu;!history!" && goto Cursor-Default )
+if /i "%choice%"=="в" ( set "history=Cursor_menu;!history!" && goto Cursor-Default )
 
 if /i "%choice%"=="C" ( set "history=Cursor_menu;!history!" && goto ASX_CMD )
 if /i "%choice%"=="с" ( set "history=Cursor_menu;!history!" && goto ASX_CMD )
@@ -4678,7 +4682,7 @@ copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11
 
 :: Импортировать схему курсоров в реестр
 reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%DEST_DIR%\pointer.cur,%DEST_DIR%\help.cur,%DEST_DIR%\work.ani,%DEST_DIR%\busy.ani,%DEST_DIR%\hand.cur,%DEST_DIR%\unavailable.cur,%DEST_DIR%\vert.cur,%DEST_DIR%\horz.cur,%DEST_DIR%\dgn1.cur,%DEST_DIR%\dgn2.cur,%DEST_DIR%\move.cur,%DEST_DIR%\alternate.cur,%DEST_DIR%\link.cur,%DEST_DIR%\pin.cur,%DEST_DIR%\person.cur" /f
-
+echo.
 echo Установка завершена. Выберите курсор "%SCHEME_NAME%" в настройках указателя мыши.
 echo.
 start %Windir%\System32\main.cpl
@@ -4744,24 +4748,24 @@ set "operation_name=Установка курсора %SCHEME_NAME%"
 call:Complete_notice
 goto GoBack
 
-:Cursor-VS_1
+:Cursor-VS_20
 cls
-echo [INFO ] %TIME% - Вызван ":Cursor-VS_15" >> "%ASX-Directory%\Files\Logs\%date%.txt"
-if not exist "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15" (
-    curl -g -L -# -o "%ASX-Directory%\Files\Downloads\VS_15.zip" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources/Windows_Customization/Cursors/VS_15/VS_15.zip" >nul 2>&1
+echo [INFO ] %TIME% - Вызван ":Cursor-VS_20" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+if not exist "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20" (
+    curl -g -L -# -o "%ASX-Directory%\Files\Downloads\VS_20.zip" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources/Windows_Customization/Cursors/VS_20/VS_20.zip" >nul 2>&1
     IF %ERRORLEVEL% NEQ 0 (
-        echo Ошибка: Не удалось скачать файл VS_15.zip. Проверьте подключение к интернету и доступность URL.
-		echo [ERROR] %TIME% - Ошибка при загрузке VS_15.zip >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        echo Ошибка: Не удалось скачать файл VS_20.zip. Проверьте подключение к интернету и доступность URL.
+		echo [ERROR] %TIME% - Ошибка при загрузке VS_20.zip >> "%ASX-Directory%\Files\Logs\%date%.txt"
         goto GoBack
     )
     chcp 850 >nul 2>&1
-    powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\VS_15.zip"' -DestinationPath '"%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15"' >nul 2>&1	
+    powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\VS_20.zip"' -DestinationPath '"%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20"' >nul 2>&1	
     chcp 65001 >nul 2>&1
 )
 
 :: Название схемы и папка
-set "CUR_DIR=%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15"
-set "SCHEME_NAME=VS Cursor 15.0"
+set "CUR_DIR=%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20"
+set "SCHEME_NAME=VS Cursors 20.0"
 
 :: Путь к системной папке курсоров
 set "DEST_DIR=%SystemRoot%\Cursors\%SCHEME_NAME%"
@@ -4772,23 +4776,23 @@ if not exist "%DEST_DIR%" (
 )
 
 :: Копировать файлы курсоров
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\pointer.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\help.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\work.ani" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\busy.ani" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\cross.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\text.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\hand.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\unavailable.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\vert.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\horz.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\dgn1.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\dgn2.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\move.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\alternate.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\link.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\pin.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\person.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\pointer.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\help.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\work.ani" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\busy.ani" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\cross.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\text.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\hand.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\unavailable.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\vert.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\horz.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\dgn1.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\dgn2.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\move.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\alternate.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\link.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\pin.cur" "%DEST_DIR%"
+copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\person.cur" "%DEST_DIR%"
 
 :: Импортировать схему курсоров в реестр
 reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%DEST_DIR%\pointer.cur,%DEST_DIR%\help.cur,%DEST_DIR%\work.ani,%DEST_DIR%\busy.ani,%DEST_DIR%\cross.cur,%DEST_DIR%\text.cur,%DEST_DIR%\hand.cur,%DEST_DIR%\unavailable.cur,%DEST_DIR%\vert.cur,%DEST_DIR%\horz.cur,%DEST_DIR%\dgn1.cur,%DEST_DIR%\dgn2.cur,%DEST_DIR%\move.cur,%DEST_DIR%\alternate.cur,%DEST_DIR%\link.cur,%DEST_DIR%\pin.cur,%DEST_DIR%\person.cur" /f
@@ -4798,6 +4802,20 @@ echo.
 start %Windir%\System32\main.cpl
 pause
 set "operation_name=Установка курсора %SCHEME_NAME%"
+call:Complete_notice
+goto GoBack
+
+:Cursor-Default
+cls
+echo [INFO ] %TIME% - Вызван ":Cursor-Default" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+:: Импортировать схему курсоров в реестр
+echo.
+echo  Выберите СХЕМА "По умолчанию (системная)" в настройках указателя мыши. %COL%[90m
+echo.
+start %Windir%\System32\main.cpl
+pause
+set "operation_name=Установка курсора Default"
+set "errorlevel=0"
 call:Complete_notice
 goto GoBack
 
