@@ -110,7 +110,7 @@ set "VersionNumberCurrent=AP27S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=27.04.2025"
+set "DateUpdate=30.04.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
