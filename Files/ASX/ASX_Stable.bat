@@ -4553,17 +4553,15 @@ goto WinCustomization
 
 :Cursor_menu
 cls
-for %%i in (C_W11 C_VS15 C_VS20 ) do (set "%%i=%COL%[37m") >nul 2>&1
-REM Cursor_win11_L
-reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Arrow" | find "%ASX-Directory%\Files\Resources\Cursor_win11_L\pointer.cur" && set "C_W11=%COL%[36m[%COL%[37m %COL%[92mАКТИВЕН %COL%[36m] %COL%[37m"
-
-REM for /f "tokens=2*" %%a in ('reg query "HKCU\Control Panel\Cursors" /v Arrow 2^>nul') do set "arrow=%%b"
-REM echo %arrow% | findstr /i "VS Cursor 15.0" >nul && set "C_VS15=%COL%[92mВКЛ "
+for %%i in (C_VS15 C_VS20 ) do (set "%%i=%COL%[37m") >nul 2>&1
 
 for /f "tokens=2*" %%a in ('reg query "HKCU\Control Panel\Cursors" /ve 2^>nul') do set "default_value=%%b"
-if "%default_value%"=="VS Cursor 15.0" set "C_VS15=%COL%[36m[%COL%[37m %COL%[92mАКТИВЕН %COL%[36m] %COL%[37m"
+if "%default_value%"=="VS Cursor 15.0" set "C_VS20=%COL%[36m[%COL%[37m %COL%[92mАКТИВЕН %COL%[36m] %COL%[37m"
 
-TITLE Cursor_menu - ASX Hub
+for /f "tokens=2*" %%a in ('reg query "HKCU\Control Panel\Cursors" /ve 2^>nul') do set "default_value=%%b"
+if "%default_value%"=="VS Cursor 20.0" set "C_VS20=%COL%[36m[%COL%[37m %COL%[92mАКТИВЕН %COL%[36m] %COL%[37m"
+
+TITLE Панель кастомных курсоров - ASX Hub
 echo [INFO ] %TIME% - Открыта панель ":Cursor_menu" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 set "choice="
 mode con: cols=146 lines=45 >nul 2>&1
@@ -4572,13 +4570,13 @@ set PageName=Cursor_menu
 echo.
 echo.
 echo.
-echo                                        %COL%[90m::::::::::: :::       ::: ::::::::::     :::     :::    ::: ::::::::
-echo                                           :+:     :+:       :+: :+:          :+: :+:   :+:   :+: :+:    :+:
-echo                                          +:+     +:+       +:+ +:+         +:+   +:+  +:+  +:+  +:+
-echo                                         +#+     +#+  +:+  +#+ +#++:++#   +#++:++#++: +#++:++   +#++:++#++
-echo                                        +#+     +#+ +#+#+ +#+ +#+        +#+     +#+ +#+  +#+         +#+
-echo                                       #+#      #+#+# #+#+#  #+#        #+#     #+# #+#   #+# #+#    #+#
-echo                                      ###       ###   ###   ########## ###     ### ###    ### ########
+echo                                     %COL%[90m::::::::   :::     ::: :::::::::    ::::::::   ::::::::    :::::::::   :::::::: 
+echo                                   :+:    :+:  :+:    :+:  :+:    :+:  :+:    :+:  :+:    :+:  :+:    :+:  :+:    :+: 
+echo                                  +:+         +:+    +:+  +:+    +:+  +:+         +:+    +:+  +:+    +:+  +:+         
+echo                                 +#+         +#+    +:+  +#++:++#:   +#++:++#++  +#+    +:+  +#++:++#:   +#++:++#++   
+echo                                +#+         +#+    +#+  +#+    +#+        +#+   +#+    +#+  +#+    +#+         +#+    
+echo                               #+#    #+#  #+#    #+#  #+#    #+#  #+#    #+#  #+#    #+#  #+#    #+#  #+#    #+#     
+echo                              ########    ########    ###    ###   ########    ########   ###    ###   ########       
 echo.
 echo.
 echo.
@@ -4586,13 +4584,13 @@ echo.
 echo.
 echo           %COL%[36mКУРСОРЫ
 echo           %COL%[97m-------%COL%[37m
-echo           %COL%[96m 1. %COL%[37m Стильный курсор Win11 %C_W11% %COL%[90m ^[C1 - предпросмотр^] %COL%[37m
+echo           %COL%[96m 1 %COL%[37m VS Cursor 15.0 %C_VS15% %COL%[90m ^[C1 - предпросмотр^] %COL%[37m
 echo.
-echo           %COL%[96m 2. %COL%[37m VS Cursor 15.0 %C_VS15% %COL%[90m ^[C2 - предпросмотр^] %COL%[37m
+echo           %COL%[96m 2. %COL%[37m VS Cursor 20.0 %C_VS20% %COL%[90m ^[C2 - предпросмотр^] %COL%[37m
 echo.
-echo           %COL%[96m 3. %COL%[37m VS Cursor 20.0 %C_VS20% %COL%[90m ^[C3 - предпросмотр^] %COL%[37m
 echo.
-echo           %COL%[96m 4. %COL%[37m 
+echo.
+echo.
 echo.
 echo.
 echo.
@@ -4613,13 +4611,10 @@ echo.
 echo                                                      %COL%[36m[ B - Назад ]       %COL%[91m[ X - Главное меню ]%COL%[37m
 echo.
 set /p choice="%DEL%                                                                      >: "
-if /i "%choice%"=="1" ( set "history=Cursor_menu;!history!" && goto Cursor-Windows11_Concept )
-if /i "%choice%"=="c1" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/Windows11_Concept/Preview.png?raw=true )
-if /i "%choice%"=="2" ( set "history=Cursor_menu;!history!" && goto Cursor-VS_15 )
-if /i "%choice%"=="c2" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/VS_15/Preview.png?raw=true )
-
-if /i "%choice%"=="3" ( set "history=Cursor_menu;!history!" && goto Cursor-VS_20 )
-if /i "%choice%"=="c3" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/VS_20/Preview.png?raw=true )
+if /i "%choice%"=="1" ( set "history=Cursor_menu;!history!" && goto Cursor-VS_15 )
+if /i "%choice%"=="c1" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/VS_15/Preview.png?raw=true )
+if /i "%choice%"=="2" ( set "history=Cursor_menu;!history!" && goto Cursor-VS_20 )
+if /i "%choice%"=="c2" ( start https://github.com/ALFiX01/ASX-Hub/blob/main/Files/Resources/Windows_Customization/Cursors/VS_20/Preview.png?raw=true )
 
 if /i "%choice%"=="4" ( set "history=Cursor_menu;!history!" && goto Cursor-win11 )
 
@@ -4635,62 +4630,6 @@ if /i "%choice%"=="и" goto GoBack
 if /i "%choice%"=="NoInput" goto WrongInput
 goto Cursor_menu
 
-
-:Cursor-Windows11_Concept
-cls
-echo [INFO ] %TIME% - Вызван ":Cursor-Windows11_Concept" >> "%ASX-Directory%\Files\Logs\%date%.txt"
-if not exist "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept" (
-    curl -g -L -# -o "%ASX-Directory%\Files\Downloads\Windows11_Concept_Light.zip" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources/Windows_Customization/Cursors/Windows11_Concept/Windows11_Concept_Light.zip" >nul 2>&1
-    IF %ERRORLEVEL% NEQ 0 (
-        echo Ошибка: Не удалось скачать файл Windows11_Concept_Light.zip. Проверьте подключение к интернету и доступность URL.
-		echo [ERROR] %TIME% - Ошибка при загрузке Windows11_Concept_Light.zip >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        goto GoBack
-    )
-    chcp 850 >nul 2>&1
-    powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\Windows11_Concept_Light.zip"' -DestinationPath '"%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept"' >nul 2>&1	
-    chcp 65001 >nul 2>&1
-)
-
-:: Название схемы и папка
-set "CUR_DIR=%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept"
-set "SCHEME_NAME=Windows 11 Cursors Light"
-
-:: Путь к системной папке курсоров
-set "DEST_DIR=%SystemRoot%\Cursors\%SCHEME_NAME%"
-
-:: Создать папку назначения (если её нет)
-if not exist "%DEST_DIR%" (
-    mkdir "%DEST_DIR%"
-)
-
-:: Копировать файлы курсоров
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\pointer.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\help.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\work.ani" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\busy.ani" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\hand.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\unavailable.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\vert.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\horz.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\dgn1.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\dgn2.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\move.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\alternate.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\link.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\pin.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\Windows11_Concept\person.cur" "%DEST_DIR%"
-
-:: Импортировать схему курсоров в реестр
-reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%DEST_DIR%\pointer.cur,%DEST_DIR%\help.cur,%DEST_DIR%\work.ani,%DEST_DIR%\busy.ani,%DEST_DIR%\hand.cur,%DEST_DIR%\unavailable.cur,%DEST_DIR%\vert.cur,%DEST_DIR%\horz.cur,%DEST_DIR%\dgn1.cur,%DEST_DIR%\dgn2.cur,%DEST_DIR%\move.cur,%DEST_DIR%\alternate.cur,%DEST_DIR%\link.cur,%DEST_DIR%\pin.cur,%DEST_DIR%\person.cur" /f
-echo.
-echo Установка завершена. Выберите курсор "%SCHEME_NAME%" в настройках указателя мыши.
-echo.
-start %Windir%\System32\main.cpl
-pause
-set "operation_name=Установка курсора %SCHEME_NAME%"
-call:Complete_notice
-goto GoBack
-
 :Cursor-VS_15
 cls
 echo [INFO ] %TIME% - Вызван ":Cursor-VS_15" >> "%ASX-Directory%\Files\Logs\%date%.txt"
@@ -4699,13 +4638,14 @@ if not exist "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_1
     IF %ERRORLEVEL% NEQ 0 (
         echo Ошибка: Не удалось скачать файл VS_15.zip. Проверьте подключение к интернету и доступность URL.
 		echo [ERROR] %TIME% - Ошибка при загрузке VS_15.zip >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        pause
         goto GoBack
     )
     chcp 850 >nul 2>&1
     powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\VS_15.zip"' -DestinationPath '"%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15"' >nul 2>&1	
     chcp 65001 >nul 2>&1
 )
-
+echo  %COL%[90m
 :: Название схемы и папка
 set "CUR_DIR=%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15"
 set "SCHEME_NAME=VS Cursor 15.0"
@@ -4719,32 +4659,35 @@ if not exist "%DEST_DIR%" (
 )
 
 :: Копировать файлы курсоров
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\pointer.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\help.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\work.ani" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\busy.ani" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\cross.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\text.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\hand.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\unavailable.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\vert.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\horz.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\dgn1.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\dgn2.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\move.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\alternate.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\link.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\pin.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\person.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\pointer.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\help.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\work.ani" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\busy.ani" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\cross.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\text.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\hand.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\unavailable.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\vert.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\horz.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\dgn1.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\dgn2.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\move.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\alternate.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\link.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\pin.cur" "%DEST_DIR%" >nul 2>&1
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_15\person.cur" "%DEST_DIR%" >nul 2>&1
+cls
 
 :: Импортировать схему курсоров в реестр
-reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%DEST_DIR%\pointer.cur,%DEST_DIR%\help.cur,%DEST_DIR%\work.ani,%DEST_DIR%\busy.ani,%DEST_DIR%\cross.cur,%DEST_DIR%\text.cur,%DEST_DIR%\hand.cur,%DEST_DIR%\unavailable.cur,%DEST_DIR%\vert.cur,%DEST_DIR%\horz.cur,%DEST_DIR%\dgn1.cur,%DEST_DIR%\dgn2.cur,%DEST_DIR%\move.cur,%DEST_DIR%\alternate.cur,%DEST_DIR%\link.cur,%DEST_DIR%\pin.cur,%DEST_DIR%\person.cur" /f
+reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%DEST_DIR%\pointer.cur,%DEST_DIR%\help.cur,%DEST_DIR%\work.ani,%DEST_DIR%\busy.ani,%DEST_DIR%\cross.cur,%DEST_DIR%\text.cur,%DEST_DIR%\hand.cur,%DEST_DIR%\unavailable.cur,%DEST_DIR%\vert.cur,%DEST_DIR%\horz.cur,%DEST_DIR%\dgn1.cur,%DEST_DIR%\dgn2.cur,%DEST_DIR%\move.cur,%DEST_DIR%\alternate.cur,%DEST_DIR%\link.cur,%DEST_DIR%\pin.cur,%DEST_DIR%\person.cur" /f >nul 2>&1
 
-echo Установка завершена. Выберите курсор "%SCHEME_NAME%" в настройках указателя мыши.
 echo.
-start %Windir%\System32\main.cpl
-pause
+echo %COL%[37m Установка завершена. Выберите курсор "%SCHEME_NAME%" в настройках указателя мыши. %COL%[90m
+echo.
+start /wait %Windir%\System32\main.cpl
+
 set "operation_name=Установка курсора %SCHEME_NAME%"
+set "errorlevel=0"
 call:Complete_notice
 goto GoBack
 
@@ -4756,16 +4699,17 @@ if not exist "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_2
     IF %ERRORLEVEL% NEQ 0 (
         echo Ошибка: Не удалось скачать файл VS_20.zip. Проверьте подключение к интернету и доступность URL.
 		echo [ERROR] %TIME% - Ошибка при загрузке VS_20.zip >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        pause
         goto GoBack
     )
     chcp 850 >nul 2>&1
     powershell -NoProfile Expand-Archive '"%ASX-Directory%\Files\Downloads\VS_20.zip"' -DestinationPath '"%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20"' >nul 2>&1	
     chcp 65001 >nul 2>&1
 )
-
+echo  %COL%[90m
 :: Название схемы и папка
 set "CUR_DIR=%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20"
-set "SCHEME_NAME=VS Cursors 20.0"
+set "SCHEME_NAME=VS Cursor 20.0"
 
 :: Путь к системной папке курсоров
 set "DEST_DIR=%SystemRoot%\Cursors\%SCHEME_NAME%"
@@ -4776,32 +4720,34 @@ if not exist "%DEST_DIR%" (
 )
 
 :: Копировать файлы курсоров
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\pointer.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\help.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\work.ani" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\busy.ani" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\cross.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\text.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\hand.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\unavailable.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\vert.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\horz.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\dgn1.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\dgn2.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\move.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\alternate.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\link.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\pin.cur" "%DEST_DIR%"
-copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\person.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\pointer.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\help.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\work.ani" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\busy.ani" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\cross.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\text.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\hand.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\unavailable.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\vert.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\horz.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\dgn1.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\dgn2.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\move.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\alternate.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\link.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\pin.cur" "%DEST_DIR%"
+    copy /Y "%ASX-Directory%\Files\Resources\Windows_Customization\Cursors\VS_20\person.cur" "%DEST_DIR%"
+cls
 
 :: Импортировать схему курсоров в реестр
-reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%DEST_DIR%\pointer.cur,%DEST_DIR%\help.cur,%DEST_DIR%\work.ani,%DEST_DIR%\busy.ani,%DEST_DIR%\cross.cur,%DEST_DIR%\text.cur,%DEST_DIR%\hand.cur,%DEST_DIR%\unavailable.cur,%DEST_DIR%\vert.cur,%DEST_DIR%\horz.cur,%DEST_DIR%\dgn1.cur,%DEST_DIR%\dgn2.cur,%DEST_DIR%\move.cur,%DEST_DIR%\alternate.cur,%DEST_DIR%\link.cur,%DEST_DIR%\pin.cur,%DEST_DIR%\person.cur" /f
-
-echo Установка завершена. Выберите курсор "%SCHEME_NAME%" в настройках указателя мыши.
+reg add "HKCU\Control Panel\Cursors\Schemes" /v "%SCHEME_NAME%" /d "%DEST_DIR%\pointer.cur,%DEST_DIR%\help.cur,%DEST_DIR%\work.ani,%DEST_DIR%\busy.ani,%DEST_DIR%\cross.cur,%DEST_DIR%\text.cur,%DEST_DIR%\hand.cur,%DEST_DIR%\unavailable.cur,%DEST_DIR%\vert.cur,%DEST_DIR%\horz.cur,%DEST_DIR%\dgn1.cur,%DEST_DIR%\dgn2.cur,%DEST_DIR%\move.cur,%DEST_DIR%\alternate.cur,%DEST_DIR%\link.cur,%DEST_DIR%\pin.cur,%DEST_DIR%\person.cur" /f >nul 2>&1
 echo.
-start %Windir%\System32\main.cpl
-pause
+echo  %COL%[37m Установка завершена. Выберите курсор "%SCHEME_NAME%" в настройках указателя мыши. %COL%[90m
+echo.
+start /wait %Windir%\System32\main.cpl
+
 set "operation_name=Установка курсора %SCHEME_NAME%"
+set "errorlevel=0"
 call:Complete_notice
 goto GoBack
 
@@ -4810,10 +4756,10 @@ cls
 echo [INFO ] %TIME% - Вызван ":Cursor-Default" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 :: Импортировать схему курсоров в реестр
 echo.
-echo  Выберите СХЕМА "По умолчанию (системная)" в настройках указателя мыши. %COL%[90m
+echo  %COL%[37m Выберите СХЕМА "По умолчанию (системная)" в настройках указателя мыши. %COL%[90m
 echo.
-start %Windir%\System32\main.cpl
-pause
+start /wait %Windir%\System32\main.cpl
+
 set "operation_name=Установка курсора Default"
 set "errorlevel=0"
 call:Complete_notice
