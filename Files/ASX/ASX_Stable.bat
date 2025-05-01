@@ -106,11 +106,11 @@ REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
 set "Version=1.5.0"
 set "FullVersionNameCurrent=1.5.0"
-set "VersionNumberCurrent=AP27S1"
+set "VersionNumberCurrent=MA01S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=30.04.2025"
+set "DateUpdate=01.05.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
