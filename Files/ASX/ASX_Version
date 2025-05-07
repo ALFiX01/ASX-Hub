@@ -1,4 +1,4 @@
-set "VersionNumberList=AMA01S1 AMA01S2"
-set UPDVER=1.5.0
-set "FullVersionName=1.5.0"
-set DisplayBranch=Stable
+set "VersionNumberList=MA07S1 MA07S1"
+set "UPDVER=1.5.1"
+set "FullVersionName=1.5.1"
+set "DisplayBranch=Stable"

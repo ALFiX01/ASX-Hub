@@ -26,7 +26,7 @@
 ::ZQ0/vhVqMQ3MEVWAtB9wSA==
 ::Zg8zqx1/OA3MEVWAtB9wSA==
 ::dhA7pRFwIByZRRnk
-::Zh4grVQjdCuDJOlERJKA/6q0/NQy7dtkt1esMlgr08u0mg01QeADNrzP27aCJaBeqlPhZ4Uk2XRmrs4eHxJXcC76IFoIiF169kyQNYmZqwqB
+::Zh4grVQjdCuDJOlERJKA/6q0/NQy7dtkt1esMlgr08u0mg01QeADNrzP27aCJaBeqlPhZ4Uk2XRmrs4eHxJXcC76IFp6+FJjhVzFH9Ke/Qr5Tyg=
 ::YB416Ek+ZW8=
 ::
 ::
@@ -104,13 +104,13 @@ echo 📌 Запуск ASX Hub >> "!ASX-Directory!\Files\Logs\%date%.txt"
 
 REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
-set "Version=1.5.0"
-set "FullVersionNameCurrent=1.5.0"
-set "VersionNumberCurrent=MA01S1"
+set "Version=1.5.1"
+set "FullVersionNameCurrent=1.5.1"
+set "VersionNumberCurrent=MA07S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=01.05.2025"
+set "DateUpdate=07.05.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -361,6 +361,37 @@ if not exist "%ASX-Directory%\ASX Hub.exe" (
 	set /a Launch_status+=1
 	set "Reason_launch_info=Отсутствует файл ASX Hub.exe"
 )
+
+if not exist "%ASX-Directory%\Files\Utilites\PyDebloatX\PyDebloatX.exe" (
+    title Загрузка отсутствующих компонентов...
+    echo [INFO ] %TIME% - Загрузка отсутствующего компонента PyDebloatX.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    if not exist "%ASX-Directory%\Files\Utilites\PyDebloatX" (
+        md "%ASX-Directory%\Files\Utilites\PyDebloatX" >nul 2>&1
+    )
+    curl -g -L -# -o "%ASX-Directory%\Files\Utilites\PyDebloatX\PyDebloatX.exe" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Utilities/PyDebloatX/PyDebloatX.exe" >nul 2>&1
+    if errorlevel 1 (
+        echo [ERROR] %TIME% - Ошибка при загрузке компонента PyDebloatX.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        set /a "error_on_loading_1+=1"
+    )
+    set /a Launch_status+=1
+    set "Reason_launch_info=Отсутствует файл PyDebloatX.exe"
+)
+
+REM if not exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" (
+REM     title Загрузка отсутствующих компонентов...
+REM     echo [INFO ] %TIME% - Загрузка отсутствующего компонента DriverFinder.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
+REM     if not exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" (
+REM         md "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" >nul 2>&1
+REM     )
+REM     curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder.exe" >nul 2>&1
+REM     curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder_FindService.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder_FindService.exe" >nul 2>&1
+REM     if errorlevel 1 (
+REM         echo [ERROR] %TIME% - Ошибка при загрузке компонентов DriverFinder >> "%ASX-Directory%\Files\Logs\%date%.txt"
+REM         set /a "error_on_loading_1+=1"
+REM     )
+REM     set /a Launch_status+=1
+REM 	set "Reason_launch_info=Отсутствует файлы утилиты DriverFinder"
+REM )
 
 Title Первоначальная настройка ASX Hub [2/5]
 
@@ -879,32 +910,19 @@ if "%WiFi%"=="On" (
         )
     )
 
-    if not exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" (
-        title Загрузка отсутствующих компонентов...
-        echo [INFO ] %TIME% - Загрузка отсутствующего компонента DriverFinder.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        if not exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" (
-            md "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" >nul 2>&1
-        )
-        curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder.exe" >nul 2>&1
-        curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder_FindService.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder_FindService.exe" >nul 2>&1
-        if errorlevel 1 (
-            echo [ERROR] %TIME% - Ошибка при загрузке компонентов DriverFinder >> "%ASX-Directory%\Files\Logs\%date%.txt"
-            set /a "error_on_loading_1+=1"
-        )
-    )
-
-    if not exist "%ASX-Directory%\Files\Utilites\ASX_FileSorter\FileSorter.exe" (
-        title Загрузка отсутствующих компонентов...
-        echo [INFO ] %TIME% - Загрузка отсутствующего компонента FileSorter.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        if not exist "%ASX-Directory%\Files\Utilites\ASX_FileSorter" (
-            md "%ASX-Directory%\Files\Utilites\ASX_FileSorter" >nul 2>&1
-        )
-        curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_FileSorter\FileSorter.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_FileSorter/FileSorter.exe" >nul 2>&1
-        if errorlevel 1 (
-            echo [ERROR] %TIME% - Ошибка при загрузке компонента FileSorter.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-            set /a "error_on_loading_1+=1"
-        )
-    )
+REM     if not exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" (
+REM         title Загрузка отсутствующих компонентов...
+REM         echo [INFO ] %TIME% - Загрузка отсутствующего компонента DriverFinder.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
+REM         if not exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" (
+REM             md "%ASX-Directory%\Files\Utilites\ASX_DriverFinder" >nul 2>&1
+REM         )
+REM         curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder.exe" >nul 2>&1
+REM         curl -g -L -# -o "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder_FindService.exe" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Utilities/ASX_DriverFinder/DriverFinder_FindService.exe" >nul 2>&1
+REM         if errorlevel 1 (
+REM             echo [ERROR] %TIME% - Ошибка при загрузке компонентов DriverFinder >> "%ASX-Directory%\Files\Logs\%date%.txt"
+REM             set /a "error_on_loading_1+=1"
+REM         )
+REM     )
 
     title Загрузка...
 )
@@ -5865,20 +5883,23 @@ for %%C in (%Categories%) do (
         )
     )
 
-    if !keywordCount! geq 2 (
+    if !keywordCount! geq 4 (
         reg add "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\User_Interests_test" /v User_Interests!interestIndex! /t REG_SZ /d !categoryName! /f >nul
         if !errorlevel! equ 0 (
-            echo   %COL%[92mОбнаружен интерес к категории !categoryName! ^(Уверенность: !keywordCount!^) %COL%[37m
+            echo  %COL%[92mОбнаружен интерес к категории !categoryName! ^(Уверенность: !keywordCount!^) %COL%[37m
             set /a interestIndex+=1
         ) else (
-            echo   %COL%[91mОшибка записи категории !categoryName! в реестр %COL%[37m
+            echo  %COL%[91mОшибка записи категории !categoryName! в реестр %COL%[37m
         )
     )
 )
 echo.
 echo  Завершено
 echo.
-pause
+echo.
+echo  %COL%[90mДля продолжения нажмите любую клавишу на клавиатуре
+echo.
+pause >nul
 goto Exp_tweaks
 
 :Driver_copy
@@ -6919,7 +6940,7 @@ if /i "%choice%"=="F6" (
         call:info_msg
         echo [INFO ] %TIME% - %INFO_TEXT% >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
-        set "history=AppInstall_PG2;!history!"
+        set "history=AppInstall_PG1;!history!"
         call:Autoruns
         echo [INFO ] %TIME% - Вызвано Autoruns для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
@@ -6933,7 +6954,7 @@ if /i "%choice%"=="G1" (
         set /a SLOADStats+=1 >nul 2>&1
         echo [INFO ] %TIME% - %ListfileName% добавлен в список загрузок >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
-        set "history=AppInstall_PG2;!history!"
+        set "history=AppInstall_PG1;!history!"
         call:VisualC
         echo [INFO ] %TIME% - Вызвано VisualC для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
@@ -6946,7 +6967,7 @@ if /i "%choice%"=="G2" (
         set /a SLOADStats+=1 >nul 2>&1
         echo [INFO ] %TIME% - %ListfileName% добавлен в список загрузок >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
-        set "history=AppInstall_PG2;!history!"
+        set "history=AppInstall_PG1;!history!"
         call:DirectX
         echo [INFO ] %TIME% - Вызвано DirectX для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
@@ -6958,7 +6979,7 @@ if /i "%choice%"=="G3" (
         call:info_msg
         echo [INFO ] %TIME% - %INFO_TEXT% >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
-        set "history=AppInstall_PG2;!history!"
+        set "history=AppInstall_PG1;!history!"
         call:MicrosoftOffice
         echo [INFO ] %TIME% - Вызвано MicrosoftOffice для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
@@ -6971,7 +6992,7 @@ if /i "%choice%"=="G4" (
         set /a SLOADStats+=1 >nul 2>&1
         echo [INFO ] %TIME% - %ListfileName% добавлен в список загрузок >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
-        set "history=AppInstall_PG2;!history!"
+        set "history=AppInstall_PG1;!history!"
         call:CreativeCloud
         echo [INFO ] %TIME% - Вызвано CreativeCloud для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
@@ -6984,7 +7005,7 @@ if /i "%choice%"=="H1" (
         call:info_msg
         echo [INFO ] %TIME% - %INFO_TEXT% >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
-        set "history=AppInstall_PG2;!history!"
+        set "history=AppInstall_PG1;!history!"
         call:AutoKMS
         echo [INFO ] %TIME% - Вызвано AutoKMS для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
@@ -6997,7 +7018,7 @@ if /i "%choice%"=="H2" (
         set /a SLOADStats+=1 >nul 2>&1
         echo [INFO ] %TIME% - %ListfileName% добавлен в список загрузок >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
-        set "history=AppInstall_PG2;!history!"
+        set "history=AppInstall_PG1;!history!"
         call:WinDigActivation
         echo [INFO ] %TIME% - Вызвано WinDigActivation для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
@@ -7009,7 +7030,7 @@ if /i "%choice%"=="H3" (
         call:info_msg
         echo [INFO ] %TIME% - %INFO_TEXT% >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
-        set "history=AppInstall_PG2;!history!"
+        set "history=AppInstall_PG1;!history!"
         call:MediaCreationTool
         echo [INFO ] %TIME% - Вызвано MediaCreationTool для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
@@ -7021,7 +7042,7 @@ if /i "%choice%"=="H4" (
         call:info_msg
         echo [INFO ] %TIME% - %INFO_TEXT% >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
-        set "history=AppInstall_PG2;!history!"
+        set "history=AppInstall_PG1;!history!"
         call:PowerToys
         echo [INFO ] %TIME% - Вызвано PowerToys для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"
     )
@@ -9824,6 +9845,7 @@ if "%WinVer%"=="Windows 11" (
 )
 
 
+echo.
 echo.
 echo.
 echo.
@@ -13418,15 +13440,15 @@ echo.
 echo       %COL%[36mОписание обновления %COL%[37m%FullVersionNameCurrent%%COL%[37m
 echo       %COL%[97m!dashes!
 echo.
-echo          %COL%[36m1.%COL%[37m Оптимизация создания файлов восстановления через ASX Revert.
-echo          %COL%[36m2.%COL%[37m Улучшены рекомендации на панели рекомендованных программ.
-echo          %COL%[36m3.%COL%[37m Новый алгоритм запуска от имени администратора.
-echo          %COL%[36m4.%COL%[37m Исправлена опечатка в пункте в настройках ASX.
-echo          %COL%[36m5.%COL%[37m Исправлены многочисленные баги и недочёты.
-echo          %COL%[36m6.%COL%[37m Добавлено Предупреждение перед удалением лишних приложений Microsoft.
-echo          %COL%[36m7.%COL%[37m Добавлена панель выбора кастомных курсоров мыши.
-echo          %COL%[36m8.%COL%[37m Добавлен экспериментальный твик "Поиск интересов".
-echo          %COL%[36m9.%COL%[37m Переделаны алгоритмы Быстрой настройки.
+echo          %COL%[36m1.%COL%[37m Исправлены обнаруженные баги, ошибки, недочёты.
+echo          %COL%[36m2.%COL%[37m Улучшен алгоритм поиска интересов.
+echo          %COL%[36m3.%COL%[37m Оптимизирован алгоритм загрузки файлов при первоначальной настройке.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
 echo.
 echo.
 echo.
