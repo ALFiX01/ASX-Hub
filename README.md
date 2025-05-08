@@ -10,10 +10,10 @@
   <p><strong>Один хаб для полной настройки — легко, чётко, под тебя.</strong></p>
 
   <p>
-    <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest"><img src="https://img.shields.io/github/v/release/ALFiX01/ASX-Hub?style=flat" alt="GitHub Release"></a>
-    <a href="https://github.com/ALFiX01/ASX-Hub/commits/main"><img src="https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub?style=flat" alt="GitHub Last Commit"></a>
-    <a href="https://github.com/ALFiX01/ASX-Hub/stargazers"><img src="https://img.shields.io/github/stars/ALFiX01/ASX-Hub?style=flat" alt="GitHub Stars"></a>
-    <a href="https://github.com/ALFiX01/ASX-Hub/releases"><img src="https://img.shields.io/github/downloads/ALFiX01/ASX-Hub/total?style=flat" alt="GitHub all Downloads"></a>
+    <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest"><img src="https://img.shields.io/github/v/release/ALFiX01/ASX-Hub?style=plastic" alt="GitHub Release"></a>
+    <a href="https://github.com/ALFiX01/ASX-Hub/commits/main"><img src="https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub?style=plastic" alt="GitHub Last Commit"></a>
+    <a href="https://github.com/ALFiX01/ASX-Hub/stargazers"><img src="https://img.shields.io/github/stars/ALFiX01/ASX-Hub?style=plastic" alt="GitHub Stars"></a>
+    <a href="https://github.com/ALFiX01/ASX-Hub/releases"><img src="https://img.shields.io/github/downloads/ALFiX01/ASX-Hub/total?style=plastic" alt="GitHub all Downloads"></a>
     <a href="https://github.com/ALFiX01/ASX-Hub/releases"><img src="https://img.shields.io/github/downloads/ALFiX01/ASX-Hub/ASX.Hub.exe?style=plastic" alt="GitHub EXE Downloads"></a>
   </p>
 </div>
