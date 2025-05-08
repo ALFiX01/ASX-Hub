@@ -10,7 +10,7 @@
   <p><strong>Один хаб для полной настройки — легко, чётко, под тебя.</strong></p>
 
   <p>
-    <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest"><img src="https://img.shields.io/github/v/release/ALFiX01/ASX-Hub?style=pfor-the-badge" alt="GitHub Release"></a>
+    <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest"><img src="https://img.shields.io/github/v/release/ALFiX01/ASX-Hub?style=for-the-badge" alt="GitHub Release"></a>
     <a href="https://github.com/ALFiX01/ASX-Hub/commits/main"><img src="https://img.shields.io/github/last-commit/ALFiX01/ASX-Hub?style=for-the-badge" alt="GitHub Last Commit"></a>
     <a href="https://github.com/ALFiX01/ASX-Hub/stargazers"><img src="https://img.shields.io/github/stars/ALFiX01/ASX-Hub?style=for-the-badge" alt="GitHub Stars"></a>
     <a href="https://github.com/ALFiX01/ASX-Hub/releases"><img src="https://img.shields.io/github/downloads/ALFiX01/ASX-Hub/total?style=for-the-badge" alt="GitHub all Downloads"></a>
