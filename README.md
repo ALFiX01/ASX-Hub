@@ -28,7 +28,7 @@
 ### Как поступить?
 
 1. **Добавьте ASX Hub в исключения**  
-   - [Скачайте ASX-Hub.exe](https://github.com/ALFiX01/ASX-Hub/releases/latest).
+   - [Скачайте ASX-Hub.exe](https://github.com/ALFiX01/ASX-Hub/releases/latest/download/ASX.Hub.exe).
    - Отключите антивирус на время установки.
    - Добавьте папку `<Системный диск>:\ASX` в список исключений вашего антивируса.
    - После запуска и входа в главное меню ASX Hub антивирус можно снова включить.
