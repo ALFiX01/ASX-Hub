@@ -134,16 +134,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 if (changelogBodyElement && data.body) {
-                    if (typeof marked === 'function') {
-                        // Базовая конфигурация для marked, чтобы обрабатывать переносы строк как <br>
-                        marked.setOptions({
-                            breaks: true, // Преобразует одинарные переносы строк в <br>
-                            gfm: true     // Использует GitHub Flavored Markdown
+                    // Используем Showdown.js для преобразования Markdown в HTML
+                    if (typeof showdown !== 'undefined' && typeof showdown.Converter === 'function') {
+                        const converter = new showdown.Converter({
+                            ghCompatibleHeaderId: true,
+                            simpleLineBreaks: true,    
+                            tables: true,              
+                            strikethrough: true,       
+                            tasklists: true,           
+                            openLinksInNewWindow: true, 
+                            emoji: true                
                         });
-                        changelogBodyElement.innerHTML = marked.parse(data.body);
+                        changelogBodyElement.innerHTML = converter.makeHtml(data.body);
                     } else {
                         changelogBodyElement.innerHTML = `<pre>${data.body.replace(/</g, "<").replace(/>/g, ">")}</pre>`;
-                        console.warn('Библиотека marked.js не найдена. Патч-ноут отображается как простой текст.');
+                        console.warn('Библиотека Showdown.js не найдена. Патч-ноут отображается как простой текст.');
                     }
                 } else if (changelogBodyElement) {
                     changelogBodyElement.innerHTML = '<p>Описание для этого релиза отсутствует.</p>';
@@ -173,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "max-glare": 0.3
         });
     } else {
-        // console.warn('Библиотека VanillaTilt.js не найдена.'); // Можно закомментировать, если не критично
+        // console.warn('Библиотека VanillaTilt.js не найдена.');
     }
 
 });
