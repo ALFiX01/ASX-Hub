@@ -16,13 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function scrollToTarget(targetId) {
-        const headerOffset = getHeaderOffset(); // Получаем актуальную высоту шапки
+        const headerOffset = getHeaderOffset();
         if (targetId === "#" || targetId === "#hero") {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
-            // Активируем ссылку "Главная"
             navLinks.forEach(l => l.classList.remove('active'));
             const homeLink = document.querySelector('header nav ul li a[href="#hero"]');
             if (homeLink) homeLink.classList.add('active');
@@ -59,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sections = Array.from(document.querySelectorAll('main section[id]'));
 
     function changeNavOnScroll() {
-        const headerOffset = getHeaderOffset(); // Получаем актуальную высоту шапки
+        const headerOffset = getHeaderOffset();
         let scrollY = window.pageYOffset;
         let currentSectionId = '';
 
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (sections.length > 0) {
         window.addEventListener('scroll', changeNavOnScroll);
-        changeNavOnScroll(); // Первоначальный вызов
+        changeNavOnScroll();
     }
 
     // 4. Получение последней версии релиза с GitHub
@@ -98,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const repoOwner = 'ALFiX01'; // !!! ЗАМЕНИТЕ НА ВАШ НИК !!!
+        const repoOwner = 'ВАШ_НИК_НА_GITHUB'; // !!! ЗАМЕНИТЕ НА ВАШ НИК !!!
         const repoName = 'ASX-Hub';          // !!! ЗАМЕНИТЕ, ЕСЛИ ИМЯ РЕПО ДРУГОЕ !!!
 
         const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`;
@@ -112,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     errorMessage = 'Релизы для репозитория не найдены.';
                 } else if (response.status === 403) {
                     errorMessage = 'Доступ к API GitHub ограничен. Попробуйте позже.';
-                    console.warn('GitHub API rate limit likely exceeded or access forbidden.');
                 }
                 versionElement.textContent = errorMessage;
                 console.error('Failed to fetch release info:', response.status, response.statusText);
@@ -133,6 +131,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    fetchLatestReleaseVersion(); // Вызов функции для загрузки версии
+    fetchLatestReleaseVersion();
+
+    // 5. Инициализация Vanilla Tilt (если не используется data-атрибут или для доп. настроек)
+    // В данном случае data-атрибуты в HTML (`data-tilt`) уже активируют библиотеку.
+    // Этот блок можно использовать для более тонкой настройки или если бы не было data-атрибутов.
+    // VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+    //     max: 25,
+    //     speed: 400,
+    //     glare: true,
+    //     "max-glare": 0.5
+    // });
+    // Поскольку data-атрибуты уже есть, явная JS инициализация vanilla-tilt не строго обязательна
+    // для элементов, уже имеющих data-tilt. Библиотека сама их найдет.
+    // Если вы хотите применить ко всем элементам с `data-tilt` одинаковые настройки,
+    // отличные от дефолтных, можно раскомментировать и настроить блок выше.
 
 });

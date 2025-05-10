@@ -1,8 +1,8 @@
 /* Общие стили */
 :root {
-    --primary-color: #4a00e0; /* Основной фиолетовый, как у Venix */
-    --secondary-color: #8e2de2; /* Второстепенный фиолетовый */
-    --dark-bg: #121212; /* Темный фон */
+    --primary-color: #4a00e0;
+    --secondary-color: #8e2de2;
+    --dark-bg: #121212;
     --light-text: #f0f0f0;
     --medium-text: #a0a0a0;
     --card-bg: #1e1e1e;
@@ -86,7 +86,7 @@ header .logo {
     font-weight: bold;
     color: var(--light-text);
     text-decoration: none;
-    line-height: 1; /* Для лучшего выравнивания иконки */
+    line-height: 1;
 }
 header .logo span {
     color: var(--light-text);
@@ -103,18 +103,11 @@ header .logo:focus {
 }
 
 .logo-icon {
-    height: 0.9em; /* Иконка высотой ~с текст. Подберите значение для вашей иконки. */
+    height: 0.9em;
     width: auto;
-    margin-right: 0.3em; /* Отступ справа от иконки */
+    margin-right: 0.3em;
     transition: filter 0.3s ease;
-    /* fill: currentColor; /* Раскомментируйте, если хотите, чтобы SVG наследовал цвет текста */
 }
-/* Пример эффекта для SVG иконки при наведении (если fill: currentColor; работает) */
-/* header .logo:hover .logo-icon,
-header .logo:focus .logo-icon {
-     fill: var(--primary-color);
-} */
-
 
 header ul {
     list-style: none;
@@ -142,7 +135,6 @@ header ul li a.active {
     font-weight: 700;
     color: var(--primary-color);
 }
-
 
 /* Секция Hero */
 #hero {
@@ -211,20 +203,24 @@ header ul li a.active {
     opacity: 0.8;
 }
 
-
 /* Секция скриншота */
 #screenshot .screenshot-container {
     max-width: 800px;
     margin: 30px auto 0;
     border: 5px solid var(--border-color);
     border-radius: 8px;
-    overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    /* Важно для 3D эффектов vanilla-tilt */
+    transform-style: preserve-3d;
+    /* perspective: 1000px; /* Можно добавить, если эффект кажется плоским */
+    /* overflow: hidden; /* Закомментируйте, если хотите, чтобы блик выходил за рамки */
 }
 
 #screenshot img {
     width: 100%;
     display: block;
+    /* Немного "приподнимает" изображение для лучшего 3D эффекта */
+    transform: translateZ(20px); /* Поэкспериментируйте с этим значением */
 }
 
 /* Секция возможностей */
@@ -297,7 +293,6 @@ footer a:hover {
     color: var(--primary-color);
 }
 
-
 /* Адаптивность */
 @media (max-width: 768px) {
     h1 { font-size: 2.5em; }
@@ -311,7 +306,6 @@ footer a:hover {
         font-size: 1.6em;
         margin-bottom: 15px;
     }
-    /* .logo-icon (height: 0.9em) автоматически подстроится под font-size родителя */
     header ul {
         margin-top: 0;
         padding-left: 0;
@@ -329,6 +323,15 @@ footer a:hover {
 
     .features-grid {
         grid-template-columns: 1fr;
+    }
+     #screenshot .screenshot-container {
+        /* На мобильных устройствах эффект tilt может быть не очень удобен,
+           можно его отключить или сделать менее выраженным через JS,
+           но CSS здесь для примера отключает "выпирание" картинки. */
+        transform-style: flat; /* Отключает 3D для дочерних */
+    }
+    #screenshot img {
+        transform: translateZ(0); /* Убираем "выпирание" на мобильных */
     }
 }
 
