@@ -179,11 +179,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 5. Инициализация Vanilla Tilt JS
     if (typeof VanillaTilt !== 'undefined') {
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-            reverse: true,
-            max: 16,
+            reverse: false,
+            max: 14,
             speed: 400,
             glare: true,
-            "max-glare": 0.3
+            "max-glare": 0.25
         });
     } else {
         // console.warn('Библиотека VanillaTilt.js не найдена.');
