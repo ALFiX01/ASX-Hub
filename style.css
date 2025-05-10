@@ -1,250 +1,138 @@
-/* Reset */
+/* Сброс стилей */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-/* Основные настройки */
+/* Основные стили */
 body {
-  font-family: 'Open Sans', 'Segoe UI', Tahoma, sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #fff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  line-height: 1.6;
 }
 
 /* Контейнер */
 .container {
   width: 90%;
-  max-width: 1100px; /* Немного увеличил для большего пространства */
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px; /* Добавил горизонтальный паддинг */
+  padding: 40px 0;
 }
 
-/* Header / Hero */
+/* Заголовок */
 .hero {
   text-align: center;
-  padding: 120px 20px 80px; /* Увеличил вертикальные отступы */
-  background: linear-gradient(145deg, #1a2a6c, #b21f1f, #fdbb2d); /* Более динамичный градиент */
-  /* Или, если хотите сохранить более темный вариант хедера, но с акцентом:
-  background: linear-gradient(145deg, #16222A, #3A6073); */
+  padding: 100px 20px 60px;
+  background: linear-gradient(145deg, #1e3c72, #2a5298);
   color: #ffffff;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
-  position: relative;
-  overflow: hidden; /* Для возможных будущих декоративных элементов */
 }
 
-.hero-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 4.5rem; /* Увеличил */
-  font-weight: 900; /* Сделал жирнее */
-  margin-bottom: 25px;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
 }
 
-.hero-title-accent {
-  color: #fdbb2d; /* Акцентный цвет из нового градиента */
-}
-
-.hero-subtitle {
-  font-size: 1.35rem; /* Увеличил */
-  margin-bottom: 40px;
-  opacity: 0.9;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  opacity: 0.85;
 }
 
 .btn {
-  display: inline-flex; /* Для выравнивания иконки и текста */
-  align-items: center;
-  gap: 10px; /* Пространство между иконкой и текстом */
-  background: linear-gradient(to right, #ffc371, #ff5f6d); /* Новый сочный градиент */
-  color: #ffffff;
-  padding: 16px 35px; /* Увеличил паддинги */
-  border-radius: 50px;
+  background: linear-gradient(to right, #f9d423, #ff4e50);
+  color: #000;
+  padding: 14px 30px;
+  border-radius: 40px;
   font-weight: bold;
   text-decoration: none;
-  font-size: 1.1rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 5px 25px rgba(255, 95, 109, 0.4);
-  border: none; /* Убираем стандартную границу */
+  font-size: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(255, 78, 80, 0.5);
 }
 
 .btn:hover {
-  transform: translateY(-3px) scale(1.03); /* Более выраженный эффект */
-  box-shadow: 0 8px 30px rgba(255, 95, 109, 0.6);
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(255, 78, 80, 0.7);
 }
 
-.btn-icon {
-  font-size: 1.2em; /* Размер иконки относительно текста кнопки */
+/* Секции */
+.features {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
-.btn-secondary {
-  background: linear-gradient(to right, #4A569D, #DC2424);
-  box-shadow: 0 5px 25px rgba(220, 36, 36, 0.4);
+.features h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
 }
 
-.btn-secondary:hover {
-  box-shadow: 0 8px 30px rgba(220, 36, 36, 0.6);
-}
-
-
-/* Content Sections */
-.content {
-  padding: 50px 0;
-  flex-grow: 1;
-}
-
-/* Glassmorphism card */
-.glass-card {
-  background: rgba(255, 255, 255, 0.08); /* Сделал чуть менее прозрачным для читаемости */
-  border-radius: 25px; /* Более скругленные углы */
-  padding: 35px; /* Увеличил паддинги */
-  margin-bottom: 40px; /* Увеличил отступ */
-  backdrop-filter: blur(15px); /* Усилил блюр */
-  -webkit-backdrop-filter: blur(15px); /* Для Safari */
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Более заметная граница */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.glass-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 45px rgba(0,0,0,0.3);
-}
-
-.glass-card h2 {
-  font-family: 'Montserrat', sans-serif;
-  margin-bottom: 25px;
-  font-size: 2.2rem; /* Увеличил */
-  font-weight: 700;
-  color: #fff;
-  border-bottom: 2px solid #fdbb2d; /* Акцентная линия под заголовком */
-  padding-bottom: 10px;
-  display: inline-block; /* Чтобы border-bottom был по ширине текста */
-}
-
-.glass-card p {
-    margin-bottom: 20px;
-    font-size: 1.1rem;
-    color: #d0d0d0;
-}
-
-/* Features List */
-.features-list {
+.features ul {
   list-style: none;
   font-size: 1.1rem;
+  line-height: 1.6;
 }
 
-.features-list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px; /* Увеличил отступ */
-  padding: 10px;
-  background: rgba(0,0,0,0.1);
-  border-radius: 10px;
-  transition: background 0.3s ease;
-}
-.features-list li:hover {
-    background: rgba(0,0,0,0.2);
+.features li::before {
+  content: '✔️';
+  margin-right: 10px;
 }
 
-.feature-icon {
-  font-size: 1.5em; /* Размер иконок */
-  margin-right: 15px;
-  color: #fdbb2d; /* Акцентный цвет для иконок */
-  min-width: 30px; /* Чтобы текст не "прыгал" */
+/* Скриншот */
+.screenshot {
   text-align: center;
 }
 
-/* Interface Section */
-.screenshot-wrapper {
-  margin-top: 25px;
-  border-radius: 15px; /* Скругление для обертки, если нужно */
-  overflow: hidden; /* Чтобы скруглялись углы у img */
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+.screenshot h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
 }
 
-.glass-card img {
+.tilt-container {
+  perspective: 1000px;
+  display: inline-block;
+}
+
+#screenshot {
   width: 100%;
-  height: auto; /* Для сохранения пропорций */
-  display: block; /* Убирает лишний отступ под изображением */
-  border-radius: 12px; /* Скругление для самого изображения */
-  /* Убрал box-shadow отсюда, перенес на wrapper для лучшего контроля */
+  max-width: 600px;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* Footer */
+/* Футер */
 .footer {
   text-align: center;
-  padding: 30px 15px; /* Увеличил паддинги */
-  font-size: 0.95rem;
-  background-color: rgba(0,0,0,0.3); /* Немного темнее */
-  color: #b0b0b0; /* Светлее для лучшей читаемости */
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 10px;
+  font-size: 0.9rem;
+  background-color: rgba(0,0,0,0.2);
+  color: #ccc;
 }
 
 .footer a {
-  color: #ffc371; /* Используем цвет из градиента кнопки */
+  color: #f9d423;
   text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
 }
 
 .footer a:hover {
-  color: #ff5f6d; /* Второй цвет из градиента кнопки */
   text-decoration: underline;
 }
 
-/* Responsive */
+/* Адаптивность */
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 3rem; /* Адаптируем размер заголовка */
+  .hero h1 {
+    font-size: 2.4rem;
   }
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-  .btn {
-    padding: 14px 28px;
-    font-size: 1rem;
-  }
-  .glass-card {
-    padding: 25px; /* Адаптируем паддинги карточек */
-  }
-  .glass-card h2 {
-    font-size: 1.8rem;
-  }
-  .features-list li {
-    font-size: 1rem;
-  }
-  .feature-icon {
-    font-size: 1.3em;
-    margin-right: 10px;
-  }
-}
 
-@media (max-width: 480px) {
-    .hero {
-        padding: 80px 15px 60px;
-    }
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-    .glass-card {
-        padding: 20px;
-        border-radius: 20px;
-    }
-    .glass-card h2 {
-        font-size: 1.6rem;
-    }
+  .features, .screenshot {
+    padding: 20px;
+  }
 }
