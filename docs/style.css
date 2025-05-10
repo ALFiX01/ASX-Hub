@@ -216,29 +216,50 @@ header ul li a.active {
     font-size: 1.1em;
     margin-bottom: 30px;
 }
+
+/* --- НАЧАЛО ИЗМЕНЕНИЙ ДЛЯ КНОПКИ "СКАЧАТЬ" --- */
 .btn {
     display: inline-block;
     padding: 12px 30px;
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; /* Этот transition важен для плавности ховера */
     border: none;
     cursor: pointer;
     position: relative;
     z-index: 2;
 }
+
 .btn-primary {
     background-color: white;
     color: var(--primary-color);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 18px rgba(var(--primary-color-rgb), 0.18);
+    animation: gentle-glow-download 2.5s infinite alternate ease-in-out;
+    /* transform-origin: center center; /* По умолчанию, но можно указать явно */
 }
+
 .btn-primary:hover {
     background-color: #f0f0f0;
     color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    transform: translateY(-3px) scale(1.03); /* Немного больше эффект при наведении */
+    box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.35);
+    animation: none; /* Отключаем анимацию gentle-glow-download при наведении */
 }
+
+/* Анимация для кнопки "Скачать ASX Hub" */
+@keyframes gentle-glow-download {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 5px 18px rgba(var(--primary-color-rgb), 0.18), 0 0 8px rgba(var(--primary-color-rgb), 0.1);
+    }
+    100% {
+        transform: scale(1.02); /* Легкое увеличение */
+        box-shadow: 0 5px 22px rgba(var(--primary-color-rgb), 0.28), 0 0 18px rgba(var(--primary-color-rgb), 0.22);
+    }
+}
+/* --- КОНЕЦ ИЗМЕНЕНИЙ ДЛЯ КНОПКИ "СКАЧАТЬ" --- */
+
 .btn-large {
     padding: 15px 40px;
     font-size: 1.1em;
@@ -267,6 +288,13 @@ header ul li a.active {
     width: 100%;
     text-align: left;
     box-shadow: 0 8px 30px rgba(0,0,0,0.2), 0 0 0 1px var(--glass-border);
+    /* Наследуемые стили от .feature-item, если нужно (background, border, backdrop-filter и т.д.) */
+    /* Пример наследования, если бы changelog-card не был .feature-item: */
+    background-color: var(--glass-bg-dark-features);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur-medium));
+    -webkit-backdrop-filter: blur(var(--glass-blur-medium));
 }
 
 .changelog-card h2 {
@@ -413,7 +441,7 @@ header ul li a.active {
 }
 .feature-item:hover {
     transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 10px 35px rgba(var(--primary-color), 0.3);
+    box-shadow: 0 10px 35px rgba(var(--primary-color-rgb), 0.3); /* Было rgba(var(--primary-color), 0.3) */
     background-color: var(--glass-bg-dark-features-hover);
     border-color: rgba(255, 255, 255, 0.2);
 }
@@ -422,7 +450,7 @@ header ul li a.active {
     height: 50px;
     margin-bottom: 20px;
 }
-#features .feature-item h3 { 
+#features .feature-item h3 {
     font-size: 1.5em;
     margin-bottom: 12px;
     color: var(--light-text);
@@ -443,7 +471,7 @@ header ul li a.active {
     justify-content: center;
 }
 
-.requirements-card {
+.requirements-card { /* Этот класс также является .feature-item, поэтому наследует его стили */
     padding: 40px 35px;
     max-width: 800px;
     width: 100%;
@@ -566,9 +594,9 @@ footer a:hover {
     #hero { padding: 140px 0 40px; }
     #changelog-section { padding: 20px 0 40px; }
     
-    .features-grid { 
+    .features-grid {
         gap: 30px;
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
     }
     .feature-item {
         background-color: rgba(80, 80, 95, 0.25);
@@ -576,7 +604,7 @@ footer a:hover {
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
         padding: 25px;
     }
-    #features .feature-item h3 { 
+    #features .feature-item h3 {
         font-size: 1.4em;
     }
 
