@@ -5,14 +5,14 @@
     --dark-bg: #121212;
     --light-text: #f0f0f0;
     --medium-text: #a0a0a0;
-    --card-bg: #1e1e1e; /* Этот var может меньше использоваться с глассморфизмом */
-    --border-color: #333;
-    --glass-bg-dark: rgba(40, 40, 50, 0.5); /* Для темных стеклянных элементов */
-    --glass-bg-header: rgba(25, 25, 30, 0.6);/* Для шапки */
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-blur-strong: 12px;
-    --glass-blur-medium: 8px;
-    --glass-blur-light: 5px;
+    /* CSS переменные для Glassmorphism */
+    --glass-bg-dark-features: rgba(55, 55, 70, 0.25); /* Фон для карточек фич (более прозрачный) */
+    --glass-bg-dark-features-hover: rgba(65, 65, 80, 0.4); /* Фон карточек фич при наведении */
+    --glass-bg-header: rgba(25, 25, 30, 0.6); /* Фон для шапки */
+    --glass-border: rgba(255, 255, 255, 0.12); /* Граница для стеклянных элементов */
+    --glass-blur-strong: 12px;  /* Сильное размытие (для шапки) */
+    --glass-blur-medium: 10px; /* Среднее размытие (для карточек) */
+    --glass-blur-light: 6px;   /* Легкое размытие (для мобильных) */
 }
 
 * {
@@ -41,28 +41,28 @@ body::after {
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    opacity: 0.3;
+    opacity: 0.4;
     pointer-events: none;
 }
 
 body::before {
     width: 65vw;
     height: 65vw;
-    background: radial-gradient(circle, rgba(104, 46, 238, 0.6) 0%, rgba(74, 0, 224, 0) 70%);
+    background: radial-gradient(circle, rgba(100, 45, 226, 0.6) 0%, rgba(74, 0, 224, 0) 70%);
     top: -28vw;
     left: -28vw;
     filter: blur(90px);
-    animation: slowPulseBefore 16s infinite alternate ease-in-out;
+    animation: slowPulseBefore 15s infinite alternate ease-in-out;
 }
 
 body::after {
     width: 60vw;
     height: 60vw;
-    background: radial-gradient(circle, rgba(240, 129, 50, 0.5) 0%, rgba(224, 180, 0, 0) 70%);
+    background: radial-gradient(circle, rgba(226, 120, 45, 0.5) 0%, rgba(224, 180, 0, 0) 70%);
     bottom: -22vw;
     right: -22vw;
     filter: blur(80px);
-    animation: slowPulseAfter 19s infinite alternate ease-in-out;
+    animation: slowPulseAfter 18s infinite alternate ease-in-out;
 }
 
 @keyframes slowPulseBefore {
@@ -251,16 +251,11 @@ header ul li a.active {
 #screenshot .screenshot-container {
     max-width: 800px;
     margin: 30px auto 0;
-    border: 1px solid var(--glass-border); /* Glassmorphism border */
-    border-radius: 12px; /* Softer radius */
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     transform-style: preserve-3d;
-    overflow: hidden; /* Если будете добавлять фон/блюр к контейнеру */
-    /* Опционально: фон для контейнера, если он тоже должен быть "стеклянным"
-    background-color: rgba(30, 30, 40, 0.3);
-    backdrop-filter: blur(var(--glass-blur-light));
-    -webkit-backdrop-filter: blur(var(--glass-blur-light));
-    */
+    overflow: hidden;
 }
 #screenshot img {
     width: 100%;
@@ -280,7 +275,7 @@ header ul li a.active {
     margin-top: 40px;
 }
 .feature-item {
-    background-color: var(--glass-bg-dark);
+    background-color: var(--glass-bg-dark-features);
     padding: 25px;
     border-radius: 12px;
     text-align: center;
@@ -293,7 +288,7 @@ header ul li a.active {
 .feature-item:hover {
     transform: translateY(-8px) scale(1.02);
     box-shadow: 0 8px 30px rgba(var(--primary-color), 0.25);
-    background-color: rgba(50, 50, 60, 0.65); /* Темнее стекло при наведении */
+    background-color: var(--glass-bg-dark-features-hover);
 }
 .feature-icon {
     width: 50px;
@@ -304,10 +299,12 @@ header ul li a.active {
     font-size: 1.4em;
     margin-bottom: 10px;
     color: var(--light-text);
+    /* text-shadow: 0 0 5px rgba(0,0,0,0.5); /* Опциональная тень для текста */
 }
 .feature-item p {
     font-size: 0.95em;
     color: var(--medium-text);
+    /* text-shadow: 0 0 3px rgba(0,0,0,0.5); /* Опциональная тень для текста */
 }
 
 /* Секция CTA (Call to Action) */
@@ -325,16 +322,13 @@ header ul li a.active {
 
 /* Подвал */
 footer {
-    /* Можно и футер сделать стеклянным, если хотите */
-    /* background-color: var(--glass-bg-dark); */
-    /* backdrop-filter: blur(var(--glass-blur-medium)); */
-    /* -webkit-backdrop-filter: blur(var(--glass-blur-medium)); */
-    /* border-top: 1px solid var(--glass-border); */
-    background-color: var(--card-bg); /* Оставил непрозрачным для контраста */
+    background-color: rgba(25,25,30,0.5); /* Сделал футер тоже немного стеклянным */
+    backdrop-filter: blur(var(--glass-blur-light));
+    -webkit-backdrop-filter: blur(var(--glass-blur-light));
+    border-top: 1px solid var(--glass-border);
     color: var(--medium-text);
     text-align: center;
     padding: 30px 0;
-    border-top: 1px solid var(--border-color);
     margin-top: 40px;
     position: relative;
     z-index: 1;
@@ -356,7 +350,7 @@ footer a:hover {
     h2 { font-size: 1.8em; }
 
     header {
-        backdrop-filter: blur(var(--glass-blur-medium)); /* Уменьшаем блюр для шапки */
+        backdrop-filter: blur(var(--glass-blur-medium));
         -webkit-backdrop-filter: blur(var(--glass-blur-medium));
     }
     header nav {
@@ -382,8 +376,14 @@ footer a:hover {
     .features-grid { grid-template-columns: 1fr; }
 
     .feature-item {
-        backdrop-filter: blur(var(--glass-blur-light)); /* Уменьшаем блюр для карточек */
+        background-color: rgba(55, 55, 70, 0.35); /* Менее прозрачный фон для мобильных */
+        backdrop-filter: blur(var(--glass-blur-light));
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
+    }
+    footer {
+        backdrop-filter: blur(var(--glass-blur-light)); /* Уменьшаем блюр для футера */
+        -webkit-backdrop-filter: blur(var(--glass-blur-light));
+        background-color: rgba(25,25,30,0.7); /* Футер менее прозрачный на мобильных */
     }
 
     #screenshot .screenshot-container { transform-style: flat; }
@@ -416,7 +416,11 @@ footer a:hover {
     body::after { filter: blur(40px); opacity: 0.18; }
 
     .feature-item {
-        /* Можно совсем отключить блюр на очень маленьких экранах, если производительность страдает */
-        /* backdrop-filter: none; -webkit-backdrop-filter: none; background-color: rgba(40, 40, 50, 0.8); */
+        background-color: rgba(55, 55, 70, 0.45);
+        /* backdrop-filter: none; -webkit-backdrop-filter: none; */
+    }
+    footer {
+        /* backdrop-filter: none; -webkit-backdrop-filter: none; */
+        background-color: rgba(25,25,30,0.8);
     }
 }
