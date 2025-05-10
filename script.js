@@ -6,79 +6,81 @@ document.addEventListener('DOMContentLoaded', function() {
         yearSpan.textContent = new Date().getFullYear();
     }
 
-    // 2. Плавная прокрутка к якорям
+    // 2. Плавная прокрутка к якорям и обработка лого
     const navLinks = document.querySelectorAll('header nav ul li a[href^="#"]');
-    const headerElement = document.querySelector('header');
-    const headerOffset = headerElement ? headerElement.offsetHeight : 0;
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            // Специальная обработка для логотипа или ссылки "Главная", ведущей на самый верх
-            if (targetId === "#" || targetId === "#hero") {
-                 window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-                // Убираем активный класс со всех, кроме "Главная", если кликнули по лого
-                if (targetId === "#") {
-                    document.querySelectorAll('header nav ul li a').forEach(l => l.classList.remove('active'));
-                    const homeLink = document.querySelector('header nav ul li a[href="#hero"]');
-                    if (homeLink) homeLink.classList.add('active');
-                }
-                return;
-            }
-
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // Обработка клика по логотипу для прокрутки вверх
     const logoLink = document.querySelector('header nav a.logo');
-    if (logoLink) {
-        logoLink.addEventListener('click', function(e) {
-            e.preventDefault();
+    const headerElement = document.querySelector('header');
+    
+    function getHeaderOffset() {
+        return headerElement ? headerElement.offsetHeight : 0;
+    }
+
+    function scrollToTarget(targetId) {
+        const headerOffset = getHeaderOffset();
+        if (targetId === "#" || targetId === "#hero") {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
-            // Сделать "Главная" активной, остальные неактивными
-            document.querySelectorAll('header nav ul li a').forEach(l => l.classList.remove('active'));
+            // Активируем ссылку "Главная"
+            navLinks.forEach(l => l.classList.remove('active'));
             const homeLink = document.querySelector('header nav ul li a[href="#hero"]');
             if (homeLink) homeLink.classList.add('active');
+            return;
+        }
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            scrollToTarget(this.getAttribute('href'));
+        });
+    });
+
+    if (logoLink) {
+        logoLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            scrollToTarget("#hero"); // Логотип всегда ведет на #hero (верх страницы)
         });
     }
 
-
     // 3. Выделение активного пункта меню при скролле
-    const sections = document.querySelectorAll('main section[id]');
-    // Обновляем headerOffset здесь, так как он мог измениться после загрузки DOM (например, из-за шрифтов)
-    const dynamicHeaderOffset = headerElement ? headerElement.offsetHeight : 0;
-
+    const sections = Array.from(document.querySelectorAll('main section[id]'));
 
     function changeNavOnScroll() {
+        const headerOffset = getHeaderOffset();
         let scrollY = window.pageYOffset;
         let currentSectionId = '';
 
-        sections.forEach(current => {
-            const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - dynamicHeaderOffset - 60; // 60px - небольшой запас
+        // Находим текущую секцию
+        // Идем снизу вверх, чтобы правильно определить последнюю видимую секцию
+        for (let i = sections.length - 1; i >= 0; i--) {
+            const section = sections[i];
+            const sectionTop = section.offsetTop - headerOffset - 60; // 60px - небольшой запас
 
-            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                currentSectionId = current.getAttribute('id');
+            if (scrollY >= sectionTop) {
+                currentSectionId = section.getAttribute('id');
+                break; 
             }
-        });
+        }
+        
+        // Если ни одна секция не найдена (например, в самом верху до первой секции),
+        // или если прокрутка выше первой секции, считаем 'hero' активной
+        if (!currentSectionId && sections.length > 0 && scrollY < (sections[0].offsetTop - headerOffset + sections[0].offsetHeight - 60)) {
+             currentSectionId = 'hero';
+        }
+
 
         navLinks.forEach(link => {
             link.classList.remove('active');
@@ -86,21 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 link.classList.add('active');
             }
         });
-
-        // Если мы в самом верху (секция hero), "Главная" должна быть активной
-        const heroSection = document.getElementById('hero');
-        if (heroSection && scrollY < (heroSection.offsetTop - dynamicHeaderOffset + heroSection.offsetHeight - 60) ) {
-             const homeLink = document.querySelector('header nav ul li a[href="#hero"]');
-             if (homeLink && !currentSectionId) { // Если никакая другая секция не активна
-                navLinks.forEach(link => link.classList.remove('active')); // Сначала убрать со всех
-                homeLink.classList.add('active');
-             }
-        } else if (!currentSectionId && scrollY < 200) { // Если наверху, но не hero (мало вероятно с текущей структурой)
-            const homeLink = document.querySelector('header nav ul li a[href="#hero"]');
-            if (homeLink) homeLink.classList.add('active');
-        }
     }
-
+    
     if (sections.length > 0) {
         window.addEventListener('scroll', changeNavOnScroll);
         changeNavOnScroll(); // Первоначальный вызов для установки состояния

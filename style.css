@@ -16,7 +16,7 @@
 }
 
 html {
-    scroll-behavior: smooth; /* Для более плавной прокрутки от JavaScript, хотя JS и сам это делает */
+    scroll-behavior: smooth;
 }
 
 body {
@@ -62,14 +62,14 @@ p { margin-bottom: 1em; }
 
 /* Шапка */
 header {
-    background-color: rgba(18, 18, 18, 0.95); /* Чуть менее прозрачный фон */
+    background-color: rgba(18, 18, 18, 0.95);
     padding: 15px 0;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px); /* Эффект размытия для поддержки браузерами */
+    backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 }
 
@@ -80,15 +80,37 @@ header nav {
 }
 
 header .logo {
+    display: flex;
+    align-items: center;
     font-size: 1.8em;
     font-weight: bold;
     color: var(--light-text);
     text-decoration: none;
 }
-header .logo:hover {
+header .logo span {
+    color: var(--light-text);
+    transition: color 0.3s ease;
+}
+header .logo:hover span,
+header .logo:focus span {
     color: var(--primary-color);
+}
+header .logo:hover,
+header .logo:focus {
     text-decoration: none;
 }
+
+.logo-icon {
+    height: 30px;
+    width: auto;
+    margin-right: 10px;
+    transition: filter 0.3s ease;
+}
+/* Пример эффекта для SVG иконки при наведении */
+/* header .logo:hover .logo-icon {
+    filter: drop-shadow(0 0 3px var(--primary-color));
+} */
+
 
 header ul {
     list-style: none;
@@ -103,19 +125,19 @@ header ul li a {
     color: var(--medium-text);
     font-weight: 500;
     font-size: 1em;
-    transition: color 0.3s ease;
-    padding-bottom: 5px; /* Небольшой отступ для возможного border-bottom */
+    transition: color 0.3s ease, border-color 0.3s ease;
+    padding-bottom: 5px;
 }
 
 header ul li a:hover,
 header ul li a.active {
     color: var(--light-text);
     text-decoration: none;
-    /* border-bottom: 2px solid var(--primary-color); /* Пример активного состояния */
 }
 header ul li a.active {
-    font-weight: 700; /* Сделаем активный пункт жирнее */
-    color: var(--primary-color); /* И акцентным цветом */
+    font-weight: 700;
+    color: var(--primary-color);
+    /* border-bottom: 2px solid var(--primary-color); */
 }
 
 
@@ -123,7 +145,7 @@ header ul li a.active {
 #hero {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
-    padding: 160px 0 100px; /* Больше отступ сверху из-за фиксированной шапки */
+    padding: 160px 0 100px;
     text-align: center;
     min-height: 70vh;
     display: flex;
@@ -154,7 +176,7 @@ header ul li a.active {
 .btn {
     display: inline-block;
     padding: 12px 30px;
-    border-radius: 50px; /* Закругленные кнопки */
+    border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s ease;
@@ -221,7 +243,7 @@ header ul li a.active {
 
 .feature-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(var(--primary-color), 0.2); /* Тень с акцентным цветом */
+    box-shadow: 0 8px 25px rgba(var(--primary-color), 0.2);
 }
 
 .feature-icon {
@@ -280,24 +302,29 @@ footer a:hover {
 
     header nav {
         flex-direction: column;
-        align-items: center; /* Центрируем лого и меню */
+        align-items: center;
     }
     header .logo {
-        margin-bottom: 10px; /* Отступ для лого, если меню переносится */
+        font-size: 1.6em;
+        margin-bottom: 15px; /* Увеличил отступ для лучшего вида */
+    }
+    .logo-icon {
+        height: 26px;
+        margin-right: 8px;
     }
     header ul {
-        margin-top: 10px;
-        padding-left: 0; /* Убираем отступ у списка, если он был */
+        margin-top: 0; /* Убрал верхний отступ, так как лого уже имеет нижний */
+        padding-left: 0;
         width: 100%;
-        justify-content: center; /* Центрируем пункты меню */
-        flex-wrap: wrap; /* Позволяем пунктам переноситься */
+        justify-content: center;
+        flex-wrap: wrap;
     }
     header ul li {
-        margin: 5px 10px; /* Отступы для пунктов, чтобы не слипались */
+        margin: 5px 10px;
     }
 
     #hero {
-        padding: 140px 0 60px; /* Уменьшаем отступ сверху, т.к. шапка может стать выше */
+        padding: 180px 0 60px; /* Увеличил отступ сверху из-за высоты шапки в моб. виде */
     }
 
     .features-grid {
@@ -311,7 +338,16 @@ footer a:hover {
     .btn { padding: 10px 20px; font-size: 0.9em; }
     .btn-large { padding: 12px 30px; font-size: 1em; }
 
+    header .logo {
+        font-size: 1.5em; /* Еще немного уменьшил лого */
+    }
+    .logo-icon {
+        height: 24px;
+    }
     header ul li a {
         font-size: 0.9em;
+    }
+    #hero {
+        padding: 170px 0 50px; /* Скорректировал padding для hero */
     }
 }
