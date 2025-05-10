@@ -7,6 +7,10 @@
     --medium-text: #a0a0a0;
     --primary-color-rgb: 74, 0, 224; /* RGB для --primary-color (#4a00e0) */
 
+    --code-background-color-rgb: 111, 111, 111; /* RGB для background-color */
+    --code-text-color-rgb: 215, 215, 215; /* RGB для color */
+    --code-border-color-rgb: 158, 151, 171; /* RGB для border */
+
 
     /* CSS переменные для Glassmorphism */
     --glass-bg-dark-features: rgba(80, 80, 95, 0.15);
@@ -329,13 +333,13 @@ header ul li a.active {
 .changelog-content em, .changelog-content i { color: inherit; font-style: italic; }
 
 .changelog-content code {
-    background-color: rgba(var(--primary-color-rgb), 0.1);
-    color: var(--light-text); /* Изменено для читаемости */
+    background-color: rgba(var(--code-background-color-rgb), 0.1);
+    color: var(--code-text-color-rgb);
     padding: 3px 6px;
     border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.9em;
-    border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+    border: 1px solid rgba(var(--code-border-color-rgb), 0.2);
 }
 .changelog-content pre {
     background-color: rgba(0,0,0,0.25);
