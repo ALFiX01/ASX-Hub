@@ -42,7 +42,7 @@ body::after {
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    opacity: 0.4;
+    opacity: 0.25;
     pointer-events: none;
 }
 
@@ -53,7 +53,7 @@ body::before {
     top: -28vw;
     left: -28vw;
     filter: blur(90px);
-    animation: slowPulseBefore 17s infinite alternate ease-in-out;
+    animation: slowPulseBefore 15s infinite alternate ease-in-out;
 }
 
 body::after {
@@ -63,7 +63,7 @@ body::after {
     bottom: -22vw;
     right: -22vw;
     filter: blur(80px);
-    animation: slowPulseAfter 20s infinite alternate ease-in-out;
+    animation: slowPulseAfter 18s infinite alternate ease-in-out;
 }
 
 @keyframes slowPulseBefore {
@@ -275,7 +275,7 @@ header ul li a.active {
     gap: 40px;
     margin-top: 40px;
 }
-.feature-item { /* Этот класс используется и для .cta-card */
+.feature-item { /* Этот класс используется и для .requirements-card */
     background-color: var(--glass-bg-dark-features);
     padding: 30px;
     border-radius: 16px;
@@ -310,43 +310,74 @@ header ul li a.active {
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
-/* Секция CTA (Call to Action) - стилизована как карточка */
-#cta-section {
+/* Секция Системных требований */
+#requirements-section {
     position: relative;
     z-index: 1;
     display: flex;
     justify-content: center;
 }
 
-.cta-card { /* Уже наследует стили от .feature-item */
-    /* Дополнительные переопределения или уникальные стили для CTA карточки */
-    padding: 40px 30px; /* Больше отступы для главной CTA */
-    max-width: 700px;
+.requirements-card { /* Наследует от .feature-item, но имеет свои настройки */
+    padding: 35px 30px;
+    max-width: 750px;
     width: 100%;
+    text-align: left; /* Переопределяем text-align для списка */
 }
 
-.cta-card h2 {
-    font-size: 2.2em;
-    margin-bottom: 0.8em;
+.requirements-card h2 { /* Уникальные стили для заголовка в этой карточке */
+    font-size: 2em;
+    margin-bottom: 1.2em;
     color: var(--light-text);
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    text-align: center; /* Заголовок по центру */
 }
 
-.cta-card p {
-    font-size: 1.2em;
+.requirements-list {
+    list-style: none;
+    padding-left: 0;
     margin-bottom: 1.5em;
+}
+
+.requirements-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(var(--glass-border), 0.5);
+    font-size: 1em;
+}
+
+.requirements-list li:last-child {
+    border-bottom: none;
+}
+
+.req-label {
+    font-weight: 500;
+    color: var(--light-text);
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.req-value {
     color: var(--medium-text);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    max-width: 550px;
-    margin-left: auto;
-    margin-right: auto;
+    text-align: right;
 }
 
-.cta-card .btn-large { /* Переопределяем стили кнопки внутри CTA */
-    padding: 18px 45px;
-    font-size: 1.2em;
+.requirements-note {
+    font-size: 0.9em;
+    color: var(--medium-text);
+    text-align: center;
+    margin-bottom: 2em;
+    opacity: 0.8;
 }
 
+.req-download-btn {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 15px 40px;
+    font-size: 1.1em;
+}
 
 /* Подвал */
 footer {
@@ -406,7 +437,7 @@ footer a:hover {
         gap: 30px;
         grid-template-columns: 1fr; 
     }
-    .feature-item { /* Касается и .cta-card на мобильных */
+    .feature-item { /* Касается и .requirements-card */
         background-color: rgba(80, 80, 95, 0.25);
         backdrop-filter: blur(var(--glass-blur-light));
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
@@ -415,20 +446,30 @@ footer a:hover {
     .feature-item h3 { /* Для карточек фич */
         font-size: 1.4em;
     }
-    .cta-card { /* Специфичные для CTA на мобильных, если нужно */
+
+    .requirements-card { /* Специфичные для requirements на мобильных */
         padding: 30px 20px;
     }
-    .cta-card h2 {
-        font-size: 2em;
+    .requirements-card h2 {
+        font-size: 1.8em;
     }
-    .cta-card p {
-        font-size: 1.1em;
+    .requirements-list li {
+        font-size: 0.95em;
+        flex-direction: column;
+        align-items: flex-start;
+        border-bottom: 1px solid rgba(var(--glass-border), 0.3);
     }
-    .cta-card .btn-large {
-        padding: 15px 35px;
-        font-size: 1.1em;
+    .req-label {
+        margin-right: 0;
+        margin-bottom: 5px;
     }
-
+    .req-value {
+        text-align: left;
+    }
+    .req-download-btn {
+        font-size: 1em;
+        padding: 12px 30px;
+    }
 
     footer {
         backdrop-filter: blur(var(--glass-blur-light));
@@ -456,7 +497,7 @@ footer a:hover {
     h1 { font-size: 2em; }
     #hero .subtitle { font-size: 1.2em; }
     .btn { padding: 10px 20px; font-size: 0.9em; }
-    .btn-large { padding: 12px 30px; font-size: 1em; }
+    .btn-large { padding: 12px 30px; font-size: 1.1em; } /* Для основной кнопки в Hero */
 
     header .logo { font-size: 1.5em; }
     header ul li a { font-size: 0.9em; }
@@ -465,13 +506,19 @@ footer a:hover {
     body::before { filter: blur(50px); opacity: 0.12; }
     body::after { filter: blur(40px); opacity: 0.18; }
 
-    .feature-item { /* Касается и .cta-card */
+    .feature-item { /* Касается и .requirements-card */
         background-color: rgba(80, 80, 95, 0.35);
         /* backdrop-filter: none; -webkit-backdrop-filter: none; */
     }
-    .cta-card .btn-large {
-        padding: 12px 30px; /* Возвращаем к обычному .btn-large на маленьких экранах */
-        font-size: 1.1em;
+    .requirements-card h2 {
+        font-size: 1.6em;
+    }
+     .requirements-list li {
+        font-size: 0.9em;
+    }
+    .req-download-btn { /* Стили для кнопки внутри карточки требований на малых экранах */
+        padding: 12px 30px;
+        font-size: 1em;
     }
 
     footer {

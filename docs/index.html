@@ -25,9 +25,10 @@
             </a>
             <ul>
                 <li><a href="#hero">Главная</a></li>
+                <li><a href="#screenshot">Интерфейс</a></li>
                 <li><a href="#features">Возможности</a></li>
-                <li><a href="#screenshot">Скриншот</a></li>
-                <li><a href="https://github.com/ALFiX01/ASX-Hub" target="_blank" rel="noopener noreferrer">GitHub</a></li> <!-- Замените ВАШ_НИК -->
+                <li><a href="#requirements-section">Требования</a></li>
+                <li><a href="https://github.com/ALFiX01/ASX-Hub" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             </ul>
         </nav>
     </header>
@@ -38,7 +39,7 @@
                 <h1>ASX Hub</h1>
                 <p class="subtitle">Ваш центр оптимизации и настройки Windows</p>
                 <p>Ускорьте работу системы, настройте её под себя и получите максимум производительности с ASX Hub.</p>
-                <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest" class="btn btn-primary" target="_blank" rel="noopener noreferrer"> <!-- Замените ВАШ_НИК -->
+                <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
                     Скачать ASX Hub
                 </a>
                 <div class="version-info" id="latest-version">Загрузка актуальной версии...</div>
@@ -78,12 +79,28 @@
             </div>
         </section>
 
-        <section id="cta-section" class="container section-padding">
-            <div class="cta-card feature-item">
-                <h2>Готовы начать?</h2>
-                <p>Скачайте ASX Hub прямо сейчас и раскройте полный потенциал вашей Windows!</p>
-                <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest" class="btn btn-primary btn-large" target="_blank" rel="noopener noreferrer"> <!-- Замените ВАШ_НИК -->
-                    Загрузить последнюю версию
+        <section id="requirements-section" class="container section-padding">
+            <div class="requirements-card feature-item">
+                <h2>Системные требования</h2>
+                <ul class="requirements-list">
+                    <li>
+                        <span class="req-label">Операционная система:</span>
+                        <span class="req-value">Windows 10 / 11 (рекомендуется x64)</span>
+                    </li>
+                    <li>
+                        <span class="req-label">Права администратора:</span>
+                        <span class="req-value">Обязательны для корректной работы</span>
+                    </li>
+                    <li>
+                        <span class="req-label">Интернет-соединение:</span>
+                        <span class="req-value">Требуется для обновлений и загрузки компонентов</span>
+                    </li>
+                </ul>
+                <p class="requirements-note">
+                    Убедитесь, что ваша система соответствует указанным требованиям для оптимальной работы ASX Hub.
+                </p>
+                <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest" class="btn btn-primary btn-large req-download-btn" target="_blank" rel="noopener noreferrer">
+                    Скачать ASX Hub
                 </a>
             </div>
         </section>
@@ -91,14 +108,12 @@
 
     <footer>
         <div class="container">
-            <p>© <span id="year"></span> ASX Hub. Проект с открытым исходным кодом.</p> <!-- Изменил текст -->
-            <p>Создано с ❤️ для сообщества. <a href="https://github.com/ALFiX01/ASX-Hub" target="_blank" rel="noopener noreferrer">Посмотреть на GitHub</a></p> <!-- Замените ВАШ_НИК -->
+            <p>© <span id="year"></span> ASX Hub. Проект с открытым исходным кодом.</p>
+            <p>Создано с ❤️ для сообщества. <a href="https://github.com/ALFiX01/ASX-Hub" target="_blank" rel="noopener noreferrer">Посмотреть на GitHub</a></p>
         </div>
     </footer>
 
-    <!-- Подключение Vanilla Tilt JS (локальный файл) -->
     <script src="vanilla-tilt.min.js"></script>
-    <!-- Подключение основного скрипта -->
     <script src="script.js"></script>
 </body>
 </html>
