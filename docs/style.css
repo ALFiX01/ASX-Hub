@@ -7,13 +7,13 @@
     --medium-text: #a0a0a0;
 
     /* CSS переменные для Glassmorphism */
-    --glass-bg-dark-features: rgba(80, 80, 95, 0.15); /* Фон для карточек фич (очень прозрачный) */
-    --glass-bg-dark-features-hover: rgba(90, 90, 105, 0.3); /* Фон карточек фич при наведении */
-    --glass-bg-header: rgba(25, 25, 30, 0.6); /* Фон для шапки */
-    --glass-border: rgba(255, 255, 255, 0.15); /* Граница для стеклянных элементов */
-    --glass-blur-strong: 12px;  /* Сильное размытие (для шапки) */
-    --glass-blur-medium: 12px; /* Среднее/сильное размытие (для карточек) */
-    --glass-blur-light: 8px;   /* Легкое размытие (для мобильных) */
+    --glass-bg-dark-features: rgba(80, 80, 95, 0.15);
+    --glass-bg-dark-features-hover: rgba(90, 90, 105, 0.3);
+    --glass-bg-header: rgba(25, 25, 30, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-blur-strong: 12px;
+    --glass-blur-medium: 12px;
+    --glass-blur-light: 8px;
 }
 
 * {
@@ -42,7 +42,7 @@ body::after {
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    opacity: 0.35;
+    opacity: 0.25;
     pointer-events: none;
 }
 
@@ -275,7 +275,7 @@ header ul li a.active {
     gap: 40px;
     margin-top: 40px;
 }
-.feature-item {
+.feature-item { /* Этот класс используется и для .cta-card */
     background-color: var(--glass-bg-dark-features);
     padding: 30px;
     border-radius: 16px;
@@ -310,18 +310,43 @@ header ul li a.active {
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
-/* Секция CTA (Call to Action) */
-#cta {
+/* Секция CTA (Call to Action) - стилизована как карточка */
+#cta-section {
     position: relative;
     z-index: 1;
+    display: flex;
+    justify-content: center;
 }
-#cta p {
-    max-width: 600px;
+
+.cta-card { /* Уже наследует стили от .feature-item */
+    /* Дополнительные переопределения или уникальные стили для CTA карточки */
+    padding: 40px 30px; /* Больше отступы для главной CTA */
+    max-width: 700px;
+    width: 100%;
+}
+
+.cta-card h2 {
+    font-size: 2.2em;
+    margin-bottom: 0.8em;
+    color: var(--light-text);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.cta-card p {
+    font-size: 1.2em;
+    margin-bottom: 1.5em;
+    color: var(--medium-text);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    max-width: 550px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 30px;
-    font-size: 1.1em;
 }
+
+.cta-card .btn-large { /* Переопределяем стили кнопки внутри CTA */
+    padding: 18px 45px;
+    font-size: 1.2em;
+}
+
 
 /* Подвал */
 footer {
@@ -381,15 +406,29 @@ footer a:hover {
         gap: 30px;
         grid-template-columns: 1fr; 
     }
-    .feature-item {
-        background-color: rgba(80, 80, 95, 0.25); /* Чуть менее прозрачный фон для мобильных */
+    .feature-item { /* Касается и .cta-card на мобильных */
+        background-color: rgba(80, 80, 95, 0.25);
         backdrop-filter: blur(var(--glass-blur-light));
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
         padding: 25px;
     }
-    .feature-item h3 {
+    .feature-item h3 { /* Для карточек фич */
         font-size: 1.4em;
     }
+    .cta-card { /* Специфичные для CTA на мобильных, если нужно */
+        padding: 30px 20px;
+    }
+    .cta-card h2 {
+        font-size: 2em;
+    }
+    .cta-card p {
+        font-size: 1.1em;
+    }
+    .cta-card .btn-large {
+        padding: 15px 35px;
+        font-size: 1.1em;
+    }
+
 
     footer {
         backdrop-filter: blur(var(--glass-blur-light));
@@ -426,12 +465,17 @@ footer a:hover {
     body::before { filter: blur(50px); opacity: 0.12; }
     body::after { filter: blur(40px); opacity: 0.18; }
 
-    .feature-item {
+    .feature-item { /* Касается и .cta-card */
         background-color: rgba(80, 80, 95, 0.35);
-        /* backdrop-filter: none; -webkit-backdrop-filter: none; */ /* Опционально отключить блюр */
+        /* backdrop-filter: none; -webkit-backdrop-filter: none; */
     }
+    .cta-card .btn-large {
+        padding: 12px 30px; /* Возвращаем к обычному .btn-large на маленьких экранах */
+        font-size: 1.1em;
+    }
+
     footer {
-        /* backdrop-filter: none; -webkit-backdrop-filter: none; */ /* Опционально отключить блюр */
+        /* backdrop-filter: none; -webkit-backdrop-filter: none; */
         background-color: rgba(25,25,30,0.8);
     }
 }
