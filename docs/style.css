@@ -5,14 +5,15 @@
     --dark-bg: #121212;
     --light-text: #f0f0f0;
     --medium-text: #a0a0a0;
+
     /* CSS переменные для Glassmorphism */
-    --glass-bg-dark-features: rgba(55, 55, 70, 0.25); /* Фон для карточек фич (более прозрачный) */
-    --glass-bg-dark-features-hover: rgba(65, 65, 80, 0.4); /* Фон карточек фич при наведении */
+    --glass-bg-dark-features: rgba(80, 80, 95, 0.15); /* Фон для карточек фич (очень прозрачный) */
+    --glass-bg-dark-features-hover: rgba(90, 90, 105, 0.3); /* Фон карточек фич при наведении */
     --glass-bg-header: rgba(25, 25, 30, 0.6); /* Фон для шапки */
-    --glass-border: rgba(255, 255, 255, 0.12); /* Граница для стеклянных элементов */
+    --glass-border: rgba(255, 255, 255, 0.15); /* Граница для стеклянных элементов */
     --glass-blur-strong: 12px;  /* Сильное размытие (для шапки) */
-    --glass-blur-medium: 10px; /* Среднее размытие (для карточек) */
-    --glass-blur-light: 6px;   /* Легкое размытие (для мобильных) */
+    --glass-blur-medium: 12px; /* Среднее/сильное размытие (для карточек) */
+    --glass-blur-light: 8px;   /* Легкое размытие (для мобильных) */
 }
 
 * {
@@ -41,7 +42,7 @@ body::after {
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    opacity: 0.4;
+    opacity: 0.35;
     pointer-events: none;
 }
 
@@ -271,40 +272,42 @@ header ul li a.active {
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
+    gap: 40px;
     margin-top: 40px;
 }
 .feature-item {
     background-color: var(--glass-bg-dark-features);
-    padding: 25px;
-    border-radius: 12px;
+    padding: 30px;
+    border-radius: 16px;
     text-align: center;
     border: 1px solid var(--glass-border);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
     backdrop-filter: blur(var(--glass-blur-medium));
     -webkit-backdrop-filter: blur(var(--glass-blur-medium));
 }
 .feature-item:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 8px 30px rgba(var(--primary-color), 0.25);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 10px 35px rgba(var(--primary-color), 0.3);
     background-color: var(--glass-bg-dark-features-hover);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 .feature-icon {
     width: 50px;
     height: 50px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 .feature-item h3 {
-    font-size: 1.4em;
-    margin-bottom: 10px;
+    font-size: 1.5em;
+    margin-bottom: 12px;
     color: var(--light-text);
-    /* text-shadow: 0 0 5px rgba(0,0,0,0.5); /* Опциональная тень для текста */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
 .feature-item p {
     font-size: 0.95em;
     color: var(--medium-text);
-    /* text-shadow: 0 0 3px rgba(0,0,0,0.5); /* Опциональная тень для текста */
+    line-height: 1.7;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 /* Секция CTA (Call to Action) */
@@ -322,7 +325,7 @@ header ul li a.active {
 
 /* Подвал */
 footer {
-    background-color: rgba(25,25,30,0.5); /* Сделал футер тоже немного стеклянным */
+    background-color: rgba(25,25,30,0.5);
     backdrop-filter: blur(var(--glass-blur-light));
     -webkit-backdrop-filter: blur(var(--glass-blur-light));
     border-top: 1px solid var(--glass-border);
@@ -373,17 +376,25 @@ footer a:hover {
     }
 
     #hero { padding: 180px 0 60px; }
-    .features-grid { grid-template-columns: 1fr; }
-
+    
+    .features-grid { 
+        gap: 30px;
+        grid-template-columns: 1fr; 
+    }
     .feature-item {
-        background-color: rgba(55, 55, 70, 0.35); /* Менее прозрачный фон для мобильных */
+        background-color: rgba(80, 80, 95, 0.25); /* Чуть менее прозрачный фон для мобильных */
         backdrop-filter: blur(var(--glass-blur-light));
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
+        padding: 25px;
     }
+    .feature-item h3 {
+        font-size: 1.4em;
+    }
+
     footer {
-        backdrop-filter: blur(var(--glass-blur-light)); /* Уменьшаем блюр для футера */
+        backdrop-filter: blur(var(--glass-blur-light));
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
-        background-color: rgba(25,25,30,0.7); /* Футер менее прозрачный на мобильных */
+        background-color: rgba(25,25,30,0.7);
     }
 
     #screenshot .screenshot-container { transform-style: flat; }
@@ -416,11 +427,11 @@ footer a:hover {
     body::after { filter: blur(40px); opacity: 0.18; }
 
     .feature-item {
-        background-color: rgba(55, 55, 70, 0.45);
-        /* backdrop-filter: none; -webkit-backdrop-filter: none; */
+        background-color: rgba(80, 80, 95, 0.35);
+        /* backdrop-filter: none; -webkit-backdrop-filter: none; */ /* Опционально отключить блюр */
     }
     footer {
-        /* backdrop-filter: none; -webkit-backdrop-filter: none; */
+        /* backdrop-filter: none; -webkit-backdrop-filter: none; */ /* Опционально отключить блюр */
         background-color: rgba(25,25,30,0.8);
     }
 }
