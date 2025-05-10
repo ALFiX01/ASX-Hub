@@ -231,7 +231,7 @@ header ul li a.active {
 
 .btn-primary {
     background-color: white;
-    color: var(--primary-color);
+    color: var(--primary-glow-color-rgb);
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     /* position: relative; и z-index: 2; уже есть от .btn, если вы применили изменения выше.
        Если .btn не имеет этих свойств, добавьте их сюда:
@@ -251,7 +251,7 @@ header ul li a.active {
     border-radius: 50px; /* Такой же, как у кнопки */
     
     /* Начальное состояние свечения: полностью прозрачное и без распространения */
-    box-shadow: 0 0 0px 0px rgba(var(--primary-color-rgb), 0); 
+    box-shadow: 0 0 0px 0px rgba(var(--primary-glow-color-rgb), 0); 
     
     opacity: 0;
     /* Плавный переход для появления свечения */
@@ -272,8 +272,8 @@ header ul li a.active {
 .btn-primary:hover::before {
     opacity: 1; /* Делаем свечение видимым */
     /* Измененное свечение: менее выраженный цвет, больший размер */
-    box-shadow: 0 0 25px 8px rgba(var(--primary-color-rgb), 0.35), /* Внутреннее кольцо: больше размытие и распространение, меньше непрозрачность */
-                0 0 50px 15px rgba(var(--primary-color-rgb), 0.2);  /* Внешнее гало: значительно больше размытие и распространение, еще меньше непрозрачность */
+    box-shadow: 0 0 25px 8px rgba(var(--primary-glow-color-rgb), 0.35), /* Внутреннее кольцо: больше размытие и распространение, меньше непрозрачность */
+                0 0 50px 15px rgba(var(--primary-glow-color-rgb), 0.25);  /* Внешнее гало: значительно больше размытие и распространение, еще меньше непрозрачность */
 }
 .btn-large {
     padding: 15px 40px;
