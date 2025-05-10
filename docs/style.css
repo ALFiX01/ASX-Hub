@@ -233,31 +233,31 @@ header ul li a.active {
     z-index: 2;
 }
 
-.btn-primary { /* Этот стиль применится ко всем .btn-primary */
+.btn-primary {
     background-color: white;
     color: var(--primary-color);
+    /* Начальную box-shadow можно оставить стандартной, анимация ее переопределит */
     box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
     animation: pulseGlowButton 2.5s infinite ease-in-out;
-    position: relative; /* Добавлено/проверено */
-    z-index: 2; /* Добавлено/проверено */
-    /* Добавляем transition для плавности перехода к статичному свечению при ховере
-       Если в .btn уже есть all, то это можно не дублировать, но для явности: */
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 2;
+    /* transition здесь не нужен, так как он унаследован от .btn или будет переопределен ниже для специфики */
 }
 
 .btn-primary:hover {
     background-color: #f0f0f0;
     color: var(--secondary-color);
-    transform: translateY(-3px) scale(1.05); /* Более выраженное "приподнимание" и увеличение */
-    animation: none; /* Останавливаем пульсацию */
-    /* Задаем ЯРКОЕ статичное свечение при наведении */
-    box-shadow: 0 0 15px rgba(255,255,255,0.4), /* Ярче белое свечение */
-                0 0 25px rgba(var(--secondary-color-rgb), 0.8), /* Основное свечение ярче */
-                0 0 35px rgba(var(--secondary-color-rgb), 0.7),
-                0 0 45px rgba(var(--secondary-color-rgb), 0.6);
+    transform: translateY(-3px) scale(1.05);
+    animation: none; /* Останавливаем пульсирующую анимацию */
+    /* Устанавливаем ЯРКОЕ статичное свечение при наведении.
+       Это значение должно плавно примениться благодаря transition в .btn или .btn-primary */
+    box-shadow: 0 0 15px rgba(255,255,255,0.5), /* Увеличил альфа для белого свечения */
+                0 0 25px rgba(var(--secondary-color-rgb), 0.9), /* Увеличил альфа для основного свечения */
+                0 0 35px rgba(var(--secondary-color-rgb), 0.8),
+                0 0 45px rgba(var(--secondary-color-rgb), 0.7);
 }
 
-/* Анимация для пульсирующего свечения кнопки (если ее не было или она была другой) */
+/* Анимация для пульсирующего свечения кнопки (без изменений) */
 @keyframes pulseGlowButton {
     0% {
         box-shadow: 0 0 5px rgba(255,255,255,0.2),
@@ -278,6 +278,7 @@ header ul li a.active {
                     0 0 20px rgba(var(--secondary-color-rgb), 0.3);
     }
 }
+
 
 /* --- КОНЕЦ ИЗМЕНЕНИЙ ДЛЯ КНОПКИ "СКАЧАТЬ" --- */
 
