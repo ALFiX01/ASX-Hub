@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASX Hub - Оптимизация и настройка Windows</title>
+    <!-- Этот путь корректен, если style.css находится в той же папке web-page, что и index.html -->
     <link rel="stylesheet" href="style.css">
 
     <!-- FAVICON SECTION START -->
+    <!-- Эти пути корректны, если иконки находятся в той же папке web-page -->
     <link rel="icon" type="image/png" sizes="32x32" href="asxhub-logo-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="asxhub-logo-16.png">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -20,6 +22,7 @@
     <header>
         <nav class="container">
             <a href="#" class="logo">
+                <!-- Этот путь корректен, если asxhub-icon.svg в той же папке web-page -->
                 <img src="asxhub-icon.svg" alt="ASX Hub Icon" class="logo-icon">
                 <span>ASX Hub</span>
             </a>
@@ -27,7 +30,7 @@
                 <li><a href="#hero">Главная</a></li>
                 <li><a href="#features">Возможности</a></li>
                 <li><a href="#screenshot">Скриншот</a></li>
-                <li><a href="https://github.com/ALFiX01/ASX-Hub" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                <li><a href="https://github.com/ВАШ_НИК/ASX-Hub" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             </ul>
         </nav>
     </header>
@@ -38,7 +41,7 @@
                 <h1>ASX Hub</h1>
                 <p class="subtitle">Ваш центр оптимизации и настройки Windows</p>
                 <p>Ускорьте работу системы, настройте её под себя и получите максимум производительности с ASX Hub.</p>
-                <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/ВАШ_НИК/ASX-Hub/releases/latest" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
                     Скачать ASX Hub
                 </a>
                 <div class="version-info" id="latest-version">Загрузка актуальной версии...</div>
@@ -47,8 +50,8 @@
 
         <section id="screenshot" class="container section-padding">
             <h2>Интерфейс ASX Hub</h2>
-            <!-- Добавлены data-tilt атрибуты для vanilla-tilt.js -->
             <div class="screenshot-container" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                <!-- Этот путь корректен, если screenshot.png в той же папке web-page -->
                 <img src="screenshot.png" alt="Скриншот интерфейса ASX Hub">
             </div>
         </section>
@@ -57,6 +60,7 @@
             <h2>Ключевые возможности</h2>
             <div class="features-grid">
                 <div class="feature-item">
+                    <!-- Внешние URL для иконок Icons8 остаются без изменений -->
                     <img src="https://img.icons8.com/fluency/48/000000/rocket.png" alt="Ускорение" class="feature-icon"/>
                     <h3>Ускорение системы</h3>
                     <p>Оптимизируйте загрузку, службы и фоновые процессы для максимальной производительности.</p>
@@ -95,9 +99,9 @@
         </div>
     </footer>
 
-    <!-- Подключение Vanilla Tilt JS (локальный файл) -->
+    <!-- Этот путь корректен, если vanilla-tilt.min.js в той же папке web-page -->
     <script src="vanilla-tilt.min.js"></script>
-    <!-- Подключение основного скрипта -->
+    <!-- Этот путь корректен, если script.js в той же папке web-page -->
     <script src="script.js"></script>
 </body>
 </html>
