@@ -42,7 +42,7 @@ body::after {
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    opacity: 0.25;
+    opacity: 0.4;
     pointer-events: none;
 }
 
@@ -53,7 +53,7 @@ body::before {
     top: -28vw;
     left: -28vw;
     filter: blur(90px);
-    animation: slowPulseBefore 15s infinite alternate ease-in-out;
+    animation: slowPulseBefore 17s infinite alternate ease-in-out;
 }
 
 body::after {
@@ -63,7 +63,7 @@ body::after {
     bottom: -22vw;
     right: -22vw;
     filter: blur(80px);
-    animation: slowPulseAfter 18s infinite alternate ease-in-out;
+    animation: slowPulseAfter 20s infinite alternate ease-in-out;
 }
 
 @keyframes slowPulseBefore {
