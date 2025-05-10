@@ -11,6 +11,8 @@
     --code-text-color-rgb: 215, 215, 215; /* RGB для color */
     --code-border-color-rgb: 158, 151, 171; /* RGB для border */
 
+    --secondary-color: #8e2de2;
+    --secondary-color-rgb: 142, 45, 226; /* RGB для #8e2de2 */
 
     /* CSS переменные для Glassmorphism */
     --glass-bg-dark-features: rgba(80, 80, 95, 0.15);
@@ -231,33 +233,51 @@ header ul li a.active {
     z-index: 2;
 }
 
-.btn-primary {
+.btn.btn-primary {
     background-color: white;
     color: var(--primary-color);
-    box-shadow: 0 5px 18px rgba(var(--primary-color-rgb), 0.18);
-    animation: gentle-glow-download 2.5s infinite alternate ease-in-out;
-    /* transform-origin: center center; /* По умолчанию, но можно указать явно */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    /* Добавляем анимацию */
+    animation: pulseGlowButton 2.5s infinite ease-in-out;
+    position: relative; /* Для z-index, если потребуется перекрыть другие тени */
+    z-index: 2; /* Убедимся, что кнопка и ее тень выше некоторых элементов */
 }
 
-.btn-primary:hover {
+/* Убираем анимацию при наведении, чтобы она не конфликтовала с основной */
+/* Или можно сделать так, чтобы при наведении анимация останавливалась или менялась */
+.btn.btn-primary:hover {
     background-color: #f0f0f0;
     color: var(--secondary-color);
-    transform: translateY(-3px) scale(1.03); /* Немного больше эффект при наведении */
-    box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.35);
-    animation: none; /* Отключаем анимацию gentle-glow-download при наведении */
+    transform: translateY(-2px); /* Оставляем эффект приподнимания */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3); /* Стандартная тень при наведении */
+    animation: none; /* Отключаем пульсацию при наведении */
 }
 
-/* Анимация для кнопки "Скачать ASX Hub" */
-@keyframes gentle-glow-download {
+/* Анимация для пульсирующего свечения кнопки */
+@keyframes pulseGlowButton {
     0% {
-        transform: scale(1);
-        box-shadow: 0 5px 18px rgba(var(--primary-color-rgb), 0.18), 0 0 8px rgba(var(--primary-color-rgb), 0.1);
+        /* Используем цвет из вашей палитры для свечения, например, --secondary-color */
+        box-shadow: 0 0 5px rgba(255,255,255,0.2), /* Легкое белое внутреннее свечение */
+                    0 0 10px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.5), /* Основное свечение */
+                    0 0 15px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.4),
+                    0 0 20px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.3);
+        /* var(--secondary-color-rgb) - это RGB компоненты вашего --secondary-color */
+        /* Например, если --secondary-color: #8e2de2;, то RGB это 142, 45, 226 */
+    }
+    50% {
+        box-shadow: 0 0 10px rgba(255,255,255,0.3),
+                    0 0 20px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.7),
+                    0 0 25px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.6),
+                    0 0 30px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.5);
     }
     100% {
-        transform: scale(1.02); /* Легкое увеличение */
-        box-shadow: 0 5px 22px rgba(var(--primary-color-rgb), 0.28), 0 0 18px rgba(var(--primary-color-rgb), 0.22);
+        box-shadow: 0 0 5px rgba(255,255,255,0.2),
+                    0 0 10px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.5),
+                    0 0 15px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.4),
+                    0 0 20px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.3);
     }
 }
+
 /* --- КОНЕЦ ИЗМЕНЕНИЙ ДЛЯ КНОПКИ "СКАЧАТЬ" --- */
 
 .btn-large {
