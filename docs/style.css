@@ -231,7 +231,7 @@ header ul li a.active {
 
 .btn-primary {
     background-color: white;
-    color: var(--primary-glow-color-rgb);
+    color: var(--primary-color-rgb);
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     /* position: relative; и z-index: 2; уже есть от .btn, если вы применили изменения выше.
        Если .btn не имеет этих свойств, добавьте их сюда:
