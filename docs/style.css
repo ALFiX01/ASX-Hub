@@ -671,6 +671,14 @@ header ul li.nav-icon-item {
     align-items: center; /* Для вертикального выравнивания ссылки-иконки */
 }
 
+header ul li a.icon-only-link .nav-icon {
+    display: inline-block;
+    width: 1.4em;  /* Размер иконки (относительно font-size: 1em у ссылок) */
+    height: 1.4em; /* Размер иконки */
+    fill: currentColor; /* <--- ЭТО КЛЮЧЕВОЙ МОМЕНТ! */
+    transition: transform 0.2s ease-in-out, color 0.3s ease;
+}
+
 /* Стили для самой ссылки-иконки */
 header ul li a.icon-only-link {
     padding-top: 0;    /* Убираем вертикальные padding, чтобы line-height работал */
