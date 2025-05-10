@@ -42,14 +42,14 @@ body::after {
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    opacity: 0.25;
+    opacity: 0.4;
     pointer-events: none;
 }
 
 body::before {
     width: 65vw;
     height: 65vw;
-    background: radial-gradient(circle, rgba(100, 45, 226, 0.6) 0%, rgba(74, 0, 224, 0) 70%);
+    background: radial-gradient(circle, rgba(106, 49, 240, 0.6) 0%, rgba(74, 0, 224, 0) 70%);
     top: -28vw;
     left: -28vw;
     filter: blur(90px);
@@ -59,7 +59,7 @@ body::before {
 body::after {
     width: 60vw;
     height: 60vw;
-    background: radial-gradient(circle, rgba(226, 120, 45, 0.5) 0%, rgba(224, 180, 0, 0) 70%);
+    background: radial-gradient(circle, rgba(247, 129, 45, 0.5) 0%, rgba(224, 180, 0, 0) 70%);
     bottom: -22vw;
     right: -22vw;
     filter: blur(80px);
@@ -319,64 +319,77 @@ header ul li a.active {
 }
 
 .requirements-card { /* Наследует от .feature-item, но имеет свои настройки */
-    padding: 35px 30px;
-    max-width: 750px;
+    padding: 40px 35px;
+    max-width: 800px;
     width: 100%;
-    text-align: left; /* Переопределяем text-align для списка */
+    text-align: left;
+    /* background-image: radial-gradient(circle at top left, rgba(255,255,255,0.05) 0%, transparent 50%); */
 }
 
-.requirements-card h2 { /* Уникальные стили для заголовка в этой карточке */
-    font-size: 2em;
-    margin-bottom: 1.2em;
+.requirements-card h2 {
+    font-size: 2.1em;
+    margin-bottom: 1.5em;
     color: var(--light-text);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-    text-align: center; /* Заголовок по центру */
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    text-align: center;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid rgba(var(--glass-border), 0.7);
 }
 
 .requirements-list {
     list-style: none;
     padding-left: 0;
-    margin-bottom: 1.5em;
+    margin-bottom: 2em;
 }
 
 .requirements-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(var(--glass-border), 0.5);
-    font-size: 1em;
+    display: grid;
+    grid-template-columns: auto 1fr; /* Метка по содержимому, значение занимает остальное */
+    gap: 10px 20px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(var(--glass-border), 0.4);
+    font-size: 1.05em;
 }
 
 .requirements-list li:last-child {
     border-bottom: none;
 }
 
+.req-icon { /* Стили для иконок, если будете использовать */
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    opacity: 0.7;
+    /* grid-column: 1; /* Если есть иконки, они в первой колонке */
+}
+
 .req-label {
-    font-weight: 500;
+    font-weight: 600; /* Использовали Roboto 500, 600 будет еще выразительнее */
     color: var(--light-text);
-    margin-right: 15px;
-    flex-shrink: 0;
+    /* grid-column: 1; /* Если нет иконок */
+    /* grid-column: 2; /* Если есть иконки */
+    white-space: nowrap;
 }
 
 .req-value {
     color: var(--medium-text);
-    text-align: right;
+    /* grid-column: 2; /* Если нет иконок */
+    /* grid-column: 3; /* Если есть иконки */
+    text-align: left;
+    justify-self: start;
+    line-height: 1.5;
 }
 
 .requirements-note {
-    font-size: 0.9em;
+    font-size: 0.95em;
     color: var(--medium-text);
     text-align: center;
-    margin-bottom: 2em;
-    opacity: 0.8;
-}
-
-.req-download-btn {
-    display: block;
-    width: fit-content;
-    margin: 0 auto;
-    padding: 15px 40px;
-    font-size: 1.1em;
+    margin-bottom: 0; /* Кнопки больше нет */
+    opacity: 0.9;
+    padding: 15px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 8px;
 }
 
 /* Подвал */
@@ -443,33 +456,38 @@ footer a:hover {
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
         padding: 25px;
     }
-    .feature-item h3 { /* Для карточек фич */
+    .feature-item h3 {
         font-size: 1.4em;
     }
 
-    .requirements-card { /* Специфичные для requirements на мобильных */
+    .requirements-card {
         padding: 30px 20px;
     }
     .requirements-card h2 {
-        font-size: 1.8em;
+        font-size: 1.9em;
+        margin-bottom: 1.2em;
     }
     .requirements-list li {
-        font-size: 0.95em;
-        flex-direction: column;
-        align-items: flex-start;
+        font-size: 1em;
+        grid-template-columns: 1fr; /* Метка и значение друг под другом */
+        gap: 5px;
+        padding: 10px 0;
         border-bottom: 1px solid rgba(var(--glass-border), 0.3);
     }
     .req-label {
         margin-right: 0;
-        margin-bottom: 5px;
+        margin-bottom: 3px;
+        white-space: normal; /* Разрешаем перенос метки */
     }
     .req-value {
         text-align: left;
+        justify-self: stretch;
     }
-    .req-download-btn {
-        font-size: 1em;
-        padding: 12px 30px;
+    .requirements-note {
+        font-size: 0.9em;
+        padding: 12px;
     }
+
 
     footer {
         backdrop-filter: blur(var(--glass-blur-light));
@@ -497,7 +515,7 @@ footer a:hover {
     h1 { font-size: 2em; }
     #hero .subtitle { font-size: 1.2em; }
     .btn { padding: 10px 20px; font-size: 0.9em; }
-    .btn-large { padding: 12px 30px; font-size: 1.1em; } /* Для основной кнопки в Hero */
+    .btn-large { padding: 12px 30px; font-size: 1.1em; }
 
     header .logo { font-size: 1.5em; }
     header ul li a { font-size: 0.9em; }
@@ -511,14 +529,10 @@ footer a:hover {
         /* backdrop-filter: none; -webkit-backdrop-filter: none; */
     }
     .requirements-card h2 {
-        font-size: 1.6em;
+        font-size: 1.7em;
     }
      .requirements-list li {
         font-size: 0.9em;
-    }
-    .req-download-btn { /* Стили для кнопки внутри карточки требований на малых экранах */
-        padding: 12px 30px;
-        font-size: 1em;
     }
 
     footer {
