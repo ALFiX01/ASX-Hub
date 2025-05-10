@@ -224,103 +224,68 @@ header ul li a.active {
 .btn {
     display: inline-block;
     padding: 12px 30px;
-    border-radius: 50px; /* Важно для формы свечения и обрезки */
+    border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
-    transition: all 0.3s ease; /* Базовый transition */
+    transition: all 0.3s ease;
     border: none;
     cursor: pointer;
-    position: relative; /* Необходимо для позиционирования псевдоэлементов */
-    z-index: 1;         /* Чтобы кнопка была выше некоторых фоновых элементов */
-    overflow: hidden;   /* Обрезает псевдоэлементы по границам кнопки, особенно важно для ::after */
+    position: relative;
+    z-index: 2;
 }
-
 .btn-primary {
-    background-color: white;
-    color: var(--primary-color);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Основная тень для объема */
-    /* Переопределяем transition из .btn, чтобы box-shadow не конфликтовал с анимацией свечения */
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1; /* чтобы псевдоэлемент был позади текста */
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-/* Псевдоэлемент для постоянного мягкого ВНЕШНЕГО свечения */
+/* Псевдоэлемент для свечения */
 .btn-primary::before {
-    content: "";
+    content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit; /* Наследуем скругление от .btn-primary */
-    z-index: -1; /* За фоном и текстом кнопки, box-shadow будет виден вокруг */
-    animation: pulse-outer-glow 3s infinite ease-in-out;
-    transition: opacity 0.4s ease, box-shadow 0.4s ease;
-    /* box-shadow будет задан и анимирован в @keyframes */
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(var(--primary-color-rgb), 0.5) 0%, transparent 60%);
+    filter: blur(30px);
+    opacity: 0.7;
+    transform: scale(0);
+    transition: transform 1.5s ease-in-out, opacity 1.5s ease-in-out;
+    pointer-events: none;
+    z-index: -1;
+    animation: pulseGlow 3s infinite ease-in-out;
 }
 
-@keyframes pulse-outer-glow {
-    0%, 100% {
-        box-shadow: 0 0 7px 1px var(--btn-primary-glow-color), /* Основное пульсирующее свечение */
-                    0 0 10px 3px rgba(var(--primary-color-rgb), 0.15); /* Дополнительный мягкий слой */
+/* Анимация «пульсации» свечения */
+@keyframes pulseGlow {
+    0% {
+        transform: scale(0);
+        opacity: 0.5;
     }
     50% {
-        box-shadow: 0 0 14px 4px var(--btn-primary-glow-color),
-                    0 0 20px 8px rgba(var(--primary-color-rgb), 0.25);
-    }
-}
-
-/* Псевдоэлемент для "бегущего" ВНУТРЕННЕГО свечения при наведении */
-.btn-primary::after {
-    content: "";
-    position: absolute;
-    top: -50%; /* Центрирование для вращения */
-    left: -50%;
-    width: 200%; /* Должен быть большим для покрытия при вращении */
-    height: 200%;
-    background: conic-gradient(
-        transparent, /* Начало градиента */
-        transparent 180deg, /* Половина окружности прозрачная */
-        var(--btn-primary-beam-color) 255deg, /* Начало цветного сектора "луча" */
-        rgba(255,255,255,0.5) 270deg, /* Яркая середина луча */
-        var(--btn-primary-beam-color) 285deg, /* Конец цветного сектора "луча" */
-        transparent 360deg /* Конец градиента, остальное прозрачное */
-    );
-    z-index: 0; /* Над фоном кнопки (.btn-primary background-color), но под текстом */
-    opacity: 0;
-    transform-origin: center center;
-    animation: rotate-beam 2.5s linear infinite paused; /* paused по умолчанию */
-    transition: opacity 0.4s ease;
-    border-radius: inherit; /* Хотя overflow:hidden должен справляться, это для подстраховки */
-}
-
-/* Стили при наведении на .btn-primary */
-.btn-primary:hover {
-    background-color: #f0f0f0;
-    color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3); /* Усиленная основная тень при ховере */
-}
-
-.btn-primary:hover::before {
-    animation-play-state: paused; /* Останавливаем базовую пульсацию */
-    /* Задаем статичное, но более интенсивное внешнее свечение */
-    box-shadow: 0 0 18px 6px var(--btn-primary-hover-glow-color),
-                0 0 28px 10px rgba(var(--primary-color-rgb), 0.35);
-    opacity: 1; /* Убедимся, что оно видимо */
-}
-
-.btn-primary:hover::after {
-    opacity: 1; /* Делаем "луч" видимым */
-    animation-play-state: running; /* Запускаем анимацию "луча" */
-}
-
-@keyframes rotate-beam {
-    0% {
-        transform: rotate(0deg);
+        transform: scale(1);
+        opacity: 0.8;
     }
     100% {
-        transform: rotate(360deg);
+        transform: scale(0);
+        opacity: 0.5;
     }
+}
+
+/* Усиление свечения на hover */
+.btn-primary:hover::before {
+    animation-duration: 1.2s;
+    opacity: 1;
+}
+
+/* Немного меняем фон и тень самой кнопки при hover */
+.btn-primary:hover {
+    background-color: #fafafa;
+    color: var(--secondary-color);
+    box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.6), 0 4px 15px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
 }
 .btn-large {
     padding: 15px 40px;
