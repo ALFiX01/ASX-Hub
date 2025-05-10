@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const repoOwner = 'ВАШ_НИК_НА_GITHUB'; // !!! ЗАМЕНИТЕ НА ВАШ НИК !!!
+        const repoOwner = 'ALFiX01'; // !!! ЗАМЕНИТЕ НА ВАШ НИК !!!
         const repoName = 'ASX-Hub';          // !!! ЗАМЕНИТЕ, ЕСЛИ ИМЯ РЕПО ДРУГОЕ !!!
 
         const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`;
