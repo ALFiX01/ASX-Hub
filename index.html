@@ -1,43 +1,88 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ASX Hub — Оптимизация Windows</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASX Hub - Оптимизация и настройка Windows</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Замените на свой favicon, если есть -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="hero">
-    <div class="container">
-      <h1>ASX Hub</h1>
-      <p>Максимальная производительность Windows в один клик</p>
-      <a href="https://github.com/ВашПользователь/ASX-Hub/releases/latest" class="btn">📥 Скачать</a>
-    </div>
-  </header>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">ASX Hub</a>
+            <ul>
+                <li><a href="#hero">Главная</a></li> <!-- Добавил якорь для "Главная" -->
+                <li><a href="#features">Возможности</a></li>
+                <li><a href="#screenshot">Скриншот</a></li>
+                <li><a href="https://github.com/ВАШ_НИК/ASX-Hub" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main class="container">
-    <section class="features">
-      <h2>Почему ASX Hub?</h2>
-      <ul>
-        <li>🚀 Увеличение FPS в играх</li>
-        <li>🧰 Гибкая настройка системы</li>
-        <li>🔒 Улучшение конфиденциальности</li>
-        <li>🧼 Очистка от мусора и временных файлов</li>
-      </ul>
-    </section>
+    <main>
+        <section id="hero">
+            <div class="container hero-content">
+                <h1>ASX Hub</h1>
+                <p class="subtitle">Ваш центр оптимизации и настройки Windows</p>
+                <p>Ускорьте работу системы, настройте её под себя и получите максимум производительности с ASX Hub.</p>
+                <a href="https://github.com/ВАШ_НИК/ASX-Hub/releases/latest" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    Скачать ASX Hub
+                </a>
+                <div class="version-info">Последняя версия: v1.0.0 (замените на актуальную)</div>
+            </div>
+        </section>
 
-    <section class="screenshot">
-      <h2>Интерфейс</h2>
-      <div class="tilt-container">
-        <img src="assets/screenshot.png" alt="Скриншот ASX Hub" id="screenshot" />
-      </div>
-    </section>
-  </main>
+        <section id="screenshot" class="container section-padding">
+            <h2>Интерфейс ASX Hub</h2>
+            <div class="screenshot-container">
+                <img src="screenshot.png" alt="Скриншот интерфейса ASX Hub">
+            </div>
+        </section>
 
-  <footer class="footer">
-    <p>© 2025 ASX Hub | <a href="https://github.com/ВашПользователь/ASX-Hub">GitHub</a></p>
-  </footer>
+        <section id="features" class="container section-padding">
+            <h2>Ключевые возможности</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <img src="https://img.icons8.com/fluency/48/000000/rocket.png" alt="Ускорение" class="feature-icon"/>
+                    <h3>Ускорение системы</h3>
+                    <p>Оптимизируйте загрузку, службы и фоновые процессы для максимальной производительности.</p>
+                </div>
+                <div class="feature-item">
+                    <img src="https://img.icons8.com/fluency/48/000000/privacy.png" alt="Приватность" class="feature-icon"/>
+                    <h3>Контроль приватности</h3>
+                    <p>Отключите телеметрию и настройте параметры конфиденциальности Windows.</p>
+                </div>
+                <div class="feature-item">
+                    <img src="https://img.icons8.com/fluency/48/000000/settings.png" alt="Настройка" class="feature-icon"/>
+                    <h3>Гибкая настройка</h3>
+                    <p>Изменяйте скрытые параметры системы и персонализируйте Windows под свои нужды.</p>
+                </div>
+                <div class="feature-item">
+                    <img src="https://img.icons8.com/fluency/48/000000/broom.png" alt="Очистка" class="feature-icon"/>
+                    <h3>Очистка системы</h3>
+                    <p>Удаляйте ненужные файлы, очищайте кэш и освобождайте место на диске.</p>
+                </div>
+            </div>
+        </section>
 
-  <script src="script.js"></script>
+        <section id="cta" class="container section-padding text-center">
+            <h2>Готовы начать?</h2>
+            <p>Скачайте ASX Hub прямо сейчас и раскройте полный потенциал вашей Windows!</p>
+            <a href="https://github.com/ВАШ_НИК/ASX-Hub/releases/latest" class="btn btn-primary btn-large" target="_blank" rel="noopener noreferrer">
+                Загрузить последнюю версию
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> ASX Hub. Все права защищены (или "Проект с открытым исходным кодом").</p>
+            <p>Создано с ❤️ для сообщества. <a href="https://github.com/ВАШ_НИК/ASX-Hub" target="_blank" rel="noopener noreferrer">Посмотреть на GitHub</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
