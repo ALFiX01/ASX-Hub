@@ -35,40 +35,40 @@ body::after {
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    opacity: 0.15;
+    opacity: 0.25; /* Увеличена базовая прозрачность */
     pointer-events: none;
 }
 
 body::before { /* Фиолетовое/синее свечение */
-    width: 60vw;
-    height: 60vw;
-    background: radial-gradient(circle, rgba(100, 45, 226, 0.4) 0%, rgba(74, 0, 224, 0) 70%); /* Подстроил цвет под палитру */
-    top: -25vw;
-    left: -25vw;
-    filter: blur(100px);
+    width: 65vw;
+    height: 65vw;
+    background: radial-gradient(circle, rgba(100, 45, 226, 0.6) 0%, rgba(74, 0, 224, 0) 70%); /* Увеличена яркость в градиенте */
+    top: -28vw;
+    left: -28vw;
+    filter: blur(90px);
     animation: slowPulseBefore 15s infinite alternate ease-in-out;
 }
 
 body::after { /* Оранжевое/желтое свечение */
-    width: 55vw;
-    height: 55vw;
-    background: radial-gradient(circle, rgba(226, 120, 45, 0.3) 0%, rgba(224, 180, 0, 0) 70%); /* Другой акцентный цвет */
-    bottom: -20vw;
-    right: -20vw;
-    filter: blur(90px);
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(226, 120, 45, 0.5) 0%, rgba(224, 180, 0, 0) 70%); /* Увеличена яркость в градиенте */
+    bottom: -22vw;
+    right: -22vw;
+    filter: blur(80px);
     animation: slowPulseAfter 18s infinite alternate ease-in-out;
 }
 
 @keyframes slowPulseBefore {
-    0% { transform: scale(1) translate(0, 0); opacity: 0.1; }
-    50% { transform: scale(1.15) translate(5vw, 5vh); opacity: 0.2; }
-    100% { transform: scale(1) translate(0, 0); opacity: 0.1; }
+    0% { transform: scale(1) translate(0, 0); opacity: 0.15; }
+    50% { transform: scale(1.15) translate(5vw, 5vh); opacity: 0.3; }
+    100% { transform: scale(1) translate(0, 0); opacity: 0.15; }
 }
 
 @keyframes slowPulseAfter {
-    0% { transform: scale(1) translate(0, 0); opacity: 0.15; }
-    50% { transform: scale(1.2) translate(-5vw, -5vh); opacity: 0.25; }
-    100% { transform: scale(1) translate(0, 0); opacity: 0.15; }
+    0% { transform: scale(1) translate(0, 0); opacity: 0.2; }
+    50% { transform: scale(1.2) translate(-5vw, -5vh); opacity: 0.35; }
+    100% { transform: scale(1) translate(0, 0); opacity: 0.2; }
 }
 
 
@@ -108,14 +108,14 @@ p { margin-bottom: 1em; }
 
 /* Шапка */
 header {
-    background-color: rgba(18, 18, 18, 0.85); /* Немного уменьшил непрозрачность для лучшей видимости фона */
+    background-color: rgba(18, 18, 18, 0.85);
     padding: 15px 0;
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1000; /* Шапка должна быть выше всего, кроме, возможно, модальных окон */
+    z-index: 1000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    backdrop-filter: blur(8px); /* Усилил блюр */
+    backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
 }
 
@@ -184,8 +184,7 @@ header ul li a.active {
 
 /* Секция Hero */
 #hero {
-    /* Убрали сплошной градиентный фон, чтобы было видно свечение сзади */
-    background-color: transparent; /* Или очень легкий полупрозрачный фон, если нужно */
+    background-color: transparent;
     color: white;
     padding: 160px 0 100px;
     text-align: center;
@@ -193,14 +192,14 @@ header ul li a.active {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; /* Для z-index */
-    z-index: 1; /* Чтобы контент hero был выше псевдоэлементов body */
+    position: relative;
+    z-index: 1;
 }
 
 #hero .hero-content {
     max-width: 700px;
-    position: relative; /* Для z-index, если нужно */
-    z-index: 2; /* Убедимся, что контент точно выше фона */
+    position: relative;
+    z-index: 2;
 }
 
 #hero h1 {
@@ -228,7 +227,7 @@ header ul li a.active {
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
-    position: relative; /* Для z-index */
+    position: relative;
     z-index: 2;
 }
 
@@ -258,7 +257,7 @@ header ul li a.active {
 
 /* Секция скриншота */
 #screenshot {
-    position: relative; /* Для z-index */
+    position: relative;
     z-index: 1;
 }
 #screenshot .screenshot-container {
@@ -278,7 +277,7 @@ header ul li a.active {
 
 /* Секция возможностей */
 #features {
-    position: relative; /* Для z-index */
+    position: relative;
     z-index: 1;
 }
 .features-grid {
@@ -321,7 +320,7 @@ header ul li a.active {
 
 /* Секция CTA (Call to Action) */
 #cta {
-    position: relative; /* Для z-index */
+    position: relative;
     z-index: 1;
 }
 #cta p {
@@ -340,7 +339,7 @@ footer {
     padding: 30px 0;
     border-top: 1px solid var(--border-color);
     margin-top: 40px;
-    position: relative; /* Для z-index */
+    position: relative;
     z-index: 1;
 }
 
@@ -400,16 +399,18 @@ footer a:hover {
         height: 90vw;
         top: -35vw;
         left: -45vw;
-        filter: blur(60px);
-        opacity: 0.08; /* Можно сделать менее интенсивным на мобильных */
+        filter: blur(70px);
+        opacity: 0.15;
+        background: radial-gradient(circle, rgba(100, 45, 226, 0.5) 0%, rgba(74, 0, 224, 0) 70%);
     }
     body::after {
-        width: 80vw;
-        height: 80vw;
+        width: 85vw;
+        height: 85vw;
         bottom: -35vw;
         right: -40vw;
-        filter: blur(50px);
-        opacity: 0.12;
+        filter: blur(60px);
+        opacity: 0.2;
+        background: radial-gradient(circle, rgba(226, 120, 45, 0.4) 0%, rgba(224, 180, 0, 0) 70%);
     }
     /* Для производительности на мобильных можно отключить анимацию свечения */
     /* body::before, body::after {
@@ -433,6 +434,6 @@ footer a:hover {
         padding: 170px 0 50px;
     }
 
-    body::before { filter: blur(40px); opacity: 0.06; }
-    body::after { filter: blur(30px); opacity: 0.1; }
+    body::before { filter: blur(50px); opacity: 0.12; }
+    body::after { filter: blur(40px); opacity: 0.18; }
 }
