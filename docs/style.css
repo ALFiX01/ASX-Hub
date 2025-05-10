@@ -251,7 +251,7 @@ header ul li a.active {
     border-radius: 50px; /* Такой же, как у кнопки */
     
     /* Начальное состояние свечения: полностью прозрачное и без распространения */
-    box-shadow: 0 0 0px 0px rgba(var(--primary-glow-color-rgb), 0); 
+    box-shadow: 0 0 0px 0px rgba(var(--primary-color-rgb), 0); 
     
     opacity: 0;
     /* Плавный переход для появления свечения */
