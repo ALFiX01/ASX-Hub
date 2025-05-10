@@ -165,7 +165,6 @@ header .logo:focus {
 header ul {
     list-style: none;
     display: flex;
-    align-items: center; /* Добавлено для выравнивания всех элементов, включая иконку */
 }
 header ul li {
     margin-left: 25px;
@@ -423,7 +422,7 @@ header ul li a.active {
     height: 50px;
     margin-bottom: 20px;
 }
-#features .feature-item h3 {
+#features .feature-item h3 { 
     font-size: 1.5em;
     margin-bottom: 12px;
     color: var(--light-text);
@@ -559,7 +558,6 @@ footer a:hover {
         width: 100%;
         justify-content: center;
         flex-wrap: wrap;
-        align-items: center; /* Добавлено для выравнивания */
     }
     header ul li {
         margin: 5px 10px;
@@ -567,10 +565,10 @@ footer a:hover {
 
     #hero { padding: 140px 0 40px; }
     #changelog-section { padding: 20px 0 40px; }
-
-    .features-grid {
+    
+    .features-grid { 
         gap: 30px;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; 
     }
     .feature-item {
         background-color: rgba(80, 80, 95, 0.25);
@@ -578,7 +576,7 @@ footer a:hover {
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
         padding: 25px;
     }
-    #features .feature-item h3 {
+    #features .feature-item h3 { 
         font-size: 1.4em;
     }
 
@@ -661,76 +659,3 @@ footer a:hover {
         background-color: rgba(25,25,30,0.8);
     }
 }
-
-/* ========= НАЧАЛО: СТИЛИ ДЛЯ ИКОНКИ DISCORD В НАВИГАЦИИ ========= */
-
-/* Стили для контейнера элемента списка с иконкой */
-header ul li.nav-icon-item {
-    margin-left: 10px; /* Отступ от предыдущего элемента (например, GitHub) */
-    display: flex; /* Для вертикального выравнивания ссылки-иконки */
-    align-items: center; /* Для вертикального выравнивания ссылки-иконки */
-}
-
-header ul li a.icon-only-link .nav-icon {
-    display: inline-block;
-    width: 1.4em;  /* Размер иконки (относительно font-size: 1em у ссылок) */
-    height: 1.4em; /* Размер иконки */
-    fill: currentColor; /* <--- ЭТО КЛЮЧЕВОЙ МОМЕНТ! */
-    transition: transform 0.2s ease-in-out, color 0.3s ease;
-}
-
-/* Стили для самой ссылки-иконки */
-header ul li a.icon-only-link {
-    padding-top: 0;    /* Убираем вертикальные padding, чтобы line-height работал */
-    padding-bottom: 0;
-    line-height: 1;    /* Выравниваем высоту контейнера по иконке */
-    /* Небольшая коррекция для лучшего визуального выравнивания с текстовыми ссылками.
-       Подберите значение, которое лучше всего смотрится. */
-    position: relative;
-    top: 1px;
-}
-
-/* Стили для SVG иконки внутри ссылки */
-header ul li a.icon-only-link .nav-icon {
-    display: inline-block;
-    width: 1.4em;  /* Размер иконки (относительно font-size: 1em у ссылок) */
-    height: 1.4em; /* Размер иконки */
-    /* fill: currentColor; уже указан в SVG, цвет будет наследоваться от 'a' */
-    transition: transform 0.2s ease-in-out, color 0.3s ease; /* Добавлен color для SVG */
-}
-
-/* Эффект при наведении/фокусе на ссылку-иконку */
-header ul li a.icon-only-link:hover .nav-icon,
-header ul li a.icon-only-link:focus .nav-icon {
-    transform: scale(1.15);
-    /* Цвет иконки изменится автоматически, т.к. он наследуется от ссылки 'a',
-       а у 'a:hover' уже есть стиль для смены цвета. */
-}
-
-/* Адаптация для мобильных устройств */
-@media (max-width: 768px) {
-    header ul li.nav-icon-item {
-        margin-left: 8px; /* Можно немного уменьшить отступ */
-        margin-top: 0; /* Убедимся, что нет лишнего отступа сверху на мобильных */
-        margin-bottom: 0; /* Убедимся, что нет лишнего отступа снизу на мобильных */
-    }
-    header ul li a.icon-only-link .nav-icon {
-        width: 1.5em; /* Можно сделать иконку чуть крупнее на мобильных */
-        height: 1.5em;
-    }
-    /* Если нужно скорректировать вертикальное положение на мобильных: */
-    header ul li a.icon-only-link {
-        top: 0px; /* Сбрасываем смещение для мобильных, если нужно */
-    }
-}
-
-@media (max-width: 480px) {
-    header ul li.nav-icon-item {
-        margin-left: 5px;
-    }
-    header ul li a.icon-only-link .nav-icon {
-        width: 1.4em;
-        height: 1.4em;
-    }
-}
-/* ========= КОНЕЦ: СТИЛИ ДЛЯ ИКОНКИ DISCORD В НАВИГАЦИИ ========= */
