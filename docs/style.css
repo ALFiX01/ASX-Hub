@@ -42,14 +42,14 @@ body::after {
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    opacity: 0.4;
+    opacity: 0.25;
     pointer-events: none;
 }
 
 body::before {
     width: 65vw;
     height: 65vw;
-    background: radial-gradient(circle, rgba(106, 49, 240, 0.6) 0%, rgba(74, 0, 224, 0) 70%);
+    background: radial-gradient(circle, rgba(100, 45, 226, 0.6) 0%, rgba(74, 0, 224, 0) 70%);
     top: -28vw;
     left: -28vw;
     filter: blur(90px);
@@ -59,7 +59,7 @@ body::before {
 body::after {
     width: 60vw;
     height: 60vw;
-    background: radial-gradient(circle, rgba(247, 129, 45, 0.5) 0%, rgba(224, 180, 0, 0) 70%);
+    background: radial-gradient(circle, rgba(226, 120, 45, 0.5) 0%, rgba(224, 180, 0, 0) 70%);
     bottom: -22vw;
     right: -22vw;
     filter: blur(80px);
@@ -184,9 +184,9 @@ header ul li a.active {
 #hero {
     background-color: transparent;
     color: white;
-    padding: 160px 0 100px;
+    padding: 160px 0 60px; /* Уменьшен нижний отступ */
     text-align: center;
-    min-height: 70vh;
+    /* min-height: 70vh;  Можно убрать, если changelog идет сразу после */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -234,7 +234,7 @@ header ul li a.active {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
-.btn-large {
+.btn-large { /* Используется для основной кнопки "Скачать" в Hero */
     padding: 15px 40px;
     font-size: 1.1em;
 }
@@ -242,6 +242,86 @@ header ul li a.active {
     margin-top: 20px;
     font-size: 0.9em;
     opacity: 0.8;
+}
+
+/* Секция Последние изменения (Патч-ноут) */
+#changelog-section {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    padding: 30px 0 60px; /* Уменьшен верхний отступ */
+}
+
+.changelog-card { /* Наследует от .feature-item */
+    padding: 35px 30px;
+    max-width: 850px;
+    width: 100%;
+    text-align: left;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2), 0 0 0 1px var(--glass-border); /* Обновленная тень */
+}
+
+.changelog-card h2 {
+    font-size: 2em;
+    margin-bottom: 0.8em;
+    color: var(--light-text);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    text-align: center;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid rgba(var(--glass-border), 0.7);
+}
+.changelog-card h2 #changelog-version {
+    font-weight: normal;
+    font-size: 0.8em;
+    color: var(--medium-text);
+}
+
+.changelog-content {
+    margin-bottom: 2em;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 15px;
+    line-height: 1.7;
+    color: var(--medium-text);
+}
+
+.changelog-content h1,
+.changelog-content h2,
+.changelog-content h3,
+.changelog-content h4 {
+    color: var(--light-text);
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+.changelog-content h1 { font-size: 1.6em; }
+.changelog-content h2 { font-size: 1.4em; }
+.changelog-content h3 { font-size: 1.2em; }
+
+.changelog-content p { margin-bottom: 0.8em; }
+.changelog-content ul, .changelog-content ol { margin-left: 20px; margin-bottom: 0.8em; }
+.changelog-content li { margin-bottom: 0.3em; }
+.changelog-content a { color: var(--primary-color); text-decoration: underline; }
+.changelog-content a:hover { color: var(--secondary-color); }
+.changelog-content code { background-color: rgba(0,0,0,0.2); padding: 2px 5px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; font-size: 0.9em; }
+.changelog-content pre { background-color: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px; overflow-x: auto; }
+.changelog-content pre code { padding: 0; background-color: transparent; }
+
+.changelog-all-btn {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 12px 30px;
+    font-size: 1em;
+    background-color: transparent;
+    color: var(--light-text);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    text-decoration: none; /* Убираем подчеркивание у кнопки-ссылки */
+}
+.changelog-all-btn:hover {
+    background-color: var(--glass-border);
+    color: var(--light-text);
+    text-decoration: none;
 }
 
 /* Секция скриншота */
@@ -275,7 +355,7 @@ header ul li a.active {
     gap: 40px;
     margin-top: 40px;
 }
-.feature-item { /* Этот класс используется и для .requirements-card */
+.feature-item { /* Этот класс используется и для .requirements-card, и для .changelog-card */
     background-color: var(--glass-bg-dark-features);
     padding: 30px;
     border-radius: 16px;
@@ -286,7 +366,7 @@ header ul li a.active {
     backdrop-filter: blur(var(--glass-blur-medium));
     -webkit-backdrop-filter: blur(var(--glass-blur-medium));
 }
-.feature-item:hover {
+.feature-item:hover { /* Это правило будет применяться ко всем карточкам с .feature-item */
     transform: translateY(-10px) scale(1.03);
     box-shadow: 0 10px 35px rgba(var(--primary-color), 0.3);
     background-color: var(--glass-bg-dark-features-hover);
@@ -297,18 +377,20 @@ header ul li a.active {
     height: 50px;
     margin-bottom: 20px;
 }
-.feature-item h3 {
+/* Стили для h3 и p внутри .feature-item (для карточек фич) */
+#features .feature-item h3 { 
     font-size: 1.5em;
     margin-bottom: 12px;
     color: var(--light-text);
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
-.feature-item p {
+#features .feature-item p {
     font-size: 0.95em;
     color: var(--medium-text);
     line-height: 1.7;
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
+
 
 /* Секция Системных требований */
 #requirements-section {
@@ -319,11 +401,10 @@ header ul li a.active {
 }
 
 .requirements-card { /* Наследует от .feature-item, но имеет свои настройки */
-    padding: 40px 35px;
+    padding: 40px 35px; /* Увеличили padding по сравнению с .feature-item */
     max-width: 800px;
     width: 100%;
     text-align: left;
-    /* background-image: radial-gradient(circle at top left, rgba(255,255,255,0.05) 0%, transparent 50%); */
 }
 
 .requirements-card h2 {
@@ -344,7 +425,7 @@ header ul li a.active {
 
 .requirements-list li {
     display: grid;
-    grid-template-columns: auto 1fr; /* Метка по содержимому, значение занимает остальное */
+    grid-template-columns: auto 1fr;
     gap: 10px 20px;
     align-items: center;
     padding: 12px 0;
@@ -356,26 +437,21 @@ header ul li a.active {
     border-bottom: none;
 }
 
-.req-icon { /* Стили для иконок, если будете использовать */
+.req-icon {
     width: 24px;
     height: 24px;
     margin-right: 10px;
     opacity: 0.7;
-    /* grid-column: 1; /* Если есть иконки, они в первой колонке */
 }
 
 .req-label {
-    font-weight: 600; /* Использовали Roboto 500, 600 будет еще выразительнее */
+    font-weight: 600;
     color: var(--light-text);
-    /* grid-column: 1; /* Если нет иконок */
-    /* grid-column: 2; /* Если есть иконки */
     white-space: nowrap;
 }
 
 .req-value {
     color: var(--medium-text);
-    /* grid-column: 2; /* Если нет иконок */
-    /* grid-column: 3; /* Если есть иконки */
     text-align: left;
     justify-self: start;
     line-height: 1.5;
@@ -385,7 +461,7 @@ header ul li a.active {
     font-size: 0.95em;
     color: var(--medium-text);
     text-align: center;
-    margin-bottom: 0; /* Кнопки больше нет */
+    margin-bottom: 0;
     opacity: 0.9;
     padding: 15px;
     background-color: rgba(0,0,0,0.1);
@@ -444,32 +520,38 @@ footer a:hover {
         margin: 5px 10px;
     }
 
-    #hero { padding: 180px 0 60px; }
+    #hero { padding: 140px 0 40px; }
+    #changelog-section { padding: 20px 0 40px; }
     
     .features-grid { 
         gap: 30px;
         grid-template-columns: 1fr; 
     }
-    .feature-item { /* Касается и .requirements-card */
+    .feature-item { /* Касается всех карточек с этим классом */
         background-color: rgba(80, 80, 95, 0.25);
         backdrop-filter: blur(var(--glass-blur-light));
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
         padding: 25px;
     }
-    .feature-item h3 {
+    /* Специфичные стили для карточек фич на мобильных */
+    #features .feature-item h3 { 
         font-size: 1.4em;
     }
+    #features .feature-item p {
+        /* Если нужно, здесь можно скорректировать текст */
+    }
+
 
     .requirements-card {
         padding: 30px 20px;
     }
     .requirements-card h2 {
-        font-size: 1.9em;
+        font-size: 1.8em;
         margin-bottom: 1.2em;
     }
     .requirements-list li {
         font-size: 1em;
-        grid-template-columns: 1fr; /* Метка и значение друг под другом */
+        grid-template-columns: 1fr;
         gap: 5px;
         padding: 10px 0;
         border-bottom: 1px solid rgba(var(--glass-border), 0.3);
@@ -477,7 +559,7 @@ footer a:hover {
     .req-label {
         margin-right: 0;
         margin-bottom: 3px;
-        white-space: normal; /* Разрешаем перенос метки */
+        white-space: normal;
     }
     .req-value {
         text-align: left;
@@ -487,6 +569,11 @@ footer a:hover {
         font-size: 0.9em;
         padding: 12px;
     }
+    .changelog-card h2 { font-size: 1.8em; }
+    .changelog-content { max-height: 300px; padding-right: 10px; }
+    .changelog-content h1 { font-size: 1.4em; }
+    .changelog-content h2 { font-size: 1.2em; }
+    .changelog-content h3 { font-size: 1.1em; }
 
 
     footer {
@@ -520,23 +607,21 @@ footer a:hover {
     header .logo { font-size: 1.5em; }
     header ul li a { font-size: 0.9em; }
     #hero { padding: 170px 0 50px; }
+    #changelog-section { padding: 15px 0 30px; }
+
 
     body::before { filter: blur(50px); opacity: 0.12; }
     body::after { filter: blur(40px); opacity: 0.18; }
 
-    .feature-item { /* Касается и .requirements-card */
+    .feature-item {
         background-color: rgba(80, 80, 95, 0.35);
-        /* backdrop-filter: none; -webkit-backdrop-filter: none; */
     }
-    .requirements-card h2 {
-        font-size: 1.7em;
-    }
-     .requirements-list li {
-        font-size: 0.9em;
-    }
+    .requirements-card h2 { font-size: 1.7em; }
+    .requirements-list li { font-size: 0.9em; }
+    .changelog-card h2 { font-size: 1.6em; }
+
 
     footer {
-        /* backdrop-filter: none; -webkit-backdrop-filter: none; */
         background-color: rgba(25,25,30,0.8);
     }
 }

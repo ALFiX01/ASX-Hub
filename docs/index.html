@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASX Hub - Центр для оптимизации и настройки</title>
+    <title>ASX Hub - Оптимизация и настройка Windows</title>
     <link rel="stylesheet" href="style.css">
 
     <!-- FAVICON SECTION START -->
@@ -14,7 +14,7 @@
     <!-- <link rel="manifest" href="/site.webmanifest"> -->
     <!-- FAVICON SECTION END -->
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet"> <!-- Добавил Roboto 500 -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -43,6 +43,18 @@
                     Скачать ASX Hub
                 </a>
                 <div class="version-info" id="latest-version">Загрузка актуальной версии...</div>
+            </div>
+        </section>
+
+        <section id="changelog-section" class="container section-padding">
+            <div class="changelog-card feature-item">
+                <h2>Последние изменения (<span id="changelog-version"></span>)</h2>
+                <div id="changelog-body" class="changelog-content">
+                    <p>Загрузка информации о последних изменениях...</p>
+                </div>
+                <a href="https://github.com/ALFiX01/ASX-Hub/releases" class="btn btn-secondary changelog-all-btn" target="_blank" rel="noopener noreferrer">
+                    Все изменения
+                </a>
             </div>
         </section>
 
@@ -94,23 +106,18 @@
                 <h2>Системные требования</h2>
                 <ul class="requirements-list">
                     <li>
-                        <!-- Пример с иконкой (раскомментируйте и укажите путь, если есть иконка) -->
-                        <!-- <img src="icons/os_icon.svg" alt="OS" class="req-icon"> -->
                         <span class="req-label">Операционная система:</span>
                         <span class="req-value">Windows 10 / 11 (рекомендуется x64)</span>
                     </li>
                     <li>
-                        <!-- <img src="icons/admin_icon.svg" alt="Admin" class="req-icon"> -->
                         <span class="req-label">Права администратора:</span>
                         <span class="req-value">Обязательны для корректной работы</span>
                     </li>
                     <li>
-                        <!-- <img src="icons/internet_icon.svg" alt="Internet" class="req-icon"> -->
                         <span class="req-label">Интернет-соединение:</span>
                         <span class="req-value">Требуется для обновлений и загрузки компонентов</span>
                     </li>
                      <li>
-                        <!-- <img src="icons/disk_space_icon.svg" alt="Disk Space" class="req-icon"> -->
                         <span class="req-label">Свободное место на диске:</span>
                         <span class="req-value">Минимум 15 МБ</span>
                     </li>
@@ -129,6 +136,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="vanilla-tilt.min.js"></script>
     <script src="script.js"></script>
 </body>
