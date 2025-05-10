@@ -136,8 +136,18 @@
         </div>
     </footer>
 
+    <!--
+        ВАЖНО: Порядок подключения скриптов!
+        1. Сначала сторонние библиотеки (marked.js, vanilla-tilt.js)
+        2. Потом ваш собственный script.js, который их использует
+    -->
+    <!-- Подключение marked.js (ЛОКАЛЬНЫЙ ФАЙЛ) -->
     <script src="marked.min.js"></script>
+
+    <!-- Подключение vanilla-tilt.js (предполагается локальный файл) -->
     <script src="vanilla-tilt.min.js"></script>
+
+    <!-- Ваш основной скрипт -->
     <script src="script.js"></script>
 </body>
 </html>

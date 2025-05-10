@@ -12,18 +12,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const headerElement = document.querySelector('header');
     
     function getHeaderOffset() {
-        // Динамически получаем высоту шапки, т.к. она может меняться (например, при ресайзе или добавлении/удалении контента в ней)
         return headerElement ? headerElement.offsetHeight : 0;
     }
 
     function scrollToTarget(targetId) {
         const headerOffset = getHeaderOffset(); 
-        if (targetId === "#" || targetId === "#hero") { // Прокрутка к самому верху или к секции hero
+        if (targetId === "#" || targetId === "#hero") {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
-            // Активируем ссылку "Главная" (если она есть и ведет на #hero)
             navLinks.forEach(l => l.classList.remove('active'));
             const homeLink = document.querySelector('header nav ul li a[href="#hero"]');
             if (homeLink) homeLink.classList.add('active');
@@ -52,34 +50,28 @@ document.addEventListener('DOMContentLoaded', function() {
     if (logoLink) {
         logoLink.addEventListener('click', function(e) {
             e.preventDefault();
-            scrollToTarget("#hero"); // Логотип всегда ведет на #hero (или самый верх)
+            scrollToTarget("#hero"); 
         });
     }
 
     // 3. Выделение активного пункта меню при скролле
-    const sections = Array.from(document.querySelectorAll('main section[id]')); // Собираем все секции с ID в main
+    const sections = Array.from(document.querySelectorAll('main section[id]'));
 
     function changeNavOnScroll() {
         const headerOffset = getHeaderOffset();
         let scrollY = window.pageYOffset;
         let currentSectionId = '';
 
-        // Идем по секциям и определяем, какая сейчас активна
-        // (начиная с последней, чтобы правильно определить, если несколько секций видны одновременно)
         for (let i = sections.length - 1; i >= 0; i--) {
             const section = sections[i];
-            // Учитываем высоту шапки и добавляем небольшой запас (например, 60px)
-            // чтобы секция считалась активной чуть раньше, чем ее самый верх коснется шапки
             const sectionTop = section.offsetTop - headerOffset - 60; 
 
             if (scrollY >= sectionTop) {
                 currentSectionId = section.getAttribute('id');
-                break; // Нашли активную секцию, выходим из цикла
+                break; 
             }
         }
         
-        // Если не найдена активная секция (например, мы в самом верху, выше первой секции с id="hero")
-        // или если currentSectionId пуст, но мы близко к верху и есть секция hero
         if (!currentSectionId && sections.length > 0 && sections[0].id === 'hero' && scrollY < (sections[0].offsetTop - headerOffset + sections[0].offsetHeight - 60) ) {
              currentSectionId = 'hero';
         }
@@ -93,10 +85,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Вызываем функцию при загрузке и при скролле, если есть секции для отслеживания
     if (sections.length > 0 && navLinks.length > 0) {
         window.addEventListener('scroll', changeNavOnScroll);
-        changeNavOnScroll(); // Первоначальный вызов для установки правильного активного пункта
+        changeNavOnScroll();
     }
 
     // 4. Получение последней версии релиза и патч-ноута с GitHub
@@ -106,12 +97,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const changelogBodyElement = document.getElementById('changelog-body');
 
         if (!versionElement && !changelogVersionElement && !changelogBodyElement) {
-            // console.warn('Элементы для версии или патч-ноута не найдены. Пропускаем загрузку с GitHub.');
-            return; // Тихо выходим, если ни одного элемента нет, чтобы не засорять консоль при отсутствии этих блоков
+            return; 
         }
         
-        const repoOwner = 'ALFiX01'; // !!! ЗАМЕНИТЕ НА ВАШ НИК, ЕСЛИ ОТЛИЧАЕТСЯ !!!
-        const repoName = 'ASX-Hub';  // !!! ЗАМЕНИТЕ, ЕСЛИ ИМЯ РЕПО ДРУГОЕ !!!
+        const repoOwner = 'ALFiX01'; 
+        const repoName = 'ASX-Hub';  
         const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`;
 
         try {
@@ -144,7 +134,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 if (changelogBodyElement && data.body) {
-                    if (typeof marked === 'function') { // Проверяем, загружена ли библиотека marked.js
+                    if (typeof marked === 'function') {
+                        // Базовая конфигурация для marked, чтобы обрабатывать переносы строк как <br>
+                        marked.setOptions({
+                            breaks: true, // Преобразует одинарные переносы строк в <br>
+                            gfm: true     // Использует GitHub Flavored Markdown
+                        });
                         changelogBodyElement.innerHTML = marked.parse(data.body);
                     } else {
                         changelogBodyElement.innerHTML = `<pre>${data.body.replace(/</g, "<").replace(/>/g, ">")}</pre>`;
@@ -167,22 +162,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Вызываем функцию для загрузки информации с GitHub
     fetchLatestReleaseInfo();
 
     // 5. Инициализация Vanilla Tilt JS
-    // Библиотека сама находит элементы с атрибутом data-tilt,
-    // но если нужна более тонкая настройка для всех элементов или специфическая инициализация:
-    if (typeof VanillaTilt !== 'undefined') { // Проверяем, загружена ли библиотека
+    if (typeof VanillaTilt !== 'undefined') {
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-            max: 15,         // Максимальный угол наклона
-            speed: 400,      // Скорость анимации
-            glare: true,     // Включить блик
-            "max-glare": 0.3 // Максимальная интенсивность блика
-            // Другие опции можно найти в документации VanillaTilt
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.3
         });
     } else {
-        console.warn('Библиотека VanillaTilt.js не найдена.');
+        // console.warn('Библиотека VanillaTilt.js не найдена.'); // Можно закомментировать, если не критично
     }
 
 });
