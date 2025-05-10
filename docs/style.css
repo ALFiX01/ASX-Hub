@@ -222,70 +222,60 @@ header ul li a.active {
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
-    transition: all 0.3s ease; /* all уже включает transform, box-shadow, background-color, color */
+    transition: all 0.3s ease;
     border: none;
     cursor: pointer;
-    position: relative; /* Необходимо для позиционирования псевдоэлемента */
-    z-index: 1; /* Чтобы кнопка была выше возможного свечения по умолчанию */
-    overflow: hidden; /* Предотвращает выход свечения за пределы кнопки, если оно слишком большое */
+    position: relative;
+    z-index: 2;
 }
-
 .btn-primary {
     background-color: white;
     color: var(--primary-color);
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    /* position: relative; УЖЕ ДОЛЖНО БЫТЬ В .btn */
-    /* z-index: 1; УЖЕ ДОЛЖНО БЫТЬ В .btn */
+    position: relative;
+    overflow: hidden;
 }
-
-/* Псевдоэлемент для свечения */
-.btn-primary::before {
+/* Эффект свечения с анимацией */
+.btn-primary::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 120%; /* Немного больше кнопки */
-    padding-bottom: 120%; /* Для сохранения пропорций (квадрат) */
-    border-radius: 50%; /* Делаем его круглым */
-    background-image: radial-gradient(circle,
-        rgba(var(--glow-color-rgb), 0.4) 0%,
-        rgba(var(--glow-color-rgb), 0) 60%
-    );
-    transform: translate(-50%, -50%) scale(0.8); /* Центрируем и начальный размер */
-    z-index: -1; /* Помещаем ЗА кнопкой */
-    opacity: 0.7;
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
-                opacity 0.4s ease,
-                background-image 0.4s ease; /* Плавность для ховера */
-    animation: pulse-button-glow 3s infinite alternate ease-in-out;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
-@keyframes pulse-button-glow {
+/* Активация анимации при наведении */
+.btn-primary:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+}
+
+/* Дополнительно: пульсирующий эффект (по желанию) */
+@keyframes pulseGlow {
     0% {
         transform: translate(-50%, -50%) scale(0.8);
         opacity: 0.6;
     }
-    100% {
+    50% {
         transform: translate(-50%, -50%) scale(1.1);
-        opacity: 0.9;
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.6;
     }
 }
 
-.btn-primary:hover {
-    background-color: #f0f0f0;
-    color: var(--secondary-color);
-    transform: translateY(-2px); /* Этот transform остается */
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3); /* Этот box-shadow для самой кнопки остается */
-}
-
-.btn-primary:hover::before {
-    animation: none; /* Останавливаем пульсацию при наведении */
-    transform: translate(-50%, -50%) scale(1.25); /* Делаем свечение больше и статичнее */
-    opacity: 1;
-    background-image: radial-gradient(circle,
-        rgba(var(--glow-color-rgb), 0.55) 0%, /* Немного ярче при ховере */
-        rgba(var(--glow-color-rgb), 0) 65%
-    );
+.btn-primary:hover::after {
+    animation: pulseGlow 2s infinite;
 }
 .btn-large {
     padding: 15px 40px;
