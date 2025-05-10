@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 console.error('Failed to fetch release info:', response.status, response.statusText);
                 if (response.status === 403 && versionElement) {
-                     versionElement.textContent = 'Последняя версия: (API лимит)';
+                     versionElement.textContent = ' ';
                 } else if (versionElement) {
                     versionElement.textContent = `Ошибка загрузки версии: ${response.status}`;
                 }
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data && data.tag_name) {
                 if (versionElement) {
-                    versionElement.textContent = `Последняя версия: ${data.tag_name}`;
+                    versionElement.textContent = `Актуальная версия версия: ${data.tag_name}`;
                 }
 
                 if (changelogBodyElement && changelogVersionElement) { // Проверяем наличие обоих элементов для changelog
