@@ -1,95 +1,113 @@
-/* Общие сбросы */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Основные настройки */
 body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Контейнер для контента */
+/* Контейнер */
 .container {
   width: 90%;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 20px 0;
 }
 
-/* Hero‐секция */
+/* Header / Hero */
 .hero {
-  background: linear-gradient(135deg, #4a90e2, #9013fe);
-  color: #fff;
   text-align: center;
-  padding: 60px 0;
+  padding: 100px 20px 60px;
+  background: linear-gradient(145deg, #1e3c72, #2a5298);
+  background-clip: padding-box;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .hero p {
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  opacity: 0.85;
 }
 
 .btn {
-  display: inline-block;
-  background-color: #ffcc00;
-  color: #333;
-  text-decoration: none;
-  padding: 12px 30px;
-  border-radius: 4px;
+  background: linear-gradient(to right, #f9d423, #ff4e50);
+  color: #000;
+  padding: 14px 30px;
+  border-radius: 40px;
   font-weight: bold;
-  transition: background 0.3s ease;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(255, 78, 80, 0.5);
 }
 
 .btn:hover {
-  background-color: #e6b800;
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(255, 78, 80, 0.7);
 }
 
-/* Секции */
-.features, .screenshot {
-  background-color: #fff;
-  margin-top: 30px;
+/* Content Sections */
+.content {
+  padding: 40px 0;
+  flex-grow: 1;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
   padding: 30px;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.features h2, .screenshot h2 {
-  margin-bottom: 15px;
+.glass-card h2 {
+  margin-bottom: 20px;
   font-size: 1.8rem;
+  color: #fff;
 }
 
-.features ul {
-  list-style: disc inside;
+.glass-card ul {
+  list-style: none;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
-.screenshot img {
-  display: block;
+.glass-card img {
   width: 100%;
-  height: auto;
-  border-radius: 4px;
+  border-radius: 12px;
   margin-top: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
-/* Футер */
+/* Footer */
 .footer {
   text-align: center;
-  padding: 20px 0;
-  margin-top: 40px;
+  padding: 20px 10px;
   font-size: 0.9rem;
-  color: #666;
+  background-color: rgba(0,0,0,0.2);
+  color: #ccc;
 }
 
 .footer a {
-  color: #4a90e2;
+  color: #f9d423;
   text-decoration: none;
 }
 
@@ -97,8 +115,13 @@ body {
   text-decoration: underline;
 }
 
-/* Адаптив */
-@media (max-width: 600px) {
-  .hero h1 { font-size: 2.2rem; }
-  .hero p { font-size: 1rem; }
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+
+  .glass-card {
+    padding: 20px;
+  }
 }
