@@ -86,10 +86,12 @@ header .logo {
     font-weight: bold;
     color: var(--light-text);
     text-decoration: none;
+    line-height: 1; /* Для лучшего выравнивания иконки */
 }
 header .logo span {
     color: var(--light-text);
     transition: color 0.3s ease;
+    display: inline-block;
 }
 header .logo:hover span,
 header .logo:focus span {
@@ -101,14 +103,16 @@ header .logo:focus {
 }
 
 .logo-icon {
-    height: 30px;
+    height: 0.9em; /* Иконка высотой ~с текст. Подберите значение для вашей иконки. */
     width: auto;
-    margin-right: 10px;
+    margin-right: 0.3em; /* Отступ справа от иконки */
     transition: filter 0.3s ease;
+    /* fill: currentColor; /* Раскомментируйте, если хотите, чтобы SVG наследовал цвет текста */
 }
-/* Пример эффекта для SVG иконки при наведении */
-/* header .logo:hover .logo-icon {
-    filter: drop-shadow(0 0 3px var(--primary-color));
+/* Пример эффекта для SVG иконки при наведении (если fill: currentColor; работает) */
+/* header .logo:hover .logo-icon,
+header .logo:focus .logo-icon {
+     fill: var(--primary-color);
 } */
 
 
@@ -137,7 +141,6 @@ header ul li a.active {
 header ul li a.active {
     font-weight: 700;
     color: var(--primary-color);
-    /* border-bottom: 2px solid var(--primary-color); */
 }
 
 
@@ -306,14 +309,11 @@ footer a:hover {
     }
     header .logo {
         font-size: 1.6em;
-        margin-bottom: 15px; /* Увеличил отступ для лучшего вида */
+        margin-bottom: 15px;
     }
-    .logo-icon {
-        height: 26px;
-        margin-right: 8px;
-    }
+    /* .logo-icon (height: 0.9em) автоматически подстроится под font-size родителя */
     header ul {
-        margin-top: 0; /* Убрал верхний отступ, так как лого уже имеет нижний */
+        margin-top: 0;
         padding-left: 0;
         width: 100%;
         justify-content: center;
@@ -324,7 +324,7 @@ footer a:hover {
     }
 
     #hero {
-        padding: 180px 0 60px; /* Увеличил отступ сверху из-за высоты шапки в моб. виде */
+        padding: 180px 0 60px;
     }
 
     .features-grid {
@@ -339,15 +339,12 @@ footer a:hover {
     .btn-large { padding: 12px 30px; font-size: 1em; }
 
     header .logo {
-        font-size: 1.5em; /* Еще немного уменьшил лого */
-    }
-    .logo-icon {
-        height: 24px;
+        font-size: 1.5em;
     }
     header ul li a {
         font-size: 0.9em;
     }
     #hero {
-        padding: 170px 0 50px; /* Скорректировал padding для hero */
+        padding: 170px 0 50px;
     }
 }
