@@ -24,7 +24,53 @@ body {
     background-color: var(--dark-bg);
     color: var(--light-text);
     line-height: 1.6;
+    position: relative; /* Для позиционирования псевдоэлементов свечения */
+    overflow-x: hidden; /* Предотвратить горизонтальную прокрутку из-за свечения */
 }
+
+/* Фоновое свечение */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    z-index: -1;
+    border-radius: 50%;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+body::before { /* Фиолетовое/синее свечение */
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(100, 45, 226, 0.4) 0%, rgba(74, 0, 224, 0) 70%); /* Подстроил цвет под палитру */
+    top: -25vw;
+    left: -25vw;
+    filter: blur(100px);
+    animation: slowPulseBefore 15s infinite alternate ease-in-out;
+}
+
+body::after { /* Оранжевое/желтое свечение */
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(circle, rgba(226, 120, 45, 0.3) 0%, rgba(224, 180, 0, 0) 70%); /* Другой акцентный цвет */
+    bottom: -20vw;
+    right: -20vw;
+    filter: blur(90px);
+    animation: slowPulseAfter 18s infinite alternate ease-in-out;
+}
+
+@keyframes slowPulseBefore {
+    0% { transform: scale(1) translate(0, 0); opacity: 0.1; }
+    50% { transform: scale(1.15) translate(5vw, 5vh); opacity: 0.2; }
+    100% { transform: scale(1) translate(0, 0); opacity: 0.1; }
+}
+
+@keyframes slowPulseAfter {
+    0% { transform: scale(1) translate(0, 0); opacity: 0.15; }
+    50% { transform: scale(1.2) translate(-5vw, -5vh); opacity: 0.25; }
+    100% { transform: scale(1) translate(0, 0); opacity: 0.15; }
+}
+
 
 .container {
     max-width: 1100px;
@@ -62,15 +108,15 @@ p { margin-bottom: 1em; }
 
 /* Шапка */
 header {
-    background-color: rgba(18, 18, 18, 0.95);
+    background-color: rgba(18, 18, 18, 0.85); /* Немного уменьшил непрозрачность для лучшей видимости фона */
     padding: 15px 0;
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1000;
+    z-index: 1000; /* Шапка должна быть выше всего, кроме, возможно, модальных окон */
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px); /* Усилил блюр */
+    -webkit-backdrop-filter: blur(8px);
 }
 
 header nav {
@@ -138,7 +184,8 @@ header ul li a.active {
 
 /* Секция Hero */
 #hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    /* Убрали сплошной градиентный фон, чтобы было видно свечение сзади */
+    background-color: transparent; /* Или очень легкий полупрозрачный фон, если нужно */
     color: white;
     padding: 160px 0 100px;
     text-align: center;
@@ -146,10 +193,14 @@ header ul li a.active {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative; /* Для z-index */
+    z-index: 1; /* Чтобы контент hero был выше псевдоэлементов body */
 }
 
 #hero .hero-content {
     max-width: 700px;
+    position: relative; /* Для z-index, если нужно */
+    z-index: 2; /* Убедимся, что контент точно выше фона */
 }
 
 #hero h1 {
@@ -177,6 +228,8 @@ header ul li a.active {
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
+    position: relative; /* Для z-index */
+    z-index: 2;
 }
 
 .btn-primary {
@@ -204,26 +257,30 @@ header ul li a.active {
 }
 
 /* Секция скриншота */
+#screenshot {
+    position: relative; /* Для z-index */
+    z-index: 1;
+}
 #screenshot .screenshot-container {
     max-width: 800px;
     margin: 30px auto 0;
     border: 5px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    /* Важно для 3D эффектов vanilla-tilt */
     transform-style: preserve-3d;
-    /* perspective: 1000px; /* Можно добавить, если эффект кажется плоским */
-    /* overflow: hidden; /* Закомментируйте, если хотите, чтобы блик выходил за рамки */
 }
 
 #screenshot img {
     width: 100%;
     display: block;
-    /* Немного "приподнимает" изображение для лучшего 3D эффекта */
-    transform: translateZ(20px); /* Поэкспериментируйте с этим значением */
+    transform: translateZ(20px);
 }
 
 /* Секция возможностей */
+#features {
+    position: relative; /* Для z-index */
+    z-index: 1;
+}
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -263,6 +320,10 @@ header ul li a.active {
 }
 
 /* Секция CTA (Call to Action) */
+#cta {
+    position: relative; /* Для z-index */
+    z-index: 1;
+}
 #cta p {
     max-width: 600px;
     margin-left: auto;
@@ -279,6 +340,8 @@ footer {
     padding: 30px 0;
     border-top: 1px solid var(--border-color);
     margin-top: 40px;
+    position: relative; /* Для z-index */
+    z-index: 1;
 }
 
 footer p {
@@ -325,14 +388,33 @@ footer a:hover {
         grid-template-columns: 1fr;
     }
      #screenshot .screenshot-container {
-        /* На мобильных устройствах эффект tilt может быть не очень удобен,
-           можно его отключить или сделать менее выраженным через JS,
-           но CSS здесь для примера отключает "выпирание" картинки. */
-        transform-style: flat; /* Отключает 3D для дочерних */
+        transform-style: flat;
     }
     #screenshot img {
-        transform: translateZ(0); /* Убираем "выпирание" на мобильных */
+        transform: translateZ(0);
     }
+
+    /* Адаптивность для свечения */
+    body::before {
+        width: 90vw;
+        height: 90vw;
+        top: -35vw;
+        left: -45vw;
+        filter: blur(60px);
+        opacity: 0.08; /* Можно сделать менее интенсивным на мобильных */
+    }
+    body::after {
+        width: 80vw;
+        height: 80vw;
+        bottom: -35vw;
+        right: -40vw;
+        filter: blur(50px);
+        opacity: 0.12;
+    }
+    /* Для производительности на мобильных можно отключить анимацию свечения */
+    /* body::before, body::after {
+        animation: none;
+    } */
 }
 
 @media (max-width: 480px) {
@@ -350,4 +432,7 @@ footer a:hover {
     #hero {
         padding: 170px 0 50px;
     }
+
+    body::before { filter: blur(40px); opacity: 0.06; }
+    body::after { filter: blur(30px); opacity: 0.1; }
 }
