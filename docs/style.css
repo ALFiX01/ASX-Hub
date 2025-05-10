@@ -6,11 +6,11 @@
     --light-text: #f0f0f0;
     --medium-text: #a0a0a0;
     --primary-color-rgb: 74, 0, 224;
+    --primary-glow-color-rgb: 132, 71, 255;
 
     --code-background-color-rgb: 111, 111, 111; /* RGB для background-color */
     --code-text-color-rgb: 215, 215, 215; /* RGB для color */
     --code-border-color-rgb: 158, 151, 171; /* RGB для border */
-
 
     /* CSS переменные для Glassmorphism */
     --glass-bg-dark-features: rgba(80, 80, 95, 0.15);
