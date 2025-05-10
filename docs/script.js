@@ -93,10 +93,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 4. Получение последней версии релиза и патч-ноута с GitHub
     async function fetchLatestReleaseInfo() {
         const versionElement = document.getElementById('latest-version');
+        const changelogSectionElement = document.getElementById('changelog-section');
         const changelogVersionElement = document.getElementById('changelog-version');
         const changelogBodyElement = document.getElementById('changelog-body');
 
-        if (!versionElement && !changelogVersionElement && !changelogBodyElement) {
+        if (!versionElement && !changelogSectionElement) {
             return; 
         }
         
@@ -106,20 +107,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const response = await fetch(apiUrl);
-            let errorMessage = '';
-
+            
             if (!response.ok) {
-                errorMessage = `Ошибка загрузки данных: ${response.status}`;
-                if (response.status === 404) {
-                    errorMessage = 'Релизы для репозитория не найдены.';
-                } else if (response.status === 403) {
-                    errorMessage = 'Доступ к API GitHub ограничен. Попробуйте позже.';
-                }
                 console.error('Failed to fetch release info:', response.status, response.statusText);
-                
-                if (versionElement) versionElement.textContent = errorMessage;
-                if (changelogVersionElement) changelogVersionElement.textContent = 'Ошибка';
-                if (changelogBodyElement) changelogBodyElement.innerHTML = `<p>${errorMessage}</p>`;
+                if (response.status === 403 && versionElement) {
+                     versionElement.textContent = 'Последняя версия: (API лимит)';
+                } else if (versionElement) {
+                    versionElement.textContent = `Ошибка загрузки версии: ${response.status}`;
+                }
+                if (changelogSectionElement) {
+                    changelogSectionElement.classList.remove('visible');
+                }
                 return;
             }
 
@@ -129,41 +127,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (versionElement) {
                     versionElement.textContent = `Последняя версия: ${data.tag_name}`;
                 }
-                if (changelogVersionElement) {
+
+                if (changelogBodyElement && changelogVersionElement) { // Проверяем наличие обоих элементов для changelog
                     changelogVersionElement.textContent = data.tag_name;
+
+                    if (data.body) {
+                        if (typeof showdown !== 'undefined' && typeof showdown.Converter === 'function') {
+                            const converter = new showdown.Converter({
+                                ghCompatibleHeaderId: true,
+                                simpleLineBreaks: true,    
+                                tables: true,              
+                                strikethrough: true,       
+                                tasklists: true,           
+                                openLinksInNewWindow: true, 
+                                emoji: true                
+                            });
+                            changelogBodyElement.innerHTML = converter.makeHtml(data.body);
+                        } else {
+                            changelogBodyElement.innerHTML = `<pre>${data.body.replace(/</g, "<").replace(/>/g, ">")}</pre>`;
+                            console.warn('Библиотека Showdown.js не найдена. Патч-ноут отображается как простой текст.');
+                        }
+                    } else {
+                        changelogBodyElement.innerHTML = '<p>Описание для этого релиза отсутствует.</p>';
+                    }
+                    
+                    if (changelogSectionElement) {
+                       changelogSectionElement.classList.add('visible');
+                    }
+                } else if (changelogSectionElement) { // Если нет элементов для тела/версии ченджлога, но есть сама секция, скрыть ее
+                     changelogSectionElement.classList.remove('visible');
                 }
 
-                if (changelogBodyElement && data.body) {
-                    // Используем Showdown.js для преобразования Markdown в HTML
-                    if (typeof showdown !== 'undefined' && typeof showdown.Converter === 'function') {
-                        const converter = new showdown.Converter({
-                            ghCompatibleHeaderId: true,
-                            simpleLineBreaks: true,    
-                            tables: true,              
-                            strikethrough: true,       
-                            tasklists: true,           
-                            openLinksInNewWindow: true, 
-                            emoji: true                
-                        });
-                        changelogBodyElement.innerHTML = converter.makeHtml(data.body);
-                    } else {
-                        changelogBodyElement.innerHTML = `<pre>${data.body.replace(/</g, "<").replace(/>/g, ">")}</pre>`;
-                        console.warn('Библиотека Showdown.js не найдена. Патч-ноут отображается как простой текст.');
-                    }
-                } else if (changelogBodyElement) {
-                    changelogBodyElement.innerHTML = '<p>Описание для этого релиза отсутствует.</p>';
-                }
             } else {
                 if (versionElement) versionElement.textContent = 'Не удалось определить версию.';
-                if (changelogVersionElement) changelogVersionElement.textContent = 'N/A';
-                if (changelogBodyElement) changelogBodyElement.innerHTML = '<p>Не удалось загрузить информацию о релизе.</p>';
+                if (changelogSectionElement) {
+                    changelogSectionElement.classList.remove('visible');
+                }
             }
 
         } catch (error) {
             console.error('Error fetching latest release info:', error);
             if (versionElement) versionElement.textContent = 'Ошибка при запросе.';
-            if (changelogVersionElement) changelogVersionElement.textContent = 'Ошибка';
-            if (changelogBodyElement) changelogBodyElement.innerHTML = '<p>Ошибка при запросе информации.</p>';
+            if (changelogSectionElement) {
+                changelogSectionElement.classList.remove('visible');
+            }
         }
     }
 
@@ -180,5 +187,4 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         // console.warn('Библиотека VanillaTilt.js не найдена.');
     }
-
 });

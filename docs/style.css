@@ -44,14 +44,14 @@ body::after {
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    opacity: 0.4;
+    opacity: 0.25;
     pointer-events: none;
 }
 
 body::before {
     width: 65vw;
     height: 65vw;
-    background: radial-gradient(circle, rgba(108, 52, 240, 0.6) 0%, rgba(74, 0, 224, 0) 70%);
+    background: radial-gradient(circle, rgba(100, 45, 226, 0.6) 0%, rgba(74, 0, 224, 0) 70%);
     top: -28vw;
     left: -28vw;
     filter: blur(90px);
@@ -61,7 +61,7 @@ body::before {
 body::after {
     width: 60vw;
     height: 60vw;
-    background: radial-gradient(circle, rgba(240, 131, 53, 0.5) 0%, rgba(224, 180, 0, 0) 70%);
+    background: radial-gradient(circle, rgba(226, 120, 45, 0.5) 0%, rgba(224, 180, 0, 0) 70%);
     bottom: -22vw;
     right: -22vw;
     filter: blur(80px);
@@ -249,9 +249,12 @@ header ul li a.active {
 #changelog-section {
     position: relative;
     z-index: 1;
-    display: flex;
+    display: none; /* Скрываем по умолчанию, показываем через JS */
     justify-content: center;
     padding: 30px 0 60px;
+}
+#changelog-section.visible {
+    display: flex; /* Показываем, когда есть контент */
 }
 
 .changelog-card { /* Наследует от .feature-item */
@@ -327,7 +330,7 @@ header ul li a.active {
 
 .changelog-content code {
     background-color: rgba(var(--primary-color-rgb), 0.1);
-    color: var(--primary-color);
+    color: var(--light-text); /* Изменено для читаемости */
     padding: 3px 6px;
     border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
