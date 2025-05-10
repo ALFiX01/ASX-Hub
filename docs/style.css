@@ -20,11 +20,6 @@
     --glass-blur-strong: 12px;
     --glass-blur-medium: 12px;
     --glass-blur-light: 8px;
-
-    /* Переменные для анимации кнопки */
-    --btn-primary-glow-color: rgba(var(--primary-color-rgb), 0.45); /* Цвет для базовой пульсации */
-    --btn-primary-hover-glow-color: rgba(var(--primary-color-rgb), 0.65); /* Цвет для усиленного свечения при наведении */
-    --btn-primary-beam-color: rgba(var(--secondary-color-rgb), 0.6); /* Цвет для "луча" при наведении */
 }
 
 * {
@@ -227,65 +222,58 @@ header ul li a.active {
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; /* Этот transition покроет transform, background-color, color кнопки */
     border: none;
     cursor: pointer;
-    position: relative;
-    z-index: 2;
-}
-.btn-primary {
-    position: relative;
-    overflow: hidden;
-    z-index: 1; /* чтобы псевдоэлемент был позади текста */
-    transition: color 0.3s ease, background-color 0.3s ease;
+    position: relative; /* ДОБАВЛЕНО/ВАЖНО: для z-index и позиционирования псевдоэлемента */
+    z-index: 2; /* ДОБАВЛЕНО/ВАЖНО: для корректной работы z-index: -1 у псевдоэлемента */
 }
 
-/* Псевдоэлемент для свечения */
+.btn-primary {
+    background-color: white;
+    color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    /* position: relative; и z-index: 2; уже есть от .btn, если вы применили изменения выше.
+       Если .btn не имеет этих свойств, добавьте их сюда:
+       position: relative;
+       z-index: 2;
+    */
+}
+
+/* НОВЫЙ БЛОК: Псевдоэлемент для анимации свечения */
 .btn-primary::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center, rgba(var(--primary-color-rgb), 0.5) 0%, transparent 60%);
-    filter: blur(30px);
-    opacity: 0.7;
-    transform: scale(0);
-    transition: transform 1.5s ease-in-out, opacity 1.5s ease-in-out;
-    pointer-events: none;
-    z-index: -1;
-    animation: pulseGlow 3s infinite ease-in-out;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px; /* Такой же, как у кнопки */
+    
+    /* Начальное состояние свечения: полностью прозрачное и без распространения */
+    box-shadow: 0 0 0px 0px rgba(var(--primary-color-rgb), 0); 
+    
+    opacity: 0;
+    /* Плавный переход для появления свечения */
+    transition: box-shadow 0.35s ease-out, opacity 0.35s ease-out;
+    z-index: -1; /* Помещаем псевдоэлемент ЗА кнопкой */
 }
 
-/* Анимация «пульсации» свечения */
-@keyframes pulseGlow {
-    0% {
-        transform: scale(0);
-        opacity: 0.5;
-    }
-    50% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
-    100% {
-        transform: scale(0);
-        opacity: 0.5;
-    }
-}
-
-/* Усиление свечения на hover */
-.btn-primary:hover::before {
-    animation-duration: 1.2s;
-    opacity: 1;
-}
-
-/* Немного меняем фон и тень самой кнопки при hover */
+/* ИЗМЕНЕНИЯ В :hover СТИЛЯХ КНОПКИ */
 .btn-primary:hover {
-    background-color: #fafafa;
+    background-color: #f0f0f0;
     color: var(--secondary-color);
-    box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.6), 0 4px 15px rgba(0,0,0,0.2);
     transform: translateY(-2px);
+    /* Слегка изменяем тень самой кнопки на ховере, чтобы лучше сочеталось со свечением */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* ИЗМЕНЕНО значение box-shadow */
+}
+
+/* НОВЫЙ БЛОК: Стили для псевдоэлемента при наведении на кнопку */
+.btn-primary:hover::before {
+    opacity: 1; /* Делаем свечение видимым */
+    /* Красивое современное свечение */
+    box-shadow: 0 0 15px 4px rgba(var(--primary-color-rgb), 0.55), /* Более интенсивное внутреннее кольцо свечения */
+                0 0 35px 10px rgba(var(--primary-color-rgb), 0.3);  /* Мягкое внешнее гало */
 }
 .btn-large {
     padding: 15px 40px;
