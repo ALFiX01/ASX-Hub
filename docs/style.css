@@ -11,7 +11,7 @@
     --code-text-color-rgb: 215, 215, 215; /* RGB для color */
     --code-border-color-rgb: 158, 151, 171; /* RGB для border */
 
-    --secondary-color: #8e2de2;
+    --secondary-color: #973ee6;
     --secondary-color-rgb: 142, 45, 226; /* RGB для #8e2de2 */
 
     /* CSS переменные для Glassmorphism */
@@ -233,48 +233,49 @@ header ul li a.active {
     z-index: 2;
 }
 
-.btn.btn-primary {
+.btn-primary { /* Этот стиль применится ко всем .btn-primary */
     background-color: white;
     color: var(--primary-color);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    /* Добавляем анимацию */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
     animation: pulseGlowButton 2.5s infinite ease-in-out;
-    position: relative; /* Для z-index, если потребуется перекрыть другие тени */
-    z-index: 2; /* Убедимся, что кнопка и ее тень выше некоторых элементов */
+    position: relative; /* Добавлено/проверено */
+    z-index: 2; /* Добавлено/проверено */
+    /* Добавляем transition для плавности перехода к статичному свечению при ховере
+       Если в .btn уже есть all, то это можно не дублировать, но для явности: */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Убираем анимацию при наведении, чтобы она не конфликтовала с основной */
-/* Или можно сделать так, чтобы при наведении анимация останавливалась или менялась */
-.btn.btn-primary:hover {
+.btn-primary:hover {
     background-color: #f0f0f0;
     color: var(--secondary-color);
-    transform: translateY(-2px); /* Оставляем эффект приподнимания */
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3); /* Стандартная тень при наведении */
-    animation: none; /* Отключаем пульсацию при наведении */
+    transform: translateY(-3px) scale(1.05); /* Более выраженное "приподнимание" и увеличение */
+    animation: none; /* Останавливаем пульсацию */
+    /* Задаем ЯРКОЕ статичное свечение при наведении */
+    box-shadow: 0 0 15px rgba(255,255,255,0.4), /* Ярче белое свечение */
+                0 0 25px rgba(var(--secondary-color-rgb), 0.8), /* Основное свечение ярче */
+                0 0 35px rgba(var(--secondary-color-rgb), 0.7),
+                0 0 45px rgba(var(--secondary-color-rgb), 0.6);
 }
 
-/* Анимация для пульсирующего свечения кнопки */
+/* Анимация для пульсирующего свечения кнопки (если ее не было или она была другой) */
 @keyframes pulseGlowButton {
     0% {
-        /* Используем цвет из вашей палитры для свечения, например, --secondary-color */
-        box-shadow: 0 0 5px rgba(255,255,255,0.2), /* Легкое белое внутреннее свечение */
-                    0 0 10px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.5), /* Основное свечение */
-                    0 0 15px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.4),
-                    0 0 20px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.3);
-        /* var(--secondary-color-rgb) - это RGB компоненты вашего --secondary-color */
-        /* Например, если --secondary-color: #8e2de2;, то RGB это 142, 45, 226 */
+        box-shadow: 0 0 5px rgba(255,255,255,0.2),
+                    0 0 10px rgba(var(--secondary-color-rgb), 0.5),
+                    0 0 15px rgba(var(--secondary-color-rgb), 0.4),
+                    0 0 20px rgba(var(--secondary-color-rgb), 0.3);
     }
     50% {
         box-shadow: 0 0 10px rgba(255,255,255,0.3),
-                    0 0 20px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.7),
-                    0 0 25px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.6),
-                    0 0 30px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.5);
+                    0 0 20px rgba(var(--secondary-color-rgb), 0.7),
+                    0 0 25px rgba(var(--secondary-color-rgb), 0.6),
+                    0 0 30px rgba(var(--secondary-color-rgb), 0.5);
     }
     100% {
         box-shadow: 0 0 5px rgba(255,255,255,0.2),
-                    0 0 10px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.5),
-                    0 0 15px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.4),
-                    0 0 20px rgba(var(--secondary-color-rgb, 142, 45, 226), 0.3);
+                    0 0 10px rgba(var(--secondary-color-rgb), 0.5),
+                    0 0 15px rgba(var(--secondary-color-rgb), 0.4),
+                    0 0 20px rgba(var(--secondary-color-rgb), 0.3);
     }
 }
 
