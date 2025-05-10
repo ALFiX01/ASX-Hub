@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //     max: 25,
     //     speed: 400,
     //     glare: true,
-    //     "max-glare": 0.5
+    //     "max-glare": 0.5 
     // });
     // Поскольку data-атрибуты уже есть, явная JS инициализация vanilla-tilt не строго обязательна
     // для элементов, уже имеющих data-tilt. Библиотека сама их найдет.
