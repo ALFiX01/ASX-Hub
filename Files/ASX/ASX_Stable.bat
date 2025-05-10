@@ -104,13 +104,13 @@ echo 📌 Запуск ASX Hub >> "!ASX-Directory!\Files\Logs\%date%.txt"
 
 REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
-set "Version=1.5.1"
-set "FullVersionNameCurrent=1.5.1"
+set "Version=1.5.2"
+set "FullVersionNameCurrent=1.5.2"
 set "VersionNumberCurrent=MA07S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=07.05.2025"
+set "DateUpdate=08.05.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -1457,37 +1457,37 @@ set PageName=TweaksPanel
 echo.
 echo.
 echo.
-echo                                        %COL%[90m::::::::::: :::       ::: ::::::::::     :::     :::    ::: ::::::::
-echo                                           :+:     :+:       :+: :+:          :+: :+:   :+:   :+: :+:    :+:
-echo                                          +:+     +:+       +:+ +:+         +:+   +:+  +:+  +:+  +:+
-echo                                         +#+     +#+  +:+  +#+ +#++:++#   +#++:++#++: +#++:++   +#++:++#++
-echo                                        +#+     +#+ +#+#+ +#+ +#+        +#+     +#+ +#+  +#+         +#+
-echo                                       #+#      #+#+# #+#+#  #+#        #+#     #+# #+#   #+# #+#    #+#
-echo                                      ###       ###   ###   ########## ###     ### ###    ### ########
+echo                                       %COL%[90m:::::::::::  :::       :::  ::::::::::      :::      :::    :::  ::::::::
+echo                                          :+:      :+:       :+:  :+:           :+: :+:    :+:   :+:  :+:    :+:
+echo                                         +:+      +:+       +:+  +:+          +:+   +:+   +:+  +:+   +:+
+echo                                        +#+      +#+  +:+  +#+  +#++:++#    +#++:++#++:  +#++:++    +#++:++#++
+echo                                       +#+      +#+ +#+#+ +#+  +#+         +#+     +#+  +#+  +#+         +#+
+echo                                      #+#       #+#+# #+#+#   #+#         #+#     #+#  #+#   #+#  #+#    #+#
+echo                                     ###        ###   ###    ##########  ###     ###  ###    ###  ########
 echo.
 echo.
 echo.
 echo.
 echo.
-echo                                                          %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Оптимизация и настройки
+echo                                                           %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Оптимизация и настройки
 echo.
 echo.
-echo                                                          %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Конфиденциальность
+echo                                                           %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Конфиденциальность
 echo.
 echo.
-echo                                                          %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Контекстное меню
+echo                                                           %COL%[96m[%COL%[37m 3 %COL%[96m]%COL%[37m Контекстное меню
 echo.
 echo.
-echo                                                          %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Кастомизация
+echo                                                           %COL%[96m[%COL%[37m 4 %COL%[96m]%COL%[37m Кастомизация
 echo.
 echo.
-echo                                                          %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Службы
+echo                                                           %COL%[96m[%COL%[37m 5 %COL%[96m]%COL%[37m Службы
 echo.
 echo.
-echo                                                          %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Экспериментальные
+echo                                                           %COL%[96m[%COL%[37m 6 %COL%[96m]%COL%[37m Экспериментальные
 echo.
 echo.
-echo                                                          %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Исправление проблем
+echo                                                           %COL%[96m[%COL%[37m 7 %COL%[96m]%COL%[37m Исправление проблем
 echo.
 echo.
 echo.
@@ -2060,7 +2060,7 @@ echo  Идет получение информации о текущих пар�
 REM echo [DEBUG] %TIME% - If_First_call >> "%ASX-Directory%\Files\Logs\%date%.txt"
 (
     for %%i in (ASXPW PWTH DBGP CTW ETW AUTOF BCDOF NONOF CONG HIBNT INDK DANF WNDF WDNT APSN UACS DWLC FSOOF AUMS AUSA BTEB DSCR ) do (set "%%i=%COL%[92mВКЛ ")
-    for %%i in (HDCP FSBT SMTSX HCCF WDNT PGMT SchM SLMD DSKN ONDR ECHR CRIS WINDF NVPIN ) do (set "%%i=%COL%[91mВЫКЛ")
+    for %%i in (HDCP FSBT SMTSX HCCF WDNT PGMT SchM SLMD DSKN ONDR ECHR CRIS WINDF NVPIN CPLT ) do (set "%%i=%COL%[91mВЫКЛ")
     for %%i in (LRAM REDG TIIP ) do (set "%%i=%COL%[90mН/Д ")
 
     REM Проверка активного плана электропитания
@@ -2179,6 +2179,13 @@ REM echo [DEBUG] %TIME% - If_First_call >> "%ASX-Directory%\Files\Logs\%date%.tx
     REM Проверка фоновой работы браузера Microsoft Edge
     reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge" /v "BackgroundModeEnabled" | findstr /i "0x0" >nul 2>&1 && set "BTEB=%COL%[91mВЫКЛ"
 
+    REM Recall
+    dism /Online /Get-FeatureInfo /FeatureName:Recall >nul 2>&1 && ( set "RECL=%COL%[91mВЫКЛ" ) || ( set "RECL=%COL%[92mВКЛ " )
+
+    REM Copilot
+    reg query "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v "IsUserEligible" | findstr /i "0x0" >nul 2>&1 && set "CPLT=%COL%[92mВКЛ "
+    reg query "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "HubsSidebarEnabled" | findstr /i "0x0" >nul 2>&1 && set "CPLT=%COL%[92mВКЛ "
+
 	REM Определение типа видеокарты
 	for /f "tokens=2 delims==" %%a in ('wmic path Win32_VideoController get VideoProcessor /value') do (
 		for %%n in (GeForce NVIDIA RTX GTX) do echo %%a | find "%%n" >nul && set "NVIDIAGPU=Found"
@@ -2212,9 +2219,7 @@ echo          %COL%[97m-----------------------%COL%[37m
 echo           1 %COL%[36m[%COL%[37m %ASXPW% %COL%[36m]%COL%[37m План электропитания ASX Hub
 echo           2 %COL%[36m[%COL%[37m %FSOOF% %COL%[36m]%COL%[37m Выключить FSO и GameBar
 echo           3 %COL%[36m[%COL%[37m %SMTSX% %COL%[36m]%COL%[37m Spectre, Meldown, DownFall
-
 echo           4 %COL%[36m[%COL%[37m %NVPIN% %COL%[36m]%COL%[37m Оптимизация настроек Nvidia
-
 echo           5 %COL%[36m[%COL%[37m %HDCP% %COL%[36m]%COL%[37m HDCP
 echo           6 %COL%[36m[%COL%[37m %PWTH% %COL%[36m]%COL%[37m Power throttling
 echo           7 %COL%[36m[%COL%[37m %DBGP% %COL%[36m]%COL%[37m Работа UWP программ в фоне
@@ -2248,9 +2253,9 @@ echo          28 %COL%[36m[%COL%[37m %COL%[91mБЛОК %COL%[36m]%COL%[37m Из�
 echo          29 %COL%[36m[%COL%[37m %AUMS% %COL%[36m]%COL%[37m Автообновление карт
 echo          30 %COL%[36m[%COL%[37m %AUSA% %COL%[36m]%COL%[37m Автообновление приложений магазина
 echo          31 %COL%[36m[%COL%[37m %BTEB% %COL%[36m]%COL%[37m Ускорение Microsoft Edge и фоновая работы браузера
-echo.
-echo.
-echo.
+echo          32 %COL%[36m[%COL%[37m %RECL% %COL%[36m]%COL%[37m Удалить Recall
+echo          33 %COL%[36m[%COL%[37m %CPLT% %COL%[36m]%COL%[37m Удалить Copilot
+echo          34 %COL%[36m[%COL%[37m %WTUL% %COL%[36m]%COL%[37m Удалить виджеты
 echo.
 echo.
 REM echo                                   %COL%[36m[ B - Назад ]         %COL%[91m[ X - Главное меню ]         %COL%[36m[ N - Слудующая страница ]%COL%[90m
@@ -2298,6 +2303,9 @@ if "%WinVer%"=="Windows 11" (
 if /i "%choice%"=="29" ( set "history=OptimizationCenterPG1;!history!" && call:AutoUpdateMaps )
 if /i "%choice%"=="30" ( set "history=OptimizationCenterPG1;!history!" && call:AutoStoreApps )
 if /i "%choice%"=="31" ( set "history=OptimizationCenterPG1;!history!" && call:BackgroundTaskEdgeBrowser )
+if /i "%choice%"=="32" ( set "history=OptimizationCenterPG1;!history!" && call:RecallAi )
+if /i "%choice%"=="33" ( set "history=OptimizationCenterPG1;!history!" && call:CopilotAi )
+if /i "%choice%"=="34" ( set "history=OptimizationCenterPG1;!history!" && Call:WidgetUninstall )
 if /i "%choice%"=="C" ( set "history=OptimizationCenterPG1;!history!" && goto ASX_CMD )
 if /i "%choice%"=="с" ( set "history=OptimizationCenterPG1;!history!" && goto ASX_CMD )
 if /i "%choice%"=="X" ( set "history=OptimizationCenterPG1;!history!" && goto MainMenu )
@@ -3590,7 +3598,6 @@ goto GoBack
 :WidgetUninstall
 echo [INFO ] %TIME% - Вызван ":WidgetUninstall" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 if "%WTUL%" == "%COL%[91mВЫКЛ" (
-
     chcp 850 >nul 2>&1
     rem Удаление DesktopPackageMetadata
     powershell -Command "Get-AppxPackage *DesktopPackageMetadata* | Remove-AppxPackage" >nul 2>&1
@@ -3740,6 +3747,64 @@ REM Проверка ускорения Microsoft Edge и фоновой раб�
 set "BTEB=%COL%[92mВКЛ "
 set "errorlevel_a=%errorlevel%"
 reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge" /v "BackgroundModeEnabled" | findstr /i "0x0" >nul 2>&1 && set "BTEB=%COL%[91mВЫКЛ"
+set "errorlevel=%errorlevel_a%"
+call:Complete_notice
+goto GoBack
+
+:RecallAi
+echo [INFO ] %TIME% - Вызван ":RecallAi" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+if "%RECL%" == "%COL%[92mВКЛ " (
+    dism /Online /Enable-Feature /FeatureName:Recall /All
+    set "operation_name=Включение Recall"
+) else (
+    dism /Online /Disable-Feature /FeatureName:Recall /Remove
+    set "operation_name=Удаление Recall"
+)
+REM Проверка ускорения Microsoft Edge и фоновой работы браузера
+set "errorlevel_a=%errorlevel%"
+dism /Online /Get-FeatureInfo /FeatureName:Recall >nul 2>&1 && ( set "RECL=%COL%[91mВЫКЛ" ) || ( set "RECL=%COL%[92mВКЛ " )
+set "errorlevel=%errorlevel_a%"
+call:Complete_notice
+goto GoBack
+
+:CopilotAi
+echo [INFO ] %TIME% - Вызван ":CopilotAi" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+if "%CPLT%" == "%COL%[92mВКЛ " (
+    :: Убираем политики «выключено» (ставим 0 или удаляем ключи)
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 0 /f
+    reg add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 0 /f
+
+    :: Восстанавливаем автозапуск и кнопку
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v AutoOpenCopilotLargeScreens /t REG_DWORD /d 1 /f
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowCopilotButton /t REG_DWORD /d 1 /f
+    reg add "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v IsUserEligible /t REG_DWORD /d 1 /f
+
+    :: Включаем боковую панель в Edge по умолчанию (ставим 1)
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v HubsSidebarEnabled /t REG_DWORD /d 1 /f
+    set "operation_name=Включение Copilot"
+) else (
+    :: Удаляем приложение
+    PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage Microsoft.CoPilot | Remove-AppxPackage"
+
+    :: Ставим политики «выключено»
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
+    reg add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
+
+    :: Отключаем автозапуск и кнопку
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v AutoOpenCopilotLargeScreens /t REG_DWORD /d 0 /f
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowCopilotButton /t REG_DWORD /d 0 /f
+    reg add "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v IsUserEligible /t REG_DWORD /d 0 /f
+
+    :: Отключаем боковую панель в Edge (при наличии)
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v HubsSidebarEnabled /t REG_DWORD /d 0 /f
+    set "operation_name=Удаление Copilot"
+)
+REM Проверка ускорения Microsoft Edge и фоновой работы браузера
+set "CPLT=%COL%[91mВЫКЛ"
+set "errorlevel_a=%errorlevel%"
+REM Copilot
+reg query "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v "IsUserEligible" | findstr /i "0x0" >nul 2>&1 && set "CPLT=%COL%[92mВКЛ "
+reg query "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "HubsSidebarEnabled" | findstr /i "0x0" >nul 2>&1 && set "CPLT=%COL%[92mВКЛ "
 set "errorlevel=%errorlevel_a%"
 call:Complete_notice
 goto GoBack
@@ -4480,6 +4545,23 @@ REM Стрелки на ярлыках
 reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons" /v 29  && set "IconArrow=%COL%[91mВЫКЛ"
 ) >nul 2>&1
 
+reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /v "RenameNameTemplate" >nul 2>&1
+if %errorlevel% equ 0 (
+    set "FolderNameTemplate=%COL%[92mВКЛ "
+) else (
+    set "FolderNameTemplate=%COL%[91mВЫКЛ"
+)
+
+for /f "tokens=2*" %%a in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /v "RenameNameTemplate" 2^>nul') do (
+    set "FolderNameTemplateName=%%b"
+)
+
+if "%FolderNameTemplate%" == "%COL%[91mВЫКЛ" (
+    set "FolderNameTemplateName= "
+) else (
+    set "FolderNameTemplateName=- %FolderNameTemplateName%"
+)
+
 goto :eof
 
 :WinCustomization
@@ -4511,7 +4593,7 @@ echo            9 %COL%[36m[%COL%[37m %TaskBarDate% %COL%[36m]%COL%[37m Пока
 echo           10 %COL%[36m[%COL%[37m %IconArrow% %COL%[36m]%COL%[37m Стрелки на ярлыках
 echo           11 %COL%[36m[%COL%[37m %DSWE% %COL%[36m]%COL%[37m Отключить экран приветствия Windows
 echo           12 %COL%[36m[%COL%[37m %MSRT% %COL%[36m]%COL%[37m Исключить средство удаления вредоносных программ из обновлений Windows
-echo           13 %COL%[36m[%COL%[37m %WTUL% %COL%[36m]%COL%[37m Удалить виджеты
+echo           13 %COL%[36m[%COL%[37m %FolderNameTemplate% %COL%[36m]%COL%[37m Нестандартное имя для новой папки %FolderNameTemplateName%
 echo.
 echo.
 echo.
@@ -4542,7 +4624,7 @@ set /p choice="%DEL%                                                            
 if /i "%choice%"=="1" ( set "history=WinCustomization;!history!" && Call:EplorerBlur )
 if /i "%choice%"=="2" ( set "history=WinCustomization;!history!" && Call:ShowFileExtensions )
 if /i "%choice%"=="3" ( set "history=WinCustomization;!history!" && Call:ThemeTweaks )
-if /i "%choice%"=="4" ( set "history=WinCustomization;!history!" && goto RemoveIconsFromThisComputer )
+if /i "%choice%"=="4" ( set "history=WinCustomization;!history!" && Call:RemoveIconsFromThisComputer )
 if "%WinVer%"=="Windows 11" (
 	if /i "%choice%"=="5" ( set "history=WinCustomization;!history!" && call:OldContextMenu )
 )
@@ -4551,9 +4633,9 @@ if /i "%choice%"=="7" ( set "history=WinCustomization;!history!" && call:HomeExp
 if /i "%choice%"=="8" ( set "history=WinCustomization;!history!" && call:NetworkExplorer )
 if /i "%choice%"=="9" ( set "history=WinCustomization;!history!" && call:TaskBarDate )
 if /i "%choice%"=="10" ( set "history=WinCustomization;!history!" && call:IconArrowOnShortcut )
-if /i "%choice%"=="11" ( set "history=WinCustomization;!history!" && goto DisableWelcomeExperience )
-if /i "%choice%"=="12" ( set "history=WinCustomization;!history!" && goto MSRT_in_WindowsUpdate )
-if /i "%choice%"=="13" ( set "history=WinCustomization;!history!" && goto WidgetUninstall )
+if /i "%choice%"=="11" ( set "history=WinCustomization;!history!" && Call:DisableWelcomeExperience )
+if /i "%choice%"=="12" ( set "history=WinCustomization;!history!" && Call:MSRT_in_WindowsUpdate )
+if /i "%choice%"=="13" ( set "history=WinCustomization;!history!" && call:FolderNameTemplateMenu )
 
 if /i "%choice%"=="Cs" ( set "history=WinCustomization;!history!" && goto Cursor_menu )
 if /i "%choice%"=="сы" ( set "history=WinCustomization;!history!" && goto Cursor_menu )
@@ -5033,6 +5115,8 @@ echo         18 %COL%[36m[%COL%[37m %Serv_WpcMonSvc% %COL%[36m]%COL%[37m Слу�
 echo         19 %COL%[36m[%COL%[37m %Serv_DoSvc% %COL%[36m]%COL%[37m Оптимизация доставки ^(%COL%[36mDoSvc - P2P обновления Windows %COL%[37m^)
 echo         20 %COL%[36m[%COL%[37m %Serv_WalletService% %COL%[36m]%COL%[37m Служба кошелька ^(%COL%[36mWalletService - Для некоторых приложений Store%COL%[37m^)
 echo         21 %COL%[36m[%COL%[37m %Serv_MixedRealityOpenXRSvc% %COL%[36m]%COL%[37m Служба Windows Mixed Reality OpenXR ^(%COL%[36mMixedRealityOpenXRSvc - Для некоторых приложений Store %COL%[37m^)
+echo.
+echo.
 echo.
 echo.
 echo.
@@ -5804,6 +5888,8 @@ echo.
 echo            2 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Новый метод полного удаления OneDrive
 echo.
 echo            3 %COL%[36m[%COL%[37m %COL%[36m]%COL%[37m Поиск интересов
+echo.
+echo.
 echo.
 echo.
 echo.
@@ -10878,23 +10964,6 @@ REM
 REM     )
 REM )
 
-reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /v "RenameNameTemplate" >nul 2>&1
-if %errorlevel% equ 0 (
-    set "FolderNameTemplate=%COL%[92mВКЛ "
-) else (
-    set "FolderNameTemplate=%COL%[91mВЫКЛ"
-)
-
-for /f "tokens=2*" %%a in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /v "RenameNameTemplate" 2^>nul') do (
-    set "FolderNameTemplateName=%%b"
-)
-
-if "%FolderNameTemplate%" == "%COL%[91mВЫКЛ" (
-    set "FolderNameTemplateName= "
-) else (
-    set "FolderNameTemplateName=- %FolderNameTemplateName%"
-)
-
 
 reg query "%SaveData%\ParameterFunction" /v "UnnecessaryItems" >nul 2>&1 && set "UnnecessaryItems=%COL%[92mВКЛ " >nul 2>&1
 reg query "%SaveData%\ParameterFunction" /v "ContextMenuOwner" >nul 2>&1 || set "ContMenuOwner=%COL%[91mВЫКЛ" >nul 2>&1
@@ -10914,6 +10983,14 @@ reg query "%SaveData%\ParameterFunction" /v "EmptyRecycleBin" >nul 2>&1 || set "
 reg query "%SaveData%\ParameterFunction" /v "DeleteFolderContents" >nul 2>&1 || set "DeleteFolderContents=%COL%[91mВЫКЛ" >nul 2>&1
 reg query "%SaveData%\ParameterFunction" /v "SettingsCME" >nul 2>&1 || set "SettingsCME=%COL%[91mВЫКЛ" >nul 2>&1
 reg query "%SaveData%\ParameterFunction" /v "WindowsTools" >nul 2>&1 || set "WindowsTools=%COL%[91mВЫКЛ" >nul 2>&1
+
+reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings" /v TaskbarEndTask | find "0x1" >nul 2>&1
+if %errorlevel% == 0 (
+    set "EndTask=%COL%[92mВКЛ " >nul 2>&1
+) else (
+    set "EndTask=%COL%[91mВЫКЛ" >nul 2>&1
+)
+
 goto :eof
 
 :EditContextMenu
@@ -10929,31 +11006,31 @@ echo                                                                     %COL%[9
 echo.
 echo          %COL%[36mДОБАВЛЕНИЕ НОВЫХ ПУНКТОВ
 echo          %COL%[97m------------------------
-echo           1 %COL%[36m[%COL%[37m %ContMenuOwner% %COL%[36m]%COL%[37m Пункт сменить владельца                 
-echo           2 %COL%[36m[%COL%[37m %ContMenuNotepad% %COL%[36m]%COL%[37m Пункт открыть через БЛОКНОТ
-echo           3 %COL%[36m[%COL%[37m %ContMenuExplorer% %COL%[36m]%COL%[37m Пункт перезапуск проводник
-echo           4 %COL%[36m[%COL%[37m %ContMenuCopytoFolder% %COL%[36m]%COL%[37m Пункт копировать в папку
-echo           5 %COL%[36m[%COL%[37m %RunWithPriority% %COL%[36m]%COL%[37m Пункт запуск с приоритетом
-echo           6 %COL%[36m[%COL%[37m %EmptyRecycleBin% %COL%[36m]%COL%[37m Пункт очистить корзину
-echo           7 %COL%[36m[%COL%[37m %DeleteFolderContents% %COL%[36m]%COL%[37m Пункт удалить содержимое папки и подпапок
-echo           8 %COL%[36m[%COL%[37m %SettingsCME% %COL%[36m]%COL%[37m Пункт настройки
-echo           9 %COL%[36m[%COL%[37m %WindowsTools% %COL%[36m]%COL%[37m Пункт инструменты Windows
-echo          10 %COL%[36m[%COL%[37m %EditInNotepad% %COL%[36m]%COL%[37m Пункт "Изменить в Блокноте"
+echo           %COL%[90m- Для файлов:%COL%[37m
+echo           1 %COL%[36m[%COL%[37m %ContMenuOwner% %COL%[36m]%COL%[37m Пункт "Сменить владельца"
+echo           2 %COL%[36m[%COL%[37m %ContMenuNotepad% %COL%[36m]%COL%[37m Пункт "Открыть через БЛОКНОТ"
+echo           3 %COL%[36m[%COL%[37m %ContMenuExplorer% %COL%[36m]%COL%[37m Пункт "Перезапустить ПРОВОДНИК"
+echo           4 %COL%[36m[%COL%[37m %ContMenuCopytoFolder% %COL%[36m]%COL%[37m Пункт "Копировать в папку..."
+echo           5 %COL%[36m[%COL%[37m %RunWithPriority% %COL%[36m]%COL%[37m Пункт "Запустить с приоритетом"
+echo           6 %COL%[36m[%COL%[37m %DeleteFolderContents% %COL%[36m]%COL%[37m Пункт "Удалить содержимое папки"
+echo           7 %COL%[36m[%COL%[37m %EditInNotepad% %COL%[36m]%COL%[37m Пункт "Изменить в Блокноте"
+echo.
+echo           %COL%[90m- Для рабочего стола:%COL%[37m
+echo           8 %COL%[36m[%COL%[37m %EmptyRecycleBin% %COL%[36m]%COL%[37m Пункт "Очистить корзину"
+echo           9 %COL%[36m[%COL%[37m %SettingsCME% %COL%[36m]%COL%[37m Пункт "Настройки"
+echo          10 %COL%[36m[%COL%[37m %WindowsTools% %COL%[36m]%COL%[37m Пункт "Инструменты Windows"
+echo.
+echo           %COL%[90m- Для панели задач:%COL%[37m
+echo          11 %COL%[36m[%COL%[37m %EndTask% %COL%[36m]%COL%[37m Пункт "Завершить задачу"
 echo.
 echo.
 echo.
 echo.
-echo.
-echo          %COL%[36mРЕДАКТИРОВАНИЕ СТАРЫХ ПУНКТОВ
-echo          %COL%[97m-----------------------------
+echo          %COL%[36mУДАЛЕНИЕ СТАРЫХ ПУНКТОВ
+echo          %COL%[97m-----------------------
 echo          11 %COL%[36m[%COL%[37m %UnnecessaryItems% %COL%[36m]%COL%[37m Удалить ненужные пункты из контекстного меню
-echo          12 %COL%[36m[%COL%[37m %ScanWithWindowsDefender% %COL%[36m]%COL%[37m Удалить пункт ^"проверка с использованием Win Defender^"
+echo          12 %COL%[36m[%COL%[37m %ScanWithWindowsDefender% %COL%[36m]%COL%[37m Удалить пункт "проверка с использованием Win Defender"
 echo          13 %COL%[36m[%COL%[37m %DeleteAllAppsFromStartMenu% %COL%[36m]%COL%[37m Удалить все программы из меню пуск
-echo          14 %COL%[36m[%COL%[37m %FolderNameTemplate% %COL%[36m]%COL%[37m Кастомное имя новой папки %FolderNameTemplateName%
-echo.
-echo.
-echo.
-echo.
 echo.
 echo.
 echo.
@@ -10973,16 +11050,16 @@ if /i "%choice%"=="2" ( set "history=EditContextMenu;!history!" && call:Notepad 
 if /i "%choice%"=="3" ( set "history=EditContextMenu;!history!" && call:Explorer )
 if /i "%choice%"=="4" ( set "history=EditContextMenu;!history!" && call:CopytoFolder )
 if /i "%choice%"=="5" ( set "history=EditContextMenu;!history!" && call:RunWithPriority )
-if /i "%choice%"=="6" ( set "history=EditContextMenu;!history!" && call:EmptyRecycleBin )
-if /i "%choice%"=="7" ( set "history=EditContextMenu;!history!" && call:DeleteFolderContents )
-if /i "%choice%"=="8" ( set "history=EditContextMenu;!history!" && call:SettingsCME )
-if /i "%choice%"=="9" ( set "history=EditContextMenu;!history!" && call:WindowsTools )
-if /i "%choice%"=="10" ( set "history=EditContextMenu;!history!" && call:EditInNotepad )
+if /i "%choice%"=="6" ( set "history=EditContextMenu;!history!" && call:DeleteFolderContents )
+if /i "%choice%"=="7" ( set "history=EditContextMenu;!history!" && call:EditInNotepad )
+if /i "%choice%"=="8" ( set "history=EditContextMenu;!history!" && call:EmptyRecycleBin )
+if /i "%choice%"=="9" ( set "history=EditContextMenu;!history!" && call:SettingsCME )
+if /i "%choice%"=="10" ( set "history=EditContextMenu;!history!" && call:WindowsTools )
+if /i "%choice%"=="11" ( set "history=EditContextMenu;!history!" && call:EndTask )
 
-if /i "%choice%"=="11" ( set "history=EditContextMenu;!history!" && call:RemoveUnnecessaryItems )
-if /i "%choice%"=="12" ( set "history=EditContextMenu;!history!" && call:ScanWithWindowsDefender )
-if /i "%choice%"=="13" ( set "history=EditContextMenu;!history!" && call:DeleteAllAppsFromStartMenu )
-if /i "%choice%"=="14" ( set "history=EditContextMenu;!history!" && call:FolderNameTemplateMenu )
+if /i "%choice%"=="12" ( set "history=EditContextMenu;!history!" && call:RemoveUnnecessaryItems )
+if /i "%choice%"=="13" ( set "history=EditContextMenu;!history!" && call:ScanWithWindowsDefender )
+if /i "%choice%"=="14" ( set "history=EditContextMenu;!history!" && call:DeleteAllAppsFromStartMenu )
 
 if /i "%choice%"=="C" ( set "history=EditContextMenu;!history!" && goto ASX_CMD )
 if /i "%choice%"=="с" ( set "history=EditContextMenu;!history!" && goto ASX_CMD )
@@ -11417,6 +11494,21 @@ if "%WindowsTools%" == "%COL%[91mВЫКЛ" (
 call:Complete_notice
 goto GoBack
 
+:EndTask
+if "%EndTask%" == "%COL%[91mВЫКЛ" (
+    echo [INFO ] %TIME% - Редактирование контекстного меню +EndTask >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings" /v "TaskbarEndTask" /t REG_DWORD /d "1" /f >nul 2>&1
+
+    set "operation_name=Добавление пункта в контекстное меню"
+) >nul 2>&1 else (
+    echo [INFO ] %TIME% - Редактирование контекстного меню -EndTask >> "%ASX-Directory%\Files\Logs\%date%.txt"
+	reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings" /v "TaskbarEndTask" /f >nul 2>&1
+
+    set "operation_name=Удаление пункта из контекстного меню"
+) >nul 2>&1
+call:Complete_notice
+goto GoBack
+
 :EditInNotepad
 if "%EditInNotepad%" == "%COL%[91mВЫКЛ" (
     echo [INFO ] %TIME% - Редактирование контекстного меню +EditInNotepad >> "%ASX-Directory%\Files\Logs\%date%.txt"
@@ -11453,17 +11545,17 @@ if "%FolderNameTemplate%" == "%COL%[91mВЫКЛ" (
     echo.
     echo.
     set /p "FolderNameTemplateEnter=%DEL%                                                Введите шаблон для названия новых папок >: "
-    echo [INFO ] %TIME% - Редактирование контекстного меню +FolderNameTemplate >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    echo [INFO ] %TIME% - Установка названия для новых папок: %FolderNameTemplateEnter% >> "%ASX-Directory%\Files\Logs\%date%.txt"
     reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /v "RenameNameTemplate" /t REG_SZ /d "%FolderNameTemplateEnter%" /f >nul 2>&1
-    echo [INFO ] %TIME% - Новые папки теперь будут создаваться с именем - %FolderNameTemplateEnter% >> "%ASX-Directory%\Files\Logs\%date%.txt"
-    set "operation_name=Добавление пункта в контекстное меню"
+    set "operation_name=Установка нестандартного названия для новых папок"
 ) else (
-    echo [INFO ] %TIME% - Редактирование контекстного меню -FolderNameTemplate >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    echo [INFO ] %TIME% - Установка названия для новых папок на стандартное >> "%ASX-Directory%\Files\Logs\%date%.txt"
     reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /f >nul 2>&1
-    set "operation_name=Удаление пункта из контекстного меню"
+    set "operation_name=Сброс названий новых папок на стандартные"
 )
 call:Complete_notice
 goto GoBack
+
 
 :ASX_cleaner_Warn
 rem chcp 65001 >nul 2>&1
@@ -13440,10 +13532,10 @@ echo.
 echo       %COL%[36mОписание обновления %COL%[37m%FullVersionNameCurrent%%COL%[37m
 echo       %COL%[97m!dashes!
 echo.
-echo          %COL%[36m1.%COL%[37m Исправлены обнаруженные баги, ошибки, недочёты.
-echo          %COL%[36m2.%COL%[37m Улучшен алгоритм поиска интересов.
-echo          %COL%[36m3.%COL%[37m Оптимизирован алгоритм загрузки файлов при первоначальной настройке.
-echo.
+echo          %COL%[36m1.%COL%[37m Улучшен дизайн панели редактирования контекстного меню.
+echo          %COL%[36m2.%COL%[37m На панель Редактирования контекстного меню добавлен пункт "Завершить задачу".
+echo          %COL%[36m3.%COL%[37m На панель Оптимизации и настроек добавлены пункты "Удалить Recall" "Удалить Copilot".
+echo          %COL%[36m4.%COL%[37m Исправлены обнаруженные баги, ошибки, недочёты.
 echo.
 echo.
 echo.
