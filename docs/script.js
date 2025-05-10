@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof VanillaTilt !== 'undefined') {
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
             reverse: true,
-            max: 15,
+            max: 16,
             speed: 400,
             glare: true,
             "max-glare": 0.3
