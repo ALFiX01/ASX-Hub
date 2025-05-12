@@ -55,21 +55,21 @@ body::after {
 body::before {
     width: 65vw;
     height: 65vw;
-    background: radial-gradient(circle, rgba(107, 50, 241, 0.6) 0%, rgba(74, 0, 224, 0) 70%);
+    background: radial-gradient(circle, rgba(112, 51, 255, 0.678) 0%, rgba(74, 0, 224, 0) 75%);
     top: -28vw;
     left: -28vw;
-    filter: blur(100px);
-    animation: slowPulseBefore 13s infinite alternate ease-in-out;
+    filter: blur(140px);
+    animation: slowPulseBefore 12s infinite alternate ease-in-out;
 }
 
 body::after {
-    width: 60vw;
-    height: 60vw;
-    background: radial-gradient(circle, rgba(245, 132, 51, 0.5) 0%, rgba(224, 180, 0, 0) 70%);
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(circle, rgba(250, 133, 49, 0.616) 0%, rgba(224, 180, 0, 0) 75%);
     bottom: -22vw;
     right: -22vw;
-    filter: blur(90px);
-    animation: slowPulseAfter 16s infinite alternate ease-in-out;
+    filter: blur(130px);
+    animation: slowPulseAfter 15s infinite alternate ease-in-out;
 }
 
 @keyframes slowPulseBefore {
@@ -247,10 +247,10 @@ header ul li a.active {
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 .btn-primary:hover {
-    background-color: #f0f0f0;
-    color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    background-color: var(--glass-bg-dark-features);
+    color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
 }
 .btn-large {
     padding: 15px 40px;
