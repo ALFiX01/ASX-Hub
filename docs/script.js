@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (downloadCountElement && typeof stats.total_downloads === 'number') {
                  // Показываем только если скачивания > 0 (или можно всегда показывать, если == 0)
                  if (stats.total_downloads >= 0) {
-                    downloadCountElement.textContent = `Всего скачиваний ${targetAssetName}: ${stats.total_downloads.toLocaleString()}`;
+                    downloadCountElement.textContent = `Cкачиваний: ${stats.total_downloads.toLocaleString()}`;
                     downloadCountElement.style.opacity = '1';
                     downloadCountElement.style.display = 'block'; // Показываем элемент
                  }
