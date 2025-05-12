@@ -185,7 +185,7 @@ if (typeof VanillaTilt !== 'undefined') {
         VanillaTilt.init(elementsToTilt, {
             max: 14,
             speed: 400,
-            glare: true,
+            glare: false,
             "max-glare": 0.05 // Ваше уменьшенное значение
         });
         console.log('VanillaTilt инициализирован для', elementsToTilt.length, 'элементов'); // <-- И эту
