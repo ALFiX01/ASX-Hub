@@ -1,293 +1,133 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    console.log('Website version: 0.8.2'); // Обновил версию для отслеживания изменений
+    console.log('Website version: 0.8.5'); // Обновил версию
 
     // 1. Установка текущего года в футере
     const yearSpan = document.getElementById('year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
+    if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
     // 2. Плавная прокрутка к якорям и обработка лого
+    // ... (Код без изменений) ...
     const navLinks = document.querySelectorAll('header nav ul li a[href^="#"]');
     const logoLink = document.querySelector('header nav a.logo');
     const headerElement = document.querySelector('header');
-
-    function getHeaderOffset() {
-        // Возвращаем высоту шапки, если она есть, иначе 0
-        return headerElement ? headerElement.offsetHeight : 0;
-    }
-
-    function scrollToTarget(targetId) {
+    function getHeaderOffset() { return headerElement ? headerElement.offsetHeight : 0; }
+    function scrollToTarget(targetId) { /* ... код прокрутки ... */
         const headerOffset = getHeaderOffset();
-        // Прокрутка наверх для # и #hero
-        if (targetId === "#" || targetId === "#hero") {
+        if (targetId === "#" || targetId === "#hero") { /* ... код прокрутки вверх ... */
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            // Снимаем active со всех ссылок и добавляем на Главную
-            navLinks.forEach(l => l.classList.remove('active'));
+            navLinks.forEach(l => { l.classList.remove('active'); l.removeAttribute('aria-current'); });
             const homeLink = document.querySelector('header nav ul li a[href="#hero"]');
-            if (homeLink) homeLink.classList.add('active');
-            return; // Выходим из функции
+            if (homeLink) { homeLink.classList.add('active'); homeLink.setAttribute('aria-current', 'page'); } return;
         }
-
         const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            // Рассчитываем позицию с учетом шапки
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        if (targetElement) { /* ... код прокрутки к элементу ... */
+             const elementPosition = targetElement.getBoundingClientRect().top; const offsetPosition = elementPosition + window.pageYOffset - headerOffset; window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
         }
     }
+    navLinks.forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); scrollToTarget(this.getAttribute('href')); }); });
+    if (logoLink) { logoLink.addEventListener('click', function(e) { e.preventDefault(); scrollToTarget("#hero"); }); }
 
-    // Навешиваем обработчики на ссылки навигации
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault(); // Отменяем стандартный переход
-            scrollToTarget(this.getAttribute('href')); // Вызываем нашу функцию прокрутки
-        });
-    });
-
-    // Навешиваем обработчик на логотип
-    if (logoLink) {
-        logoLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            scrollToTarget("#hero"); // Прокрутка к #hero при клике на лого
-        });
-    }
 
     // 3. Выделение активного пункта меню при скролле
+    // ... (Код без изменений) ...
     const sections = Array.from(document.querySelectorAll('main section[id]'));
-
-    function changeNavOnScroll() {
-        const headerOffset = getHeaderOffset();
-        const scrollMargin = 30; // Увеличил отступ для более точного срабатывания
-        let scrollY = window.pageYOffset;
-        let currentSectionId = '';
-
-        // Идем по секциям снизу вверх
-        for (let i = sections.length - 1; i >= 0; i--) {
-            const section = sections[i];
-            // Рассчитываем верхнюю границу секции с учетом шапки и отступа
-            const sectionTop = section.offsetTop - headerOffset - scrollMargin;
-
-            // Если текущая прокрутка больше или равна верху секции
-            if (scrollY >= sectionTop) {
-                currentSectionId = section.getAttribute('id');
-                break; // Нашли активную секцию, выходим из цикла
-            }
-        }
-
-        // Особый случай для секции Hero, если ничего другого не найдено
-        if (!currentSectionId && sections.length > 0 && sections[0].id === 'hero' && scrollY < (sections[0].offsetTop - headerOffset + sections[0].offsetHeight - scrollMargin) ) {
-             currentSectionId = 'hero';
-        }
-
-        // Обновляем классы 'active' у ссылок навигации
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            // Добавляем aria-current для доступности
-            link.removeAttribute('aria-current');
-            if (link.getAttribute('href') === `#${currentSectionId}`) {
-                link.classList.add('active');
-                link.setAttribute('aria-current', 'page'); // Указываем текущую страницу для скринридеров
-            }
-        });
+    function changeNavOnScroll() { /* ... код scrollspy ... */
+        const headerOffset = getHeaderOffset(); const scrollMargin = 30; let scrollY = window.pageYOffset; let currentSectionId = '';
+        for (let i = sections.length - 1; i >= 0; i--) { const section = sections[i]; const sectionTop = section.offsetTop - headerOffset - scrollMargin; if (scrollY >= sectionTop) { currentSectionId = section.getAttribute('id'); break; } }
+        if (!currentSectionId && sections.length > 0 && sections[0].id === 'hero' && scrollY < (sections[0].offsetTop - headerOffset + sections[0].offsetHeight - scrollMargin) ) { currentSectionId = 'hero'; }
+        navLinks.forEach(link => { link.classList.remove('active'); link.removeAttribute('aria-current'); if (link.getAttribute('href') === `#${currentSectionId}`) { link.classList.add('active'); link.setAttribute('aria-current', 'page'); } });
     }
+    if (sections.length > 0 && navLinks.length > 0) { window.addEventListener('scroll', changeNavOnScroll); changeNavOnScroll(); }
 
-    // Добавляем слушатель скролла, если есть секции и ссылки
-    if (sections.length > 0 && navLinks.length > 0) {
-        window.addEventListener('scroll', changeNavOnScroll);
-        changeNavOnScroll(); // Вызываем один раз при загрузке
-    }
 
-    // 4. Получение последней версии, патч-ноута и СКАЧИВАНИЙ с GitHub
-    async function fetchLatestReleaseInfo() {
+    // 4. Загрузка статистики из ЛОКАЛЬНОГО файла github-stats.json
+    async function fetchStatsFromFile() {
         const versionElement = document.getElementById('latest-version');
-        const downloadCountElement = document.getElementById('download-count'); // <<< Получаем новый элемент
-        const changelogSectionElement = document.getElementById('changelog-section');
-        const changelogVersionElement = document.getElementById('changelog-version');
-        const changelogBodyElement = document.getElementById('changelog-body');
+        const downloadCountElement = document.getElementById('download-count');
+        const targetAssetName = 'ASX.Hub.exe'; // Используется для текста
 
+        // Скрываем счетчик скачиваний по умолчанию
         if (downloadCountElement) {
-            downloadCountElement.style.display = 'none'; // Скрываем по умолчанию
-            downloadCountElement.textContent = ''; // Очищаем текст на всякий случай
-        }
-        
-        // Проверяем наличие основных элементов
-        if (!versionElement && !changelogSectionElement) {
-            console.warn('Элементы для отображения версии или ченджлога не найдены.');
-            // Скроем и счетчик скачиваний, если нет даже версии
-            if(downloadCountElement) downloadCountElement.style.display = 'none';
-            return;
+            downloadCountElement.style.display = 'none';
+            downloadCountElement.textContent = '';
+        } else {
+            console.warn('Элемент для отображения количества скачиваний не найден.');
         }
 
-        // Отдельная проверка для счетчика
-        if (!downloadCountElement) {
-             console.warn('Элемент для отображения количества скачиваний не найден.');
+        // Проверяем элемент версии
+        if (!versionElement) {
+             console.warn('Элемент для отображения версии не найден.');
         }
-
-        const repoOwner = 'ALFiX01';
-        const repoName = 'ASX-Hub';
-        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`;
-        const targetAssetName = 'ASX.Hub.exe'; // <<< Имя файла, для которого ищем скачивания
 
         try {
-            const response = await fetch(apiUrl);
+            // --- ИЗМЕНЕНИЕ: Загружаем локальный файл ---
+            const response = await fetch('github-stats.json');
+            // ------------------------------------------
 
-            // Улучшенная обработка ошибок ответа API
             if (!response.ok) {
-                console.error('Ошибка при загрузке данных с GitHub:', response.status, response.statusText);
-                const friendlyErrorMessage = 'Не удалось загрузить информацию.'; // Общее сообщение
+                // Ошибка загрузки локального файла (маловероятно, но возможно)
+                console.error('Ошибка при загрузке файла github-stats.json:', response.status, response.statusText);
                 if (versionElement) {
-                    versionElement.textContent = friendlyErrorMessage;
-                    versionElement.style.opacity = '0.7';
-                    downloadCountElement.style.display = 'none'; // Скрываем по умолчанию
-                    downloadCountElement.textContent = ''; // Очищаем текст на всякий случай
-                }
-                 // Обновляем и счетчик при ошибке
-                if (downloadCountElement) {
-                    downloadCountElement.textContent = 'Скачиваний: ошибка';
-                    downloadCountElement.style.opacity = '0.7';
-                    downloadCountElement.style.display = 'none'; // Скрываем по умолчанию
-                    downloadCountElement.textContent = ''; // Очищаем текст на всякий случай
-                    
-                }
-                 // Скрываем секцию ченджлога при любой ошибке
-                if (changelogSectionElement) {
-                    changelogSectionElement.classList.remove('visible');
-                }
-                return; // Выходим из функции
-            }
-
-            const data = await response.json();
-
-            if (data && data.tag_name) {
-                // Отображаем версию
-                if (versionElement) {
-                    versionElement.textContent = `v${data.tag_name}`;
-                    versionElement.style.opacity = '1'; // Возвращаем нормальную прозрачность
-                }
-
-                // --->>> ЛОГИКА ПОДСЧЕТА СКАЧИВАНИЙ <<<---
-                if (downloadCountElement) {
-                    let downloads = null;
-                    // Ищем нужный asset в массиве assets
-                    if (data.assets && Array.isArray(data.assets)) {
-                        const targetAsset = data.assets.find(asset => asset.name === targetAssetName);
-                        if (targetAsset) {
-                            downloads = targetAsset.download_count;
-                        }
-                    }
-
-                    // Отображаем результат
-                    if (downloads !== null) {
-                        // Используем toLocaleString для разделения тысяч пробелами
-                        downloadCountElement.textContent = `Скачиваний v${data.tag_name}: ${downloads.toLocaleString()}`;
-                        downloadCountElement.style.opacity = '1';
-                    } else {
-                        console.warn(`Ассет с именем "${targetAssetName}" не найден в последнем релизе.`);
-                        downloadCountElement.textContent = `Скачиваний: н/д`; // н/д = нет данных
-                        downloadCountElement.style.opacity = '0.7';
-                    }
-                }
-                // --->>> КОНЕЦ ЛОГИКИ ПОДСЧЕТА СКАЧИВАНИЙ <<<---
-
-
-                // Отображаем ченджлог, если есть нужные элементы
-                if (changelogBodyElement && changelogVersionElement) {
-                    changelogVersionElement.textContent = data.tag_name;
-
-                    if (data.body) {
-                        // Используем Showdown для конвертации Markdown в HTML
-                        if (typeof showdown !== 'undefined' && typeof showdown.Converter === 'function') {
-                            const converter = new showdown.Converter({
-                                ghCompatibleHeaderId: true,
-                                simpleLineBreaks: true,
-                                tables: true,
-                                strikethrough: true,
-                                tasklists: true,
-                                openLinksInNewWindow: true,
-                                emoji: true
-                            });
-                            changelogBodyElement.innerHTML = converter.makeHtml(data.body);
-                        } else {
-                            // Запасной вариант: показать как простой текст
-                            changelogBodyElement.innerHTML = `<pre>${data.body.replace(/</g, "<").replace(/>/g, ">")}</pre>`;
-                            console.warn('Библиотека Showdown.js не найдена. Ченджлог отображен как простой текст.');
-                        }
-                    } else {
-                        changelogBodyElement.innerHTML = '<p>Описание для этого релиза отсутствует.</p>';
-                    }
-
-                    // Показываем секцию ченджлога
-                    if (changelogSectionElement) {
-                       changelogSectionElement.classList.add('visible');
-                    }
-                } else if (changelogSectionElement) {
-                    // Если нет элементов для контента, но есть секция - скрываем
-                     changelogSectionElement.classList.remove('visible');
-                     console.warn('Элементы для отображения содержимого ченджлога не найдены.');
-                }
-
-            } else {
-                 // Если данные некорректные
-                console.warn('Получены некорректные данные от GitHub API:', data);
-                if (versionElement) {
-                    versionElement.textContent = 'Не удалось определить версию.';
+                    versionElement.textContent = 'Ошибка загрузки статистики';
                     versionElement.style.opacity = '0.7';
                 }
-                // Обновляем и счетчик при некорректных данных
-                if (downloadCountElement) {
-                    downloadCountElement.textContent = 'Скачиваний: н/д';
-                    downloadCountElement.style.opacity = '0.7';
-                }
-                if (changelogSectionElement) {
-                    changelogSectionElement.classList.remove('visible');
+                // Счетчик остается скрытым
+                return;
+            }
+
+            const stats = await response.json();
+
+            // Отображаем версию из файла
+            if (versionElement) {
+                if (stats.latest_version && stats.latest_version !== "N/A") {
+                    versionElement.textContent = `Актуальная версия: ${stats.latest_version}`;
+                    versionElement.style.opacity = '1';
+                } else {
+                    versionElement.textContent = 'Не удалось определить версию';
+                    versionElement.style.opacity = '0.7';
                 }
             }
+
+            // Отображаем скачивания из файла
+            if (downloadCountElement && typeof stats.total_downloads === 'number') {
+                 // Показываем только если скачивания > 0 (или можно всегда показывать, если == 0)
+                 if (stats.total_downloads >= 0) {
+                    downloadCountElement.textContent = `Всего скачиваний ${targetAssetName}: ${stats.total_downloads.toLocaleString()}`;
+                    downloadCountElement.style.opacity = '1';
+                    downloadCountElement.style.display = 'block'; // Показываем элемент
+                 }
+            }
+
+            // --- УДАЛЕНО: Логика загрузки и отображения ченджлога из API ---
+            // Если ченджлог все еще нужен динамически, его нужно загружать
+            // отдельным unauthenticated запросом к /releases/latest
+            // или включить его в github-stats.json (что усложнит Action)
 
         } catch (error) {
-             // Обработка сетевых ошибок или ошибок JS
-            console.error('Ошибка при выполнении запроса к GitHub API:', error);
+             // Ошибка JS при обработке файла или сам fetch не удался
+            console.error('Ошибка при получении или обработке github-stats.json:', error);
             if (versionElement) {
-                versionElement.textContent = 'Ошибка при запросе.';
+                versionElement.textContent = 'Ошибка обработки статистики';
                  versionElement.style.opacity = '0.7';
             }
-            // Обновляем и счетчик при ошибке запроса
-            if (downloadCountElement) {
-                downloadCountElement.textContent = 'Скачиваний: ошибка';
-                downloadCountElement.style.opacity = '0.7';
-            }
-            if (changelogSectionElement) {
-                changelogSectionElement.classList.remove('visible');
-            }
+            // Счетчик остается скрытым
         }
     }
 
-    fetchLatestReleaseInfo(); // Запускаем загрузку данных
+    // --- ИЗМЕНЕНИЕ: Вызываем новую функцию ---
+    fetchStatsFromFile();
+    // ---------------------------------------
+
+    // --- УДАЛЕНО: Функция fetchLatestReleaseInfo больше не нужна в этом виде ---
 
     // 5. Инициализация Vanilla Tilt JS
-    if (typeof VanillaTilt !== 'undefined') {
-        // Находим все элементы с атрибутом data-tilt
+    // ... (Код без изменений) ...
+    if (typeof VanillaTilt !== 'undefined') { /* ... код Tilt ... */
         const elementsToTilt = document.querySelectorAll("[data-tilt]");
         console.log('Найдены элементы для Tilt:', elementsToTilt);
-
-        // Инициализируем Tilt ТОЛЬКО если элементы найдены
-        if (elementsToTilt.length > 0) {
-            VanillaTilt.init(elementsToTilt, {
-                max: 12, // Немного уменьшил максимальный наклон
-                speed: 450, // Чуть медленнее
-                glare: true, // Включил небольшое свечение
-                "max-glare": 0.2 // Интенсивность свечения
-            });
-            console.log('VanillaTilt инициализирован для', elementsToTilt.length, 'элементов');
-        } else {
-            console.warn('Не найдены элементы с атрибутом [data-tilt] для инициализации VanillaTilt.');
-        }
-    } else {
-         // Если библиотека не загрузилась
-         console.warn('Библиотека VanillaTilt.js не найдена или не загружена.');
-    }
+        if (elementsToTilt.length > 0) { VanillaTilt.init(elementsToTilt, { max: 12, speed: 450, glare: true, "max-glare": 0.2 }); console.log('VanillaTilt инициализирован...'); }
+        else { console.warn('Не найдены элементы ... для VanillaTilt.'); }
+    } else { console.warn('Библиотека VanillaTilt.js не найдена...'); }
 
 }); // Конец DOMContentLoaded
