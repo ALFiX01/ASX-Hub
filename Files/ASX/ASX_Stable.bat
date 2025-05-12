@@ -104,13 +104,13 @@ echo 📌 Запуск ASX Hub >> "!ASX-Directory!\Files\Logs\%date%.txt"
 
 REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
-set "Version=1.5.2"
-set "FullVersionNameCurrent=1.5.2"
+set "Version=1.6.0"
+set "FullVersionNameCurrent=1.6.0"
 set "VersionNumberCurrent=MA07S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=08.05.2025"
+set "DateUpdate=11.05.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -1469,7 +1469,7 @@ echo.
 echo.
 echo.
 echo.
-echo                                                           %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Оптимизация и настройки
+echo                                                           %COL%[96m[%COL%[37m 1 %COL%[96m]%COL%[37m Оптимизация и настройка
 echo.
 echo.
 echo                                                           %COL%[96m[%COL%[37m 2 %COL%[96m]%COL%[37m Конфиденциальность
@@ -2060,7 +2060,7 @@ echo  Идет получение информации о текущих пар�
 REM echo [DEBUG] %TIME% - If_First_call >> "%ASX-Directory%\Files\Logs\%date%.txt"
 (
     for %%i in (ASXPW PWTH DBGP CTW ETW AUTOF BCDOF NONOF CONG HIBNT INDK DANF WNDF WDNT APSN UACS DWLC FSOOF AUMS AUSA BTEB DSCR ) do (set "%%i=%COL%[92mВКЛ ")
-    for %%i in (HDCP FSBT SMTSX HCCF WDNT PGMT SchM SLMD DSKN ONDR ECHR CRIS WINDF NVPIN CPLT ) do (set "%%i=%COL%[91mВЫКЛ")
+    for %%i in (HDCP FSBT SMTSX HCCF WDNT PGMT SchM SLMD DSKN ONDR ECHR CRIS WINDF NVPIN CPLT WTUL ) do (set "%%i=%COL%[91mВЫКЛ")
     for %%i in (LRAM REDG TIIP ) do (set "%%i=%COL%[90mН/Д ")
 
     REM Проверка активного плана электропитания
@@ -2186,6 +2186,9 @@ REM echo [DEBUG] %TIME% - If_First_call >> "%ASX-Directory%\Files\Logs\%date%.tx
     reg query "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v "IsUserEligible" | findstr /i "0x0" >nul 2>&1 && set "CPLT=%COL%[92mВКЛ "
     reg query "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "HubsSidebarEnabled" | findstr /i "0x0" >nul 2>&1 && set "CPLT=%COL%[92mВКЛ "
 
+    REM Проверка установки виджетов Windows - WebExperience
+    reg query "%SaveData%\ParameterFunction" /v "WidgetUninstall" >nul 2>&1 && set "WTUL=%COL%[92mВКЛ " >nul 2>&1
+
 	REM Определение типа видеокарты
 	for /f "tokens=2 delims==" %%a in ('wmic path Win32_VideoController get VideoProcessor /value') do (
 		for %%n in (GeForce NVIDIA RTX GTX) do echo %%a | find "%%n" >nul && set "NVIDIAGPU=Found"
@@ -2210,11 +2213,11 @@ set PageName=OptimizationCenterPG1
 cls
 call:Optimization-checker
 :If_First_call_false
-TITLE Оптимизация и настройки - ASX Hub
+TITLE Оптимизация и настройка - ASX Hub
 echo.
 echo                                                                     %COL%[90m[%COL%[96m1 %COL%[90m/ 1%COL%[90m]
 echo.
-echo          %COL%[36mОптимизация и настройки
+echo          %COL%[36mОптимизация и настройка
 echo          %COL%[97m-----------------------%COL%[37m
 echo           1 %COL%[36m[%COL%[37m %ASXPW% %COL%[36m]%COL%[37m План электропитания ASX Hub
 echo           2 %COL%[36m[%COL%[37m %FSOOF% %COL%[36m]%COL%[37m Выключить FSO и GameBar
@@ -2329,11 +2332,11 @@ set PageName=OptimizationCenterPG2
 cls
 call:Optimization-checker
 :If_First_call_false2
-TITLE Оптимизация и настройки - ASX Hub
+TITLE Оптимизация и настройка - ASX Hub
 echo.
 echo                                                                     %COL%[90m[%COL%[96m2 %COL%[90m/ 2%COL%[90m]
 echo.
-echo          %COL%[36mОптимизация и настройки
+echo          %COL%[36mОптимизация и настройка
 echo          %COL%[97m-----------------------%COL%[37m
 echo           1 %COL%[36m[%COL%[37m %TEST% %COL%[36m]%COL%[37m TEST              
 echo.
@@ -2832,10 +2835,12 @@ goto GoBack
 echo [INFO ] %TIME% - Вызван ":Hibernation" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 if "%HIBNT%" == "%COL%[91mВЫКЛ" (
 	reg add "%SaveData%\ParameterFunction" /v "Hibernation" /f >nul 2>&1
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v HibernateEnabled /t REG_DWORD /d 0 /f >nul 2>&1
 	powercfg.exe /hibernate off
 	set "operation_name=Включение гибернации"		
 ) >nul 2>&1 else (
 	reg delete "%SaveData%\ParameterFunction" /v "Hibernation" /f >nul 2>&1
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v HibernateEnabled /t REG_DWORD /d 1 /f >nul 2>&1
 	powercfg.exe /hibernate on
 	set "operation_name=Выключение гибернации"	
 ) >nul 2>&1
@@ -2897,6 +2902,7 @@ if "%WINDF%" == "%COL%[91mВЫКЛ" (
     reg add "HKCR\Directory\shellex\ContextMenuHandlers\EPP" /ve /t REG_SZ /d "{09A47860-11B0-4DA5-AFA5-26D86198A780}" /f >nul 2>&1
     reg add "HKCR\Drive\shellex\ContextMenuHandlers\EPP" /ve /t REG_SZ /d "{09A47860-11B0-4DA5-AFA5-26D86198A780}" /f >nul 2>&1
     
+    reg delete "HKLM\SYSTEM\SOFTWARE\Microsoft\Wbem" /v "AmsiEnable" /f >nul 2>&1
     set "operation_name=Включение Windows Defender"
 ) else (
     REM ВЫКЛЮЧЕНИЕ WINDOWS DEFENDER
@@ -2919,6 +2925,8 @@ if "%WINDF%" == "%COL%[91mВЫКЛ" (
 
     reg add "HKLM\SYSTEM\CurrentControlSet\Services\SecurityHealthService" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
     reg add "HKLM\SYSTEM\CurrentControlSet\Services\wscsvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+
+    reg add "HKLM\SYSTEM\SOFTWARE\Microsoft\Wbem" /v "AmsiEnable" /t REG_DWORD /d "0" /f >nul 2>&1
     set "operation_name=Выключение Windows Defender"
 )
 
@@ -3771,32 +3779,29 @@ goto GoBack
 echo [INFO ] %TIME% - Вызван ":CopilotAi" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 if "%CPLT%" == "%COL%[92mВКЛ " (
     :: Убираем политики «выключено» (ставим 0 или удаляем ключи)
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 0 /f
-    reg add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 0 /f
+    reg add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 0 /f >nul 2>&1
+    reg add "HKCU\SOFTWARE\Policies\Microsoft\Windows\WindowsAI" /v DisableAIDataAnalysis /t REG_DWORD /d 0 /f >nul 2>&1
 
     :: Восстанавливаем автозапуск и кнопку
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v AutoOpenCopilotLargeScreens /t REG_DWORD /d 1 /f
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowCopilotButton /t REG_DWORD /d 1 /f
-    reg add "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v IsUserEligible /t REG_DWORD /d 1 /f
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v AutoOpenCopilotLargeScreens /t REG_DWORD /d 1 /f >nul 2>&1
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowCopilotButton /t REG_DWORD /d 1 /f >nul 2>&1
+    reg add "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v IsUserEligible /t REG_DWORD /d 1 /f >nul 2>&1
 
     :: Включаем боковую панель в Edge по умолчанию (ставим 1)
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v HubsSidebarEnabled /t REG_DWORD /d 1 /f
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v HubsSidebarEnabled /t REG_DWORD /d 1 /f >nul 2>&1
     set "operation_name=Включение Copilot"
 ) else (
-    :: Удаляем приложение
-    PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage Microsoft.CoPilot | Remove-AppxPackage"
-
     :: Ставим политики «выключено»
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
-    reg add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f
+    reg add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f >nul 2>&1
+    reg add "HKCU\SOFTWARE\Policies\Microsoft\Windows\WindowsAI" /v DisableAIDataAnalysis /t REG_DWORD /d 1 /f >nul 2>&1
 
     :: Отключаем автозапуск и кнопку
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v AutoOpenCopilotLargeScreens /t REG_DWORD /d 0 /f
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowCopilotButton /t REG_DWORD /d 0 /f
-    reg add "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v IsUserEligible /t REG_DWORD /d 0 /f
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" /v AutoOpenCopilotLargeScreens /t REG_DWORD /d 0 /f >nul 2>&1
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowCopilotButton /t REG_DWORD /d 0 /f >nul 2>&1
+    reg add "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v IsUserEligible /t REG_DWORD /d 0 /f >nul 2>&1
 
     :: Отключаем боковую панель в Edge (при наличии)
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v HubsSidebarEnabled /t REG_DWORD /d 0 /f
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v HubsSidebarEnabled /t REG_DWORD /d 0 /f >nul 2>&1
     set "operation_name=Удаление Copilot"
 )
 REM Проверка ускорения Microsoft Edge и фоновой работы браузера
@@ -4498,8 +4503,8 @@ goto GoBack
 
 :WinCustomization-checker
 echo [INFO ] %TIME% - Вызван ":WinCustomization-checker" >> "%ASX-Directory%\Files\Logs\%date%.txt"
-for %%i in (BLEX SFE NetworkExplorer IconArrow ) do (set "%%i=%COL%[92mВКЛ ") >nul 2>&1
-for %%i in (THPC OldContMenuWindows galleryExplorer HomeExplorer DSWE MSRT WTUL ) do (set "%%i=%COL%[91mВЫКЛ") >nul 2>&1
+for %%i in (BLEX SFE NetworkExplorer IconArrow GrayHilight ) do (set "%%i=%COL%[92mВКЛ ") >nul 2>&1
+for %%i in (THPC OldContMenuWindows galleryExplorer HomeExplorer DSWE MSRT ) do (set "%%i=%COL%[91mВЫКЛ") >nul 2>&1
 REM Показать расширения файлов
 for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideFileExt" 2^>nul') do @if "%%A"=="0x0" (set "SFE=%COL%[92mВКЛ ") else (set "SFE=%COL%[91mВЫКЛ")
 
@@ -4520,9 +4525,6 @@ for /f "tokens=1,2,*" %%A in ('reg query "HKLM\SOFTWARE\Microsoft\Windows\Curren
 REM Проверка отключения определений MSRT (Malicious Software Removal Tool)
 reg query "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUAU" | findstr /i "0x1" >nul 2>&1 && set "MSRT=%COL%[92mВКЛ "
 
-    REM Проверка установки виджетов Windows - WebExperience
-    reg query "%SaveData%\ParameterFunction" /v "WidgetUninstall" >nul 2>&1 && set "WTUL=%COL%[92mВКЛ " >nul 2>&1
-
 REM Тема
 for %%i in (THEME ) do (set "%%i=светлую")
 for /f "tokens=2*" %%a in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "AppsUseLightTheme" 2^>nul ^| find /i "1"') do (
@@ -4540,6 +4542,9 @@ for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Software\Classes\CLSID\{
 
 REM День Недели на панели задач
 for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Control Panel\International" /v sShortDate ') do @(if "%%A"=="ddd-dd.MM.yyyy" (set "TaskBarDate=%COL%[92mВКЛ ") else (set "TaskBarDate=%COL%[91mВЫКЛ"))
+
+REM Серый цвет для выделения
+for /f "tokens=2*" %%a in ('reg query "HKCU\Control Panel\Colors" /v "Hilight" ^| find /i "0 120 215"') do ( set "GrayHilight=%COL%[91mВЫКЛ")
 
 REM Стрелки на ярлыках
 reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons" /v 29  && set "IconArrow=%COL%[91mВЫКЛ"
@@ -4594,7 +4599,7 @@ echo           10 %COL%[36m[%COL%[37m %IconArrow% %COL%[36m]%COL%[37m Стрел
 echo           11 %COL%[36m[%COL%[37m %DSWE% %COL%[36m]%COL%[37m Отключить экран приветствия Windows
 echo           12 %COL%[36m[%COL%[37m %MSRT% %COL%[36m]%COL%[37m Исключить средство удаления вредоносных программ из обновлений Windows
 echo           13 %COL%[36m[%COL%[37m %FolderNameTemplate% %COL%[36m]%COL%[37m Нестандартное имя для новой папки %FolderNameTemplateName%
-echo.
+echo           14 %COL%[36m[%COL%[37m %GrayHilight% %COL%[36m]%COL%[37m Серый цвет выделеной области
 echo.
 echo.
 echo          %COL%[36mПУНКТЫ
@@ -4636,6 +4641,7 @@ if /i "%choice%"=="10" ( set "history=WinCustomization;!history!" && call:IconAr
 if /i "%choice%"=="11" ( set "history=WinCustomization;!history!" && Call:DisableWelcomeExperience )
 if /i "%choice%"=="12" ( set "history=WinCustomization;!history!" && Call:MSRT_in_WindowsUpdate )
 if /i "%choice%"=="13" ( set "history=WinCustomization;!history!" && call:FolderNameTemplateMenu )
+if /i "%choice%"=="14" ( set "history=WinCustomization;!history!" && call:GrayHilightToggle )
 
 if /i "%choice%"=="Cs" ( set "history=WinCustomization;!history!" && goto Cursor_menu )
 if /i "%choice%"=="сы" ( set "history=WinCustomization;!history!" && goto Cursor_menu )
@@ -5052,6 +5058,54 @@ if "%IconArrow%" == "%COL%[91mВЫКЛ" (
 call:Complete_notice
 goto GoBack
 
+:FolderNameTemplateMenu
+if "%FolderNameTemplate%" == "%COL%[91mВЫКЛ" (
+    echo [INFO ] %TIME% - Вызван ":FolderNameTemplateMenu" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    cls
+    TITLE Смена названия новых папок - ASX Hub
+    echo.
+    echo.
+    echo.
+    echo.
+    echo.
+    echo                                            %COL%[90m:::      ::::::::  :::    :::          :::    ::: :::    ::: :::::::::
+    echo                                         :+: :+:   :+:    :+: :+:    :+:          :+:    :+: :+:    :+: :+:    :+:
+    echo                                       +:+   +:+  +:+         +:+  +:+           +:+    +:+ +:+    +:+ +:+    +:+
+    echo                                     +#++:++#++: +#++:++#++   +#++:+            +#++:++#++ +#+    +:+ +#++:++#+
+    echo                                    +#+     +#+        +#+  +#+  +#+           +#+    +#+ +#+    +#+ +#+    +#+
+    echo                                   #+#     #+# #+#    #+# #+#    #+#          #+#    #+# #+#    #+# #+#    #+#
+    echo                                  ###     ###  ########  ###    ###          ###    ###  ########  #########
+    echo.
+    echo                              Нажатие клавиш B или И не вернет вас назад, а может привести к нарушению работы скрипта
+    echo.
+    echo.
+    set /p "FolderNameTemplateEnter=%DEL%                                                Введите шаблон для названия новых папок >: "
+    echo [INFO ] %TIME% - Установка названия для новых папок: %FolderNameTemplateEnter% >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /v "RenameNameTemplate" /t REG_SZ /d "%FolderNameTemplateEnter%" /f >nul 2>&1
+    set "operation_name=Установка нестандартного названия для новых папок"
+) else (
+    echo [INFO ] %TIME% - Установка названия для новых папок на стандартное >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /f >nul 2>&1
+    set "operation_name=Сброс названий новых папок на стандартные"
+)
+call:Complete_notice
+goto GoBack
+
+:GrayHilightToggle
+if "%GrayHilight%" == "%COL%[91mВЫКЛ" (
+    echo [INFO ] %TIME% - Изменение цвета выделения на серый >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    reg add "HKCU\Control Panel\Colors" /v "Hilight" /t REG_SZ /d "95 95 95" /f >nul 2>&1
+    reg add "HKCU\Control Panel\Colors" /v "HotTrackingColor" /t REG_SZ /d "80 80 80" /f >nul 2>&1
+    set "operation_name=Изменение цвета выделеной области. Нужна перезагрузка"
+) >nul 2>&1 else (
+    echo [INFO ] %TIME% - Изменение цвета выделения на стандартный >> "%ASX-Directory%\Files\Logs\%date%.txt"
+    reg add "HKCU\Control Panel\Colors" /v "Hilight" /t REG_SZ /d "0 120 215" /f >nul 2>&1
+    reg add "HKCU\Control Panel\Colors" /v "HotTrackingColor" /t REG_SZ /d "0 102 204" /f >nul 2>&1
+    set "operation_name=Изменение цвета выделеной области. Нужна перезагрузка"
+) >nul 2>&1
+call:Complete_notice
+goto GoBack
+
 :Services
 REM call:Privacy-checker
 cls
@@ -5061,6 +5115,10 @@ for %%s in (PcaSvc Wecsvc WbioSrvc stisvc WSearch MapsBroker SensorService vmick
     set "Serv_%%s=%COL%[91mН/Д"
 )
 
+for %%R in (Serv_Location Serv_UserActivities ) do (
+    set "%%R=%COL%[92mВКЛ "
+)
+
 set "output_file=%ASX-Directory%\Files\Logs\Output-Services-%date%.txt"
 reg query HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services > %output_file%
 for /f %%i in ('type %output_file% ^| find /c /v ""') do set "line_count=%%i"
@@ -5068,11 +5126,11 @@ for /f %%i in ('type %output_file% ^| find /c /v ""') do set "line_count=%%i"
 for /f %%i in ('sc query ^| find "STATE" ^| find /c "RUNNING"') do set Services_count=%%i
 
 rem Проверяем службы и их состояние
-set "ServicesList=PcaSvc Wecsvc WbioSrvc stisvc WSearch MapsBroker SensorService vmickvpexchange XblAuthManager Spooler DPS SysMain wisvc Fax RemoteRegistry PhoneSvc TabletInputService WpcMonSvc DoSvc WalletService MixedRealityOpenXRSvc"
+set "ServicesList=PcaSvc Wecsvc WbioSrvc stisvc WSearch MapsBroker SensorService vmickvpexchange XblAuthManager Spooler DPS SysMain wisvc Fax RemoteRegistry PhoneSvc TabletInputService WpcMonSvc DoSvc WalletService MixedRealityOpenXRSvc UsoSvc"
 for %%s in (%ServicesList%) do (
     sc query %%s >nul 2>&1
     if errorlevel 1 (
-        set "Serv_%%s=%COL%[90mН/Д"
+        set "Serv_%%s=%COL%[90mН/Д "
     ) else (
         for /f "tokens=4" %%a in ('sc query %%s ^| findstr "STATE"') do (
             if /i "%%a"=="RUNNING" (
@@ -5084,6 +5142,16 @@ for %%s in (%ServicesList%) do (
     )
 )
 
+	REM Служба отслеживания местоположения
+    for /f "tokens=3" %%A in ('reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" /v "Value" 2^>nul') do (
+    	if "%%A"=="Deny" set "Serv_Location=%COL%[91mВЫКЛ"
+    )
+
+    REM Проверка состояния UAC (Контроль учетных записей пользователей)
+    for /f "tokens=3" %%A in ('reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities1" 2^>nul') do (
+    	if "%%A"=="0x1" set "Serv_UserActivities=%COL%[91mВЫКЛ"
+    )
+
 
 echo [INFO ] %TIME% - Открыта панель ":Services" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 set PageName=Services
@@ -5094,30 +5162,30 @@ echo                                                                     %COL%[9
 echo.
 echo          %COL%[36mСЛУЖБЫ WINDOWS ^(%Services_count%\~%line_count%^)
 echo          %COL%[97m------------------------%COL%[37m
-echo          1 %COL%[36m[%COL%[37m %Serv_PcaSvc% %COL%[36m]%COL%[37m Служба помощника по совместимости программ ^(%COL%[36mPcaSvc %COL%[37m^)
-echo          2 %COL%[36m[%COL%[37m %Serv_Wecsvc% %COL%[36m]%COL%[37m Служба сборщика событий Windows ^(%COL%[36mWecsvc %COL%[37m^)
-echo          3 %COL%[36m[%COL%[37m %Serv_WbioSrvc% %COL%[36m]%COL%[37m Биометрическая служба Windows ^(%COL%[36mWbioSrvc %COL%[37m^)
-echo          4 %COL%[36m[%COL%[37m %Serv_WSearch% %COL%[36m]%COL%[37m Windows Search ^(%COL%[36mWSearch %COL%[37m^)
-echo          5 %COL%[36m[%COL%[37m %Serv_MapsBroker% %COL%[36m]%COL%[37m Диспетчер скачанных карт ^(%COL%[36mMapsBroker %COL%[37m^)
-echo          6 %COL%[36m[%COL%[37m %Serv_SensorService% %COL%[36m]%COL%[37m Службы датчиков ^(%COL%[36mSensorService, SensorDataService, SensrSvc %COL%[37m^)
-echo          7 %COL%[36m[%COL%[37m %Serv_vmickvpexchange% %COL%[36m]%COL%[37m Службы Hyper-V ^(%COL%[36mvmickvpexchange, vmicshutdown, vmicheartbeat, и тд. %COL%[37m^)
-echo          8 %COL%[36m[%COL%[37m %Serv_XblAuthManager% %COL%[36m]%COL%[37m Службы Xbox ^(%COL%[36mXblGameSave, XboxNetApiSvc, XblAuthManager и тд. %COL%[37m^)
-echo          9 %COL%[36m[%COL%[37m %Serv_Spooler% %COL%[36m]%COL%[37m Служба печати ^(%COL%[36mSpooler - Если нет принтера - выключайте %COL%[37m^)
-echo         10 %COL%[36m[%COL%[37m %Serv_stisvc% %COL%[36m]%COL%[37m Служба загрузки изображений Windows ^(%COL%[36mstisvc - Если нет сканера - выключайте %COL%[37m^)
-echo         11 %COL%[36m[%COL%[37m %Serv_DPS% %COL%[36m]%COL%[37m Службы диагностики ^(%COL%[36mDiagTrack, DPS, WdiServiceHost и тд. %COL%[37m^)
-echo         12 %COL%[36m[%COL%[37m %Serv_SysMain% %COL%[36m]%COL%[37m SysMain ^(%COL%[36mSuperfetch - Если у вас SSD - выключайте %COL%[37m^)
-echo         13 %COL%[36m[%COL%[37m %Serv_wisvc% %COL%[36m]%COL%[37m Служба предварительной оценки Windows ^(%COL%[36mwisvc - Компоненты Insider Preview %COL%[37m^)
-echo         14 %COL%[36m[%COL%[37m %Serv_Fax% %COL%[36m]%COL%[37m Факс ^(%COL%[36mFax - Если нет факс-модема - выключайте %COL%[37m^)
-echo         15 %COL%[36m[%COL%[37m %Serv_RemoteRegistry% %COL%[36m]%COL%[37m Удаленный реестр ^(%COL%[36mRemoteRegistry - Обычно не нужен %COL%[37m^)
-echo         16 %COL%[36m[%COL%[37m %Serv_PhoneSvc% %COL%[36m]%COL%[37m Телефонная служба ^(%COL%[36mPhoneSvc - Если не используете модем/телефонию %COL%[37m^)
-echo         17 %COL%[36m[%COL%[37m %Serv_TabletInputService% %COL%[36m]%COL%[37m Служба сенсорной клавиатуры и панели рукописного ввода ^(%COL%[36mTabletInputService %COL%[37m^)
-echo         18 %COL%[36m[%COL%[37m %Serv_WpcMonSvc% %COL%[36m]%COL%[37m Служба родительского контроля ^(%COL%[36mWpcMonSvc - Если не используется %COL%[37m^)
-echo         19 %COL%[36m[%COL%[37m %Serv_DoSvc% %COL%[36m]%COL%[37m Оптимизация доставки ^(%COL%[36mDoSvc - P2P обновления Windows %COL%[37m^)
-echo         20 %COL%[36m[%COL%[37m %Serv_WalletService% %COL%[36m]%COL%[37m Служба кошелька ^(%COL%[36mWalletService - Для некоторых приложений Store%COL%[37m^)
-echo         21 %COL%[36m[%COL%[37m %Serv_MixedRealityOpenXRSvc% %COL%[36m]%COL%[37m Служба Windows Mixed Reality OpenXR ^(%COL%[36mMixedRealityOpenXRSvc - Для некоторых приложений Store %COL%[37m^)
-echo.
-echo.
-echo.
+echo           1 %COL%[36m[%COL%[37m %Serv_PcaSvc% %COL%[36m]%COL%[37m Служба помощника по совместимости программ ^(%COL%[36mPcaSvc %COL%[37m^)
+echo           2 %COL%[36m[%COL%[37m %Serv_Wecsvc% %COL%[36m]%COL%[37m Служба сборщика событий Windows ^(%COL%[36mWecsvc %COL%[37m^)
+echo           3 %COL%[36m[%COL%[37m %Serv_WbioSrvc% %COL%[36m]%COL%[37m Биометрическая служба Windows ^(%COL%[36mWbioSrvc %COL%[37m^)
+echo           4 %COL%[36m[%COL%[37m %Serv_WSearch% %COL%[36m]%COL%[37m Windows Search ^(%COL%[36mWSearch %COL%[37m^)
+echo           5 %COL%[36m[%COL%[37m %Serv_MapsBroker% %COL%[36m]%COL%[37m Диспетчер скачанных карт ^(%COL%[36mMapsBroker %COL%[37m^)
+echo           6 %COL%[36m[%COL%[37m %Serv_SensorService% %COL%[36m]%COL%[37m Службы датчиков ^(%COL%[36mSensorService, SensorDataService, SensrSvc %COL%[37m^)
+echo           7 %COL%[36m[%COL%[37m %Serv_vmickvpexchange% %COL%[36m]%COL%[37m Службы Hyper-V ^(%COL%[36mvmickvpexchange, vmicshutdown, vmicheartbeat, и тд. %COL%[37m^)
+echo           8 %COL%[36m[%COL%[37m %Serv_XblAuthManager% %COL%[36m]%COL%[37m Службы Xbox ^(%COL%[36mXblGameSave, XboxNetApiSvc, XblAuthManager и тд. %COL%[37m^)
+echo           9 %COL%[36m[%COL%[37m %Serv_Spooler% %COL%[36m]%COL%[37m Служба печати ^(%COL%[36mSpooler - Если нет принтера - выключайте %COL%[37m^)
+echo          10 %COL%[36m[%COL%[37m %Serv_stisvc% %COL%[36m]%COL%[37m Служба загрузки изображений Windows ^(%COL%[36mstisvc - Если нет сканера - выключайте %COL%[37m^)
+echo          11 %COL%[36m[%COL%[37m %Serv_DPS% %COL%[36m]%COL%[37m Службы диагностики ^(%COL%[36mDiagTrack, DPS, WdiServiceHost и тд. %COL%[37m^)
+echo          12 %COL%[36m[%COL%[37m %Serv_SysMain% %COL%[36m]%COL%[37m SysMain ^(%COL%[36mSuperfetch - Если у вас SSD - выключайте %COL%[37m^)
+echo          13 %COL%[36m[%COL%[37m %Serv_wisvc% %COL%[36m]%COL%[37m Служба предварительной оценки Windows ^(%COL%[36mwisvc - Компоненты Insider Preview %COL%[37m^)
+echo          14 %COL%[36m[%COL%[37m %Serv_Fax% %COL%[36m]%COL%[37m Факс ^(%COL%[36mFax - Если нет факс-модема - выключайте %COL%[37m^)
+echo          15 %COL%[36m[%COL%[37m %Serv_RemoteRegistry% %COL%[36m]%COL%[37m Удаленный реестр ^(%COL%[36mRemoteRegistry - Обычно не нужен %COL%[37m^)
+echo          16 %COL%[36m[%COL%[37m %Serv_PhoneSvc% %COL%[36m]%COL%[37m Телефонная служба ^(%COL%[36mPhoneSvc - Если не используете модем/телефонию %COL%[37m^)
+echo          17 %COL%[36m[%COL%[37m %Serv_TabletInputService% %COL%[36m]%COL%[37m Служба сенсорной клавиатуры и панели рукописного ввода ^(%COL%[36mTabletInputService %COL%[37m^)
+echo          18 %COL%[36m[%COL%[37m %Serv_WpcMonSvc% %COL%[36m]%COL%[37m Служба родительского контроля ^(%COL%[36mWpcMonSvc - Если не используется %COL%[37m^)
+echo          19 %COL%[36m[%COL%[37m %Serv_DoSvc% %COL%[36m]%COL%[37m Оптимизация доставки ^(%COL%[36mDoSvc - P2P обновления Windows %COL%[37m^)
+echo          20 %COL%[36m[%COL%[37m %Serv_WalletService% %COL%[36m]%COL%[37m Служба кошелька ^(%COL%[36mWalletService - Для некоторых приложений Store%COL%[37m^)
+echo          21 %COL%[36m[%COL%[37m %Serv_MixedRealityOpenXRSvc% %COL%[36m]%COL%[37m Служба Windows Mixed Reality OpenXR ^(%COL%[36mMixedRealityOpenXRSvc - Для некоторых приложений Store %COL%[37m^)
+echo          22 %COL%[36m[%COL%[37m %Serv_UsoSvc% %COL%[36m]%COL%[37m Службы обновления Windows ^(%COL%[36mwuauserv, WaaSMedicSvc, UsoSvc, DoSvc%COL%[37m^)
+echo          23 %COL%[36m[%COL%[37m %Serv_Location% %COL%[36m]%COL%[37m Служба отслеживания местоположения ^(%COL%[36mlfsvc %COL%[37m^)
+echo          23 %COL%[36m[%COL%[37m %Serv_UserActivities% %COL%[36m]%COL%[37m Запись хронологии действий в Windows ^(%COL%[36mlfsvc %COL%[37m^)
 echo.
 echo.
 echo.
@@ -5156,6 +5224,10 @@ if /i "%choice%"=="18" ( set "history=Services;!history!" && Call:Services_WpcMo
 if /i "%choice%"=="19" ( set "history=Services;!history!" && Call:Services_DoSvc )
 if /i "%choice%"=="20" ( set "history=Services;!history!" && Call:Services_WalletService )
 if /i "%choice%"=="21" ( set "history=Services;!history!" && Call:Services_MixedRealityOpenXRSvc )
+if /i "%choice%"=="22" ( set "Warning_NotRecommended_Call=Services_WinUpdate" && set "history_Warning_NotRecommended_goto=Services" && set "history=Services;!history!" && Call:Warning_NotRecommended)
+if /i "%choice%"=="23" ( set "history=Services;!history!" && Call:Services_Location )
+if /i "%choice%"=="24" ( set "history=Services;!history!" && Call:Services_UserActivities )
+
 if /i "%choice%"=="RS" ( set "history=Services;!history!" && Call:Recommeded_Services_Turn )
 if /i "%choice%"=="кы" ( set "history=Services;!history!" && Call:Recommeded_Services_Turn )
 if /i "%choice%"=="SL" ( set "history=Services;!history!" && Call:Services_List )
@@ -5169,6 +5241,60 @@ if /i "%choice%"=="и" goto GoBack
 if /i "%choice%"=="NoInput" goto WrongInput
 call:WrongInput
 goto Services
+
+:Warning_NotRecommended
+cls
+echo [INFO ] %TIME% - Вызван ":Warning_NotRecommended" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+title Предупреждение - ASX Hub
+echo.
+echo.
+echo.
+echo.
+echo                                                                         %COL%[91m_
+echo                                                                        / \
+echo                                                                       /   \
+echo                                                                      /     \
+echo                                                                     /       \
+echo                                                                    /         \
+echo                                                                   /           \
+echo                                                                  /             \
+echo                                                                 /      ___      \
+echo                                                                /      ^|   ^|      \
+echo                                                               /       ^|   ^|       \
+echo                                                              /        ^|   ^|        \
+echo                                                             /         ^|   ^|         \
+echo                                                            /          ^|   ^|          \
+echo                                                           /           ^|   ^|           \
+echo                                                          /            ^|   ^|            \
+echo                                                         /             ^|___^|             \
+echo                                                        /                                 \
+echo                                                       /                                   \
+echo                                                      /                 ___                 \
+echo                                                     /                 ^|___^|                 \
+echo                                                    /                                         \
+echo                                                   /___________________________________________\
+echo.
+echo.
+echo.
+echo.
+echo                                Внимание: %COL%[37mВыбранный вами твик не рекомендуется к применению разработчиками ASX Hub.
+echo.
+echo                                       Пожалуйста, тщательно обдумайте своё решение перед активацией твика.%COL%[90m
+echo.
+echo.
+echo.
+echo                                               Введите %COL%[36m^<OK^>%COL%[90m для продолжения или %COL%[36m^<B^>%COL%[90m для возврата назад.
+echo.
+set "choice="
+set /p choice="%DEL%                                                                     >: "
+
+if not defined choice cls && goto Warning_NotRecommended
+if /i "%choice%"=="OK" ( goto %Warning_NotRecommended_Call% )
+if /i "%choice%"=="ок" ( goto %Warning_NotRecommended_Call% )
+if /i "%choice%"=="back" ( goto GoBack )
+if /i "%choice%"=="B" ( goto GoBack )
+if /i "%choice%"=="и" ( goto GoBack )
+goto Warning_NotRecommended
 
 :Services_PcaSvc
 if "%Serv_PcaSvc%" == "%COL%[91mВЫКЛ" (
@@ -5386,37 +5512,41 @@ goto GoBack
 
 :Services_Diagnost
 REM DiagTrack, dmwappushservice, diagsvc, DPS, diagnosticshub.standardcollector.service, WdiServiceHost, WdiSystemHost
-if "%Serv_Diagnost%" == "%COL%[91mВЫКЛ" (
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack" /v "Start" /t REG_DWORD /d 2 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\dmwappushservice" /v "Start" /t REG_DWORD /d 2 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\diagsvc" /v "Start" /t REG_DWORD /d 2 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\DPS" /v "Start" /t REG_DWORD /d 2 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\diagnosticshub.standardcollector.service" /v "Start" /t REG_DWORD /d 2 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\WdiServiceHost" /v "Start" /t REG_DWORD /d 2 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\WdiSystemHost" /v "Start" /t REG_DWORD /d 2 /f >nul 2>&1
-		net start DiagTrack
-		net start dmwappushservice
-		net start diagsvc
-		net start DPS
-		net start diagnosticshub.standardcollector.service
-		net start WdiServiceHost
-		net start WdiSystemHost
+if "%Serv_DPS%" == "%COL%[91mВЫКЛ" (
+        sc config "DiagTrack" start= auto
+		    net start DiagTrack
+        sc config "dmwappushservice" start= auto
+		    net start dmwappushservice
+        sc config "diagsvc" start= auto
+		    net start diagsvc
+        sc config "DPS" start= auto
+		    net start DPS
+                reg add HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\DiagLog /v Start /t reg_dword /d 1 /f >nul 2>&1
+                reg add HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\WdiContextLog /v Start /t reg_dword /d 1 /f >nul 2>&1
+        sc config "diagnosticshub.standardcollector.service" start= auto
+		    net start diagnosticshub.standardcollector.service
+        sc config "WdiServiceHost" start= auto
+		    net start WdiServiceHost
+        sc config "WdiSystemHost" start= auto
+		    net start WdiSystemHost
 	set "operation_name=Включение служб DiagTrack, dmwappushservice, diagsvc, DPS и тд."		
 ) >nul 2>&1 else (
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack" /v "Start" /t REG_DWORD /d 4 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\dmwappushservice" /v "Start" /t REG_DWORD /d 4 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\diagsvc" /v "Start" /t REG_DWORD /d 4 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\DPS" /v "Start" /t REG_DWORD /d 4 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\diagnosticshub.standardcollector.service" /v "Start" /t REG_DWORD /d 4 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\WdiServiceHost" /v "Start" /t REG_DWORD /d 4 /f >nul 2>&1
-	reg add "HKLM\SYSTEM\CurrentControlSet\Services\WdiSystemHost" /v "Start" /t REG_DWORD /d 2 /f >nul 2>&1
 		net stop DiagTrack
+            sc config "DiagTrack" start= disabled
 		net stop dmwappushservice
+            sc config "dmwappushservice" start= disabled
 		net stop diagsvc
-		net stop DPS
+            sc config "diagsvc" start= disabled
+        net stop DPS
+            sc config "DPS" start= disabled
+                reg add HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\DiagLog /v Start /t reg_dword /d 0 /f >nul 2>&1
+                reg add HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\WdiContextLog /v Start /t reg_dword /d 0 /f >nul 2>&1
 		net stop diagnosticshub.standardcollector.service
+            sc config "diagnosticshub.standardcollector.service" start= disabled
 		net stop WdiServiceHost
+            sc config "WdiServiceHost" start= disabled
 		net stop WdiSystemHost
+            sc config "WdiSystemHost" start= disabled
 	set "operation_name=Выключение служб DiagTrack, dmwappushservice, diagsvc, DPS и тд."	
 ) >nul 2>&1
 call:Complete_notice
@@ -5529,21 +5659,114 @@ if "%Serv_MixedRealityOpenXRSvc%" == "%COL%[91mВЫКЛ" (
 call:Complete_notice
 goto GoBack
 
+:Services_WinUpdate
+REM wuauserv, WaaSMedicSvc, UsoSvc, DoSvc
+if "%Serv_UsoSvc%" == "%COL%[91mВЫКЛ" (
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wuauserv" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UsoSvc" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
+    REM reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BITS" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DoSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+
+    net start wuauserv
+    net start UsoSvc
+    net start WaaSMedicSvc
+    net start BITS
+    net start DoSvc
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\DoNotConnectToWindowsUpdateInternetLocations" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\SetDisableUXWUAccess" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\ExcludeWUDriversInQualityUpdate" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\AU\NoAutoUpdate" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\Schedule Scan" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\USO_UxBroker" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\UpdateModelTask" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WaaSMedic\PerformRemediation" /ENABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\Scheduled Start" /ENABLE >nul 2>&1
+
+    chcp 850 >nul 2>&1
+    powershell -command "Get-ScheduledTask -TaskPath '\Microsoft\Windows\InstallService\*' | Enable-ScheduledTask; Get-ScheduledTask -TaskPath '\Microsoft\Windows\UpdateOrchestrator\*' | Enable-ScheduledTask; Get-ScheduledTask -TaskPath '\Microsoft\Windows\WindowsUpdate\*' | Enable-ScheduledTask;"
+    chcp 65001 >nul 2>&1
+
+    set "operation_name=Включение служб mwuauserv, WaaSMedicSvc, UsoSvc, DoSvc"
+) else (
+    net stop wuauserv
+    net stop UsoSvc
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wuauserv" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UsoSvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+    REM  reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BITS" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DoSvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\DoNotConnectToWindowsUpdateInternetLocations" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\SetDisableUXWUAccess" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\ExcludeWUDriversInQualityUpdate" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\AU\NoAutoUpdate" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\Schedule Scan" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\USO_UxBroker" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\UpdateOrchestrator\UpdateModelTask" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WaaSMedic\PerformRemediation" /DISABLE >nul 2>&1
+    schtasks /change /TN "Microsoft\Windows\WindowsUpdate\Scheduled Start" /DISABLE >nul 2>&1
+    
+    chcp 850 >nul 2>&1
+    powershell -command "Get-ScheduledTask -TaskPath '\Microsoft\Windows\WindowsUpdate\' | Disable-ScheduledTask"
+    chcp 65001 >nul 2>&1
+
+    rd /s /q "%windir%\SoftwareDistribution"
+    md "%windir%\SoftwareDistribution"
+    set "operation_name=Выключение служб mwuauserv, WaaSMedicSvc, UsoSvc, DoSvc"
+)
+call:Complete_notice
+goto GoBack
+
+:Services_Location
+REM lfsvc
+if "%Serv_Location%" == "%COL%[91mВЫКЛ" (
+    reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" /v "Value" /f >nul 2>&1
+    reg delete "HKLM\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration" /v "Status" /f >nul 2>&1
+    set "operation_name=Включение cлужбы отслеживания местоположения"
+) else (
+    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" /v "Value" /t REG_SZ /d "Deny" /f >nul 2>&1
+    reg add "HKLM\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration" /v "Status" /t REG_DWORD /d "0" /f >nul 2>&1
+    set "operation_name=Выключение службы отслеживания местоположения"
+)
+call:Complete_notice
+goto GoBack
+
+:Services_UserActivities
+REM lfsvc
+if "%Serv_Location%" == "%COL%[91mВЫКЛ" (
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities" /f >nul 2>&1
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "UploadUserActivities" /f >nul 2>&1
+    set "operation_name=Включение функции записи хронологии действий в Windows"
+) else (
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities" /t REG_DWORD /d "0" /f >nul 2>&1
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "UploadUserActivities" /t REG_DWORD /d "0" /f >nul 2>&1
+    set "operation_name=Выключение функции записи хронологии действий в Windows"
+)
+call:Complete_notice
+goto GoBack
+
 :Recommeded_Services_Turn
 REM 2 — Автоматически
 REM 3 — Вручную
 REM 4 — Отключена
 
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\ALG" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\ALG" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\AppIDSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Appinfo" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\AppMgmt" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\AppReadiness" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\AppMgmt" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\AppReadiness" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\AssignedAccessManagerSvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\AppXSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\AudioEndpointBuilder" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Audiosrv" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\BFE" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\BITS" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\AxInstSV" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\BFE" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\BITS" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\BrokerInfrastructure" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\BTAGService" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\BDESVC" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
@@ -5558,10 +5781,12 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\CryptSvc" /v "Start" /t REG_DWOR
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\DcomLaunch" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\DeviceAssociationService" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\DeviceInstall" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\DevQueryBroker" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\DevQueryBroker" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Dhcp" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\diagnosticshub.standardcollector.service" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\diagsvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\dmwappushservice" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\diagtrack" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\DispBrokerDesktopSvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\DisplayEnhancementService" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
@@ -5592,8 +5817,8 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\KAPSService" /v "Start" /t REG_D
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\KeyIso" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\KNDBWM" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\KtmRm" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\LicenseManager" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\lmhosts" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\lfsvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
@@ -5624,35 +5849,34 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\Power" /v "Start" /t REG_DWORD /
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\PrintNotify" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\ProfSvc" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\QWAVE" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\RasMan" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\RasMan" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\RpcEptMapper" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\RpcSs" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\RmSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\SamSs" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Schedule" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\seclogon" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\SecurityHealthService" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\Sendevsvc" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\SENS" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\SensorDataService" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\SensorService" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\SensrSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\SENS" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\SensorDataService" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\SensorService" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\SensrSvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\ShellHWDetection" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\SNMPTRAP" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\Spooler" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\sppsvc" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\SSDPSRV" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\StateRepository" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\StateRepository" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Steam Client Service" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\stisvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\StorSvc" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\svsvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\swprv" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\SystemEventsBroker" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\SgrmBroker" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\TabletInputService" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
+
+for /f %%I in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /k /f "SgrmBroker" ^| find /i "SgrmBroker"') do (
+    reg add "%%I" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+)
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Themes" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\TimeBrokerSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\TokenBroker" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
@@ -5673,7 +5897,6 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\vmicvss" /v "Start" /t REG_DWORD
 
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\VaultSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\vds" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-reg add "HKLM\SYSTEM\CurrentControlSet\Services\vgc" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\VSS" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\W32Time" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
@@ -11006,7 +11229,7 @@ echo                                                                     %COL%[9
 echo.
 echo          %COL%[36mДОБАВЛЕНИЕ НОВЫХ ПУНКТОВ
 echo          %COL%[97m------------------------
-echo           %COL%[90m- Для файлов:%COL%[37m
+echo           %COL%[90mДля файлов:%COL%[37m
 echo           1 %COL%[36m[%COL%[37m %ContMenuOwner% %COL%[36m]%COL%[37m Пункт "Сменить владельца"
 echo           2 %COL%[36m[%COL%[37m %ContMenuNotepad% %COL%[36m]%COL%[37m Пункт "Открыть через БЛОКНОТ"
 echo           3 %COL%[36m[%COL%[37m %ContMenuExplorer% %COL%[36m]%COL%[37m Пункт "Перезапустить ПРОВОДНИК"
@@ -11015,12 +11238,12 @@ echo           5 %COL%[36m[%COL%[37m %RunWithPriority% %COL%[36m]%COL%[37m Пу�
 echo           6 %COL%[36m[%COL%[37m %DeleteFolderContents% %COL%[36m]%COL%[37m Пункт "Удалить содержимое папки"
 echo           7 %COL%[36m[%COL%[37m %EditInNotepad% %COL%[36m]%COL%[37m Пункт "Изменить в Блокноте"
 echo.
-echo           %COL%[90m- Для рабочего стола:%COL%[37m
+echo           %COL%[90mДля рабочего стола:%COL%[37m
 echo           8 %COL%[36m[%COL%[37m %EmptyRecycleBin% %COL%[36m]%COL%[37m Пункт "Очистить корзину"
 echo           9 %COL%[36m[%COL%[37m %SettingsCME% %COL%[36m]%COL%[37m Пункт "Настройки"
 echo          10 %COL%[36m[%COL%[37m %WindowsTools% %COL%[36m]%COL%[37m Пункт "Инструменты Windows"
 echo.
-echo           %COL%[90m- Для панели задач:%COL%[37m
+echo           %COL%[90mДля панели задач:%COL%[37m
 echo          11 %COL%[36m[%COL%[37m %EndTask% %COL%[36m]%COL%[37m Пункт "Завершить задачу"
 echo.
 echo.
@@ -11523,38 +11746,6 @@ if "%EditInNotepad%" == "%COL%[91mВЫКЛ" (
 call:Complete_notice
 goto GoBack
 
-:FolderNameTemplateMenu
-if "%FolderNameTemplate%" == "%COL%[91mВЫКЛ" (
-    echo [INFO ] %TIME% - Вызван ":FolderNameTemplateMenu" >> "%ASX-Directory%\Files\Logs\%date%.txt"
-    cls
-    TITLE Смена названия новых папок - ASX Hub
-    echo.
-    echo.
-    echo.
-    echo.
-    echo.
-    echo                                            %COL%[90m:::      ::::::::  :::    :::          :::    ::: :::    ::: :::::::::
-    echo                                         :+: :+:   :+:    :+: :+:    :+:          :+:    :+: :+:    :+: :+:    :+:
-    echo                                       +:+   +:+  +:+         +:+  +:+           +:+    +:+ +:+    +:+ +:+    +:+
-    echo                                     +#++:++#++: +#++:++#++   +#++:+            +#++:++#++ +#+    +:+ +#++:++#+
-    echo                                    +#+     +#+        +#+  +#+  +#+           +#+    +#+ +#+    +#+ +#+    +#+
-    echo                                   #+#     #+# #+#    #+# #+#    #+#          #+#    #+# #+#    #+# #+#    #+#
-    echo                                  ###     ###  ########  ###    ###          ###    ###  ########  #########
-    echo.
-    echo                              Нажатие клавиш B или И не вернет вас назад, а может привести к нарушению работы скрипта
-    echo.
-    echo.
-    set /p "FolderNameTemplateEnter=%DEL%                                                Введите шаблон для названия новых папок >: "
-    echo [INFO ] %TIME% - Установка названия для новых папок: %FolderNameTemplateEnter% >> "%ASX-Directory%\Files\Logs\%date%.txt"
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /v "RenameNameTemplate" /t REG_SZ /d "%FolderNameTemplateEnter%" /f >nul 2>&1
-    set "operation_name=Установка нестандартного названия для новых папок"
-) else (
-    echo [INFO ] %TIME% - Установка названия для новых папок на стандартное >> "%ASX-Directory%\Files\Logs\%date%.txt"
-    reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates" /f >nul 2>&1
-    set "operation_name=Сброс названий новых папок на стандартные"
-)
-call:Complete_notice
-goto GoBack
 
 
 :ASX_cleaner_Warn
@@ -13433,9 +13624,7 @@ if "%total_errors%" GEQ "1" (
     set "Assistant_Message=Ассистент: В автозагрузке слишком много программ (!StartupCount!) [ F ]"
     set "RecomendedPanelNameGOTO=Dynamic_StartupManager"
     echo [INFO ] %TIME% - Много программ в автозагрузке: !StartupCount! >> "%ASX-Directory%\Files\Logs\%date%.txt"
-) else (        
-    echo.
-) 
+)
 
 
 rem Найдем длину строки Assistant_Message
@@ -13532,14 +13721,14 @@ echo.
 echo       %COL%[36mОписание обновления %COL%[37m%FullVersionNameCurrent%%COL%[37m
 echo       %COL%[97m!dashes!
 echo.
-echo          %COL%[36m1.%COL%[37m Улучшен дизайн панели редактирования контекстного меню.
-echo          %COL%[36m2.%COL%[37m На панель Редактирования контекстного меню добавлен пункт "Завершить задачу".
-echo          %COL%[36m3.%COL%[37m На панель Оптимизации и настроек добавлены пункты "Удалить Recall" "Удалить Copilot".
-echo          %COL%[36m4.%COL%[37m Исправлены обнаруженные баги, ошибки, недочёты.
-echo.
-echo.
-echo.
-echo.
+echo         %COL%[36m1.%COL%[37m Улучшен дизайн панели редактирования контекстного меню.
+echo         %COL%[36m2.%COL%[37m На панель Редактирования контекстного меню добавлен пункт "Завершить задачу".
+echo         %COL%[36m3.%COL%[37m На панель Оптимизации и настроек добавлены пункты "Удалить Recall" "Удалить Copilot".
+echo         %COL%[36m4.%COL%[37m На панель кастомизации добавлен пункт "Серый цвет выделеной области".
+echo         %COL%[36m5.%COL%[37m На панель служб добавлены пункты "Службы обновления Windows" "Служба отслеживания местоположения"
+echo            "Запись хронологии действий в Windows".
+echo         %COL%[36m6.%COL%[37m Улучшение алгоритма изменения состояния Служб диагностики.
+echo         %COL%[36m7.%COL%[37m Исправлены обнаруженные баги, ошибки, недочёты.
 echo.
 echo.
 echo.
