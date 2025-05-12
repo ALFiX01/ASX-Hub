@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
             max: 14,
             speed: 400,
             glare: true,
-            "max-glare": 0.20
+            "max-glare": 0.10
         });
     } else {
         // console.warn('Библиотека VanillaTilt.js не найдена.');
