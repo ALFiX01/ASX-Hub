@@ -1,16 +1,16 @@
 /* Общие стили */
 :root {
-    --primary-color: #4a00e0;
-    --secondary-color: #8e2de2;
+    --primary-color: #6e28f8;
+    --secondary-color: #9036df;
     --dark-bg: #101010;
     --light-text: #f0f0f0;
     --medium-text: #a0a0a0;
     --primary-color-rgb: 74, 0, 224; /* RGB для основного цвета */
 
     /* Обновлены переменные для кода */
-    --code-background-color-rgb: 55, 55, 65; /* Сделал чуть темнее и менее насыщенным */
-    --code-text-color-rgb: 210, 210, 220;    /* Слегка изменил оттенок */
-    --code-border-color-rgb: 80, 80, 95;     /* Граница ближе к фону карточек */
+    --code-background-color-rgb: 55, 55, 65;
+    --code-text-color-rgb: 210, 210, 220;
+    --code-border-color-rgb: 80, 80, 95;
 
     /* CSS переменные для Glassmorphism */
     --glass-bg-dark-features: rgba(80, 80, 95, 0.15);
@@ -162,8 +162,7 @@ header .logo span {
     transition: color 0.3s ease;
     display: inline-block;
 }
-header .logo:hover span,
-header .logo:focus span {
+header .logo:hover span {
     color: var(--primary-color);
 }
 header .logo:hover,
@@ -258,9 +257,21 @@ header ul li a.active {
     font-size: 1.1em;
 }
 #hero .version-info {
-    margin-top: 20px;
+    margin-top: 10px;
+    color: rgba(160, 84, 211, 0);
     font-size: 0.9em;
     opacity: 0.8;
+}
+/* Стили для информации о скачиваниях под кнопкой */
+#hero .download-info {
+    margin-top: 10px; /* Отступ сверху */
+    color: rgba(255, 255, 255, 0.616);
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+#hero .download-info.visible {
+    display: flex; /* Показываем через JS */
 }
 
 /* Секция Последние изменения (Патч-ноут) */
@@ -290,7 +301,7 @@ header ul li a.active {
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     text-align: center;
     padding-bottom: 0.5em;
-    border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2); /* Немного стилизовал разделитель */
+    /* border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2); */ /* Убрано по запросу */
 }
 .changelog-card h2 #changelog-version {
     font-weight: normal;
@@ -302,7 +313,7 @@ header ul li a.active {
     margin-bottom: 2em;
     max-height: 400px;
     overflow-y: auto;
-    padding-right: 15px; /* Увеличил отступ для скроллбара */
+    padding-right: 15px;
     padding-left: 5px;
     line-height: 1.7;
     color: var(--medium-text);
@@ -346,26 +357,25 @@ header ul li a.active {
 .changelog-content strong, .changelog-content b { color: var(--light-text); font-weight: 600; }
 .changelog-content em, .changelog-content i { color: inherit; font-style: italic; }
 
-/* Обновлен стиль кода */
 .changelog-content code {
-    background-color: rgba(var(--code-background-color-rgb), 0.5); /* Более заметный фон */
+    background-color: rgba(var(--code-background-color-rgb), 0.5);
     color: rgb(var(--code-text-color-rgb));
-    padding: 3px 7px; /* Чуть больше padding */
-    border-radius: 5px; /* Чуть больше радиус */
+    padding: 3px 7px;
+    border-radius: 5px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.9em;
-    border: 1px solid rgba(var(--code-border-color-rgb), 0.6); /* Более заметная граница */
-    word-wrap: break-word; /* Перенос длинных строк */
+    border: 1px solid rgba(var(--code-border-color-rgb), 0.6);
+    word-wrap: break-word;
 }
 .changelog-content pre {
     background-color: rgba(0,0,0,0.25);
     padding: 15px;
-    border-radius: 8px; /* Увеличил радиус */
+    border-radius: 8px;
     overflow-x: auto;
     margin-bottom: 1.2em;
     border: 1px solid var(--glass-border);
 }
-.changelog-content pre code { padding: 0; background-color: transparent; border: none; color: var(--light-text); font-size: 0.95em; /* Немного увеличил шрифт в pre */}
+.changelog-content pre code { padding: 0; background-color: transparent; border: none; color: var(--light-text); font-size: 0.95em; }
 
 .changelog-all-btn {
     display: block;
@@ -429,8 +439,8 @@ header ul li a.active {
 }
 .feature-item:hover {
     transform: translateY(-10px) scale(1.03);
-    /* Используем --primary-color-rgb для тени */
-    box-shadow: 0 10px 35px rgba(var(--primary-color-rgb), 0.3);
+    /* Возвращаем более стандартную темную тень */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); /* Стандартная темная тень */
     background-color: var(--glass-bg-dark-features-hover);
     border-color: rgba(255, 255, 255, 0.2);
 }
@@ -474,7 +484,7 @@ header ul li a.active {
     text-shadow: 0 1px 4px rgba(0,0,0,0.5);
     text-align: center;
     padding-bottom: 0.5em;
-    border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2); /* Немного стилизовал разделитель */
+    /* border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2); */ /* Убрано по запросу */
 }
 
 .requirements-list {

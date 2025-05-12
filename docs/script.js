@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    console.log('Website version: 0.8.1'); // Обновил версию для отслеживания изменений
+    console.log('Website version: 0.8.2'); // Обновил версию для отслеживания изменений
 
     // 1. Установка текущего года в футере
     const yearSpan = document.getElementById('year');
@@ -86,8 +86,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Обновляем классы 'active' у ссылок навигации
         navLinks.forEach(link => {
             link.classList.remove('active');
+            // Добавляем aria-current для доступности
+            link.removeAttribute('aria-current');
             if (link.getAttribute('href') === `#${currentSectionId}`) {
                 link.classList.add('active');
+                link.setAttribute('aria-current', 'page'); // Указываем текущую страницу для скринридеров
             }
         });
     }
@@ -98,22 +101,36 @@ document.addEventListener('DOMContentLoaded', function() {
         changeNavOnScroll(); // Вызываем один раз при загрузке
     }
 
-    // 4. Получение последней версии релиза и патч-ноута с GitHub
+    // 4. Получение последней версии, патч-ноута и СКАЧИВАНИЙ с GitHub
     async function fetchLatestReleaseInfo() {
         const versionElement = document.getElementById('latest-version');
+        const downloadCountElement = document.getElementById('download-count'); // <<< Получаем новый элемент
         const changelogSectionElement = document.getElementById('changelog-section');
         const changelogVersionElement = document.getElementById('changelog-version');
         const changelogBodyElement = document.getElementById('changelog-body');
 
-        // Если нет ключевых элементов, выходим
+        if (downloadCountElement) {
+            downloadCountElement.style.display = 'none'; // Скрываем по умолчанию
+            downloadCountElement.textContent = ''; // Очищаем текст на всякий случай
+        }
+        
+        // Проверяем наличие основных элементов
         if (!versionElement && !changelogSectionElement) {
             console.warn('Элементы для отображения версии или ченджлога не найдены.');
+            // Скроем и счетчик скачиваний, если нет даже версии
+            if(downloadCountElement) downloadCountElement.style.display = 'none';
             return;
+        }
+
+        // Отдельная проверка для счетчика
+        if (!downloadCountElement) {
+             console.warn('Элемент для отображения количества скачиваний не найден.');
         }
 
         const repoOwner = 'ALFiX01';
         const repoName = 'ASX-Hub';
-        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`;
+        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases`;
+        const targetAssetName = 'ASX.Hub.exe'; // <<< Имя файла, для которого ищем скачивания
 
         try {
             const response = await fetch(apiUrl);
@@ -121,11 +138,20 @@ document.addEventListener('DOMContentLoaded', function() {
             // Улучшенная обработка ошибок ответа API
             if (!response.ok) {
                 console.error('Ошибка при загрузке данных с GitHub:', response.status, response.statusText);
-                const friendlyErrorMessage = 'Не удалось загрузить информацию о последней версии.';
+                const friendlyErrorMessage = 'Не удалось загрузить информацию.'; // Общее сообщение
                 if (versionElement) {
                     versionElement.textContent = friendlyErrorMessage;
-                    // Можно добавить стиль, чтобы показать, что это ошибка
                     versionElement.style.opacity = '0.7';
+                    downloadCountElement.style.display = 'none'; // Скрываем по умолчанию
+                    downloadCountElement.textContent = ''; // Очищаем текст на всякий случай
+                }
+                 // Обновляем и счетчик при ошибке
+                if (downloadCountElement) {
+                    downloadCountElement.textContent = 'Скачиваний: ошибка';
+                    downloadCountElement.style.opacity = '0.7';
+                    downloadCountElement.style.display = 'none'; // Скрываем по умолчанию
+                    downloadCountElement.textContent = ''; // Очищаем текст на всякий случай
+                    
                 }
                  // Скрываем секцию ченджлога при любой ошибке
                 if (changelogSectionElement) {
@@ -139,9 +165,34 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data && data.tag_name) {
                 // Отображаем версию
                 if (versionElement) {
-                    versionElement.textContent = `Актуальная версия: ${data.tag_name}`;
+                    versionElement.textContent = `v${data.tag_name}`;
                     versionElement.style.opacity = '1'; // Возвращаем нормальную прозрачность
                 }
+
+                // --->>> ЛОГИКА ПОДСЧЕТА СКАЧИВАНИЙ <<<---
+                if (downloadCountElement) {
+                    let downloads = null;
+                    // Ищем нужный asset в массиве assets
+                    if (data.assets && Array.isArray(data.assets)) {
+                        const targetAsset = data.assets.find(asset => asset.name === targetAssetName);
+                        if (targetAsset) {
+                            downloads = targetAsset.download_count;
+                        }
+                    }
+
+                    // Отображаем результат
+                    if (downloads !== null) {
+                        // Используем toLocaleString для разделения тысяч пробелами
+                        downloadCountElement.textContent = `Скачиваний: ${downloads.toLocaleString()}`;
+                        downloadCountElement.style.opacity = '1';
+                    } else {
+                        console.warn(`Ассет с именем "${targetAssetName}" не найден в последнем релизе.`);
+                        downloadCountElement.textContent = `Скачиваний: н/д`; // н/д = нет данных
+                        downloadCountElement.style.opacity = '0.7';
+                    }
+                }
+                // --->>> КОНЕЦ ЛОГИКИ ПОДСЧЕТА СКАЧИВАНИЙ <<<---
+
 
                 // Отображаем ченджлог, если есть нужные элементы
                 if (changelogBodyElement && changelogVersionElement) {
@@ -186,6 +237,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     versionElement.textContent = 'Не удалось определить версию.';
                     versionElement.style.opacity = '0.7';
                 }
+                // Обновляем и счетчик при некорректных данных
+                if (downloadCountElement) {
+                    downloadCountElement.textContent = 'Скачиваний: н/д';
+                    downloadCountElement.style.opacity = '0.7';
+                }
                 if (changelogSectionElement) {
                     changelogSectionElement.classList.remove('visible');
                 }
@@ -197,6 +253,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (versionElement) {
                 versionElement.textContent = 'Ошибка при запросе.';
                  versionElement.style.opacity = '0.7';
+            }
+            // Обновляем и счетчик при ошибке запроса
+            if (downloadCountElement) {
+                downloadCountElement.textContent = 'Скачиваний: ошибка';
+                downloadCountElement.style.opacity = '0.7';
             }
             if (changelogSectionElement) {
                 changelogSectionElement.classList.remove('visible');
@@ -228,4 +289,5 @@ document.addEventListener('DOMContentLoaded', function() {
          // Если библиотека не загрузилась
          console.warn('Библиотека VanillaTilt.js не найдена или не загружена.');
     }
-});
+
+}); // Конец DOMContentLoaded
