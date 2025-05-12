@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const repoOwner = 'ALFiX01';
         const repoName = 'ASX-Hub';
-        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases`;
+        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/releases/latest`;
         const targetAssetName = 'ASX.Hub.exe'; // <<< Имя файла, для которого ищем скачивания
 
         try {
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Отображаем результат
                     if (downloads !== null) {
                         // Используем toLocaleString для разделения тысяч пробелами
-                        downloadCountElement.textContent = `Скачиваний: ${downloads.toLocaleString()}`;
+                        downloadCountElement.textContent = `Скачиваний v${data.tag_name}: ${downloads.toLocaleString()}`;
                         downloadCountElement.style.opacity = '1';
                     } else {
                         console.warn(`Ассет с именем "${targetAssetName}" не найден в последнем релизе.`);
