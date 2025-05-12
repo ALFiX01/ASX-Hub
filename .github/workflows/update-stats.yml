@@ -24,6 +24,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # --- ДОБАВЛЕНО: Убедимся, что папка docs существует ---
+      - name: Create docs directory if it doesn't exist
+        run: mkdir -p docs
+      # ----------------------------------------------------
+
       # 2. Запрашиваем данные с API, обрабатываем и сохраняем в JSON
       - name: Fetch and process GitHub release stats
         env:
@@ -32,7 +37,8 @@ jobs:
           REPO_OWNER: ALFiX01
           REPO_NAME: ASX-Hub
           ASSET_NAME: ASX.Hub.exe
-          OUTPUT_FILE: github-stats.json # Имя файла для сохранения статистики
+          # --- ИЗМЕНЕНО: Путь к файлу теперь включает docs/ ---
+          OUTPUT_FILE: docs/github-stats.json
         run: |
           # Запрос всех релизов (первая страница, до 100 штук)
           # Используем токен для аутентификации
@@ -65,7 +71,8 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore: Update GitHub stats [skip ci]' # Сообщение коммита
-          file_pattern: github-stats.json # Указываем, какой файл коммитить
+          # --- ИЗМЕНЕНО: Указываем файл в папке docs/ ---
+          file_pattern: docs/github-stats.json
           commit_user_name: github-actions[bot] # Имя коммитера-бота
           commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com # Email бота
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
