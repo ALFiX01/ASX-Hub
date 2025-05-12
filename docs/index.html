@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASX Hub - Оптимизация и настройка Windows</title>
+
+    <!-- SEO и Описание -->
+    <meta name="description" content="ASX Hub - Бесплатная утилита для оптимизации, настройки и очистки Windows 10/11. Ускорьте систему, настройте приватность и многое другое.">
+    <meta name="keywords" content="asx hub, windows optimizer, windows tweaker, оптимизация windows, настройка windows, ускорение пк, windows 10, windows 11, ALFiX">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ALFiX01.github.io/ASX-Hub-Site/"> <!-- <<< ЗАМЕНИТЕ НА ВАШ URL -->
+    <meta property="og:title" content="ASX Hub - Оптимизация и настройка Windows">
+    <meta property="og:description" content="Ускорьте работу системы, настройте её под себя и получите максимум производительности с ASX Hub.">
+    <meta property="og:image" content="https://ALFiX01.github.io/ASX-Hub-Site/screenshot.png"> <!-- <<< ЗАМЕНИТЕ НА ПОЛНЫЙ URL К СКРИНШОТУ -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ALFiX01.github.io/ASX-Hub-Site/"> <!-- <<< ЗАМЕНИТЕ НА ВАШ URL -->
+    <meta property="twitter:title" content="ASX Hub - Оптимизация и настройка Windows">
+    <meta property="twitter:description" content="Ускорьте работу системы, настройте её под себя и получите максимум производительности с ASX Hub.">
+    <meta property="twitter:image" content="https://ALFiX01.github.io/ASX-Hub-Site/screenshot.png"> <!-- <<< ЗАМЕНИТЕ НА ПОЛНЫЙ URL К СКРИНШОТУ -->
+
     <link rel="stylesheet" href="style.css">
 
     <!-- FAVICON SECTION START -->
@@ -11,6 +30,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="asxhub-logo-16.png">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest"> <!-- Опционально: Добавьте манифест для PWA -->
     <!-- FAVICON SECTION END -->
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -46,6 +66,7 @@
         </section>
 
         <section id="changelog-section" class="container section-padding">
+            <!-- Содержимое секции остаётся прежним -->
             <div class="changelog-card feature-item">
                 <h2>Последние изменения (<span id="changelog-version"></span>)</h2>
                 <div id="changelog-body" class="changelog-content">
@@ -60,7 +81,8 @@
         <section id="screenshot" class="container section-padding">
             <h2>Интерфейс ASX Hub</h2>
             <div class="screenshot-container" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
-                <img src="screenshot.png" alt="Скриншот интерфейса ASX Hub">
+                <!-- Добавлено loading="lazy" -->
+                <img src="screenshot.png" alt="Скриншот интерфейса ASX Hub" loading="lazy">
             </div>
         </section>
 
@@ -68,32 +90,38 @@
             <h2>Ключевые возможности</h2>
             <div class="features-grid">
                 <div class="feature-item">
-                    <img src="https://img.icons8.com/fluency/48/000000/rocket.png" alt="Ускорение" class="feature-icon"/>
+                     {/*Добавлен alt*/}
+                    <img src="https://img.icons8.com/fluency/48/000000/rocket.png" alt="Иконка ракеты" class="feature-icon"/>
                     <h3>Ускорение системы</h3>
                     <p>Оптимизируйте загрузку, службы и фоновые процессы для максимальной производительности.</p>
                 </div>
                 <div class="feature-item">
-                    <img src="https://img.icons8.com/fluency/48/000000/privacy.png" alt="Приватность" class="feature-icon"/>
+                     {/*Добавлен alt*/}
+                    <img src="https://img.icons8.com/fluency/48/000000/privacy.png" alt="Иконка щита приватности" class="feature-icon"/>
                     <h3>Контроль приватности</h3>
                     <p>Отключите телеметрию и настройте параметры конфиденциальности Windows.</p>
                 </div>
                 <div class="feature-item">
-                    <img src="https://img.icons8.com/fluency/48/000000/settings.png" alt="Настройка" class="feature-icon"/>
+                     {/*Добавлен alt*/}
+                    <img src="https://img.icons8.com/fluency/48/000000/settings.png" alt="Иконка шестеренки" class="feature-icon"/>
                     <h3>Гибкая настройка</h3>
                     <p>Изменяйте скрытые параметры системы и персонализируйте Windows под свои нужды.</p>
                 </div>
                 <div class="feature-item">
-                    <img src="https://img.icons8.com/fluency/48/000000/broom.png" alt="Очистка" class="feature-icon"/>
+                     {/*Добавлен alt*/}
+                    <img src="https://img.icons8.com/fluency/48/000000/broom.png" alt="Иконка метлы" class="feature-icon"/>
                     <h3>Очистка системы</h3>
                     <p>Удаляйте ненужные файлы, очищайте кэш и освобождайте место на диске.</p>
                 </div>
                 <div class="feature-item">
-                    <img src="https://img.icons8.com/fluency/48/000000/paint-palette.png" alt="Кастомизация" class="feature-icon"/>
+                     {/*Добавлен alt*/}
+                    <img src="https://img.icons8.com/fluency/48/000000/paint-palette.png" alt="Иконка палитры" class="feature-icon"/>
                     <h3>Кастомизация</h3>
                     <p>Настройте внешний вид Windows, изменяйте курсор, проводник и другие элементы интерфейса.</p>
                 </div>
                 <div class="feature-item">
-                    <img src="https://img.icons8.com/fluency/48/000000/software-box.png" alt="Автоустановка софта" class="feature-icon"/>
+                     {/*Добавлен alt*/}
+                    <img src="https://img.icons8.com/fluency/48/000000/software-box.png" alt="Иконка коробки с ПО" class="feature-icon"/>
                     <h3>Автоустановка софта</h3>
                     <p>Автоматизируйте установку необходимого программного обеспечения.</p>
                 </div>
@@ -101,7 +129,8 @@
         </section>
 
         <section id="requirements-section" class="container section-padding">
-            <div class="requirements-card feature-item">
+            <!-- Содержимое секции остаётся прежним -->
+             <div class="requirements-card feature-item">
                 <h2>Системные требования</h2>
                 <ul class="requirements-list">
                     <li>
@@ -129,7 +158,8 @@
     </main>
 
     <footer>
-        <div class="container">
+        <!-- Содержимое футера остаётся прежним -->
+         <div class="container">
             <p>© <span id="year"></span> ASX Hub. Проект с открытым исходным кодом.</p>
             <p>Присоединяйтесь к нашему <a href="https://discord.com/invite/MreKhdN2Ns" target="_blank" rel="noopener noreferrer" class="discord-link">Discord-серверу</a> для общения и поддержки!</p>
             <p>Создано с ❤️ для сообщества. <a href="https://github.com/ALFiX01/ASX-Hub" target="_blank" rel="noopener noreferrer">Посмотреть на GitHub</a></p>
@@ -138,6 +168,7 @@
 
     <!-- Подключение библиотек -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <!-- Убедитесь, что путь к vanilla-tilt.min.js правильный -->
     <script src="vanilla-tilt.min.js"></script>
 
     <!-- основной скрипт -->
