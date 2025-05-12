@@ -1,0 +1,21 @@
+{
+  "name": "ASX Hub",
+  "short_name": "ASX Hub",
+  "description": "Ваш центр оптимизации и настройки Windows",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#101010",
+  "theme_color": "#4a00e0",
+  "icons": [
+    {
+      "src": "asxhub-logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "asxhub-logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
