@@ -176,15 +176,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     fetchLatestReleaseInfo();
 
-    // 5. Инициализация Vanilla Tilt JS
-    if (typeof VanillaTilt !== 'undefined') {
-        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+// 5. Инициализация Vanilla Tilt JS
+if (typeof VanillaTilt !== 'undefined') {
+    const elementsToTilt = document.querySelectorAll("[data-tilt]");
+    console.log('Найденные элементы для Tilt:', elementsToTilt); // <-- Добавьте эту строку
+
+    if (elementsToTilt.length > 0) { // Добавим проверку, что элементы найдены
+        VanillaTilt.init(elementsToTilt, {
             max: 14,
             speed: 400,
             glare: true,
-            "max-glare": 0.10
+            "max-glare": 0.05 // Ваше уменьшенное значение
         });
+        console.log('VanillaTilt инициализирован для', elementsToTilt.length, 'элементов'); // <-- И эту
     } else {
-        // console.warn('Библиотека VanillaTilt.js не найдена.');
+        console.warn('Не найдены элементы с атрибутом [data-tilt] для инициализации VanillaTilt.');
     }
+} else {
+     console.warn('Библиотека VanillaTilt.js не найдена.');
+}
 });
