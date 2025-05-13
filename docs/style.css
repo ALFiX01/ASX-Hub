@@ -230,8 +230,11 @@ header ul li a.active {
     margin-bottom: 30px;
 }
 .btn {
-    display: inline-block;
-    padding: 12px 30px;
+    display: inline-flex; /* Используем flex для выравнивания иконки и текста */
+    align-items: center;   /* Выравниваем по вертикали */
+    justify-content: center; /* Центрируем содержимое (если кнопка будет иметь фиксированную ширину) */
+    gap: 0.6em;            /* Расстояние между иконкой/текстом */
+    padding: 12px 25px; /* Немного уменьшил горизонтальный padding из-за иконки */
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
@@ -241,14 +244,23 @@ header ul li a.active {
     position: relative;
     z-index: 2;
 }
+
+.btn .btn-icon {
+    width: 1.265em;  /* Новый размер (1.1em * 1.15) */
+    height: 1.265em; /* Новый размер (1.1em * 1.15) */
+    line-height: 0; /* Чтобы SVG не влиял на высоту строки */
+    /* Смещение иконки вниз, подберите значение при необходимости */
+    transform: translateY(1.5px); 
+}
+
 .btn-primary {
     background-color: white;
-    color: var(--primary-color);
+    color: var(--primary-color); /* Текст и иконка будут этого цвета */
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 .btn-primary:hover {
     background-color: var(--glass-bg-dark-features);
-    color: var(--primary-color);
+    color: var(--primary-color); /* Цвет текста и иконки при наведении */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     border: 1px solid var(--glass-border);
 }
@@ -258,27 +270,24 @@ header ul li a.active {
 }
 #hero .version-info {
     margin-top: 10px;
-    color: rgba(160, 84, 211, 0);
+    color: rgba(160, 84, 211, 0); /* Это значение будет переопределено JS, но имеет смысл установить прозрачность */
     font-size: 0.9em;
-    opacity: 0.8;
+    opacity: 0.8; /* Или 0, если хотите чтобы появлялось плавно */
 }
 /* Стили для информации о скачиваниях под кнопкой */
 #hero .download-info {
     margin-top: 10px; /* Отступ сверху */
     color: rgba(255, 255, 255, 0.616);
     font-size: 0.9em;
-    opacity: 0.8;
-}
-
-#hero .download-info.visible {
-    display: flex; /* Показываем через JS */
+    opacity: 0.8; /* Или 0, если хотите чтобы появлялось плавно */
+    display: none; /* Будет показано JS */
 }
 
 /* Секция Последние изменения (Патч-ноут) */
 #changelog-section {
     position: relative;
     z-index: 1;
-    display: none; /* Скрываем по умолчанию */
+    display: none; /* Скрываем по умолчанию, JS добавит .visible */
     justify-content: center;
     padding: 30px 0 60px;
 }
@@ -292,6 +301,7 @@ header ul li a.active {
     width: 100%;
     text-align: left;
     box-shadow: 0 8px 30px rgba(0,0,0,0.2), 0 0 0 1px var(--glass-border);
+    /* background-color, backdrop-filter, border, border-radius унаследованы от .feature-item */
 }
 
 .changelog-card h2 {
@@ -301,7 +311,6 @@ header ul li a.active {
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     text-align: center;
     padding-bottom: 0.5em;
-    /* border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2); */ /* Убрано по запросу */
 }
 .changelog-card h2 #changelog-version {
     font-weight: normal;
@@ -319,6 +328,22 @@ header ul li a.active {
     color: var(--medium-text);
     font-size: 0.95em;
 }
+
+.changelog-content::-webkit-scrollbar {
+    width: 8px;
+}
+.changelog-content::-webkit-scrollbar-track {
+    background: rgba(var(--code-background-color-rgb), 0.2);
+    border-radius: 4px;
+}
+.changelog-content::-webkit-scrollbar-thumb {
+    background: rgba(var(--primary-color-rgb), 0.5);
+    border-radius: 4px;
+}
+.changelog-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--primary-color-rgb), 0.7);
+}
+
 
 .changelog-content h1,
 .changelog-content h2,
@@ -426,7 +451,7 @@ header ul li a.active {
     gap: 40px;
     margin-top: 40px;
 }
-.feature-item {
+.feature-item { /* Этот класс используется и для .changelog-card и для .requirements-card */
     background-color: var(--glass-bg-dark-features);
     padding: 30px;
     border-radius: 16px;
@@ -439,8 +464,7 @@ header ul li a.active {
 }
 .feature-item:hover {
     transform: translateY(-10px) scale(1.03);
-    /* Возвращаем более стандартную темную тень */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); /* Стандартная темная тень */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); 
     background-color: var(--glass-bg-dark-features-hover);
     border-color: rgba(255, 255, 255, 0.2);
 }
@@ -449,13 +473,13 @@ header ul li a.active {
     height: 50px;
     margin-bottom: 20px;
 }
-#features .feature-item h3 {
+#features .feature-item h3 { /* Специфично для карточек возможностей */
     font-size: 1.5em;
     margin-bottom: 12px;
     color: var(--light-text);
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
-#features .feature-item p {
+#features .feature-item p { /* Специфично для карточек возможностей */
     font-size: 0.95em;
     color: var(--medium-text);
     line-height: 1.7;
@@ -470,11 +494,11 @@ header ul li a.active {
     justify-content: center;
 }
 
-.requirements-card { /* Наследует от .feature-item */
+.requirements-card { /* Наследует от .feature-item, но с другими паддингами и выравниванием */
     padding: 40px 35px;
     max-width: 800px;
     width: 100%;
-    text-align: left;
+    text-align: left; /* Переопределяем text-align от .feature-item */
 }
 
 .requirements-card h2 {
@@ -482,9 +506,8 @@ header ul li a.active {
     margin-bottom: 1.5em;
     color: var(--light-text);
     text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-    text-align: center;
+    text-align: center; /* Заголовок по центру */
     padding-bottom: 0.5em;
-    /* border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2); */ /* Убрано по запросу */
 }
 
 .requirements-list {
@@ -507,7 +530,7 @@ header ul li a.active {
     border-bottom: none;
 }
 
-.req-icon {
+.req-icon { /* Если будете добавлять иконки к требованиям */
     width: 24px;
     height: 24px;
     margin-right: 10px;
@@ -597,7 +620,7 @@ footer a:hover {
         gap: 30px;
         grid-template-columns: 1fr;
     }
-    .feature-item {
+    .feature-item { /* Общее для всех карточек в мобильной версии */
         background-color: rgba(80, 80, 95, 0.25);
         backdrop-filter: blur(var(--glass-blur-light));
         -webkit-backdrop-filter: blur(var(--glass-blur-light));
@@ -616,7 +639,7 @@ footer a:hover {
     }
     .requirements-list li {
         font-size: 1em;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* В один столбец */
         gap: 5px;
         padding: 10px 0;
         border-bottom: 1px solid rgba(var(--glass-border), 0.3);
@@ -664,8 +687,8 @@ footer a:hover {
 @media (max-width: 480px) {
     h1 { font-size: 2em; }
     #hero .subtitle { font-size: 1.2em; }
-    .btn { padding: 10px 20px; font-size: 0.9em; }
-    .btn-large { padding: 12px 30px; font-size: 1.1em; }
+    .btn { padding: 10px 20px; font-size: 0.9em; } /* Уменьшаем padding для кнопок на маленьких экранах */
+    .btn-large { padding: 12px 30px; font-size: 1.1em; } /* Также для больших кнопок */
 
     header .logo { font-size: 1.5em; }
     header ul li a { font-size: 0.9em; }
@@ -675,7 +698,7 @@ footer a:hover {
     body::before { filter: blur(50px); opacity: 0.12; }
     body::after { filter: blur(40px); opacity: 0.18; }
 
-    .feature-item {
+    .feature-item { /* Общее для всех карточек */
         background-color: rgba(80, 80, 95, 0.35);
     }
     .requirements-card h2 { font-size: 1.7em; }

@@ -9,6 +9,14 @@
     <meta name="description" content="ASX Hub - Бесплатная утилита для оптимизации, настройки и очистки Windows 10/11. Ускорьте систему, настройте приватность и многое другое.">
     <meta name="keywords" content="asx hub, windows optimizer, windows tweaker, оптимизация windows, настройка windows, ускорение пк, windows 10, windows 11, ALFiX, alfix01">
 
+    <!-- Open Graph и Twitter Cards -->
+    <meta property="og:title" content="ASX Hub - Оптимизация и настройка Windows">
+    <meta property="og:description" content="ASX Hub - Бесплатная утилита для оптимизации, настройки и очистки Windows 10/11. Ускорьте систему, настройте приватность и многое другое.">
+    <meta property="og:image" content="https://URL_К_ВАШЕМУ_ПРЕДСТАВИТЕЛЬНОМУ_ИЗОБРАЖЕНИЮ.png"> <!-- ЗАМЕНИТЕ НА РЕАЛЬНЫЙ URL КАРТИНКИ -->
+    <meta property="og:url" content="https://URL_ВАШЕГО_САЙТА"> <!-- ЗАМЕНИТЕ НА РЕАЛЬНЫЙ URL САЙТА -->
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="stylesheet" href="style.css">
 
     <!-- FAVICON SECTION START -->
@@ -46,14 +54,16 @@
                 <p>Ускорьте работу системы, настройте её под себя и получите максимум производительности с ASX Hub.</p>
                 <div class="version-info" id="latest-version">Загрузка актуальной версии...</div>
                 <a href="https://github.com/ALFiX01/ASX-Hub/releases/latest/download/ASX.Hub.exe" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                    Скачать ASX Hub
+                    <span>Скачать ASX Hub</span>
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                    </svg>
                 </a>
                 <div class="download-info" id="download-count"> </div>
             </div>
         </section>
 
         <section id="changelog-section" class="container section-padding">
-            <!-- Содержимое секции остаётся прежним -->
             <div class="changelog-card feature-item">
                 <h2>Последние изменения (<span id="changelog-version"></span>)</h2>
                 <div id="changelog-body" class="changelog-content">
@@ -67,8 +77,8 @@
 
         <section id="screenshot" class="container section-padding">
             <h2>Интерфейс ASX Hub</h2>
-            <div class="screenshot-container" data-tilt data-tilt-glare data-tilt-max-glare="0.1" data-tilt-reverse="true" data-tilt data-tilt-full-page-listening>
-                <!-- Добавлено loading="lazy" -->
+            <div class="screenshot-container" data-tilt data-tilt-glare data-tilt-max-glare="0.1" data-tilt-reverse="true" data-tilt-full-page-listening>
+                <!-- Рассмотрите использование <picture> для WebP с фолбэком -->
                 <img src="screenshot.png" alt="Скриншот интерфейса ASX Hub" loading="lazy">
             </div>
         </section>
@@ -110,7 +120,6 @@
         </section>
 
         <section id="requirements-section" class="container section-padding">
-            <!-- Содержимое секции остаётся прежним -->
              <div class="requirements-card feature-item">
                 <h2>Системные требования</h2>
                 <ul class="requirements-list">
@@ -139,7 +148,6 @@
     </main>
 
     <footer>
-        <!-- Содержимое футера остаётся прежним -->
          <div class="container">
             <p>© <span id="year"></span> ASX Hub. Проект с открытым исходным кодом.</p>
             <p>Присоединяйтесь к нашему <a href="https://discord.com/invite/MreKhdN2Ns" target="_blank" rel="noopener noreferrer" class="discord-link">Discord-серверу</a> для общения и поддержки!</p>
@@ -147,10 +155,33 @@
         </div>
     </footer>
 
+    <!-- Schema.org для SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ASX Hub",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Windows 10, Windows 11",
+      "description": "Бесплатная утилита для оптимизации, настройки и очистки Windows 10/11.",
+      "downloadUrl": "https://github.com/ALFiX01/ASX-Hub/releases/latest/download/ASX.Hub.exe",
+      "softwareVersion": "", // Будет заполнено через JavaScript
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "RUB" 
+      },
+      "author": {
+        "@type": "Person", 
+        "name": "ALFiX"
+      },
+      "screenshot": "https://URL_К_ВАШЕМУ_screenshot.png" // ЗАМЕНИТЕ НА ПОЛНЫЙ URL К СКРИНШОТУ
+    }
+    </script>
+
     <!-- Подключение библиотек -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-    <!-- Убедитесь, что путь к vanilla-tilt.min.js правильный -->
-    <script src="vanilla-tilt.min.js"></script>
+    <script src="vanilla-tilt.min.js"></script> <!-- Убедитесь, что этот файл находится в корне или укажите правильный путь -->
 
     <!-- основной скрипт -->
     <script src="script.js"></script>

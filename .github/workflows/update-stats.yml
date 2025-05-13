@@ -24,55 +24,58 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # --- ДОБАВЛЕНО: Убедимся, что папка docs существует ---
+      # 2. Убедимся, что папка docs существует (если вы складываете сайт туда)
       - name: Create docs directory if it doesn't exist
-        run: mkdir -p docs
-      # ----------------------------------------------------
+        run: mkdir -p docs # Эта команда создаст папку docs, если её нет, и не выдаст ошибку, если она уже есть
 
-      # 2. Запрашиваем данные с API, обрабатываем и сохраняем в JSON
+      # 3. Запрашиваем данные с API, обрабатываем и сохраняем в JSON
       - name: Fetch and process GitHub release stats
         env:
-          # Передаем секретный токен в окружение шага
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }} # Убедитесь, что этот токен имеет права на чтение релизов
           REPO_OWNER: ALFiX01
           REPO_NAME: ASX-Hub
           ASSET_NAME: ASX.Hub.exe
-          # --- ИЗМЕНЕНО: Путь к файлу теперь включает docs/ ---
-          OUTPUT_FILE: docs/github-stats.json
+          OUTPUT_FILE: docs/github-stats.json # Путь к файлу, куда сохраняется JSON
         run: |
-          # Запрос всех релизов (первая страница, до 100 штук)
-          # Используем токен для аутентификации
-          # Используем jq для обработки JSON
+          # Запрос всех релизов (первая страница, до 100 штук, но для последнего релиза нам важен только первый)
+          # Можно запросить только последний релиз: /repos/$REPO_OWNER/$REPO_NAME/releases/latest
+          # Но для total_downloads нам нужны все релизы. Поэтому оставляем текущий запрос.
           curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
                -H "Accept: application/vnd.github+json" \
                "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/releases?per_page=100" | \
           jq --arg ASSET_NAME "$ASSET_NAME" '
-            # Проверяем, что получен массив
+            # Проверяем, что получен массив и он не пуст
             if type == "array" and length > 0 then
               {
                 # Получаем версию последнего релиза (первый в массиве)
                 latest_version: (.[0].tag_name // "N/A"),
+                # Получаем тело последнего релиза (Markdown)
+                # Если .[0].body равно null, будет использована пустая строка ""
+                latest_release_body: (.[0].body // ""),
                 # Суммируем скачивания нужного ассета по всем релизам
                 total_downloads: ([
                   .[] | .assets[]? | select(.name == $ASSET_NAME) | .download_count
                 ] | add // 0) # Используем add для суммы, fallback 0 если массив пуст
               }
             else
-              # Возвращаем пустой объект или сообщение об ошибке, если релизов нет
-              { latest_version: "N/A", total_downloads: 0 }
+              # Возвращаем объект с дефолтными значениями, если релизов нет
+              { 
+                latest_version: "N/A", 
+                latest_release_body: "", 
+                total_downloads: 0 
+              }
             end
           ' > "$OUTPUT_FILE" # Сохраняем результат в файл
 
           echo "Stats saved to $OUTPUT_FILE"
           cat "$OUTPUT_FILE" # Выводим содержимое файла в лог для проверки
 
-      # 3. Коммитим измененный файл статистики обратно в репозиторий
+      # 4. Коммитим измененный файл статистики обратно в репозиторий
       - name: Commit stats file
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore: Update GitHub stats [skip ci]' # Сообщение коммита
-          # --- ИЗМЕНЕНО: Указываем файл в папке docs/ ---
-          file_pattern: docs/github-stats.json
+          file_pattern: docs/github-stats.json # Указываем файл (или паттерн) для коммита
           commit_user_name: github-actions[bot] # Имя коммитера-бота
           commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com # Email бота
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
