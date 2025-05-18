@@ -1,4 +1,3 @@
-/* Общие стили */
 :root {
     --primary-color: #4D5BCE; /* Deep, tech blue */
     --primary-color-rgb: 77, 91, 206;
@@ -50,7 +49,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Улучшенный эффект фонового свечения для body */
 body {
     min-height: 100vh;
     background: linear-gradient(120deg, #181f36 0%, #1e1044 100%);
@@ -91,7 +89,6 @@ body::after {
     animation: glowMove2 18s infinite alternate cubic-bezier(.68,0,.32,1);
 }
 
-/* Extra floating blobs for depth */
 /* === Ultra Dark & Neon Glow Background === */
 body {
     min-height: 100vh;
@@ -204,7 +201,7 @@ body::after {
     100% { transform: scale(1);}
 }
 
-/* Responsive fix for mobile */
+
 @media (max-width: 700px) {
     body::before, body::after, .bg-glow-1, .bg-glow-2, .bg-glow-3 {
         filter: blur(45px);
@@ -230,7 +227,6 @@ a:hover {
     color: var(--primary-color);
 }
 
-/* Добавлен стиль фокуса для доступности */
 a:focus-visible,
 .btn:focus-visible {
     outline: 2.5px solid var(--secondary-color);
@@ -258,7 +254,7 @@ p { margin-bottom: 1em; }
     text-align: center;
 }
 
-/* === Мега-крутой Apple-style Header === */
+/* === Header === */
 header {
     background: rgba(18, 20, 30, 0.62);
     padding: 18px 0 16px 0;
@@ -411,8 +407,7 @@ header ul li a.active {
     }
 }
 
-
-/* Секция Hero */
+/* === Секция Hero === */
 #hero {
     background-color: transparent;
     color: white;
@@ -1088,7 +1083,7 @@ footer {
     -webkit-backdrop-filter: blur(var(--glass-blur-light));
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--medium-text);
-    padding: 1.6rem 0;
+    padding: 1.4rem 0;
     margin-top: 4rem;
     position: relative;
     z-index: 1;
