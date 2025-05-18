@@ -1,11 +1,13 @@
 /* Общие стили */
 :root {
-    --primary-color: #7735fa;
-    --secondary-color: #973de6;
+    --primary-color: #4D5BCE; /* Deep, tech blue */
+    --primary-color-rgb: 77, 91, 206;
+    --secondary-color: #FF7F50; /* Coral accent */
+    --secondary-color-rgb: 255, 127, 80;
     --dark-bg: #101010;
-    --light-text: #f0f0f0;
-    --medium-text: #a0a0a0;
-    --primary-color-rgb: 74, 0, 224; /* RGB для основного цвета */
+    --light-text: #F7FAFC;      /* Almost white */
+    --medium-text: #B0B6C8;     /* Muted blue-gray */
+    --danger-color: #F2545B;    /* For error or delete actions */
 
     /* Обновлены переменные для кода */
     --code-background-color-rgb: 55, 55, 65;
@@ -19,7 +21,9 @@
     --glass-border: rgba(255, 255, 255, 0.15);
     --glass-blur-strong: 12px;
     --glass-blur-medium: 12px;
-    --glass-blur-light: 8px;
+    --glass-blur-light: 7px;
+
+    --icon-color: linear-gradient(to right, rgba(var(--primary-color-rgb), 0.75), rgba(var(--secondary-color-rgb), 0.75));
 }
 
 * {
@@ -33,57 +37,182 @@ html {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
     background-color: var(--dark-bg);
     color: var(--light-text);
     line-height: 1.6;
     position: relative;
     overflow-x: hidden;
+    min-height: 100vh;
+    letter-spacing: 0.01em;
+    /* Improved font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Фоновое свечение */
-body::before,
-body::after {
+/* Улучшенный эффект фонового свечения для body */
+body {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #181f36 0%, #1e1044 100%);
+    overflow-x: hidden;
+}
+
+/* Animated glowing blobs */
+body::before, body::after, .bg-glow-1, .bg-glow-2, .bg-glow-3 {
     content: '';
     position: fixed;
-    z-index: -1;
+    z-index: -2;
     border-radius: 50%;
-    opacity: 0.4;
     pointer-events: none;
+    opacity: 0.38;
+    filter: blur(120px) brightness(1.17) saturate(1.2);
+    transition: opacity 0.6s, filter 0.7s;
+    mix-blend-mode: lighten;
+    will-change: opacity, filter, transform;
 }
 
+/* Main purple-blue glow (top left) */
 body::before {
     width: 65vw;
     height: 65vw;
-    background: radial-gradient(circle, rgba(112, 51, 255, 0.678) 0%, rgba(74, 0, 224, 0) 75%);
-    top: -28vw;
-    left: -28vw;
-    filter: blur(140px);
-    animation: slowPulseBefore 12s infinite alternate ease-in-out;
+    top: -22vw;
+    left: -30vw;
+    background: radial-gradient(circle at 50% 60%, #792fffcc 0%, #4556ff55 50%, #5f2bff00 100%);
+    animation: glowMove1 15s infinite alternate cubic-bezier(.75,0,.25,1);
 }
 
+/* Orange-pink glow (bottom right) */
 body::after {
     width: 55vw;
     height: 55vw;
-    background: radial-gradient(circle, rgba(250, 133, 49, 0.616) 0%, rgba(224, 180, 0, 0) 75%);
-    bottom: -22vw;
+    bottom: -18vw;
     right: -22vw;
-    filter: blur(130px);
-    animation: slowPulseAfter 15s infinite alternate ease-in-out;
+    background: radial-gradient(circle at 55% 45%, #fa8331bb 0%, #ffb95e77 60%, #ff818100 100%);
+    animation: glowMove2 18s infinite alternate cubic-bezier(.68,0,.32,1);
 }
 
-@keyframes slowPulseBefore {
-    0% { transform: scale(1) translate(0, 0); opacity: 0.15; }
-    50% { transform: scale(1.15) translate(5vw, 5vh); opacity: 0.3; }
-    100% { transform: scale(1) translate(0, 0); opacity: 0.15; }
+/* Extra floating blobs for depth */
+/* === Ultra Dark & Neon Glow Background === */
+body {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #090a12 0%, #14151c 100%);
+    color: #fafbfc;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+    position: relative;
 }
 
-@keyframes slowPulseAfter {
-    0% { transform: scale(1) translate(0, 0); opacity: 0.2; }
-    50% { transform: scale(1.2) translate(-5vw, -5vh); opacity: 0.35; }
-    100% { transform: scale(1) translate(0, 0); opacity: 0.2; }
+/* Glowing Blobs */
+body::before, body::after, .bg-glow-1, .bg-glow-2, .bg-glow-3 {
+    content: '';
+    position: fixed;
+    z-index: -2;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.38;
+    filter: blur(110px) brightness(1.09) saturate(1.18);
+    transition: opacity 0.6s, filter 0.7s;
+    mix-blend-mode: lighten;
+    will-change: opacity, filter, transform;
 }
 
+/* Main purple-blue glow (top left) */
+body::before {
+    width: 65vw;
+    height: 65vw;
+    top: -22vw;
+    left: -30vw;
+    background: radial-gradient(circle at 50% 60%, #792fffcc 0%, #4556ff44 50%, #5f2bff00 100%);
+    animation: glowMove1 15s infinite alternate cubic-bezier(.75,0,.25,1);
+}
+
+/* Orange-pink glow (bottom right) */
+body::after {
+    width: 55vw;
+    height: 55vw;
+    bottom: -18vw;
+    right: -22vw;
+    background: radial-gradient(circle at 55% 45%, #fa8331bb 0%, #ffb95e66 60%, #ff818100 100%);
+    animation: glowMove2 18s infinite alternate cubic-bezier(.68,0,.32,1);
+}
+
+/* Extra floating blobs for depth */
+.bg-glow-1 {
+    width: 32vw;
+    height: 32vw;
+    top: 18vh;
+    left: 62vw;
+    background: radial-gradient(circle at 60% 40%, #38fff99c 0%, #1e6fff44 60%, #1e6fff00 100%);
+    opacity: 0.21;
+    animation: blobPulse1 22s infinite alternate cubic-bezier(.56,0,.44,1);
+}
+.bg-glow-2 {
+    width: 25vw;
+    height: 25vw;
+    bottom: 10vh;
+    left: 8vw;
+    background: radial-gradient(circle at 70% 50%, #fff887bb 0%, #f5c96c55 60%, #f5c96c00 100%);
+    opacity: 0.16;
+    animation: blobPulse2 17s infinite alternate cubic-bezier(.56,0,.44,1);
+}
+.bg-glow-3 {
+    width: 18vw;
+    height: 18vw;
+    top: 48vh;
+    right: 14vw;
+    background: radial-gradient(circle at 30% 70%, #ff72e4aa 0%, #ff53b966 60%, #ff53b900 100%);
+    opacity: 0.17;
+    animation: blobPulse3 19s infinite alternate cubic-bezier(.56,0,.44,1);
+}
+
+/* Subtle glassmorphism overlay */
+.bg-glass {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: rgba(20, 22, 30, 0.09);
+    backdrop-filter: blur(8px) saturate(1.35);
+    -webkit-backdrop-filter: blur(8px) saturate(1.35);
+    mix-blend-mode: lighten;
+}
+
+/* Animations for glowing blobs */
+@keyframes glowMove1 {
+    0%   { transform: scale(1) translate(0, 0); opacity: 0.29;}
+    50%  { transform: scale(1.13) translate(6vw, 4vh); opacity: 0.43;}
+    100% { transform: scale(1) translate(0, 0); opacity: 0.33;}
+}
+@keyframes glowMove2 {
+    0%   { transform: scale(1) translate(0, 0); opacity: 0.34;}
+    50%  { transform: scale(1.12) translate(-6vw, -2vh); opacity: 0.45;}
+    100% { transform: scale(1) translate(0, 0); opacity: 0.36;}
+}
+@keyframes blobPulse1 {
+    0%   { transform: scale(1) translate(0, 0);}
+    60%  { transform: scale(1.12) translate(-4vw, 3vh);}
+    100% { transform: scale(1) translate(0, 0);}
+}
+@keyframes blobPulse2 {
+    0%   { transform: scale(1);}
+    65%  { transform: scale(1.16) translate(2vw, -2vh);}
+    100% { transform: scale(1);}
+}
+@keyframes blobPulse3 {
+    0%   { transform: scale(1);}
+    70%  { transform: scale(1.10) translate(-2vw, 3vh);}
+    100% { transform: scale(1);}
+}
+
+/* Responsive fix for mobile */
+@media (max-width: 700px) {
+    body::before, body::after, .bg-glow-1, .bg-glow-2, .bg-glow-3 {
+        filter: blur(45px);
+    }
+    .bg-glow-1, .bg-glow-2, .bg-glow-3 {
+        display: none;
+    }
+}
 
 .container {
     max-width: 1100px;
@@ -93,33 +222,33 @@ body::after {
 
 a {
     color: var(--secondary-color);
+    transition: color 0.15s, border-bottom 0.2s;
     text-decoration: none;
+    cursor: pointer;
 }
 a:hover {
     color: var(--primary-color);
-    text-decoration: underline;
 }
 
 /* Добавлен стиль фокуса для доступности */
 a:focus-visible,
 .btn:focus-visible {
-    outline: 2px solid var(--secondary-color);
-    outline-offset: 3px;
-    border-radius: 3px; /* Слегка скруглить обводку фокуса */
+    outline: 2.5px solid var(--secondary-color);
+    outline-offset: 2px;
+    border-radius: 3px;
 }
-/* Убрать стандартный outline, если используется focus-visible */
 a:focus, .btn:focus {
     outline: none;
 }
-
 
 h1, h2, h3 {
     margin-bottom: 0.8em;
     color: var(--light-text);
     font-weight: 700;
 }
-h1 { font-size: 3em; font-weight: 900; }
-h2 { font-size: 2.2em; text-align: center; }
+h1 { font-size: 2.5em; font-weight: 900; }
+h2 { font-size: 2em; text-align: center; }
+h3 { font-size: 1.38em; }
 p { margin-bottom: 1em; }
 
 .section-padding {
@@ -129,75 +258,159 @@ p { margin-bottom: 1em; }
     text-align: center;
 }
 
-/* Шапка */
+/* === Мега-крутой Apple-style Header === */
 header {
-    background-color: var(--glass-bg-header);
-    padding: 15px 0;
+    background: rgba(18, 20, 30, 0.62);
+    padding: 18px 0 16px 0;
     position: fixed;
-    width: 100%;
+    width: 100vw;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.3);
-    backdrop-filter: blur(var(--glass-blur-strong));
-    -webkit-backdrop-filter: blur(var(--glass-blur-strong));
-    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.28), 0 1.5px 0 0 rgba(138,93,255,0.12);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+    border-bottom: 1.5px solid rgba(130,100,255,0.16);
+    transition: background 0.33s cubic-bezier(.6,.05,.33,1), box-shadow 0.33s;
+    animation: headerFadeIn 1.6s cubic-bezier(.32,1.17,.53,.97);
+}
+
+@keyframes headerFadeIn {
+    0% { opacity: 0; transform: translateY(-24px);}
+    100% { opacity: 1; transform: translateY(0);}
 }
 
 header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-left: clamp(16px, 7vw, 64px);
+    padding-right: clamp(16px, 7vw, 64px);
+    min-height: 54px;
 }
+
 header .logo {
     display: flex;
     align-items: center;
-    font-size: 1.8em;
-    font-weight: bold;
-    color: var(--light-text);
+    font-size: 2.1em;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #f5f7fa;
     text-decoration: none;
     line-height: 1;
+    gap: 0.22em;
+    user-select: none;
+    transition: filter 0.24s;
+    filter: drop-shadow(0 1.5px 12px #9a67ff66);
 }
 header .logo span {
-    color: var(--light-text);
-    transition: color 0.3s ease;
-    display: inline-block;
+    color: #f5f7fa;
+    background: linear-gradient(112deg, #ff8364 0%, #ffb765 18%, #8f47fb 74%, #7735fa 100%);
+    background-size: 200% 200%;
+    background-position: 0% 50%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    filter: drop-shadow(0 1px 6px #ffb76570);
+    transition: background-position 0.5s, filter 0.28s;
+    font-weight: 900;
 }
-header .logo:hover span {
-    color: var(--primary-color);
-}
-header .logo:hover,
-header .logo:focus {
-    text-decoration: none;
+header .logo:hover span,
+header .logo:focus span {
+    background-position: 100% 50%;
+    filter: drop-shadow(0 2px 12px #8f47fb33);
 }
 .logo-icon {
-    height: 0.9em;
+    height: 1.1em;
     width: auto;
-    margin-right: 0.3em;
-    transition: filter 0.3s ease;
+    margin-right: 0.33em;
+    transition: filter 0.3s, transform 0.3s;
+    filter: drop-shadow(0 3px 8px #6b42e055);
+}
+header .logo:hover .logo-icon,
+header .logo:focus .logo-icon {
+    filter: drop-shadow(0 6px 18px #ffb76560) hue-rotate(-14deg) brightness(1.12);
+    transform: scale(1.08) rotate(-3deg);
 }
 header ul {
     list-style: none;
     display: flex;
+    gap: clamp(16px, 4vw, 40px);
+    margin: 0;
+    padding: 0;
 }
 header ul li {
-    margin-left: 25px;
+    position: relative;
 }
 header ul li a {
-    color: var(--medium-text);
+    color: #bdbed6;
     font-weight: 500;
-    font-size: 1em;
-    transition: color 0.3s ease, border-color 0.3s ease;
-    padding-bottom: 5px;
+    font-size: 1.08em;
+    padding: 2px 0 6px 0;
+    text-decoration: none;
+    border-bottom: 2.5px solid transparent;
+    letter-spacing: 0.01em;
+    transition: color 0.18s, border-color 0.23s, background 0.21s;
+    position: relative;
+    z-index: 1;
+    font-family: inherit;
+}
+header ul li a:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 50%; right: 50%; bottom: 0; height: 2.5px;
+    background: linear-gradient(90deg,#ffb765 0%,#8f47fb 100%);
+    border-radius: 1.5px;
+    transition: left 0.23s, right 0.23s, opacity 0.24s;
+    opacity: 0;
+    z-index: 0;
 }
 header ul li a:hover,
 header ul li a.active {
-    color: var(--light-text);
-    text-decoration: none;
+    color: #fff;
+    border-bottom: 2.5px solid #8f47fb;
+    background: linear-gradient(90deg,rgba(143,71,251,0.05) 0%,rgba(255,179,101,0.08) 100%);
+}
+header ul li a:hover:after,
+header ul li a.active:after {
+    left: 0; right: 0; opacity: 1;
 }
 header ul li a.active {
-    font-weight: 700;
-    color: var(--primary-color);
+    font-weight: 800;
+    color: #ffb765;
+    border-bottom: 2.5px solid #ffb765;
+    background: linear-gradient(90deg,rgba(255,179,101,0.11) 0%,rgba(143,71,251,0.09) 100%);
 }
+
+@media (max-width: 900px) {
+    header nav {
+        padding-left: clamp(8px, 3vw, 28px);
+        padding-right: clamp(8px, 3vw, 28px);
+    }
+    header .logo {
+        font-size: 1.44em;
+    }
+    header ul {
+        gap: 12px;
+    }
+}
+@media (max-width: 600px) {
+    header nav {
+        flex-direction: column;
+        align-items: flex-start;
+        min-height: 44px;
+        gap: 11px;
+    }
+    header .logo {
+        font-size: 1.07em;
+        margin-bottom: 3px;
+    }
+    header ul {
+        gap: 4px;
+    }
+}
+
 
 /* Секция Hero */
 #hero {
@@ -221,53 +434,167 @@ header ul li a.active {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 #hero .subtitle {
-    font-size: 1.5em;
+    font-size: 1.45em;
     margin-bottom: 20px;
     font-weight: 400;
+    color: var(--medium-text);
+    text-shadow: 0 2px 8px rgba(77,91,206,0.08);
 }
 #hero p {
-    font-size: 1.1em;
-    margin-bottom: 30px;
+    font-size: 1.07em;
+    margin-bottom: 28px;
 }
-.btn {
-    display: inline-flex; /* Используем flex для выравнивания иконки и текста */
-    align-items: center;   /* Выравниваем по вертикали */
-    justify-content: center; /* Центрируем содержимое (если кнопка будет иметь фиксированную ширину) */
-    gap: 0.6em;            /* Расстояние между иконкой/текстом */
-    padding: 12px 25px; /* Немного уменьшил горизонтальный padding из-за иконки */
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
+/* SPECIAL DOWNLOAD BUTTON DESIGN */
+/* IMPROVED DOWNLOAD BUTTON DESIGN: Futuristic, Animated, Unique */
+.btn-download {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 17px 52px;
+    border-radius: 64px;
+    font-size: 1.22em;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    background: 
+        linear-gradient(120deg, #7735fa 0%, #8f47fb 55%, #ff8364 100%);
+    color: #fff;
+    border: none;
+    box-shadow:
+        0 4px 28px 0 rgba(120,50,255,0.23),
+        0 1.5px 16px 0 rgba(255,131,100,0.13);
+    cursor: pointer;
+    overflow: visible;
     z-index: 2;
+    isolation: isolate;
+    transition: 
+        background 0.45s cubic-bezier(.4,1.3,.6,1), 
+        box-shadow 0.40s cubic-bezier(.4,1.3,.6,1),
+        transform 0.40s cubic-bezier(.4,1.3,.6,1), 
+        color 0.32s cubic-bezier(.4,1.3,.6,1),
+        filter 0.32s cubic-bezier(.4,1.3,.6,1);
+    filter: drop-shadow(0 0 12px rgba(120,50,255,0.09));
+    outline: none;
 }
 
-.btn .btn-icon {
-    width: 1.265em;  /* Новый размер (1.1em * 1.15) */
-    height: 1.265em; /* Новый размер (1.1em * 1.15) */
-    line-height: 0; /* Чтобы SVG не влиял на высоту строки */
-    /* Смещение иконки вниз, подберите значение при необходимости */
-    transform: translateY(1.5px); 
+.btn-download .btn-icon {
+    width: 1.5em;
+    height: 1.5em;
+    margin-left: 0.08em;
+    margin-right: -0.23em;
+    filter: drop-shadow(0 2px 11px rgba(120,50,255,0.22));
+    transition: 
+        filter 0.24s cubic-bezier(.4,1.3,.6,1);
+    z-index: 2;
+    will-change: filter;
 }
 
-.btn-primary {
-    background-color: white;
-    color: var(--primary-color); /* Текст и иконка будут этого цвета */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+/* bounce и glow только по кнопке */
+.btn-download:hover,
+.btn-download:focus-visible {
+    background: linear-gradient(112deg, #ff8364 0%, #ffb765 18%, #8f47fb 74%, #7735fa 100%);
+    color: #fff;
+    box-shadow:
+        0 20px 56px 0 rgba(120,50,255,0.38),
+        0 14px 42px 0 rgba(255,131,100,0.25);
+    filter: brightness(1.10) drop-shadow(0 0 30px #ff836480);
+    transform: translateY(-7px) scale(1.13) rotate(-2deg);
+    text-decoration: none;
+    animation: btnDownloadBounce 0.35s cubic-bezier(.34,1.56,.64,1) 1;
 }
-.btn-primary:hover {
-    background-color: var(--glass-bg-dark-features);
-    color: var(--primary-color); /* Цвет текста и иконки при наведении */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--glass-border);
+@keyframes btnDownloadBounce {
+    0% { transform: translateY(0) scale(1) rotate(0deg); }
+    60% { transform: translateY(-13px) scale(1.14, 0.96) rotate(-2deg);}
+    80% { transform: translateY(-6px) scale(1.10, 1.02) rotate(-2deg);}
+    100% { transform: translateY(-7px) scale(1.13) rotate(-2deg);}
 }
-.btn-large {
-    padding: 15px 40px;
-    font-size: 1.1em;
+.btn-download:hover .btn-icon,
+.btn-download:focus-visible .btn-icon {
+    filter: drop-shadow(0 4px 22px #7735fa) drop-shadow(0 0 18px #ff8364cc);
 }
+
+.btn-download:active {
+    transform: scale(0.97);
+    box-shadow: 0 3px 10px 0 rgba(120,50,255,0.13), 0 1.5px 6px 0 rgba(255,131,100,0.10);
+}
+
+.btn-download:active .btn-icon {
+    filter: drop-shadow(0 2px 9px #8f47fbcc);
+}
+
+/* Мягкое свечение внутри кнопки */
+.btn-download .btn-glow {
+    position: absolute;
+    left: 52%;
+    top: 52%;
+    width: 90%;
+    height: 140%;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(1.07) rotate(-8deg);
+    background: radial-gradient(circle, rgba(255,255,255,0.21) 0%, rgba(150,90,255,0.16) 50%, rgba(255,255,255,0) 80%);
+    filter: blur(19px);
+    opacity: 0.80;
+    z-index: 1;
+    border-radius: 64% 60% 68% 55%;
+    animation: btnDownloadGlowPulse 2.2s infinite alternate cubic-bezier(.4,1.3,.6,1);
+}
+
+@keyframes btnDownloadGlowPulse {
+    0%   { opacity: 0.7; filter: blur(15px);}
+    35%  { opacity: 0.97; filter: blur(25px);}
+    100% { opacity: 0.85; filter: blur(14px);}
+}
+
+/* Ribbon возвращён! */
+.btn-download .btn-ribbon {
+    position: absolute;
+    top: -23px;
+    right: -31px;
+    background: linear-gradient(92deg, #ff8364 15%, #ffb765 85%);
+    color: #fff;
+    font-size: 0.82em;
+    font-weight: bold;
+    padding: 5px 18px 5px 14px;
+    border-radius: 20px 34px 20px 32px;
+    box-shadow: 0 3px 14px 0 rgba(255,131,100,0.19);
+    z-index: 2;
+    letter-spacing: 0.05em;
+    transform: rotate(11deg) scale(1.02);
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.96;
+    border: 1.5px solid rgba(255,255,255,0.23);
+    overflow: visible;
+    white-space: nowrap;
+    text-shadow: 0 1px 3px #d0622c50;
+    backdrop-filter: blur(1px);
+}
+
+@media (max-width: 768px) {
+    .btn-download {
+        font-size: 1.06em;
+        padding: 12px 28px;
+    }
+    .btn-download .btn-ribbon {
+        font-size: 0.75em;
+        padding: 4px 13px 4px 10px;
+        top: -14px;
+        right: -15px;
+    }
+}
+@media (max-width: 480px) {
+    .btn-download {
+        font-size: 0.95em;
+        padding: 10px 14px;
+    }
+    .btn-download .btn-ribbon {
+        font-size: 0.65em;
+        padding: 2.5px 8px 2.5px 7px;
+        top: -7px;
+        right: -7px;
+    }
+}
+
 #hero .version-info {
     margin-top: 10px;
     color: rgba(160, 84, 211, 0); /* Это значение будет переопределено JS, но имеет смысл установить прозрачность */
@@ -292,7 +619,7 @@ header ul li a.active {
     padding: 30px 0 60px;
 }
 #changelog-section.visible {
-    display: flex; /* Показываем через JS */
+    display: flex;
 }
 
 .changelog-card { /* Наследует от .feature-item */
@@ -303,6 +630,7 @@ header ul li a.active {
     box-shadow: 0 8px 30px rgba(0,0,0,0.2), 0 0 0 1px var(--glass-border);
     /* background-color, backdrop-filter, border, border-radius унаследованы от .feature-item */
 }
+
 
 .changelog-card h2 {
     font-size: 2.1em; /* Немного увеличим размер основного заголовка */
@@ -315,6 +643,7 @@ header ul li a.active {
     letter-spacing: 0.5px; /* Небольшое увеличение межбуквенного расстояния для читаемости */
     line-height: 1.3; /* Явно зададим высоту строки для лучшего контроля */
 }
+
 .changelog-card h2::after {
     content: '';
     position: absolute;
@@ -336,6 +665,7 @@ header ul li a.active {
     */
     padding: 0.2em 0.65em; /* Внутренние отступы для "бейджа" (em для масштабируемости) */
     border-radius: 6px; /* Скругление углов "бейджа" */
+    text-align: center;
     margin-left: 0.25em; /* Небольшой отступ от открывающей скобки */
     display: inline-block; /* Позволяет применять padding, margin, background */
     vertical-align: middle; /* Стараемся выровнять "бейдж" по вертикальному центру текста */
@@ -350,9 +680,10 @@ header ul li a.active {
     overflow-y: auto;
     padding-right: 15px;
     padding-left: 5px;
-    line-height: 1.7;
+    line-height: 1.2;
     color: var(--medium-text);
     font-size: 0.95em;
+    text-align: left; /* <--- Вот эта строка выравнивает текст changelog вправо */
 }
 
 .changelog-content::-webkit-scrollbar {
@@ -370,6 +701,7 @@ header ul li a.active {
     background: rgba(var(--primary-color-rgb), 0.7);
 }
 
+/* Markdown Headings */
 .changelog-content h1,
 .changelog-content h2,
 .changelog-content h3,
@@ -377,99 +709,207 @@ header ul li a.active {
 .changelog-content h5,
 .changelog-content h6 {
     color: var(--light-text);
-    margin-top: 1.2em;
-    margin-bottom: 0.6em;
+    font-weight: 800;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
     line-height: 1.3;
+    text-shadow: 0 1px 6px rgba(var(--primary-color-rgb),0.09);
 }
-.changelog-content h1:first-child,
-.changelog-content h2:first-child,
-.changelog-content h3:first-child,
-.changelog-content h4:first-child,
-.changelog-content h5:first-child,
-.changelog-content h6:first-child,
-.changelog-content p:first-child {
-    margin-top: 0;
+.changelog-content h1 { font-size: 1.35em; }
+.changelog-content h2 { font-size: 1.17em; }
+.changelog-content h3 { font-size: 1em; }
+.changelog-content h4 { font-size: 0.97em; font-weight: bold; }
+
+/* List Styles for Release Notes */
+.changelog-content ul, .changelog-content ol {
+    margin-left: 25px;
+    margin-bottom: 1em;
+    padding-left: 0;
+}
+.changelog-content li {
+    margin-bottom: 0.2em;
+    padding-left: 6px;
+    font-size: 0.98em;
+    position: relative;
+}
+.changelog-content ul li::marker {
+    color: var(--primary-color);
+    font-size: 1.14em;
+}
+.changelog-content ol li::marker {
+    color: var(--secondary-color);
+    font-size: 1.12em;
 }
 
-.changelog-content h1 { font-size: 1.5em; }
-.changelog-content h2 { font-size: 1.3em; }
-.changelog-content h3 { font-size: 1.15em; }
-.changelog-content h4 { font-size: 1em; font-weight: bold; }
+.changelog-content p {
+    margin-bottom: 1.05em;
+    margin-top: 0.2em;
+}
 
-.changelog-content p { margin-bottom: 0.8em; }
-.changelog-content ul, .changelog-content ol { margin-left: 25px; margin-bottom: 1em; padding-left: 0; }
-.changelog-content li { margin-bottom: 0.5em; padding-left: 5px; }
-.changelog-content ul li::marker { color: var(--primary-color); }
+.changelog-content a {
+    color: var(--primary-color);
+    text-decoration: underline dotted;
+    border-bottom: 1.5px dotted var(--secondary-color);
+    transition: color 0.18s, border-bottom-color 0.18s;
+    word-break: break-all;
+}
+.changelog-content a:hover {
+    color: var(--secondary-color);
+    border-bottom-color: var(--primary-color);
+}
 
-.changelog-content a { color: var(--primary-color); text-decoration: none; border-bottom: 1px dotted var(--primary-color); }
-.changelog-content a:hover { color: var(--secondary-color); border-bottom-color: var(--secondary-color); }
+.changelog-content strong, .changelog-content b {
+    color: var(--light-text);
+    font-weight: 700;
+}
 
-.changelog-content strong, .changelog-content b { color: var(--light-text); font-weight: 600; }
-.changelog-content em, .changelog-content i { color: inherit; font-style: italic; }
+.changelog-content em, .changelog-content i {
+    color: var(--secondary-color);
+    font-style: italic;
+}
 
 .changelog-content code {
-    background-color: rgba(var(--code-background-color-rgb), 0.5);
+    background-color: rgba(var(--code-background-color-rgb), 0.62);
     color: rgb(var(--code-text-color-rgb));
-    padding: 3px 7px;
-    border-radius: 5px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.9em;
-    border: 1px solid rgba(var(--code-border-color-rgb), 0.6);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', 'Fira Mono', 'Courier New', Courier, monospace;
+    font-size: 1em;
+    border: 1px solid rgba(var(--code-border-color-rgb), 0.54);
+    margin: 0 1px;
     word-wrap: break-word;
 }
 .changelog-content pre {
-    background-color: rgba(0,0,0,0.25);
-    padding: 15px;
+    background-color: rgba(var(--code-background-color-rgb),0.82);
+    padding: 16px 18px;
     border-radius: 8px;
     overflow-x: auto;
-    margin-bottom: 1.2em;
-    border: 1px solid var(--glass-border);
+    margin-bottom: 1.3em;
+    border: 1.5px solid var(--glass-border);
+    color: rgb(var(--code-text-color-rgb));
+    font-size: 1em;
 }
-.changelog-content pre code { padding: 0; background-color: transparent; border: none; color: var(--light-text); font-size: 0.95em; }
+.changelog-content pre code {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    color: var(--light-text);
+    font-size: 1.06em;
+}
 
+.changelog-content blockquote {
+    border-left: 4px solid var(--primary-color);
+    background: rgba(var(--primary-color-rgb), 0.09);
+    margin: 1em 0;
+    padding: 0.8em 1em;
+    color: var(--light-text);
+    font-style: italic;
+    border-radius: 7px;
+    opacity: 0.95;
+}
+
+/* "All changes" button restyle */
 .changelog-all-btn {
     display: block;
     width: fit-content;
     margin: 0 auto;
-    padding: 12px 30px;
-    font-size: 1em;
-    background-color: transparent;
-    color: var(--light-text);
-    border: 1px solid var(--glass-border);
-    border-radius: 50px;
+    padding: 12px 32px;
+    font-size: 1.03em;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--medium-text);
+    background: var(--glass-bg-dark-features);
+    border-radius: 48px;
+    border: 1.2px solid var(--glass-border);
+    box-shadow: 0 2px 8px 0 rgba(80, 80, 95, 0.09);
     text-decoration: none;
+    backdrop-filter: blur(var(--glass-blur-light));
+    -webkit-backdrop-filter: blur(var(--glass-blur-light));
+    transition:
+        background 0.19s,
+        color 0.19s,
+        box-shadow 0.19s,
+        border-color 0.19s;
+    position: relative;
+    z-index: 2;
 }
-.changelog-all-btn:hover {
-    background-color: var(--glass-border);
-    color: var(--light-text);
+
+.changelog-all-btn:hover,
+.changelog-all-btn:focus-visible {
+    background: var(--glass-bg-dark-features-hover);
+    color: rgba(255, 255, 255, 0.815);
+    border-color: rgba(255,255,255,0.24);
+    box-shadow: 0 4px 13px 0 rgba(120, 53, 250, 0.10);
     text-decoration: none;
 }
 
-/* Адаптация для мобильных устройств (если нужно скорректировать линию) */
+.changelog-all-btn:active {
+    color: var(--secondary-color);
+    box-shadow: 0 2px 5px 0 rgba(80, 80, 95, 0.08);
+}
+
+.changelog-all-btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .changelog-all-btn {
+        padding: 9px 18px;
+        font-size: 0.97em;
+    }
+}
+
+/* Responsive improvements */
 @media (max-width: 768px) {
+    #changelog-section {
+        padding: 24px 0 36px;
+        border-radius: 18px;
+    }
+    .changelog-card {
+        padding: 22px 7vw 18px 7vw;
+        border-radius: 14px;
+        margin: 0 1vw;
+    }
     .changelog-card h2 {
-        font-size: 1.8em; /* Этот стиль у вас уже есть, оставляем */
+        font-size: 1.5em;
     }
     .changelog-card h2::after {
-        width: 70px; /* Можно немного уменьшить ширину линии */
+        width: 70px;
         height: 2.5px;
     }
     .changelog-card h2 #changelog-version {
-        font-size: 0.78em; /* Можно чуть подкорректировать относительный размер для мобильных */
-        padding: 0.15em 0.6em;
+        font-size: 0.82em;
+        padding: 0.12em 0.6em;
+    }
+    .changelog-content {
+        font-size: 0.96em;
+        max-height: 260px;
+        padding-right: 7px;
     }
 }
 
 @media (max-width: 480px) {
+    .changelog-card {
+        padding: 13px 2.5vw 12px 2.5vw;
+        border-radius: 9px;
+    }
     .changelog-card h2 {
-        font-size: 1.6em; /* Этот стиль у вас уже есть, оставляем */
+        font-size: 1.16em;
     }
     .changelog-card h2::after {
-        width: 60px; /* Еще немного уменьшить */
+        width: 48px;
+        height: 2px;
     }
-     .changelog-card h2 #changelog-version {
-        font-size: 0.8em;
-        padding: 0.1em 0.5em;
+    .changelog-card h2 #changelog-version {
+        font-size: 0.83em;
+        padding: 0.09em 0.45em;
+    }
+    .changelog-content {
+        font-size: 0.93em;
+        max-height: 170px;
+        padding-right: 2px;
     }
 }
 /* Секция скриншота */
@@ -481,8 +921,8 @@ header ul li a.active {
     max-width: 800px;
     margin: 30px auto 0;
     border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.356);
     transform-style: preserve-3d;
     overflow: hidden;
 }
@@ -496,47 +936,73 @@ header ul li a.active {
 #features {
     position: relative;
     z-index: 1;
+    padding: 60px 20px;
 }
+
+/* Грид с карточками */
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 48px;
     margin-top: 40px;
 }
-.feature-item { /* Этот класс используется и для .changelog-card и для .requirements-card */
+
+/* Универсальная карточка */
+.feature-item {
     background-color: var(--glass-bg-dark-features);
-    padding: 30px;
-    border-radius: 16px;
-    text-align: center;
+    padding: 32px 28px;
+    border-radius: 20px;
+    text-align: left;
     border: 1px solid var(--glass-border);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     transition: transform 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
     backdrop-filter: blur(var(--glass-blur-medium));
     -webkit-backdrop-filter: blur(var(--glass-blur-medium));
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
+
 .feature-item:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); 
+    transform: translateY(-12px) scale(1.035);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
     background-color: var(--glass-bg-dark-features-hover);
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.25);
 }
+
+/* Иконка */
 .feature-icon {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 20px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(112deg, #ff8364 0%, #ffb765 18%, #8f47fb 74%, #7735fa 100%);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    flex-shrink: 0;
 }
-#features .feature-item h3 { /* Специфично для карточек возможностей */
-    font-size: 1.5em;
-    margin-bottom: 12px;
+
+/* Заголовок карточки */
+#features .feature-item h3 {
+    font-size: 1.6em;
+    margin: 0;
     color: var(--light-text);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    font-weight: 600;
+    line-height: 1.3;
 }
-#features .feature-item p { /* Специфично для карточек возможностей */
-    font-size: 0.95em;
+
+/* Текст карточки */
+#features .feature-item p {
+    font-size: 1em;
     color: var(--medium-text);
-    line-height: 1.7;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    line-height: 1.8;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    margin: 0;
 }
+
 
 /* Секция Системных требований */
 #requirements-section {
@@ -615,16 +1081,19 @@ header ul li a.active {
 
 /* Подвал */
 footer {
-    background-color: rgba(25,25,30,0.5);
+    background: linear-gradient(180deg, 
+        rgba(25, 25, 30, 0.3) 0%,
+        rgba(25, 25, 30, 0.7) 100%);
     backdrop-filter: blur(var(--glass-blur-light));
     -webkit-backdrop-filter: blur(var(--glass-blur-light));
-    border-top: 1px solid var(--glass-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--medium-text);
-    text-align: center;
-    padding: 30px 0;
-    margin-top: 40px;
+    padding: 1.6rem 0;
+    margin-top: 4rem;
     position: relative;
     z-index: 1;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
 }
 footer p {
     margin-bottom: 0.5em;

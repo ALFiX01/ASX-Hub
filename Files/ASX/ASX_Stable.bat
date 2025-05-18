@@ -6192,7 +6192,7 @@ for %%C in (%Categories%) do (
         )
     )
 
-    if !keywordCount! geq 4 (
+    if !keywordCount! geq 5 (
         reg add "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\User_Interests_test" /v User_Interests!interestIndex! /t REG_SZ /d !categoryName! /f >nul
         if !errorlevel! equ 0 (
             echo  %COL%[92mОбнаружен интерес к категории !categoryName! ^(Уверенность: !keywordCount!^) %COL%[37m
