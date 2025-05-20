@@ -1518,7 +1518,6 @@ if /i "%choice%"=="ч" ( set "history=TweaksPanel;!history!" && goto MainMenu )
 if /i "%choice%"=="B" goto GoBack
 if /i "%choice%"=="и" goto GoBack
 if /i "%choice%"=="NoInput" goto WrongInput
-call:WrongInput
 goto TweaksPanel
 
 
@@ -1539,7 +1538,7 @@ set "files=ASX-Power.bat Cortana.bat StickyKeys.bat Mouse.bat Wallpaper.bat Game
 for %%f in (%files%) do (
     if not exist "%ASX-Directory%\Files\Resources\FastOptimizeScripts\%%f" (
         echo  Загрузка: %%f
-        curl -g -L -# -o "%ASX-Directory%\Files\Resources\FastOptimizeScripts\%%f" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Scripts/FastOptimizeScripts/%%f" >nul 2>&1
+        curl -g -L -# -o "%ASX-Directory%\Files\Resources\FastOptimizeScripts\%%f" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/Resources/FastOptimizeScripts/%%f" >nul 2>&1
     )
 )
 
@@ -1580,17 +1579,14 @@ reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search
 )
 
 REM Проверка отключения залипания клавиш
-for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v Flags 2^>nul') do (
-    if not "%%A"=="0" (
-        set "DSKN=%COL%[92mВКЛ "
-        set "AUTO_OPT3=%Yes-Icon%"
-    ) else (
-        set "DSKN=%COL%[91mВЫКЛ"
-        set "AUTO_OPT3=%COL%[90m%No-Icon%"
-        set /A OptimizationStatusCount+=1
-    )
+reg query "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v "Flags" | find "506" && set "DSKN=%COL%[91mВЫКЛ" && (
+    set "DSKN=%COL%[91mВЫКЛ"
+	set "AUTO_OPT3=%COL%[90m%No-Icon%"
+    set /A OptimizationStatusCount+=1
+) || (
+	set "DSKN=%COL%[92mВКЛ "
+	set "AUTO_OPT3=%Yes-Icon%"
 )
-
 
 REM Проверка повышенной точности установки указателя мыши
 for /f "tokens=3" %%A in ('reg query "HKCU\Control Panel\Mouse" /v MouseSpeed 2^>nul') do (
@@ -8019,7 +8015,7 @@ set "FileName=ChromeSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8031,7 +8027,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8042,7 +8038,7 @@ set "FileName=Firefox.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8054,7 +8050,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8065,7 +8061,7 @@ set "FileName=Opera.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8077,7 +8073,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8088,7 +8084,7 @@ set "FileName=Yandex.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8100,7 +8096,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8111,7 +8107,7 @@ set "FileName=YandexMusic.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8123,7 +8119,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8134,7 +8130,7 @@ set "FileName=iTunesInstaller.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8146,7 +8142,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8157,7 +8153,7 @@ set "FileName=ZonaSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8169,7 +8165,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8180,7 +8176,7 @@ set "FileName=SpotifyInstaller.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8192,7 +8188,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8204,7 +8200,7 @@ set "FileName=paintnet.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8216,7 +8212,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8231,7 +8227,7 @@ IF EXIST "%FilePatch%" (
 	reg add "HKEY_CURRENT_USER\Software\Topaz Labs LLC\Topaz Gigapixel AI\appMain"  /v "ia0" /t REG_SZ /d "aWk=" /f >nul 2>&1
 	reg add "HKEY_CURRENT_USER\Software\Topaz Labs LLC\Topaz Gigapixel AI\appMain"  /v "lastLoggedInUserName" /t REG_SZ /d "any name" /f >nul 2>&1	
 	reg add "HKEY_CURRENT_USER\Software\Topaz Labs LLC\Topaz Gigapixel AI\appMain"  /v "userPw" /t REG_SZ /d "any password" /f >nul 2>&1	
-	start %FilePatch%
+	start "" "%FilePatch%"
 ) ELSE (
 	cd "%ASX-Directory%\Files"
     title Скачивание файлов [0/1]
@@ -8256,7 +8252,7 @@ IF EXIST "%FilePatch%" (
     title Настройка файлов [2/2] 
     echo  %COL%[36mНастройка завершена, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul   	   
-	start %FilePatch%
+	start "" "%FilePatch%"
 )
 goto GoBack
 
@@ -8266,7 +8262,7 @@ set "FileName=Upscayl.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8278,7 +8274,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8289,7 +8285,7 @@ set "FileName=Movavi_Video_Editor.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8301,7 +8297,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8324,7 +8320,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8335,7 +8331,7 @@ set "FileName=NVIDIA_Broadcast.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8347,7 +8343,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8358,7 +8354,7 @@ set "FileName=AMD-Adrenalin-edition.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8370,7 +8366,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8381,7 +8377,7 @@ set "FileName=Setup_ThunderMaster.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8393,7 +8389,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8404,7 +8400,7 @@ set "FileName=LogitechGhub.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8416,7 +8412,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8427,7 +8423,7 @@ set "FileName=HyperX_NGENUITY.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8439,7 +8435,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8450,7 +8446,7 @@ set "FileName=RSQKeyroxSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8462,7 +8458,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8473,7 +8469,7 @@ set "FileName=RazerSynapseInstaller.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8485,7 +8481,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8496,7 +8492,7 @@ set "FileName=AppleDevicesInstaller.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8508,7 +8504,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8519,7 +8515,7 @@ set "FileName=SteamSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8531,7 +8527,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8542,7 +8538,7 @@ set "FileName=Epic.Games.msi"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8554,7 +8550,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8565,7 +8561,7 @@ set "FileName=EAapp.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8577,7 +8573,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8588,7 +8584,7 @@ set "FileName=UbisoftConnectInstaller.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8600,7 +8596,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8611,7 +8607,7 @@ set "FileName=BattleNet.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8623,7 +8619,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8634,7 +8630,7 @@ set "FileName=ValorantSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8646,7 +8642,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8657,7 +8653,7 @@ set "FileName=XboxInstaller.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8669,7 +8665,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8680,7 +8676,7 @@ set "FileName=Win.Tweaker.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8692,7 +8688,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8703,7 +8699,7 @@ set "FileName=QuickCpuSetup.msi"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8715,7 +8711,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8726,7 +8722,7 @@ set "FileName=Auslogics.BoostSpeed.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8738,7 +8734,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8752,7 +8748,7 @@ set "FilePatchZip=%ASX-Directory%\Files\Downloads\%FileNameZip%"
 set "FilePatchZipDestination=%ASX-Directory%\Files\Downloads\Dism++"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8770,7 +8766,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m     └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatchZip%"
 )
 goto GoBack
@@ -8781,7 +8777,7 @@ set "FileName=CCleaner.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8793,7 +8789,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8804,7 +8800,7 @@ set "FileName=PowerToysSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8816,7 +8812,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8827,7 +8823,7 @@ set "FileName=winrar-x64-701ru.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8839,7 +8835,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
     timeout 4 /nobreak >nul
     title Активация продукта [1/1]
@@ -8855,7 +8851,7 @@ set "FileName=7z.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8867,7 +8863,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8878,7 +8874,7 @@ set "FileName=DiscordSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8890,7 +8886,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8901,7 +8897,7 @@ set "FileName=Telegram.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8913,7 +8909,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8924,7 +8920,7 @@ set "FileName=UninstallTool.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8936,7 +8932,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8947,7 +8943,7 @@ set "FileName=Driver.Booster.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8959,7 +8955,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -8970,7 +8966,7 @@ set "FileName=Unlocker.msi"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8982,7 +8978,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start %FilePatch%
+    start "" "%FilePatch%"
 )
 goto GoBack
 
@@ -8992,7 +8988,7 @@ set "FileName=FreeMove.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9008,7 +9004,7 @@ IF EXIST "%FilePatch%" (
     chcp 65001 >nul 2>&1
     echo     %COL%[36m     └ Ярлык создан, запуск программы%COL%[37m
     timeout 1 /nobreak >nul
-    start %FilePatch%
+    start "" "%FilePatch%"
 )
 goto GoBack
 
@@ -9018,7 +9014,7 @@ set "FileName=memreduct.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9030,7 +9026,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9041,7 +9037,7 @@ set "FileName=EaseUS.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9053,7 +9049,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9064,7 +9060,7 @@ set "FileName=AIDA64.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9076,7 +9072,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9087,7 +9083,7 @@ set "FileName=cpu-z.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9099,7 +9095,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9110,7 +9106,7 @@ set "FileName=MSIAfterburnerSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9122,7 +9118,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9133,7 +9129,7 @@ set "FileName=VSCode.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9145,7 +9141,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9156,7 +9152,7 @@ set "FileName=VisualStudioSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9168,7 +9164,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9179,7 +9175,7 @@ set "FileName=GitHubDesktop.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9191,7 +9187,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9202,7 +9198,7 @@ set "FileName=npp.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9214,7 +9210,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9225,7 +9221,7 @@ set "FileName=Pycharm.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9237,7 +9233,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9248,7 +9244,7 @@ set "FileName=Sound_Lock_Setup.msi"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9260,7 +9256,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9274,7 +9270,7 @@ set "FilePatchZip=%ASX-Directory%\Files\Downloads\%FileNameZip%"
 set "FilePatchZipDestination=%ASX-Directory%\Files\Resources\KMSAuto"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
 	title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileNameZip% %COL%[37m    
@@ -9292,7 +9288,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m     └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul    
-	start /wait %FilePatch%
+	start "" /wait "%FilePatch%"
     del /Q "%FilePatchZip%"
 )
 goto GoBack
@@ -9303,7 +9299,7 @@ set "FileName=WinDigitalActivation.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9315,7 +9311,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9326,7 +9322,7 @@ set "FileName=qbittorrent.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9338,7 +9334,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9349,7 +9345,7 @@ set "FileName=TeamViewer.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9361,7 +9357,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9372,7 +9368,7 @@ set "FileName=Flow-Launcher-Setup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9384,7 +9380,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9395,7 +9391,7 @@ set "FileName=Rufus.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9407,7 +9403,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9418,7 +9414,7 @@ set "FileName=Flashr.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9430,7 +9426,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9441,7 +9437,7 @@ set "FileName=MiniBin.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%ASX-Directory%\Files\Downloads\%FileName%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9470,7 +9466,7 @@ set "FileName=dfControl.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9482,7 +9478,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9497,7 +9493,7 @@ set "FilePatchZip=%ASX-Directory%\Files\Downloads\%FileNameZip%"
 set "FilePatchZipDestination=%ASX-Directory%\Files\Utilites\DriverStoreExplorer"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
 	title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileNameZip% %COL%[37m    
@@ -9515,7 +9511,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m     └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-	start %FilePatch%
+	start "" "%FilePatch%"
     del /Q "%FilePatchZip%"
 )
 goto GoBack
@@ -9526,7 +9522,7 @@ set "FileName=Autoruns.exe"
 set "FilePatch=%ASX-Directory%\Files\Utilites\Autoruns\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m 
@@ -9543,7 +9539,7 @@ IF EXIST "%FilePatch%" (
     chcp 65001 >nul 2>&1
     echo     %COL%[36m     └ Ярлык создан, запуск программы%COL%[37m
     timeout 1 /nobreak >nul
-    start %FilePatch%
+    start "" "%FilePatch%"
 )
 goto GoBack
 
@@ -9553,7 +9549,7 @@ set "FileName=DDU_setup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9565,7 +9561,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9576,7 +9572,7 @@ set "FileName=VibranceGUI.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9588,7 +9584,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9599,7 +9595,7 @@ set "FileName=EverythingSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9611,7 +9607,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9622,7 +9618,7 @@ set "FileName=ShutUp10.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9634,7 +9630,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
 )
 goto GoBack
 
@@ -9670,7 +9666,7 @@ set "FileName=VC_redist.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9682,7 +9678,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9693,7 +9689,7 @@ set "FileName=DirectX.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9705,22 +9701,21 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
 
 :MicrosoftOffice
 call :ASX_Hub_Downloads_Title 
-set "FileName=OInstall.exe"
-set "FileNameZip=Office.zip"
+set "FileName=Office 365 Setup.cmd"
+set "FileNameZip=Office_365_ProPlus.zip"
 set "FilePatch=%ASX-Directory%\Files\Downloads\Office\%FileName%"
 set "FilePatchZip=%ASX-Directory%\Files\Downloads\%FileNameZip%"
 set "FilePatchZipDestination=%ASX-Directory%\Files\Downloads\Office"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileNameZip% %COL%[37m
     start "" "%FilePatch%"
-	start "" "%FilePatchZipDestination%\readme_ru.txt"
 ) ELSE (
 	title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileNameZip% %COL%[37m    
@@ -9739,7 +9734,6 @@ IF EXIST "%FilePatch%" (
     echo     %COL%[36m     └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
     start "" "%FilePatch%"
-	start "" "%FilePatchZipDestination%\readme_ru.txt"
     del /Q "%FilePatchZip%"
 )
 goto GoBack
@@ -9750,7 +9744,7 @@ set "FileName=CreativeCloud.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9762,7 +9756,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9773,7 +9767,7 @@ set "FileName=MediaCreationTool_Win11_23H2.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -9785,7 +9779,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -13614,7 +13608,7 @@ if "%total_errors%" GEQ "1" (
     set "Assistant_Message=Ассистент: Рекомендуется удалить устаревшие версии драйверов [ F ]"
     set "RecomendedPanelNameGOTO=DriverFinder_Menu"
 ) else if !StartupCount! gtr 10 (
-    set "Assistant_Message=Ассистент: В автозагрузке слишком много программ (!StartupCount!) [ F ]"
+    set "Assistant_Message=Ассистент: В автозагрузке слишком много программ ^(!StartupCount!^) [ F ]"
     set "RecomendedPanelNameGOTO=Dynamic_StartupManager"
     echo [INFO ] %TIME% - Много программ в автозагрузке: !StartupCount! >> "%ASX-Directory%\Files\Logs\%date%.txt"
 )
