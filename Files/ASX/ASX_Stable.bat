@@ -74,8 +74,8 @@ if errorlevel 1 (
         pause
         exit /b 1
     )
-    reg add "HKCU\Software\ALFiX inc.\ASX\Settings" /t REG_SZ /v "Directory" /d "%ProgramFiles%\ASX" /f >nul 2>&1
-    set "ASX-Directory=%ProgramFiles%\ASX"
+    reg add "HKCU\Software\ALFiX inc.\ASX\Settings" /t REG_SZ /v "Directory" /d "%Windir%\ASX" /f >nul 2>&1
+    set "ASX-Directory=%Windir%\ASX"
     
     REM Создаем структуру директорий
     if not exist "!ASX-Directory!\Files\Logs" (
@@ -1673,6 +1673,7 @@ reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notificat
 	set "AUTO_OPT10=%Yes-Icon%"
 )
 
+
 REM Проверка Журнала буфера обмена
 reg query "HKEY_CURRENT_USER\Software\Microsoft\Clipboard" /v "EnableClipboardHistory" | find "0x1" >nul 2>&1 && (
 	set "ECHR=%COL%[92mВКЛ "
@@ -2059,15 +2060,15 @@ if %OptimizationCheckerCount% equ 1 (
 echo  Идет получение информации о текущих параметрах...
 REM echo [DEBUG] %TIME% - If_First_call >> "%ASX-Directory%\Files\Logs\%date%.txt"
 (
-    for %%i in (ASXPW PWTH DBGP CTW ETW AUTOF BCDOF NONOF CONG HIBNT INDK DANF WNDF WDNT APSN UACS DWLC FSOOF AUMS AUSA BTEB DSCR ) do (set "%%i=%COL%[92mВКЛ ")
-    for %%i in (HDCP FSBT SMTSX HCCF WDNT PGMT SchM SLMD DSKN ONDR ECHR CRIS WINDF NVPIN CPLT WTUL ) do (set "%%i=%COL%[91mВЫКЛ")
+    for %%i in (ASXPW PWTH DBGP CTW ETW AUTOF BCDOF NONOF CONG HIBNT INDK DANF WNDF WDNT APSN UACS DWLC FSOOF AUMS AUSA BTEB DSCR DSKN ) do (set "%%i=%COL%[92mВКЛ ")
+    for %%i in (HDCP FSBT SMTSX HCCF WDNT PGMT SchM SLMD ONDR ECHR CRIS WINDF NVPIN CPLT WTUL ) do (set "%%i=%COL%[91mВЫКЛ")
     for %%i in (LRAM REDG TIIP ) do (set "%%i=%COL%[90mН/Д ")
 
     REM Проверка активного плана электропитания
     powercfg /GetActiveScheme | findstr /i "ASX" >nul 2>&1 || set "ASXPW=%COL%[91mВЫКЛ"
 
     REM Проверка состояния FSO и GameBar и изменение переменной FSOOF
-    reg query "HKCU\System\GameConfigStore" /v "GameDVR_Enabled" | find "0x1" >nul 2>&1 && set "FSOOF=%COL%[91mВЫКЛ "
+    reg query "HKCU\System\GameConfigStore" /v "GameDVR_Enabled" | find "0x1" >nul 2>&1 && set "FSOOF=%COL%[91mВЫКЛ"
 
 	REM Проверка состояния Spectre, Meldown, DownFall
     reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettings" | find "0x1" || set "SMTSX=%COL%[92mВКЛ " >nul 2>&1
@@ -2119,10 +2120,7 @@ REM echo [DEBUG] %TIME% - If_First_call >> "%ASX-Directory%\Files\Logs\%date%.tx
 	reg query "HKCU\Control Panel\Desktop" /v "JPEGImportQuality" | find "0x100" && set "DWLC=%COL%[91mВЫКЛ" >nul 2>&1
 
 	REM Проверка отключения залипания клавиш
-    for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v Flags 2^>nul') do (
-        if not "%%A"=="0" set "DSKN=%COL%[92mВКЛ "
-    )
-
+    reg query "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v "Flags" | find "506" && set "DSKN=%COL%[91mВЫКЛ" >nul 2>&1
 
     REM Проверка Повышенной точности установки указателя мыши
     for /f "tokens=3" %%A in ('reg query "HKCU\Control Panel\Mouse" /v MouseSpeed 2^>nul') do (
@@ -3227,14 +3225,9 @@ if "%DSKN%" == "%COL%[92mВКЛ " (
 	set "operation_name=Возвращение залипаний клавиш"	
 ) >nul 2>&1
 REM Проверка отключения залипания клавиш
+set "DSKN=%COL%[92mВКЛ " >nul 2>&1
 set "errorlevel_a=%errorlevel%"
-for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v Flags 2^>nul') do (
-    if "%%A"=="0" (
-        set "DSKN=%COL%[91mВЫКЛ"
-    ) else (
-        set "DSKN=%COL%[92mВКЛ "
-    )
-)
+reg query "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v "Flags" | find "506" && set "DSKN=%COL%[91mВЫКЛ" >nul 2>&1
 set "errorlevel=%errorlevel_a%"
 call:Complete_notice
 goto GoBack
@@ -8003,7 +7996,7 @@ set "FileName=MicrosoftEdgeSetup.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileName% %COL%[37m
-    start %FilePatch%
+    start "" "%FilePatch%"
 ) ELSE (
     title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileName% %COL%[37m
@@ -8015,7 +8008,7 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m   └ Файл прошел проверку, запуск установщика %COL%[37m
     timeout 1 /nobreak >nul
-    start /wait %FilePatch%
+    start "" /wait "%FilePatch%"
     del /Q "%FilePatch%"
 )
 goto GoBack
@@ -9726,8 +9719,8 @@ set "FilePatchZip=%ASX-Directory%\Files\Downloads\%FileNameZip%"
 set "FilePatchZipDestination=%ASX-Directory%\Files\Downloads\Office"
 IF EXIST "%FilePatch%" (
 	echo %COL%[36m Запуск %FileNameZip% %COL%[37m
-    start %FilePatch%
-	start %FilePatchZipDestination%\readme_ru.txt
+    start "" "%FilePatch%"
+	start "" "%FilePatchZipDestination%\readme_ru.txt"
 ) ELSE (
 	title Скачивание файлов [0/1]
     echo     %COL%[36m Запущено скачивание %FileNameZip% %COL%[37m    
@@ -9745,8 +9738,8 @@ IF EXIST "%FilePatch%" (
     title Проверка файлов [1/1]
     echo     %COL%[36m     └ Файл прошел проверку, запуск программы %COL%[37m
     timeout 1 /nobreak >nul
-    start %FilePatch%
-	start %FilePatchZipDestination%\readme_ru.txt
+    start "" "%FilePatch%"
+	start "" "%FilePatchZipDestination%\readme_ru.txt"
     del /Q "%FilePatchZip%"
 )
 goto GoBack
