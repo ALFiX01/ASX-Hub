@@ -306,7 +306,6 @@ header .logo span {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
     filter: drop-shadow(0 1px 6px #ffb76570);
     transition: background-position 0.5s, filter 0.28s;
     font-weight: 900;

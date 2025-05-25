@@ -26,7 +26,7 @@
 ::ZQ0/vhVqMQ3MEVWAtB9wSA==
 ::Zg8zqx1/OA3MEVWAtB9wSA==
 ::dhA7pRFwIByZRRnk
-::Zh4grVQjdCuDJOlERJKA/6q0/NQy7dtkt1esMlgr08u0mg01QeADNrzP27aCJaBeqlPhZ4Uk2XRmrs4eHxJXcC76IFp6+FJjhVzFH9Ke/Qr5Tyg=
+::Zh4grVQjdCyDJGyX8VAjFD9VQg2LMFeeCbYJ5e31+/m7hUQJfPc9RK7o4vmmNeIvzEzocIUR90lipOo/NFtwaxDlaxcxyQ==
 ::YB416Ek+ZW8=
 ::
 ::
@@ -106,11 +106,11 @@ REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
 set "Version=1.6.0"
 set "FullVersionNameCurrent=1.6.0"
-set "VersionNumberCurrent=MA07S1"
+set "VersionNumberCurrent=MA25S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=11.05.2025"
+set "DateUpdate=25.05.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -1579,7 +1579,7 @@ reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search
 )
 
 REM Проверка отключения залипания клавиш
-reg query "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v "Flags" | find "506" && set "DSKN=%COL%[91mВЫКЛ" && (
+reg query "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v "Flags" | find "506" >nul 2>&1 && (
     set "DSKN=%COL%[91mВЫКЛ"
 	set "AUTO_OPT3=%COL%[90m%No-Icon%"
     set /A OptimizationStatusCount+=1
@@ -1589,18 +1589,14 @@ reg query "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v "Flags" 
 )
 
 REM Проверка повышенной точности установки указателя мыши
-for /f "tokens=3" %%A in ('reg query "HKCU\Control Panel\Mouse" /v MouseSpeed 2^>nul') do (
-    if "%%A"=="0" (
+reg query "HKCU\Control Panel\Mouse" /v "MouseSpeed" | find "0" >nul 2>&1 && (
         set "MOAC=%COL%[91mВЫКЛ"
         set "AUTO_OPT4=%COL%[90m%No-Icon%"
         set /A OptimizationStatusCount+=1
-    ) else (
+) || (
         set "MOAC=%COL%[92mВКЛ "
         set "AUTO_OPT4=%Yes-Icon%"
-    )
 )
-
-
 
 REM Проверка сжатия обоев рабочего стола
 reg query "HKCU\Control Panel\Desktop" /v "JPEGImportQuality" | find "0x100" >nul 2>&1 && (
@@ -1800,76 +1796,250 @@ echo.
 
 REM ASX-Power
 if "%AUTO_OPT1%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\ASX-Power.bat"
+    call :auto_ASX-Power
 )
 
 REM Cortana
 if "%AUTO_OPT2%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Cortana.bat"
+    call :auto_Cortana
 )
 
 REM StickyKeys
 if "%AUTO_OPT3%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\StickyKeys.bat"
+    call :auto_StickyKeys
 )
 
 REM Mouse
 if "%AUTO_OPT4%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Mouse.bat"
+    call :auto_Mouse
 )
 
 REM Wallpaper
 if "%AUTO_OPT5%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Wallpaper.bat"
+    call :auto_Wallpaper
 )
 
 REM GameBar
 if "%AUTO_OPT6%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\GameBar.bat"
+    call :auto_GameBar
 )
 
 REM ContextMenu
 if "%WinVer%"=="Windows 11" (
     if "%AUTO_OPT7%"=="%Yes-Icon%" (
-        call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\ContextMenu.bat"
+        call :auto_ContextMenu
     )
 )
 
 REM UAC
 if "%AUTO_OPT8%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\UAC.bat"
+    call :auto_UAC
 )
 
 REM SmartScreenNotification
 if "%AUTO_OPT9%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\SmartScreenNotification.bat"
+    call :auto_SmartScreenNotification
 )
 
 REM WindowsDefenderNotification
 if "%AUTO_OPT10%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\WindowsDefenderNotification.bat"
+    call :auto_WindowsDefenderNotification
 )
 
 REM Clipboard
 if "%AUTO_OPT11%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Clipboard.bat"
+    call :auto_Clipboard
 )
 
 REM Spectre, Meldown, DownFall
 if "%AUTO_OPT12%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\Spectre-Meldown-DownFall.bat"
+    call :auto_Spectre-Meldown-DownFall
 )
 
 REM MapAutoUpdate
 if "%AUTO_OPT13%"=="%Yes-Icon%" (
-    call "%ASX-Directory%\Files\Resources\FastOptimizeScripts\MapAutoUpdate.bat"
+    call :auto_MapAutoUpdate
 )
 
 echo.
 echo %COL%[92m Оптимизация завершена. Нажмите любую клавишу для возврата... %COL%[37m
 set "operation_name=Авто-оптимизация"
-call:Complete_notice
+set "history=FastOpimizePage;!history!" && call:Complete_notice
 goto FastOpimizePage
+
+:auto_ASX-Power
+echo Активация плана электропитания ASX-Power
+echo [INFO ] %TIME% - Активация плана электропитания ASX-Power >> "%ASX-Directory%\Files\Logs\%date%.txt"
+echo Активация плана электропитания ASX-Power
+  chcp 850 >nul 2>&1	
+  powercfg -restoredefaultschemes
+  chcp 65001 >nul 2>&1
+  curl -g -L -s -o "%temp%\ASX-Power.pow" "https://github.com/ALFiX01/ASX-Hub/raw/refs/heads/main/Files/PowerPlan/ASX-Power.pow"
+  if %errorlevel% equ 0 (
+      for %%A in ("%temp%\ASX-Power.pow") do (
+        if %%~zA gtr 6144 (
+          echo [INFO ] %TIME% - Установка плана электропитания ASX-Power прошла успешно >> "%ASX-Directory%\Files\Logs\%date%.txt"
+          echo Успешно
+          chcp 850 >nul 2>&1
+          powercfg /d 44444444-4444-4444-4444-444444444449 >nul 2>&1 
+          powercfg -import "%temp%\ASX-Power.pow" 44444444-4444-4444-4444-444444444449 >nul 2>&1 
+          powercfg -SETACTIVE "44444444-4444-4444-4444-444444444449" >nul 2>&1 
+          chcp 65001 >nul 2>&1
+          REM powercfg /changename 44444444-4444-4444-4444-444444444449 "ASX Power" "Оптимизировано для высокой частоты кадров и минимальной задержки." >nul 2>&1 
+          del "%temp%\ASX-Power.pow" >nul 2>&1
+        ) else (
+            echo [INFO ] %TIME% - Ошибка при установке плана электропитания ASX-Power >> "%ASX-Directory%\Files\Logs\%date%.txt"
+            echo Ошибка при установке плана электропитания ASX-Power %COL%[37m
+        )
+      )
+  ) else (
+      echo [ERROR] %TIME% - Ошибка при загрузке плана электропитания ASX-Power >> "%ASX-Directory%\Files\Logs\%date%.txt"
+      echo Ошибка: Загрузка файла плана электропитания ASX-Power не удалась. %COL%[37m
+  )
+goto :EOF
+
+:auto_Cortana
+echo  Отключение Cortana
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f >nul 2>&1
+:: Disable Cortana via Group Policy
+REG add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f >nul 2>&1
+
+:: Stop Cortana process
+taskkill /f /im Cortana.exe >nul 2>&1
+REM Переменная для хранения пути к папке с Cortana.exe
+set "cortana_path="
+
+:: Перебираем все папки внутри C:\Program Files\WindowsApps\
+for /d %%d in ("%ProgramFiles%\WindowsApps\*") do (
+    :: Проверяем, есть ли в текущей папке файл Cortana.exe
+    if exist "%%d\Cortana.exe" (
+        set "cortana_path=%%d"
+        :: Выводим путь к папке с Cortana.exe
+        echo [INFO ] %TIME% - Файл Cortana.exe найден в папке: !cortana_path! >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        :: Take ownership of the folder
+        takeown /f "!cortana_path!" /r /d y >nul 2>&1
+        icacls "!cortana_path!" /grant %username%:F /t >nul 2>&1
+        :: Удаляем папку
+        rmdir /s /q "!cortana_path!" >nul 2>&1
+        :: Проверяем, удалена ли папка
+        if exist "!cortana_path!" (
+            echo [ERROR] %TIME% - Папка !cortana_path! не была удалена. >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        ) else (
+            echo [INFO ] %TIME% - Папка !cortana_path! успешно удалена. >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        )
+    )
+)
+
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CanCortanaBeEnabled" /t REG_DWORD /d 0 /f >nul 2>&1
+    
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Preferences" /v "ModelDownloadAllowed" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCloudSearch" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowSearchToUseLocation" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "ConnectedSearchUseWeb" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "DisableWebSearch" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization" /v "RestrictImplicitInkCollection" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization" /v "RestrictImplicitTextCollection" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization\TrainedDataStore" /v "HarvestContacts" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings" /v "AcceptedPrivacyPolicy" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Windows Search" /v "CortanaConsent" /t REG_DWORD /d "0" /f >nul 2>&1
+
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "BingSearchEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "CortanaEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTaskbarMode" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowCortanaButton" /t REG_DWORD /d "0" /f >nul 2>&1
+taskkill /f /im explorer.exe >nul 2>&1
+start explorer.exe >nul 2>&1
+goto :EOF
+
+:auto_StickyKeys
+echo  Отключение залипания клавиш
+reg add "HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys" /v "Flags" /t REG_SZ /d "506" /f >nul 2>&1
+reg add "HKEY_CURRENT_USER\Control Panel\Accessibility\SoundSentry" /v "Flags" /t REG_SZ /d "0" /f >nul 2>&1
+reg add "HKCU\Control Panel\Accessibility\Keyboard Response" /v "DelayBeforeAcceptance" /t REG_SZ /d "0" /f >nul 2>&1
+reg add "HKCU\Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatRate" /t REG_SZ /d "0" /f >nul 2>&1
+reg add "HKCU\Control Panel\Accessibility\Keyboard Response" /v "AutoRepeatDelay" /t REG_SZ /d "0" /f >nul 2>&1
+reg add "HKCU\Control Panel\Accessibility\Keyboard Response" /v "Flags" /t REG_SZ /d "122" /f >nul 2>&1
+reg add "HKCU\Control Panel\Accessibility\ToggleKeys" /v "Flags" /t REG_SZ /d "58" /f >nul 2>&1
+goto :EOF
+
+:auto_Mouse
+echo  Отключение повышенной точности установки указателя мыши
+reg add "HKCU\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f >nul 2>&1
+reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "0" /f >nul 2>&1
+reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "0" /f >nul 2>&1
+goto :EOF
+
+:auto_Wallpaper
+echo  Отключение сжатия обоев...
+reg add "HKCU\Control Panel\Desktop" /v "JPEGImportQuality" /t REG_DWORD /d 256 /f >nul 2>&1
+goto :EOF
+
+:auto_GameBar
+echo  Отключение FSO и GameBar
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AutoGameModeEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "GamePanelStartupTipIndex" /t REG_DWORD /d "3" /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "UseNexusForGameBarEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" /v "AppCaptureEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
+reg delete "HKCU\System\GameConfigStore" /v "Win32_AutoGameModeDefaultProfile" /f >nul 2>&1
+reg delete "HKCU\System\GameConfigStore" /v "Win32_GameModeRelatedProcesses" /f >nul 2>&1
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_DSEBehavior" /t REG_DWORD /d "2" /f >nul 2>&1
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_DXGIHonorFSEWindowsCompatible" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_EFSEFeatureFlags" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_Enabled" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_FSEBehavior" /t REG_DWORD /d "2" /f >nul 2>&1
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_FSEBehaviorMode" /t REG_DWORD /d "2" /f >nul 2>&1
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_HonorUserFSEBehaviorMode" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v "AllowGameDVR" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR" /v "value" /t REG_DWORD /d "0" /f >nul 2>&1
+goto :EOF
+
+:auto_ContextMenu
+echo  Установка старого контекстного меню из Windows 10
+reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /ve /t REG_SZ /d "" /f >nul 2>&1
+taskkill /f /im explorer.exe
+start explorer.exe
+goto :EOF
+
+:auto_UAC
+echo  Отключение UAC
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "ConsentPromptBehaviorAdmin" /T REG_DWORD /d 0 >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "ConsentPromptBehaviorUser" /T REG_DWORD /d 3 >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "EnableInstallerDetection" /T REG_DWORD /d 1 >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "EnableLUA" /T REG_DWORD /d 1 >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "EnableVirtualization" /T REG_DWORD /d 1 >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "PromptOnSecureDesktop" /T REG_DWORD /d 0 >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "ValidateAdminCodeSignatures" /T REG_DWORD /d 0 >nul 2>&1
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /F /V "FilterAdministratorToken" /T REG_DWORD /d 0 >nul 2>&1
+
+goto :EOF
+
+:auto_SmartScreenNotification
+echo  Отключение уведомлений от Windows Defender
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender Security Center\Notifications" /F /V "DisableNotifications" /T REG_DWORD /d 1 >nul 2>&1
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications" /F /V "DisableNotifications" /T REG_DWORD /d 1 >nul 2>&1
+goto :EOF
+
+:auto_Clipboard
+echo  Включение журнала буфера обмена
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Clipboard" /v "EnableClipboardHistory" /t REG_DWORD /d 1 /f >nul 2>&1
+goto :EOF
+
+:auto_Spectre-Meldown-DownFall
+echo  Выключение Spectre, Meldown, DownFall
+Reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettings" /t REG_DWORD /d "1" /f >nul 2>&1
+Reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "33554432" /f >nul 2>&1
+Reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f >nul 2>&1
+goto :EOF
+
+:auto_MapAutoUpdate
+echo  Выключение Автообновления карт
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\Maps" /v "AutoUpdateEnabled" /t REG_DWORD /d 0 /f >nul 2>&1
+goto :EOF
 
 REM Exp_tweaks
 :Exp_tweaks_warn
@@ -3182,13 +3352,13 @@ call:Complete_notice
 goto GoBack
 
 :DisableWallpapercompression
-    echo [INFO ] %TIME% - Вызван ":DisableWallpapercompression" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+echo [INFO ] %TIME% - Вызван ":DisableWallpapercompression" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 if "%DWLC%" == "%COL%[92mВКЛ " (
     reg add "HKCU\Control Panel\Desktop" /v "JPEGImportQuality" /t REG_DWORD /d 256 /f >nul 2>&1
     set "operation_name=Отключение сжатия обоев"
 ) else (
     REM reg delete "HKCU\Control Panel\Desktop" /v "JPEGImportQuality" /f >nul 2>&1
-    reg add "HKCU\Control Panel\Desktop" /v "JPEGImportQuality" /t REG_DWORD /d %DFSettingValue% /f >nul 2>&1
+    reg add "HKCU\Control Panel\Desktop" /v "JPEGImportQuality" /t REG_DWORD /d 100 /f >nul 2>&1
     set "operation_name=Включение сжатия обоев"
 )
 REM Проверка сжатия обоев рабочего стола
@@ -6281,22 +6451,22 @@ echo.
 echo.
 echo.
 echo.
-echo                                            %COL%[92m___
-echo                                           %COL%[92m^|   ^| 
-echo                                           %COL%[92m^|   ^|                                                    %COL%[91m______
-echo                                           %COL%[92m^|   ^|                                              %COL%[91m_____^|______^|____
-echo                                         %COL%[92m__^|   ^|__                                           %COL%[91m^|_________________^|
-echo                                         %COL%[92m\       /              
-echo                                          %COL%[92m\     /                                            %COL%[91m^|  ^|           ^|  ^|
-echo                                           %COL%[92m\   /                                             %COL%[91m^|  ^|   ^|   ^|   ^|  ^|
-echo                                            %COL%[92m\_/                                              %COL%[91m^|  ^|   ^|   ^|   ^|  ^|
-echo                                                                                             %COL%[91m^|  ^|   ^|   ^|   ^|  ^|
-echo                                 %COL%[92m^|  ^|                 ^|  ^|                                   %COL%[91m^|  ^|           ^|  ^|
-echo                                 %COL%[92m^|  ^|_________________^|  ^|                                   %COL%[91m^|  ^|___________^|  ^| 
-echo                                 %COL%[92m^|_______________________^|                                   %COL%[91m^|_________________^|                                
+echo                                           %COL%[92m___
+echo                                          %COL%[92m^|   ^|                                                     %COL%[91m______
+echo                                          %COL%[92m^|   ^|                                              %COL%[91m______^|______^|_____
+echo                                          %COL%[92m^|   ^|                                             %COL%[91m^|___________________^|
+echo                                        %COL%[92m__^|   ^|__
+echo                                        %COL%[92m\       /                                           %COL%[91m^|  ^|             ^|  ^|
+echo                                         %COL%[92m\     /                                            %COL%[91m^|  ^|    ^|   ^|    ^|  ^|
+echo                                          %COL%[92m\   /                                             %COL%[91m^|  ^|    ^|   ^|    ^|  ^|
+echo                                           %COL%[92m\_/                                              %COL%[91m^|  ^|    ^|   ^|    ^|  ^|
+echo                                                                                            %COL%[91m^|  ^|    ^|   ^|    ^|  ^|
+echo                                %COL%[92m^|  ^|                 ^|  ^|                                   %COL%[91m^|  ^|             ^|  ^|
+echo                                %COL%[92m^|  ^|_________________^|  ^|                                   %COL%[91m^|  ^|_____________^|  ^| 
+echo                                %COL%[92m^|_______________________^|                                   %COL%[91m^|___________________^|                                
 echo.
-echo                                         %COL%[92mУстановка %COL%[37m                                               %COL%[91m Удаление%COL%[37m
-echo                                 _________________________                                   ___________________
+echo                                        %COL%[92mУстановка %COL%[37m                                                %COL%[91m Удаление%COL%[37m
+echo                                _________________________                                   _____________________
 echo.
 echo                                 %COL%[92m[%COL%[37m 1 %COL%[92m] %COL%[37mОсновные %COL%[37m                                             %COL%[91m[%COL%[37m 3 %COL%[91m] %COL%[37mВручную %COL%[37m
 echo                                 %COL%[92m[%COL%[37m 2 %COL%[92m] %COL%[37mРекомендованные %COL%[37m                                      %COL%[91m[%COL%[37m 4 %COL%[91m] %COL%[37mАвтоматически %COL%[37m
@@ -6484,9 +6654,9 @@ rem Если найдена хоть одна строка БЕЗ фразы, ER
 cscript //Nologo %windir%\system32\slmgr.vbs /dli 2>nul | findstr /I "имеет лицензию" >nul
 if %ERRORLEVEL%==0 (
     set WindowsActivated=Yes
-    echo %COL%[90m[ INFO  ]%COL%[37m %TIME% - Обнаружено: Windows активирована любой тип. >> "%ASX-Directory%\Files\Logs%date%.txt"
+    echo %COL%[90m[ INFO  ]%COL%[37m %TIME% - Обнаружено: Windows активирована любой тип. >> "%ASX-Directory%\Files\Logs\%date%.txt"
 ) else (
-    echo %COL%[90m[ INFO  ]%COL%[37m %TIME% - Обнаружено: Windows не активирована. >> "%ASX-Directory%\Files\Logs%date%.txt"
+    echo %COL%[90m[ INFO  ]%COL%[37m %TIME% - Обнаружено: Windows не активирована. >> "%ASX-Directory%\Files\Logs\%date%.txt"
 )
 
 REM Проверка NVIDIA App (поиск по ключевым словам)
@@ -6674,10 +6844,10 @@ if "%WindowsActivated%"=="No" (
     )
 )
 if /i "%choice%"=="%NvidiaAppChoice%" (
-    set "history=AppInstall_Recommendations;!history!" && goto NvidiaApp
+    set "history=AppInstall_Recommendations;!history!" && goto Nvidia-App
 )
 if /i "%choice%"=="%NVBroadcastChoice%" (
-    set "history=AppInstall_Recommendations;!history!" && goto NVBroadcast
+    set "history=AppInstall_Recommendations;!history!" && goto NVIDIA-Broadcast
 )
 if /i "%choice%"=="%AMDAdrenalinChoice%" (
     set "history=AppInstall_Recommendations;!history!" && goto AMDAdrenalin
@@ -6969,7 +7139,7 @@ if /i "%choice%"=="D1" (
         echo [INFO ] %TIME% - %ListfileName% добавлен в список загрузок >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
         set "history=AppInstall_PG1;!history!"
-        call:NvidiaApp
+        call:Nvidia_App
         echo [INFO ] %TIME% - Вызвано NvidiaApp для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"	
     )
 )
@@ -6982,7 +7152,7 @@ if /i "%choice%"=="D2" (
         echo [INFO ] %TIME% - %ListfileName% добавлен в список загрузок >> "%ASX-Directory%\Files\Logs\%date%.txt"
     ) else (
         set "history=AppInstall_PG1;!history!"
-        call:NVIDIA_Broadcast
+        call:NVIDIA-Broadcast
         echo [INFO ] %TIME% - Вызвано NVIDIA_Broadcast для установки >> "%ASX-Directory%\Files\Logs\%date%.txt"	
     )
 )
@@ -8302,7 +8472,7 @@ IF EXIST "%FilePatch%" (
 )
 goto GoBack
 
-:NvidiaApp
+:Nvidia-App
 call :ASX_Hub_Downloads_Title
 set "FileName=NVIDIA_app.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
@@ -8325,7 +8495,7 @@ IF EXIST "%FilePatch%" (
 )
 goto GoBack
 
-:NVIDIA_Broadcast
+:NVIDIA-Broadcast
 call :ASX_Hub_Downloads_Title
 set "FileName=NVIDIA_Broadcast.exe"
 set "FilePatch=%ASX-Directory%\Files\Downloads\%FileName%"
@@ -13714,9 +13884,9 @@ echo         %COL%[36m3.%COL%[37m На панель Оптимизации и н
 echo         %COL%[36m4.%COL%[37m На панель кастомизации добавлен пункт "Серый цвет выделеной области".
 echo         %COL%[36m5.%COL%[37m На панель служб добавлены пункты "Службы обновления Windows" "Служба отслеживания местоположения"
 echo            "Запись хронологии действий в Windows".
-echo         %COL%[36m6.%COL%[37m Улучшение алгоритма изменения состояния Служб диагностики.
-echo         %COL%[36m7.%COL%[37m Исправлены обнаруженные баги, ошибки, недочёты.
-echo.
+echo         %COL%[36m6.%COL%[37m Переписаны алгоритмы Быстрой настройки windows.
+echo         %COL%[36m7.%COL%[37m Улучшен алгоритм изменения состояния Служб диагностики.
+echo         %COL%[36m8.%COL%[37m Исправлены многочисленно обнаруженные баги, ошибки, недочёты.
 echo.
 echo.
 echo.
