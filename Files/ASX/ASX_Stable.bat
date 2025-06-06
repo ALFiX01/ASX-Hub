@@ -104,13 +104,13 @@ echo 📌 Запуск ASX Hub >> "!ASX-Directory!\Files\Logs\%date%.txt"
 
 REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
-set "Version=1.6.0"
-set "FullVersionNameCurrent=1.6.0"
+set "Version=1.6.1"
+set "FullVersionNameCurrent=1.6.1"
 set "VersionNumberCurrent=MA25S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=25.05.2025"
+set "DateUpdate=06.06.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -352,7 +352,7 @@ REM проверка наличия EXE 👇
 if not exist "%ASX-Directory%\ASX Hub.exe" (
 	title Загрузка отсутствующих компонентов...
     echo [INFO ] %TIME% - Загрузка отсутствующего компонента ASX Hub.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
-	curl -g -L -# -o "%ASX-Directory%\ASX Hub.exe" "https://github.com/ALFiX01/ASX-Hub/releases/latest/download/ASX.Hub.exe" >nul 2>&1
+	curl -g -L -# -o "%ASX-Directory%\ASX Hub.exe" "https://github.com/ALFiX01/ASX-Hub/releases/latest/download/ASX-Hub.exe" >nul 2>&1
 	if errorlevel 1 (
 		echo [ERROR] %TIME% - Ошибка при загрузке ASX Hub.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
 		set /a error_on_setup+=1
@@ -984,7 +984,7 @@ REM проверка наличия EXE
 if "%WiFi%" == "On" (
     if not exist "%ASX-Directory%\ASX Hub.exe" (
         echo [WARN ] %TIME% - Файл "ASX Hub.exe" отсутствует >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        curl -g -L -# -o "%ASX-Directory%\ASX Hub.exe" "https://github.com/ALFiX01/ASX-Hub/releases/latest/download/ASX.Hub.exe" >nul 2>&1
+        curl -g -L -# -o "%ASX-Directory%\ASX Hub.exe" "https://github.com/ALFiX01/ASX-Hub/releases/latest/download/ASX-Hub.exe" >nul 2>&1
         if errorlevel 1 (
             echo [ERROR] %TIME% - Ошибка при загрузке ASX Hub.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
             set /a "error_on_loading_3+=1"
