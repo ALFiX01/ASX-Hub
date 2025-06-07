@@ -1,0 +1,29 @@
+# Остановка OneDrive, если запущен
+taskkill /f /im OneDrive.exe
+
+# Удаление OneDrive для 64-битной системы
+$onedrive64 = "$env:SYSTEMROOT\System32\OneDriveSetup.exe"
+if (Test-Path $onedrive64) {
+    Start-Process $onedrive64 -ArgumentList "/uninstall" -Wait
+}
+
+# Удаление OneDrive для 32-битной системы (если вдруг)
+$onedrive32 = "$env:SYSTEMROOT\SysWOW64\OneDriveSetup.exe"
+if (Test-Path $onedrive32) {
+    Start-Process $onedrive32 -ArgumentList "/uninstall" -Wait
+}
+
+# Удаление оставшихся папок
+Remove-Item "$env:USERPROFILE\OneDrive" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item "$env:LOCALAPPDATA\Microsoft\OneDrive" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item "$env:PROGRAMDATA\Microsoft OneDrive" -Recurse -Force -ErrorAction SilentlyContinue
+
+# Очистка записей в реестре (опционально)
+Remove-Item -Path "HKCU:\Software\Microsoft\OneDrive" -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Recurse -Force -ErrorAction SilentlyContinue
+
+# Удаление ярлыка из Проводника
+New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Force | Out-Null
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -PropertyType DWord -Value 1 -Force | Out-Null
+
+Write-Host "`n✅ OneDrive полностью удалён."
