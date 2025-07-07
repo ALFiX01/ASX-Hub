@@ -26,7 +26,7 @@
 ::ZQ0/vhVqMQ3MEVWAtB9wSA==
 ::Zg8zqx1/OA3MEVWAtB9wSA==
 ::dhA7pRFwIByZRRnk
-::Zh4grVQjdCyDJGyX8VAjFD9VQg2LMFeeCbYJ5e31+/m7hUQJfPc9RK7o4vmmNeIvzEzocIUR90lipOo/NFtwaxDlaxcxyQ==
+::Zh4grVQjdCyDJGyX8VAjFD9VQg2LMFeeCbYJ5e31+/m7hUQJfPc9RK7o4vmmNeIv7krnZqoM5UIXsN4OQh5Ae3I=
 ::YB416Ek+ZW8=
 ::
 ::
@@ -40,9 +40,8 @@
 :: Запуск от имени администратора
 net session >nul 2>&1
 if %errorlevel% neq 0 (
-    echo Requesting administrative privileges...
-    REM start "" /wait /I /min powershell -NoProfile -Command "Start-Process -FilePath '%~s0' -Verb RunAs"
-    powershell -Command "Start-Process 'cmd.exe' -ArgumentList '/c \"\"%~f0\" admin\"' -Verb RunAs"
+    echo  Requesting administrator privileges...
+    powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs -ArgumentList '--elevated'" >nul 2>&1
     exit /b
 )
 
@@ -60,7 +59,7 @@ if /I "%WinLang%" NEQ "ru-RU" (
 mode con: cols=146 lines=45 >nul 2>&1
 chcp 65001 >nul 2>&1
 
-setlocal EnableDelayedExpansion
+setlocal EnableDelayedExpansion 
 
 title Подготовка [0/3]
 
@@ -104,13 +103,13 @@ echo 📌 Запуск ASX Hub >> "!ASX-Directory!\Files\Logs\%date%.txt"
 
 REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
-set "Version=1.6.1"
-set "FullVersionNameCurrent=1.6.1"
-set "VersionNumberCurrent=MA25S1"
+set "Version=1.7.0"
+set "FullVersionNameCurrent=1.7.0"
+set "VersionNumberCurrent=YL07S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=06.06.2025"
+set "DateUpdate=07.07.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -135,6 +134,7 @@ set "L_EnableLUA=1"
 set "L_EnableSecureUIAPaths=1"
 set "L_FilterAdministratorToken=0"
 set "L_PromptOnSecureDesktop=0"
+set "L_ValidateAdminCodeSignatures=0"
 
 REM Путь к реестру UAC
 set "UAC_HKLM=HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
@@ -149,6 +149,7 @@ for %%i in (
     EnableSecureUIAPaths
     FilterAdministratorToken
     PromptOnSecureDesktop
+    ValidateAdminCodeSignatures
 ) do (
     for /f "tokens=3" %%a in ('reg query "%UAC_HKLM%" /v "%%i" 2^>nul ^| find /i "%%i"') do (
         REM Удаляем префикс "0x" из текущего значения
@@ -348,7 +349,6 @@ if not exist "%ASX-Directory%\Uninst.exe" (
 )
 
 REM проверка наличия EXE 👇
-
 if not exist "%ASX-Directory%\ASX Hub.exe" (
 	title Загрузка отсутствующих компонентов...
     echo [INFO ] %TIME% - Загрузка отсутствующего компонента ASX Hub.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
@@ -463,15 +463,11 @@ Title Первоначальная настройка ASX Hub [4/5]
 
 chcp 850 >nul 2>&1
 powershell -Command "$s = (New-Object -ComObject WScript.Shell).CreateShortcut('%userprofile%\Desktop\ASX Hub.lnk'); $s.TargetPath = '%ASX-Directory%\ASX Hub.exe'; $s.Save()" >nul
-chcp 65001 >nul 2>&1
 
-chcp 850 >nul 2>&1
 powershell -Command "$s = (New-Object -ComObject WScript.Shell).CreateShortcut('%SystemDrive%\Windows\ASX Hub.lnk'); $s.TargetPath = '%ASX-Directory%\ASX Hub.exe'; $s.WorkingDirectory = '%ASX-Directory%'; $s.Save()"
 powershell -Command "$s = (New-Object -ComObject WScript.Shell).CreateShortcut('%SystemDrive%\Windows\ASX.lnk'); $s.TargetPath = '%ASX-Directory%\ASX Hub.exe'; $s.WorkingDirectory = '%ASX-Directory%'; $s.Save()"
 powershell -Command "$s = (New-Object -ComObject WScript.Shell).CreateShortcut('%SystemDrive%\Windows\ASX-dir.lnk'); $s.TargetPath = '%ASX-Directory%'; $s.WorkingDirectory = '%ASX-Directory%'; $s.Save()"
-chcp 65001 >nul 2>&1
 
-chcp 850 >nul 2>&1
 powershell -Command "$s = (New-Object -ComObject WScript.Shell).CreateShortcut([Environment]::GetFolderPath('Desktop') + '\ASX Hub.lnk'); $s.TargetPath = '%ASX-Directory%\ASX Hub.exe'; $s.Save()"
 chcp 65001 >nul 2>&1
 
@@ -486,7 +482,6 @@ reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\AS
 reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\ASX Hub" /v "URLInfoAbout" /t REG_SZ /d "https://github.com/ALFiX01/ASX-Hub" /f >nul 2>&1
 reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\ASX Hub" /v "HelpLink" /t REG_SZ /d "https://discord.gg/MreKhdN2Ns" /f >nul 2>&1
 reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\ASX Hub" /v "Contact" /t REG_SZ /d "https://discord.gg/MreKhdN2Ns" /f >nul 2>&1
-
 
 Title Первоначальная настройка ASX Hub [5/5]
 
@@ -1720,7 +1715,6 @@ cls
 
 echo.
 echo.
-echo.
 echo                                            %COL%[90m:::      ::::::::  :::    :::          :::    ::: :::    ::: :::::::::
 echo                                         :+: :+:   :+:    :+: :+:    :+:          :+:    :+: :+:    :+: :+:    :+:
 echo                                       +:+   +:+  +:+         +:+  +:+           +:+    +:+ +:+    +:+ +:+    +:+
@@ -1734,21 +1728,22 @@ echo.
 echo.
 echo  %COL%[37mТекущее состояние оптимизации %COL%[94m%OptimizationLevel%%COL%[37m:
 echo.
-echo   1. %COL%[94m[%AUTO_OPT1%%COL%[94m]%COL%[37m План электропитания ASX: %COL%[90m[Текущий статус: %ASXPW%%COL%[90m]%COL%[37m
-echo   2. %COL%[94m[%AUTO_OPT2%%COL%[94m]%COL%[37m Cortana: %COL%[37m%COL%[90m[Текущий статус: %DSCR%%COL%[90m]%COL%[37m
-echo   3. %COL%[94m[%AUTO_OPT3%%COL%[94m]%COL%[37m Залипание клавиш: %COL%[37m%COL%[90m[Текущий статус: %DSKN%%COL%[90m]%COL%[37m
+echo   1. %COL%[94m[%AUTO_OPT1%%COL%[94m]%COL%[37m План электропитания ASX: %COL%[90m[Сейчас: %ASXPW%%COL%[90m]%COL%[37m
+echo   2. %COL%[94m[%AUTO_OPT2%%COL%[94m]%COL%[37m Cortana: %COL%[37m%COL%[90m[Сейчас: %DSCR%%COL%[90m]%COL%[37m
+echo   3. %COL%[94m[%AUTO_OPT3%%COL%[94m]%COL%[37m Залипание клавиш: %COL%[37m%COL%[90m[Сейчас: %DSKN%%COL%[90m]%COL%[37m
 
-echo   4. %COL%[94m[%AUTO_OPT4%%COL%[94m]%COL%[37m Повышенная точность установки указателя мыши: %COL%[90m[Текущий статус: %MOAC%%COL%[90m]%COL%[37m
+echo   4. %COL%[94m[%AUTO_OPT4%%COL%[94m]%COL%[37m Повышенная точность установки указателя мыши: %COL%[90m[Сейчас: %MOAC%%COL%[90m]%COL%[37m
 
-echo   5. %COL%[94m[%AUTO_OPT5%%COL%[94m]%COL%[37m Сжатия обоев рабочего стола: %COL%[90m[Текущий статус: %DWLC%%COL%[90m]%COL%[37m
-echo   6. %COL%[94m[%AUTO_OPT6%%COL%[94m]%COL%[37m FSO и GameBar: %COL%[90m[Текущий статус: %FSOOF%%COL%[90m]%COL%[37m
-echo   7. %COL%[94m[%AUTO_OPT7%%COL%[94m]%COL%[37m Контекстное меню win10: %COL%[90m[Текущий статус: %OldContMenuWindows%%COL%[90m]%COL%[37m
-echo   8. %COL%[94m[%AUTO_OPT8%%COL%[94m]%COL%[37m Контроль учётных записей пользователей ^(UAC^): %COL%[90m[Текущий статус: %UACS%%COL%[90m]%COL%[37m
-echo   9. %COL%[94m[%AUTO_OPT9%%COL%[94m]%COL%[37m Уведомления о запуске приложений: %COL%[90m[Текущий статус: %APSN%%COL%[90m]%COL%[37m
-echo  10. %COL%[94m[%AUTO_OPT10%%COL%[94m]%COL%[37m Уведомлений Windows Defender: %COL%[90m[Текущий статус: %WDNT%%COL%[90m]%COL%[37m
-echo  11. %COL%[94m[%AUTO_OPT11%%COL%[94m]%COL%[37m Журнал буфера обмена: %COL%[90m[Текущий статус: %ECHR%%COL%[90m]%COL%[37m
-echo  12. %COL%[94m[%AUTO_OPT12%%COL%[94m]%COL%[37m Spectre, Meldown, DownFall: %COL%[90m[Текущий статус: %SMTSX%%COL%[90m]%COL%[37m
-echo  13. %COL%[94m[%AUTO_OPT13%%COL%[94m]%COL%[37m Автообновление карт: %COL%[90m[Текущий статус: %AUMS%%COL%[90m]%COL%[37m
+echo   5. %COL%[94m[%AUTO_OPT5%%COL%[94m]%COL%[37m Сжатия обоев рабочего стола: %COL%[90m[Сейчас: %DWLC%%COL%[90m]%COL%[37m
+echo   6. %COL%[94m[%AUTO_OPT6%%COL%[94m]%COL%[37m FSO и GameBar: %COL%[90m[Сейчас: %FSOOF%%COL%[90m]%COL%[37m
+echo   7. %COL%[94m[%AUTO_OPT7%%COL%[94m]%COL%[37m Контекстное меню win10: %COL%[90m[Сейчас: %OldContMenuWindows%%COL%[90m]%COL%[37m
+echo   8. %COL%[94m[%AUTO_OPT8%%COL%[94m]%COL%[37m Контроль учётных записей пользователей ^(UAC^): %COL%[90m[Сейчас: %UACS%%COL%[90m]%COL%[37m
+echo   9. %COL%[94m[%AUTO_OPT9%%COL%[94m]%COL%[37m Уведомления о запуске приложений: %COL%[90m[Сейчас: %APSN%%COL%[90m]%COL%[37m
+echo  10. %COL%[94m[%AUTO_OPT10%%COL%[94m]%COL%[37m Уведомлений Windows Defender: %COL%[90m[Сейчас: %WDNT%%COL%[90m]%COL%[37m
+echo  11. %COL%[94m[%AUTO_OPT11%%COL%[94m]%COL%[37m Журнал буфера обмена: %COL%[90m[Сейчас: %ECHR%%COL%[90m]%COL%[37m
+echo  12. %COL%[94m[%AUTO_OPT12%%COL%[94m]%COL%[37m Spectre, Meldown, DownFall: %COL%[90m[Сейчас: %SMTSX%%COL%[90m]%COL%[37m
+echo  13. %COL%[94m[%AUTO_OPT13%%COL%[94m]%COL%[37m Автообновление карт: %COL%[90m[Сейчас: %AUMS%%COL%[90m]%COL%[37m
+echo.
 echo.
 echo.
 echo.
@@ -2016,12 +2011,19 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\S
 goto :EOF
 
 :auto_SmartScreenNotification
-echo  Отключение уведомлений от Windows Defender
+echo  Отключение уведомлений о запуске приложений
 reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
 reg add "HKLM\SOFTWARE\Microsoft\Windows Defender Security Center\Notifications" /F /V "DisableNotifications" /T REG_DWORD /d 1 >nul 2>&1
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" /F /V "Enabled" /T REG_DWORD /d 0 >nul 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications" /F /V "DisableNotifications" /T REG_DWORD /d 1 >nul 2>&1
+goto :EOF
+
+:auto_WindowsDefenderNotification
+echo  Отключение уведомлений от Windows Defender
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Security" /F /V "DisableSecuritySettingsCheck" /T REG_DWORD /d 1 >nul 2>&1
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Associations" /v LowRiskFileTypes /t REG_SZ /d ".exe;.bat;.cmd;.reg;.vbs;.msi;.msp;.com;.ps1;.ps2;.cpl" /f >nul 2>&1
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3" /F /V "1806" /T REG_DWORD /d 0 >nul 2>&1
 goto :EOF
 
 :auto_Clipboard
@@ -2351,7 +2353,16 @@ REM echo [DEBUG] %TIME% - If_First_call >> "%ASX-Directory%\Files\Logs\%date%.tx
     reg query "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "HubsSidebarEnabled" | findstr /i "0x0" >nul 2>&1 && set "CPLT=%COL%[92mВКЛ "
 
     REM Проверка установки виджетов Windows - WebExperience
-    reg query "%SaveData%\ParameterFunction" /v "WidgetUninstall" >nul 2>&1 && set "WTUL=%COL%[92mВКЛ " >nul 2>&1
+    reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages" /f "MicrosoftWindows.Client.WebExperience" >nul 2>&1 && set "WTUL=%COL%[92mВКЛ " >nul 2>&1
+    
+    reg query "HKCU\Control Panel\Sound" /v "EnableSystemSounds" 2>nul | find "0x1" >nul
+    if !errorlevel! == 0 (
+        set "sound_status=Включены"
+        set "WSND=%COL%[92mВКЛ "
+    ) else (
+        set "sound_status=Отключены"
+        set "WSND=%COL%[91mВЫКЛ"
+    )
 
 	REM Определение типа видеокарты
 	for /f "tokens=2 delims==" %%a in ('wmic path Win32_VideoController get VideoProcessor /value') do (
@@ -2379,7 +2390,7 @@ call:Optimization-checker
 :If_First_call_false
 TITLE Оптимизация и настройка - ASX Hub
 echo.
-echo                                                                     %COL%[90m[%COL%[96m1 %COL%[90m/ 1%COL%[90m]
+echo                                                                     %COL%[90m[%COL%[96m1 %COL%[90m/ 2%COL%[90m]
 echo.
 echo          %COL%[36mОптимизация и настройка
 echo          %COL%[97m-----------------------%COL%[37m
@@ -2419,7 +2430,7 @@ echo          28 %COL%[36m[%COL%[37m %COL%[91mБЛОК %COL%[36m]%COL%[37m Из�
 )
 echo          29 %COL%[36m[%COL%[37m %AUMS% %COL%[36m]%COL%[37m Автообновление карт
 echo          30 %COL%[36m[%COL%[37m %AUSA% %COL%[36m]%COL%[37m Автообновление приложений магазина
-echo          31 %COL%[36m[%COL%[37m %BTEB% %COL%[36m]%COL%[37m Ускорение Microsoft Edge и фоновая работы браузера
+echo          31 %COL%[36m[%COL%[37m %BTEB% %COL%[36m]%COL%[37m Ускорение Microsoft Edge и фоновая работа браузера
 echo          32 %COL%[36m[%COL%[37m %RECL% %COL%[36m]%COL%[37m Удалить Recall
 echo          33 %COL%[36m[%COL%[37m %CPLT% %COL%[36m]%COL%[37m Удалить Copilot
 echo          34 %COL%[36m[%COL%[37m %WTUL% %COL%[36m]%COL%[37m Удалить виджеты
@@ -2482,8 +2493,8 @@ if /i "%choice%"=="и" goto GoBack
 if /i "%choice%"=="R" goto OptimizationCenterPG1
 if /i "%choice%"=="к" goto OptimizationCenterPG1
 
-REM if /i "%choice%"=="N" ( set "history=OptimizationCenterPG1;!history!" && goto OptimizationCenterPG2 )
-REM if /i "%choice%"=="т" ( set "history=OptimizationCenterPG1;!history!" && goto OptimizationCenterPG2 )
+if /i "%choice%"=="N" ( set "history=OptimizationCenterPG1;!history!" && goto OptimizationCenterPG2 )
+if /i "%choice%"=="т" ( set "history=OptimizationCenterPG1;!history!" && goto OptimizationCenterPG2 )
 REM if /i "%choice%"=="NoInput" goto WrongInput
 call:WrongInput
 goto OptimizationCenterPG1
@@ -2502,7 +2513,7 @@ echo                                                                     %COL%[9
 echo.
 echo          %COL%[36mОптимизация и настройка
 echo          %COL%[97m-----------------------%COL%[37m
-echo           1 %COL%[36m[%COL%[37m %TEST% %COL%[36m]%COL%[37m TEST              
+echo           1 %COL%[36m[%COL%[37m %WSND% %COL%[36m]%COL%[37m Системные звуки windows
 echo.
 echo.
 echo.
@@ -2545,7 +2556,7 @@ set "choice="
 set /p choice="%DEL%                                                                      >: "
 
 if not defined choice cls && goto OptimizationCenterPG2
-if /i "%choice%"=="1" ( set "history=OptimizationCenterPG2;!history!" && goto test )
+if /i "%choice%"=="1" ( set "history=OptimizationCenterPG2;!history!" && Call:WindowsSounds )
 
 REM if /i "%choice%"=="N" goto OptimizationCenterPG2PG2
 if /i "%choice%"=="C" ( set "history=OptimizationCenterPG2;!history!" && goto ASX_CMD )
@@ -3762,75 +3773,6 @@ set "errorlevel=%errorlevel_a%"
 call:Complete_notice
 goto GoBack
 
-:WidgetUninstall
-echo [INFO ] %TIME% - Вызван ":WidgetUninstall" >> "%ASX-Directory%\Files\Logs\%date%.txt"
-if "%WTUL%" == "%COL%[91mВЫКЛ" (
-    chcp 850 >nul 2>&1
-    rem Удаление DesktopPackageMetadata
-    powershell -Command "Get-AppxPackage *DesktopPackageMetadata* | Remove-AppxPackage" >nul 2>&1
-
-    rem Удаление Мини-приложений Windows (Windows Widgets)
-    powershell -Command "Get-AppxPackage *MicrosoftWindows.Client.WebExperience* | Remove-AppxPackage" >nul 2>&1
-
-    rem Удаление среды выполнения, предназначенной для работы с виджетами (widgets)
-    powershell -Command "Get-AppxPackage *Microsoft.WidgetsPlatformRuntime* | Remove-AppxPackage" >nul 2>&1
-
-    rem Удаление WebExperience
-    PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage *WebExperience* | Remove-AppxPackage" >nul 2>&1
-
-    rem Удаление WidgetServicePackage
-    powershell -Command "Get-AppxPackage *WidgetServicePackage* | Remove-AppxPackage" >nul 2>&1
-
-    chcp 65001 >nul 2>&1
-    reg add "%SaveData%\ParameterFunction" /v "WidgetUninstall" /f >nul 2>&1
-
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v "AllowNewsAndInterests" /t "REG_DWORD" /d "0" /f >nul 2>&1
-
-    rem Деактивация приложение Microsoft Windows Client Web Experience
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy" /f >nul 2>&1
-
-    rem Отключение виджетов на панели задач
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarDa" /t REG_DWORD /d 0 /f >nul 2>&1
-    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowTaskViewButton" /t REG_DWORD /d 0 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests" /v "value" /t REG_DWORD /d 0 /f >nul 2>&1
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" /v "EnableFeeds" /t REG_DWORD /d 0 /f >nul 2>&1
-
-    REM Переменная для хранения пути к папке с Widgets.dll
-    set "widgets_path="
-
-:: Перебираем все папки внутри C:\Program Files\WindowsApps\
-for /d %%d in ("%ProgramFiles%\WindowsApps\*") do (
-    :: Проверяем, есть ли в текущей папке файл Widgets.dll
-    if exist "%%d\Widgets.dll" (
-        set "widgets_path=%%d"
-        :: Выводим путь к папке с Widgets.dll
-        echo [INFO ] %TIME% - Файл Widgets.dll найден в папке: !widgets_path! >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        :: Take ownership of the folder
-        takeown /f "!widgets_path!" /r /d y >nul 2>&1
-        icacls "!widgets_path!" /grant %username%:F /t >nul 2>&1
-        :: Удаляем папку
-        rmdir /s /q "!widgets_path!" >nul 2>&1
-        :: Проверяем, удалена ли папка
-        if exist "!widgets_path!" (
-            echo [ERROR] %TIME% - Папка !widgets_path! не была удалена. >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        ) else (
-            echo [INFO ] %TIME% - Папка !widgets_path! успешно удалена. >> "%ASX-Directory%\Files\Logs\%date%.txt"
-        )
-    )
-)
-
-    set "operation_name=Удаление виджетов"
-) else (
-    set "operation_name=Виджеты Windows уже деактивированы в системе")
-REM Проверка установки виджетов Windows - WebExperience
-set "WTUL=%COL%[91mВЫКЛ" >nul 2>&1
-set "errorlevel_a=%errorlevel%"
-reg query "%SaveData%\ParameterFunction" /v "WidgetUninstall" >nul 2>&1 && set "WTUL=%COL%[92mВКЛ " >nul 2>&1
-set "errorlevel=%errorlevel_a%"
-call:Complete_notice
-goto GoBack
-
-
 :ClipboardHistory
 echo [INFO ] %TIME% - Вызван ":ClipboardHistory" >> "%ASX-Directory%\Files\Logs\%date%.txt"
 if "%ECHR%" == "%COL%[91mВЫКЛ" (
@@ -3969,6 +3911,107 @@ set "errorlevel_a=%errorlevel%"
 REM Copilot
 reg query "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v "IsUserEligible" | findstr /i "0x0" >nul 2>&1 && set "CPLT=%COL%[92mВКЛ "
 reg query "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "HubsSidebarEnabled" | findstr /i "0x0" >nul 2>&1 && set "CPLT=%COL%[92mВКЛ "
+set "errorlevel=%errorlevel_a%"
+call:Complete_notice
+goto GoBack
+
+:WidgetUninstall
+echo [INFO ] %TIME% - Вызван ":WidgetUninstall" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+if "%WTUL%" == "%COL%[91mВЫКЛ" (
+
+:: --------------Remove "Widgets" from taskbar---------------
+    chcp 850 >nul 2>&1
+    PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'; $data =  '0'; reg add 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' /v 'TaskbarDa' /t 'REG_DWORD' /d "^""$data"^"" /f" >nul 2>&1
+    PowerShell -ExecutionPolicy Unrestricted -Command "$message = 'This script will not take effect until you restart explorer.exe. You can restart explorer.exe by restarting your computer or by running following on command prompt: `taskkill /f /im explorer.exe & start explorer`.'; $warn =  $false; if ($warn) { Write-Warning "^""$message"^""; } else { Write-Host "^""Note: "^"" -ForegroundColor Blue -NoNewLine; Write-Output "^""$message"^""; }" >nul 2>&1
+    chcp 65001 >nul 2>&1
+    :: --Remove "Windows Web Experience Pack" (breaks Widgets)---
+    chcp 850 >nul 2>&1
+    PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'MicrosoftWindows.Client.WebExperience' | Remove-AppxPackage"
+    PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+    chcp 65001 >nul 2>&1
+
+    rem Удаление DesktopPackageMetadata
+    powershell -Command "Get-AppxPackage *DesktopPackageMetadata* | Remove-AppxPackage" >nul 2>&1
+
+    rem Удаление среды выполнения, предназначенной для работы с виджетами (widgets)
+    powershell -Command "Get-AppxPackage *Microsoft.WidgetsPlatformRuntime* | Remove-AppxPackage" >nul 2>&1
+
+    rem Удаление WidgetServicePackage
+    powershell -Command "Get-AppxPackage *WidgetServicePackage* | Remove-AppxPackage" >nul 2>&1
+
+    chcp 65001 >nul 2>&1
+    reg add "%SaveData%\ParameterFunction" /v "WidgetUninstall" /f >nul 2>&1
+
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v "AllowNewsAndInterests" /t "REG_DWORD" /d "0" /f >nul 2>&1
+
+    rem Деактивация приложение Microsoft Windows Client Web Experience
+    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy" /f >nul 2>&1
+
+    rem Отключение виджетов на панели задач
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarDa" /t REG_DWORD /d 0 /f >nul 2>&1
+    reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowTaskViewButton" /t REG_DWORD /d 0 /f >nul 2>&1
+    reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests" /v "value" /t REG_DWORD /d 0 /f >nul 2>&1
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" /v "EnableFeeds" /t REG_DWORD /d 0 /f >nul 2>&1
+
+    REM Переменная для хранения пути к папке с Widgets.dll
+    set "widgets_path="
+
+:: Перебираем все папки внутри C:\Program Files\WindowsApps\
+for /d %%d in ("%ProgramFiles%\WindowsApps\*") do (
+    :: Проверяем, есть ли в текущей папке файл Widgets.dll
+    if exist "%%d\Widgets.dll" (
+        set "widgets_path=%%d"
+        :: Выводим путь к папке с Widgets.dll
+        echo [INFO ] %TIME% - Файл Widgets.dll найден в папке: !widgets_path! >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        :: Take ownership of the folder
+        takeown /f "!widgets_path!" /r /d y >nul 2>&1
+        icacls "!widgets_path!" /grant %username%:F /t >nul 2>&1
+        :: Удаляем папку
+        rmdir /s /q "!widgets_path!" >nul 2>&1
+        :: Проверяем, удалена ли папка
+        if exist "!widgets_path!" (
+            echo [ERROR] %TIME% - Папка !widgets_path! не была удалена. >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        ) else (
+            echo [INFO ] %TIME% - Папка !widgets_path! успешно удалена. >> "%ASX-Directory%\Files\Logs\%date%.txt"
+        )
+    )
+)
+
+    set "operation_name=Удаление виджетов"
+) else (
+    set "operation_name=Виджеты Windows уже деактивированы в системе")
+REM Проверка установки виджетов Windows - WebExperience
+set "WTUL=%COL%[91mВЫКЛ" >nul 2>&1
+set "errorlevel_a=%errorlevel%"
+reg query "%SaveData%\ParameterFunction" /v "WidgetUninstall" >nul 2>&1 && set "WTUL=%COL%[92mВКЛ " >nul 2>&1
+set "errorlevel=%errorlevel_a%"
+call:Complete_notice
+goto GoBack
+
+:WindowsSounds
+echo [INFO ] %TIME% - Вызван ":WindowsSounds" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+if "%WSND%" == "%COL%[92mВКЛ " (
+    reg add "HKCU\AppEvents\Schemes" /ve /d ".None" /f >nul
+    reg add "HKCU\Control Panel\Sound" /v "Beep" /d "no" /f >nul
+    reg add "HKCU\Control Panel\Sound" /v "ExtendedSounds" /d "no" /f >nul
+    reg add "HKCU\Control Panel\Sound" /v "EnableSystemSounds" /t REG_DWORD /d 0 /f >nul
+    reg add "HKCU\AppEvents\EventLabels\WindowsLogon" /v "ExcludeFromCPL" /t REG_DWORD /d 1 /f >nul
+    set "operation_name=Отключение системных звуков Windows"
+) else (
+    reg add "HKCU\AppEvents\Schemes" /ve /d ".Default" /f >nul
+    reg add "HKCU\Control Panel\Sound" /v "Beep" /d "yes" /f >nul
+    reg add "HKCU\Control Panel\Sound" /v "ExtendedSounds" /d "yes" /f >nul
+    reg add "HKCU\Control Panel\Sound" /v "EnableSystemSounds" /t REG_DWORD /d 1 /f >nul
+    reg add "HKCU\AppEvents\EventLabels\WindowsLogon" /v "ExcludeFromCPL" /t REG_DWORD /d 0 /f >nul
+    set "operation_name=Включение системных звуков Windows"
+)
+taskkill /f /im explorer.exe >nul 2>&1
+start explorer.exe >nul
+REM Проверка системных звуков Windows
+set "WSND=%COL%[91mВЫКЛ"
+set "errorlevel_a=%errorlevel%"
+reg query "HKCU\Control Panel\Sound" /v "EnableSystemSounds" 2>nul | find "0x1" >nul
+if !errorlevel! == 0 ( set "WSND=%COL%[92mВКЛ " )
 set "errorlevel=%errorlevel_a%"
 call:Complete_notice
 goto GoBack
@@ -4128,8 +4171,8 @@ echo [INFO ] %TIME% - Начало проверки настроек конфи�
 
 REM Проверка значений
 for %%i in (ADOFF DOMAC SPYMD ASSC) do ( set "%%i=%COL%[91mВЫКЛ")
-for %%i in (DLEGT CWINT DATAS) do ( set "%%i=%COL%[90mН/Д ")
-for %%i in (ADOFF SYWND TELEN NVTEL APPDA STATU INPAD LOGUS LOCOF FEEDB SPECH MONSY EXPRT WINLO) do ( set "%%i=%COL%[92mВКЛ ")
+for %%i in (CWINT DATAS) do ( set "%%i=%COL%[90mН/Д ")
+for %%i in (ADOFF SYWND TELEN NVTEL APPDA STATU INPAD LOGUS LOCOF FEEDB SPECH MONSY EXPRT WINLO DLEGT) do ( set "%%i=%COL%[92mВКЛ ")
 
 
 ( 
@@ -4146,8 +4189,7 @@ REM Телеметрия NVIDIA
 reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NvTelemetryContainer" /v "Start" | find "0x4" >nul 2>&1 && set "NVTEL=%COL%[91mВЫКЛ"
 
 REM Телеметрия Edge
-reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge" /v "DiagnosticData" | find "0x0" >nul 2>&1 && set "DLEGT=%COL%[92mВКЛ "
-
+reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge" /v "DiagnosticData" | find "0x0" >nul 2>&1 && set "DLEGT=%COL%[91mВЫКЛ"
 
 REM Сбор данных через события планировщика
 reg query "%SaveData%\ParameterFunction" /v "SchedulerEventData" && set "DATAS=%COL%[92mВКЛ "
@@ -6321,46 +6363,67 @@ if not exist "%ASX-Directory%\Files\Resources\BrowsingHistory\BrowsingHistoryVie
 echo  %COL%[37mЭкспортирую данные...
 "%ASX-Directory%\Files\Resources\BrowsingHistory\BrowsingHistoryView.exe" /scomma "%ASX-Directory%\Files\Resources\BrowsingHistory\BrowserHistory.txt"
 
-timeout /t 3 >nul
+timeout /t 2 >nul
 
 set "file=%ASX-Directory%\Files\Resources\BrowsingHistory\BrowserHistory.txt"
 
-REM Ключевые слова по категориям
-set "Categories=Movies Games Tweaker Social"
-set "Movies=movie film cinema netflix hulu kino youtube vod disney amazonprime hbo kinopoisk ivi okko сериал фильм кино мультфильм трейлер"
-set "Games=pubg csgo rust fortnite minecraft steam epic roblox dota lol valorant cyberpunk genshin overwatch warzone игровой гейминг геймер игра"
-set "Tweaker=msconfig regedit sysinternals processhacker autoruns overclock tuning tweak sdi snappy latencymon reshade radeon msi afterburner nvidia driver booster оптимизация настройка производительность разгон утилита"
-set "Social=facebook instagram twitter tiktok telegram discord whatsapp vkontakte odnoklassniki соцсеть чат мессенджер"
+REM Прокачанные категории и ключевые слова
+set "Categories=Movies Games Tweaker Social Shopping News Work Education"
+set "Movies=movie film cinema netflix hulu kino youtube vod disney amazonprime hbo kinopoisk ivi okko сериал фильм кино мультфильм трейлер animation anime amedia lostfilm"
+set "Games=pubg csgo rust fortnite minecraft steam epic roblox dota lol valorant cyberpunk genshin overwatch warzone игровой гейминг геймер игра playstation xbox nintendo blizzard riot ubisoft battlenet origin gog"
+set "Tweaker=msconfig regedit sysinternals processhacker autoruns overclock tuning tweak sdi snappy latencymon reshade radeon msi afterburner nvidia driver booster оптимизация настройка производительность разгон утилита tweakui process explorer"
+set "Social=facebook instagram twitter tiktok telegram discord whatsapp vkontakte odnoklassniki соцсеть чат мессенджер reddit snapchat linkedin messenger skype zoom teams"
+set "Shopping=aliexpress ozon wildberries amazon ebay lamoda sbermarket яндексмаркет маркет покупка магазин shopping купон скидка promo"
+set "News=bbc cnn reuters lenta gazeta news новости издание журнал times bloomberg forbes meduza"
+set "Work=office outlook teams slack jira trello notion monday github gitlab bitbucket zoom meet work работа проект task задача"
+set "Education=edx coursera stepik udemy skillbox geekbrains университет школа лекция учеба обучение learn study курс курс лекции"
 
 REM Очистка старых данных
 reg delete "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\User_Interests_test" /f >nul 2>&1
-echo  Запускаю анализ...
+echo  Запускаю продвинутый анализ...
 echo.
+
+setlocal enabledelayedexpansion
 set "interestIndex=1"
 
+REM Считаем общее количество строк для нормализации уверенности
+for /f %%A in ('find /c /v "" "%file%"') do set "totalLines=%%A"
+
+REM Для каждой категории считаем количество уникальных совпавших ключевых слов и общий счет
 for %%C in (%Categories%) do (
     set "categoryName=%%C"
     set "keywords=!%%C!"
     set "keywordCount=0"
+    set "uniqueHits="
+    set "totalHits=0"
 
     for %%W in (!keywords!) do (
-        findstr /i /c:"%%W" "!file!" >nul 2>&1
+        findstr /i /c:"%%W" "%file%" >nul 2>&1
         if !errorlevel! equ 0 (
-            set /a keywordCount+=1
-            REM echo ✓ Found keyword "%%W" for category !categoryName! (Count: !keywordCount!)
+            echo !uniqueHits! | findstr /i /c:"%%W;" >nul 2>&1 || (
+                set /a keywordCount+=1
+                set "uniqueHits=!uniqueHits!%%W;"
+            )
+            REM Считаем общее количество вхождений ключа
+            for /f %%H in ('findstr /i /c:"%%W" "%file%" ^| find /c /v ""') do (
+                set /a totalHits+=%%H
+            )
         )
     )
 
+    REM Динамический порог: если найдено хотя бы 3 уникальных ключа или более 10 общих совпадений
     if !keywordCount! geq 5 (
+        set "confidence=!keywordCount! уникальных, !totalHits! совпадений"
         reg add "HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data\User_Interests_test" /v User_Interests!interestIndex! /t REG_SZ /d !categoryName! /f >nul
         if !errorlevel! equ 0 (
-            echo  %COL%[92mОбнаружен интерес к категории !categoryName! ^(Уверенность: !keywordCount!^) %COL%[37m
+            echo  %COL%[92mОбнаружен интерес к категории !categoryName! ^(Уверенность: !confidence!^) %COL%[37m
             set /a interestIndex+=1
         ) else (
             echo  %COL%[91mОшибка записи категории !categoryName! в реестр %COL%[37m
         )
     )
 )
+
 echo.
 echo  Завершено
 echo.
@@ -6381,10 +6444,10 @@ echo 2. Восстановить драйверы из резервной коп
 echo.
 set /p choice="Введите номер действия: "
 
-if "%choice%"=="1" goto CreateBackup
-if "%choice%"=="2" goto RestoreBackup
-if "%choice%"=="B" goto GoBack
-if "%choice%"=="и" goto GoBack
+if /I "%choice%"=="1" goto CreateBackup
+if /I "%choice%"=="2" goto RestoreBackup
+if /I "%choice%"=="B" goto GoBack
+if /I "%choice%"=="и" goto GoBack
 goto Driver_copy
 
 :CreateBackup
@@ -6569,45 +6632,224 @@ cls
 TITLE Автоматическое удаление лишних приложений Microsoft - ASX Hub
 echo.
 echo  Идет процесс удаления лишних программ от Microsoft
-chcp 850 >nul 2>&1
-PowerShell -Command "Get-AppxPackage -allusers *3DBuilder* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *bing* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *bingfinance* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *bingsports* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *BingWeather* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage *Microsoft.OneConnect* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage *Microsoft.MSPaint* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage *Microsoft.MicrosoftStickyNotes* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage *soundrecorder* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage *Microsoft.MixedReality.Portal* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage *Microsoft.Microsoft3DViewer* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "get-appxpackage *feedback* | remove-appxpackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
 
-PowerShell -Command "Get-AppxPackage -allusers *CommsPhone* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *Microsoft.Messaging* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *MicrosoftOfficeHub* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *Office.OneNote* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *OneNote* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *people* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *SkypeApp* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *solit* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *Sway* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *WindowsPhone* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *WindowsMaps* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *WindowsFeedbackHub* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
-PowerShell -Command "Get-AppxPackage -allusers *WindowsSoundRecorder* | Remove-AppxPackage" >> "%ASX-Directory%\Files\Logs\DeleteMicrosoftApps-%date%.txt"
+:: -----------------Remove "MSN Weather" app-----------------
+echo --- Remove "MSN Weather" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.BingWeather' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.BingWeather_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
 chcp 65001 >nul 2>&1
 
-if exist "%ASX-Directory%\Files\Resources\Scripts\Delete_MicrosoftOffice.ps1" (
-    powershell -NoProfile -ExecutionPolicy Bypass -File "%ASX-Directory%\Files\Resources\Scripts\Delete_MicrosoftOffice.ps1"
-) else (
-    echo [ERROR] %TIME% - Скрипт '%ASX-Directory%\Files\Resources\Scripts\Delete_MicrosoftOffice.ps1' не существует >> "%ASX-Directory%\Files\Logs\%date%.txt"
-)
+:: -----------------Remove "MSN Sports" app------------------
+echo --- Remove "MSN Sports" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.BingSports' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.BingSports_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ---------------Remove "Microsoft News" app----------------
+echo --- Remove "Microsoft News" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.BingNews' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.BingNews_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ------------------Remove "MSN Money" app------------------
+echo --- Remove "MSN Money" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.BingFinance' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.BingFinance_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: --------------Remove insecure "Print 3D" app--------------
+echo --- Remove insecure "Print 3D" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.Print3D' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Print3D_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+PowerShell -ExecutionPolicy Unrestricted -Command "$pathGlobPattern = "^""%SYSTEMROOT%\SystemApps\Windows.Print3D_cw5n1h2txyewy\*"^""; $expandedPath = [System.Environment]::ExpandEnvironmentVariables($pathGlobPattern); Write-Host "^""Searching for items matching pattern: `"^""$($expandedPath)`"^""."^""; $renamedCount   = 0; $skippedCount   = 0; $failedCount    = 0; Add-Type -TypeDefinition "^""using System;`r`nusing System.Runtime.InteropServices;`r`npublic class Privileges {`r`n    [DllImport(`"^""advapi32.dll`"^"", ExactSpelling = true, SetLastError = true)]`r`n    internal static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall,`r`n        ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);`r`n    [DllImport(`"^""advapi32.dll`"^"", ExactSpelling = true, SetLastError = true)]`r`n    internal static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr phtok);`r`n    [DllImport(`"^""advapi32.dll`"^"", SetLastError = true)]`r`n    internal static extern bool LookupPrivilegeValue(string host, string name, ref long pluid);`r`n    [StructLayout(LayoutKind.Sequential, Pack = 1)]`r`n    internal struct TokPriv1Luid {`r`n        public int Count;`r`n        public long Luid;`r`n        public int Attr;`r`n    }`r`n    internal const int SE_PRIVILEGE_ENABLED = 0x00000002;`r`n    internal const int TOKEN_QUERY = 0x00000008;`r`n    internal const int TOKEN_ADJUST_PRIVILEGES = 0x00000020;`r`n    public static bool AddPrivilege(string privilege) {`r`n        try {`r`n            bool retVal;`r`n            TokPriv1Luid tp;`r`n            IntPtr hproc = GetCurrentProcess();`r`n            IntPtr htok = IntPtr.Zero;`r`n            retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);`r`n            tp.Count = 1;`r`n            tp.Luid = 0;`r`n            tp.Attr = SE_PRIVILEGE_ENABLED;`r`n            retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);`r`n            retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);`r`n            return retVal;`r`n        } catch (Exception ex) {`r`n            throw new Exception(`"^""Failed to adjust token privileges`"^"", ex);`r`n        }`r`n    }`r`n    public static bool RemovePrivilege(string privilege) {`r`n        try {`r`n            bool retVal;`r`n            TokPriv1Luid tp;`r`n            IntPtr hproc = GetCurrentProcess();`r`n            IntPtr htok = IntPtr.Zero;`r`n            retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);`r`n            tp.Count = 1;`r`n            tp.Luid = 0;`r`n            tp.Attr = 0;  // This line is changed to revoke the privilege`r`n            retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);`r`n            retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);`r`n            return retVal;`r`n        } catch (Exception ex) {`r`n            throw new Exception(`"^""Failed to adjust token privileges`"^"", ex);`r`n        }`r`n    }`r`n    [DllImport(`"^""kernel32.dll`"^"", CharSet = CharSet.Auto)]`r`n    public static extern IntPtr GetCurrentProcess();`r`n}"^""; [Privileges]::AddPrivilege('SeRestorePrivilege') | Out-Null; [Privileges]::AddPrivilege('SeTakeOwnershipPrivilege') | Out-Null; $adminSid = New-Object System.Security.Principal.SecurityIdentifier 'S-1-5-32-544'; $adminAccount = $adminSid.Translate([System.Security.Principal.NTAccount]); $adminFullControlAccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule( $adminAccount, [System.Security.AccessControl.FileSystemRights]::FullControl, [System.Security.AccessControl.AccessControlType]::Allow ); $foundAbsolutePaths = @(); Write-Host 'Iterating files and directories recursively.'; try { $foundAbsolutePaths += @(; Get-ChildItem -Path $expandedPath -Force -Recurse -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; try { $foundAbsolutePaths += @(; Get-Item -Path $expandedPath -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; $foundAbsolutePaths = $foundAbsolutePaths | Select-Object -Unique | Sort-Object -Property { $_.Length } -Descending; if (!$foundAbsolutePaths) { Write-Host 'Skipping, no items available.'; exit 0; }; Write-Host "^""Initiating processing of $($foundAbsolutePaths.Count) items from `"^""$expandedPath`"^""."^""; foreach ($path in $foundAbsolutePaths) { if (Test-Path -Path $path -PathType Container) { Write-Host "^""Skipping folder (not its contents): `"^""$path`"^""."^""; $skippedCount++; continue; }; if($revert -eq $true) { if (-not $path.EndsWith('.OLD')) { Write-Host "^""Skipping non-backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; } else { if ($path.EndsWith('.OLD')) { Write-Host "^""Skipping backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; }; $originalFilePath = $path; Write-Host "^""Processing file: `"^""$originalFilePath`"^""."^""; if (-Not (Test-Path $originalFilePath)) { Write-Host "^""Skipping, file `"^""$originalFilePath`"^"" not found."^""; $skippedCount++; exit 0; }; $originalAcl = Get-Acl -Path "^""$originalFilePath"^""; $accessGranted = $false; try { $acl = Get-Acl -Path "^""$originalFilePath"^""; $acl.SetOwner($adminAccount) <# Take Ownership (because file is owned by TrustedInstaller) #>; $acl.AddAccessRule($adminFullControlAccessRule) <# Grant rights to be able to move the file #>; Set-Acl -Path $originalFilePath -AclObject $acl -ErrorAction Stop; $accessGranted = $true; } catch { Write-Warning "^""Failed to grant access to `"^""$originalFilePath`"^"": $($_.Exception.Message)"^""; }; if ($revert -eq $true) { $newFilePath = $originalFilePath.Substring(0, $originalFilePath.Length - 4); } else { $newFilePath = "^""$($originalFilePath).OLD"^""; }; try { Move-Item -LiteralPath "^""$($originalFilePath)"^"" -Destination "^""$newFilePath"^"" -Force -ErrorAction Stop; Write-Host "^""Successfully processed `"^""$originalFilePath`"^""."^""; $renamedCount++; if ($accessGranted) { try { Set-Acl -Path $newFilePath -AclObject $originalAcl -ErrorAction Stop; } catch { Write-Warning "^""Failed to restore access on `"^""$newFilePath`"^"": $($_.Exception.Message)"^""; }; }; } catch { Write-Error "^""Failed to rename `"^""$originalFilePath`"^"" to `"^""$newFilePath`"^"": $($_.Exception.Message)"^""; $failedCount++; if ($accessGranted) { try { Set-Acl -Path $originalFilePath -AclObject $originalAcl -ErrorAction Stop; } catch { Write-Warning "^""Failed to restore access on `"^""$originalFilePath`"^"": $($_.Exception.Message)"^""; }; }; }; }; if (($renamedCount -gt 0) -or ($skippedCount -gt 0)) { Write-Host "^""Successfully processed $renamedCount items and skipped $skippedCount items."^""; }; if ($failedCount -gt 0) { Write-Warning "^""Failed to process $($failedCount) items."^""; }; [Privileges]::RemovePrivilege('SeRestorePrivilege') | Out-Null; [Privileges]::RemovePrivilege('SeTakeOwnershipPrivilege') | Out-Null"
+PowerShell -ExecutionPolicy Unrestricted -Command "$pathGlobPattern = "^""%SYSTEMROOT%\$(("^""Windows.Print3D"^"" -Split '\.')[-1])\*"^""; $expandedPath = [System.Environment]::ExpandEnvironmentVariables($pathGlobPattern); Write-Host "^""Searching for items matching pattern: `"^""$($expandedPath)`"^""."^""; $renamedCount   = 0; $skippedCount   = 0; $failedCount    = 0; Add-Type -TypeDefinition "^""using System;`r`nusing System.Runtime.InteropServices;`r`npublic class Privileges {`r`n    [DllImport(`"^""advapi32.dll`"^"", ExactSpelling = true, SetLastError = true)]`r`n    internal static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall,`r`n        ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);`r`n    [DllImport(`"^""advapi32.dll`"^"", ExactSpelling = true, SetLastError = true)]`r`n    internal static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr phtok);`r`n    [DllImport(`"^""advapi32.dll`"^"", SetLastError = true)]`r`n    internal static extern bool LookupPrivilegeValue(string host, string name, ref long pluid);`r`n    [StructLayout(LayoutKind.Sequential, Pack = 1)]`r`n    internal struct TokPriv1Luid {`r`n        public int Count;`r`n        public long Luid;`r`n        public int Attr;`r`n    }`r`n    internal const int SE_PRIVILEGE_ENABLED = 0x00000002;`r`n    internal const int TOKEN_QUERY = 0x00000008;`r`n    internal const int TOKEN_ADJUST_PRIVILEGES = 0x00000020;`r`n    public static bool AddPrivilege(string privilege) {`r`n        try {`r`n            bool retVal;`r`n            TokPriv1Luid tp;`r`n            IntPtr hproc = GetCurrentProcess();`r`n            IntPtr htok = IntPtr.Zero;`r`n            retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);`r`n            tp.Count = 1;`r`n            tp.Luid = 0;`r`n            tp.Attr = SE_PRIVILEGE_ENABLED;`r`n            retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);`r`n            retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);`r`n            return retVal;`r`n        } catch (Exception ex) {`r`n            throw new Exception(`"^""Failed to adjust token privileges`"^"", ex);`r`n        }`r`n    }`r`n    public static bool RemovePrivilege(string privilege) {`r`n        try {`r`n            bool retVal;`r`n            TokPriv1Luid tp;`r`n            IntPtr hproc = GetCurrentProcess();`r`n            IntPtr htok = IntPtr.Zero;`r`n            retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);`r`n            tp.Count = 1;`r`n            tp.Luid = 0;`r`n            tp.Attr = 0;  // This line is changed to revoke the privilege`r`n            retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);`r`n            retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);`r`n            return retVal;`r`n        } catch (Exception ex) {`r`n            throw new Exception(`"^""Failed to adjust token privileges`"^"", ex);`r`n        }`r`n    }`r`n    [DllImport(`"^""kernel32.dll`"^"", CharSet = CharSet.Auto)]`r`n    public static extern IntPtr GetCurrentProcess();`r`n}"^""; [Privileges]::AddPrivilege('SeRestorePrivilege') | Out-Null; [Privileges]::AddPrivilege('SeTakeOwnershipPrivilege') | Out-Null; $adminSid = New-Object System.Security.Principal.SecurityIdentifier 'S-1-5-32-544'; $adminAccount = $adminSid.Translate([System.Security.Principal.NTAccount]); $adminFullControlAccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule( $adminAccount, [System.Security.AccessControl.FileSystemRights]::FullControl, [System.Security.AccessControl.AccessControlType]::Allow ); $foundAbsolutePaths = @(); Write-Host 'Iterating files and directories recursively.'; try { $foundAbsolutePaths += @(; Get-ChildItem -Path $expandedPath -Force -Recurse -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; try { $foundAbsolutePaths += @(; Get-Item -Path $expandedPath -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; $foundAbsolutePaths = $foundAbsolutePaths | Select-Object -Unique | Sort-Object -Property { $_.Length } -Descending; if (!$foundAbsolutePaths) { Write-Host 'Skipping, no items available.'; exit 0; }; Write-Host "^""Initiating processing of $($foundAbsolutePaths.Count) items from `"^""$expandedPath`"^""."^""; foreach ($path in $foundAbsolutePaths) { if (Test-Path -Path $path -PathType Container) { Write-Host "^""Skipping folder (not its contents): `"^""$path`"^""."^""; $skippedCount++; continue; }; if($revert -eq $true) { if (-not $path.EndsWith('.OLD')) { Write-Host "^""Skipping non-backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; } else { if ($path.EndsWith('.OLD')) { Write-Host "^""Skipping backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; }; $originalFilePath = $path; Write-Host "^""Processing file: `"^""$originalFilePath`"^""."^""; if (-Not (Test-Path $originalFilePath)) { Write-Host "^""Skipping, file `"^""$originalFilePath`"^"" not found."^""; $skippedCount++; exit 0; }; $originalAcl = Get-Acl -Path "^""$originalFilePath"^""; $accessGranted = $false; try { $acl = Get-Acl -Path "^""$originalFilePath"^""; $acl.SetOwner($adminAccount) <# Take Ownership (because file is owned by TrustedInstaller) #>; $acl.AddAccessRule($adminFullControlAccessRule) <# Grant rights to be able to move the file #>; Set-Acl -Path $originalFilePath -AclObject $acl -ErrorAction Stop; $accessGranted = $true; } catch { Write-Warning "^""Failed to grant access to `"^""$originalFilePath`"^"": $($_.Exception.Message)"^""; }; if ($revert -eq $true) { $newFilePath = $originalFilePath.Substring(0, $originalFilePath.Length - 4); } else { $newFilePath = "^""$($originalFilePath).OLD"^""; }; try { Move-Item -LiteralPath "^""$($originalFilePath)"^"" -Destination "^""$newFilePath"^"" -Force -ErrorAction Stop; Write-Host "^""Successfully processed `"^""$originalFilePath`"^""."^""; $renamedCount++; if ($accessGranted) { try { Set-Acl -Path $newFilePath -AclObject $originalAcl -ErrorAction Stop; } catch { Write-Warning "^""Failed to restore access on `"^""$newFilePath`"^"": $($_.Exception.Message)"^""; }; }; } catch { Write-Error "^""Failed to rename `"^""$originalFilePath`"^"" to `"^""$newFilePath`"^"": $($_.Exception.Message)"^""; $failedCount++; if ($accessGranted) { try { Set-Acl -Path $originalFilePath -AclObject $originalAcl -ErrorAction Stop; } catch { Write-Warning "^""Failed to restore access on `"^""$originalFilePath`"^"": $($_.Exception.Message)"^""; }; }; }; }; if (($renamedCount -gt 0) -or ($skippedCount -gt 0)) { Write-Host "^""Successfully processed $renamedCount items and skipped $skippedCount items."^""; }; if ($failedCount -gt 0) { Write-Warning "^""Failed to process $($failedCount) items."^""; }; [Privileges]::RemovePrivilege('SeRestorePrivilege') | Out-Null; [Privileges]::RemovePrivilege('SeTakeOwnershipPrivilege') | Out-Null"
+PowerShell -ExecutionPolicy Unrestricted -Command "$pathGlobPattern = "^""%SYSTEMDRIVE%\Program Files\WindowsApps\Windows.Print3D_*_cw5n1h2txyewy\*"^""; $expandedPath = [System.Environment]::ExpandEnvironmentVariables($pathGlobPattern); Write-Host "^""Searching for items matching pattern: `"^""$($expandedPath)`"^""."^""; $renamedCount   = 0; $skippedCount   = 0; $failedCount    = 0; Add-Type -TypeDefinition "^""using System;`r`nusing System.Runtime.InteropServices;`r`npublic class Privileges {`r`n    [DllImport(`"^""advapi32.dll`"^"", ExactSpelling = true, SetLastError = true)]`r`n    internal static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall,`r`n        ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);`r`n    [DllImport(`"^""advapi32.dll`"^"", ExactSpelling = true, SetLastError = true)]`r`n    internal static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr phtok);`r`n    [DllImport(`"^""advapi32.dll`"^"", SetLastError = true)]`r`n    internal static extern bool LookupPrivilegeValue(string host, string name, ref long pluid);`r`n    [StructLayout(LayoutKind.Sequential, Pack = 1)]`r`n    internal struct TokPriv1Luid {`r`n        public int Count;`r`n        public long Luid;`r`n        public int Attr;`r`n    }`r`n    internal const int SE_PRIVILEGE_ENABLED = 0x00000002;`r`n    internal const int TOKEN_QUERY = 0x00000008;`r`n    internal const int TOKEN_ADJUST_PRIVILEGES = 0x00000020;`r`n    public static bool AddPrivilege(string privilege) {`r`n        try {`r`n            bool retVal;`r`n            TokPriv1Luid tp;`r`n            IntPtr hproc = GetCurrentProcess();`r`n            IntPtr htok = IntPtr.Zero;`r`n            retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);`r`n            tp.Count = 1;`r`n            tp.Luid = 0;`r`n            tp.Attr = SE_PRIVILEGE_ENABLED;`r`n            retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);`r`n            retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);`r`n            return retVal;`r`n        } catch (Exception ex) {`r`n            throw new Exception(`"^""Failed to adjust token privileges`"^"", ex);`r`n        }`r`n    }`r`n    public static bool RemovePrivilege(string privilege) {`r`n        try {`r`n            bool retVal;`r`n            TokPriv1Luid tp;`r`n            IntPtr hproc = GetCurrentProcess();`r`n            IntPtr htok = IntPtr.Zero;`r`n            retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);`r`n            tp.Count = 1;`r`n            tp.Luid = 0;`r`n            tp.Attr = 0;  // This line is changed to revoke the privilege`r`n            retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);`r`n            retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);`r`n            return retVal;`r`n        } catch (Exception ex) {`r`n            throw new Exception(`"^""Failed to adjust token privileges`"^"", ex);`r`n        }`r`n    }`r`n    [DllImport(`"^""kernel32.dll`"^"", CharSet = CharSet.Auto)]`r`n    public static extern IntPtr GetCurrentProcess();`r`n}"^""; [Privileges]::AddPrivilege('SeRestorePrivilege') | Out-Null; [Privileges]::AddPrivilege('SeTakeOwnershipPrivilege') | Out-Null; $adminSid = New-Object System.Security.Principal.SecurityIdentifier 'S-1-5-32-544'; $adminAccount = $adminSid.Translate([System.Security.Principal.NTAccount]); $adminFullControlAccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule( $adminAccount, [System.Security.AccessControl.FileSystemRights]::FullControl, [System.Security.AccessControl.AccessControlType]::Allow ); $foundAbsolutePaths = @(); Write-Host 'Iterating files and directories recursively.'; try { $foundAbsolutePaths += @(; Get-ChildItem -Path $expandedPath -Force -Recurse -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; try { $foundAbsolutePaths += @(; Get-Item -Path $expandedPath -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; $foundAbsolutePaths = $foundAbsolutePaths | Select-Object -Unique | Sort-Object -Property { $_.Length } -Descending; if (!$foundAbsolutePaths) { Write-Host 'Skipping, no items available.'; exit 0; }; Write-Host "^""Initiating processing of $($foundAbsolutePaths.Count) items from `"^""$expandedPath`"^""."^""; foreach ($path in $foundAbsolutePaths) { if (Test-Path -Path $path -PathType Container) { Write-Host "^""Skipping folder (not its contents): `"^""$path`"^""."^""; $skippedCount++; continue; }; if($revert -eq $true) { if (-not $path.EndsWith('.OLD')) { Write-Host "^""Skipping non-backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; } else { if ($path.EndsWith('.OLD')) { Write-Host "^""Skipping backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; }; $originalFilePath = $path; Write-Host "^""Processing file: `"^""$originalFilePath`"^""."^""; if (-Not (Test-Path $originalFilePath)) { Write-Host "^""Skipping, file `"^""$originalFilePath`"^"" not found."^""; $skippedCount++; exit 0; }; $originalAcl = Get-Acl -Path "^""$originalFilePath"^""; $accessGranted = $false; try { $acl = Get-Acl -Path "^""$originalFilePath"^""; $acl.SetOwner($adminAccount) <# Take Ownership (because file is owned by TrustedInstaller) #>; $acl.AddAccessRule($adminFullControlAccessRule) <# Grant rights to be able to move the file #>; Set-Acl -Path $originalFilePath -AclObject $acl -ErrorAction Stop; $accessGranted = $true; } catch { Write-Warning "^""Failed to grant access to `"^""$originalFilePath`"^"": $($_.Exception.Message)"^""; }; if ($revert -eq $true) { $newFilePath = $originalFilePath.Substring(0, $originalFilePath.Length - 4); } else { $newFilePath = "^""$($originalFilePath).OLD"^""; }; try { Move-Item -LiteralPath "^""$($originalFilePath)"^"" -Destination "^""$newFilePath"^"" -Force -ErrorAction Stop; Write-Host "^""Successfully processed `"^""$originalFilePath`"^""."^""; $renamedCount++; if ($accessGranted) { try { Set-Acl -Path $newFilePath -AclObject $originalAcl -ErrorAction Stop; } catch { Write-Warning "^""Failed to restore access on `"^""$newFilePath`"^"": $($_.Exception.Message)"^""; }; }; } catch { Write-Error "^""Failed to rename `"^""$originalFilePath`"^"" to `"^""$newFilePath`"^"": $($_.Exception.Message)"^""; $failedCount++; if ($accessGranted) { try { Set-Acl -Path $originalFilePath -AclObject $originalAcl -ErrorAction Stop; } catch { Write-Warning "^""Failed to restore access on `"^""$originalFilePath`"^"": $($_.Exception.Message)"^""; }; }; }; }; if (($renamedCount -gt 0) -or ($skippedCount -gt 0)) { Write-Host "^""Successfully processed $renamedCount items and skipped $skippedCount items."^""; }; if ($failedCount -gt 0) { Write-Warning "^""Failed to process $($failedCount) items."^""; }; [Privileges]::RemovePrivilege('SeRestorePrivilege') | Out-Null; [Privileges]::RemovePrivilege('SeTakeOwnershipPrivilege') | Out-Null"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\EndOfLife\$CURRENT_USER_SID\Windows.Print3D_cw5n1h2txyewy'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; $userSid = (New-Object System.Security.Principal.NTAccount($env:USERNAME)).Translate([Security.Principal.SecurityIdentifier]).Value; $registryPath = $registryPath.Replace('$CURRENT_USER_SID', $userSid); if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Windows.Print3D' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Windows.Print3D_cw5n1h2txyewy'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\EndOfLife\$CURRENT_USER_SID\Windows.Print3D_cw5n1h2txyewy'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; $userSid = (New-Object System.Security.Principal.NTAccount($env:USERNAME)).Translate([Security.Principal.SecurityIdentifier]).Value; $registryPath = $registryPath.Replace('$CURRENT_USER_SID', $userSid); Write-Host "^""Removing registry key at `"^""$registryPath`"^""."^""; if (-not (Test-Path -LiteralPath $registryPath)) { Write-Host "^""Skipping, no action needed, registry key `"^""$registryPath`"^"" does not exist."^""; exit 0; }; try { Remove-Item -LiteralPath $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully removed the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to remove the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+PowerShell -ExecutionPolicy Unrestricted -Command "$pathGlobPattern = "^""%LOCALAPPDATA%\Packages\Windows.Print3D_cw5n1h2txyewy\*"^""; $expandedPath = [System.Environment]::ExpandEnvironmentVariables($pathGlobPattern); Write-Host "^""Searching for items matching pattern: `"^""$($expandedPath)`"^""."^""; $renamedCount   = 0; $skippedCount   = 0; $failedCount    = 0; $foundAbsolutePaths = @(); Write-Host 'Iterating files and directories recursively.'; try { $foundAbsolutePaths += @(; Get-ChildItem -Path $expandedPath -Force -Recurse -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; try { $foundAbsolutePaths += @(; Get-Item -Path $expandedPath -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; $foundAbsolutePaths = $foundAbsolutePaths | Select-Object -Unique | Sort-Object -Property { $_.Length } -Descending; if (!$foundAbsolutePaths) { Write-Host 'Skipping, no items available.'; exit 0; }; Write-Host "^""Initiating processing of $($foundAbsolutePaths.Count) items from `"^""$expandedPath`"^""."^""; foreach ($path in $foundAbsolutePaths) { if (Test-Path -Path $path -PathType Container) { Write-Host "^""Skipping folder (not its contents): `"^""$path`"^""."^""; $skippedCount++; continue; }; if($revert -eq $true) { if (-not $path.EndsWith('.OLD')) { Write-Host "^""Skipping non-backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; } else { if ($path.EndsWith('.OLD')) { Write-Host "^""Skipping backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; }; $originalFilePath = $path; Write-Host "^""Processing file: `"^""$originalFilePath`"^""."^""; if (-Not (Test-Path $originalFilePath)) { Write-Host "^""Skipping, file `"^""$originalFilePath`"^"" not found."^""; $skippedCount++; exit 0; }; if ($revert -eq $true) { $newFilePath = $originalFilePath.Substring(0, $originalFilePath.Length - 4); } else { $newFilePath = "^""$($originalFilePath).OLD"^""; }; try { Move-Item -LiteralPath "^""$($originalFilePath)"^"" -Destination "^""$newFilePath"^"" -Force -ErrorAction Stop; Write-Host "^""Successfully processed `"^""$originalFilePath`"^""."^""; $renamedCount++; } catch { Write-Error "^""Failed to rename `"^""$originalFilePath`"^"" to `"^""$newFilePath`"^"": $($_.Exception.Message)"^""; $failedCount++; }; }; if (($renamedCount -gt 0) -or ($skippedCount -gt 0)) { Write-Host "^""Successfully processed $renamedCount items and skipped $skippedCount items."^""; }; if ($failedCount -gt 0) { Write-Warning "^""Failed to process $($failedCount) items."^""; }"
+PowerShell -ExecutionPolicy Unrestricted -Command "$pathGlobPattern = "^""%PROGRAMDATA%\Microsoft\Windows\AppRepository\Packages\Windows.Print3D_*_cw5n1h2txyewy\*"^""; $expandedPath = [System.Environment]::ExpandEnvironmentVariables($pathGlobPattern); Write-Host "^""Searching for items matching pattern: `"^""$($expandedPath)`"^""."^""; $renamedCount   = 0; $skippedCount   = 0; $failedCount    = 0; Add-Type -TypeDefinition "^""using System;`r`nusing System.Runtime.InteropServices;`r`npublic class Privileges {`r`n    [DllImport(`"^""advapi32.dll`"^"", ExactSpelling = true, SetLastError = true)]`r`n    internal static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall,`r`n        ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);`r`n    [DllImport(`"^""advapi32.dll`"^"", ExactSpelling = true, SetLastError = true)]`r`n    internal static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr phtok);`r`n    [DllImport(`"^""advapi32.dll`"^"", SetLastError = true)]`r`n    internal static extern bool LookupPrivilegeValue(string host, string name, ref long pluid);`r`n    [StructLayout(LayoutKind.Sequential, Pack = 1)]`r`n    internal struct TokPriv1Luid {`r`n        public int Count;`r`n        public long Luid;`r`n        public int Attr;`r`n    }`r`n    internal const int SE_PRIVILEGE_ENABLED = 0x00000002;`r`n    internal const int TOKEN_QUERY = 0x00000008;`r`n    internal const int TOKEN_ADJUST_PRIVILEGES = 0x00000020;`r`n    public static bool AddPrivilege(string privilege) {`r`n        try {`r`n            bool retVal;`r`n            TokPriv1Luid tp;`r`n            IntPtr hproc = GetCurrentProcess();`r`n            IntPtr htok = IntPtr.Zero;`r`n            retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);`r`n            tp.Count = 1;`r`n            tp.Luid = 0;`r`n            tp.Attr = SE_PRIVILEGE_ENABLED;`r`n            retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);`r`n            retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);`r`n            return retVal;`r`n        } catch (Exception ex) {`r`n            throw new Exception(`"^""Failed to adjust token privileges`"^"", ex);`r`n        }`r`n    }`r`n    public static bool RemovePrivilege(string privilege) {`r`n        try {`r`n            bool retVal;`r`n            TokPriv1Luid tp;`r`n            IntPtr hproc = GetCurrentProcess();`r`n            IntPtr htok = IntPtr.Zero;`r`n            retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);`r`n            tp.Count = 1;`r`n            tp.Luid = 0;`r`n            tp.Attr = 0;  // This line is changed to revoke the privilege`r`n            retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);`r`n            retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);`r`n            return retVal;`r`n        } catch (Exception ex) {`r`n            throw new Exception(`"^""Failed to adjust token privileges`"^"", ex);`r`n        }`r`n    }`r`n    [DllImport(`"^""kernel32.dll`"^"", CharSet = CharSet.Auto)]`r`n    public static extern IntPtr GetCurrentProcess();`r`n}"^""; [Privileges]::AddPrivilege('SeRestorePrivilege') | Out-Null; [Privileges]::AddPrivilege('SeTakeOwnershipPrivilege') | Out-Null; $adminSid = New-Object System.Security.Principal.SecurityIdentifier 'S-1-5-32-544'; $adminAccount = $adminSid.Translate([System.Security.Principal.NTAccount]); $adminFullControlAccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule( $adminAccount, [System.Security.AccessControl.FileSystemRights]::FullControl, [System.Security.AccessControl.AccessControlType]::Allow ); $foundAbsolutePaths = @(); Write-Host 'Iterating files and directories recursively.'; try { $foundAbsolutePaths += @(; Get-ChildItem -Path $expandedPath -Force -Recurse -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; try { $foundAbsolutePaths += @(; Get-Item -Path $expandedPath -ErrorAction Stop | Select-Object -ExpandProperty FullName; ); } catch [System.Management.Automation.ItemNotFoundException] { <# Swallow, do not run `Test-Path` before, it's unreliable for globs requiring extra permissions #>; }; $foundAbsolutePaths = $foundAbsolutePaths | Select-Object -Unique | Sort-Object -Property { $_.Length } -Descending; if (!$foundAbsolutePaths) { Write-Host 'Skipping, no items available.'; exit 0; }; Write-Host "^""Initiating processing of $($foundAbsolutePaths.Count) items from `"^""$expandedPath`"^""."^""; foreach ($path in $foundAbsolutePaths) { if (Test-Path -Path $path -PathType Container) { Write-Host "^""Skipping folder (not its contents): `"^""$path`"^""."^""; $skippedCount++; continue; }; if($revert -eq $true) { if (-not $path.EndsWith('.OLD')) { Write-Host "^""Skipping non-backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; } else { if ($path.EndsWith('.OLD')) { Write-Host "^""Skipping backup file: `"^""$path`"^""."^""; $skippedCount++; continue; }; }; $originalFilePath = $path; Write-Host "^""Processing file: `"^""$originalFilePath`"^""."^""; if (-Not (Test-Path $originalFilePath)) { Write-Host "^""Skipping, file `"^""$originalFilePath`"^"" not found."^""; $skippedCount++; exit 0; }; $originalAcl = Get-Acl -Path "^""$originalFilePath"^""; $accessGranted = $false; try { $acl = Get-Acl -Path "^""$originalFilePath"^""; $acl.SetOwner($adminAccount) <# Take Ownership (because file is owned by TrustedInstaller) #>; $acl.AddAccessRule($adminFullControlAccessRule) <# Grant rights to be able to move the file #>; Set-Acl -Path $originalFilePath -AclObject $acl -ErrorAction Stop; $accessGranted = $true; } catch { Write-Warning "^""Failed to grant access to `"^""$originalFilePath`"^"": $($_.Exception.Message)"^""; }; if ($revert -eq $true) { $newFilePath = $originalFilePath.Substring(0, $originalFilePath.Length - 4); } else { $newFilePath = "^""$($originalFilePath).OLD"^""; }; try { Move-Item -LiteralPath "^""$($originalFilePath)"^"" -Destination "^""$newFilePath"^"" -Force -ErrorAction Stop; Write-Host "^""Successfully processed `"^""$originalFilePath`"^""."^""; $renamedCount++; if ($accessGranted) { try { Set-Acl -Path $newFilePath -AclObject $originalAcl -ErrorAction Stop; } catch { Write-Warning "^""Failed to restore access on `"^""$newFilePath`"^"": $($_.Exception.Message)"^""; }; }; } catch { Write-Error "^""Failed to rename `"^""$originalFilePath`"^"" to `"^""$newFilePath`"^"": $($_.Exception.Message)"^""; $failedCount++; if ($accessGranted) { try { Set-Acl -Path $originalFilePath -AclObject $originalAcl -ErrorAction Stop; } catch { Write-Warning "^""Failed to restore access on `"^""$originalFilePath`"^"": $($_.Exception.Message)"^""; }; }; }; }; if (($renamedCount -gt 0) -or ($skippedCount -gt 0)) { Write-Host "^""Successfully processed $renamedCount items and skipped $skippedCount items."^""; }; if ($failedCount -gt 0) { Write-Warning "^""Failed to process $($failedCount) items."^""; }; [Privileges]::RemovePrivilege('SeRestorePrivilege') | Out-Null; [Privileges]::RemovePrivilege('SeTakeOwnershipPrivilege') | Out-Null"
+chcp 65001 >nul 2>&1
+
+:: ------------Remove "Microsoft 3D Builder" app-------------
+echo --- Remove "Microsoft 3D Builder" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.3DBuilder' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.3DBuilder_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ------------------Remove "3D Viewer" app------------------
+echo --- Remove "3D Viewer" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.Microsoft3DViewer' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Microsoft3DViewer_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -----------Remove "Microsoft 365 (Office)" app------------
+echo --- Remove "Microsoft 365 (Office)" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.MicrosoftOfficeHub' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -------------------Remove "OneNote" app-------------------
+echo --- Remove "OneNote" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.Office.OneNote' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Office.OneNote_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: --------------------Remove "Sway" app---------------------
+echo --- Remove "Sway" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.Office.Sway' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Office.Sway_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ---------------Remove "Phone Companion" app---------------
+echo --- Remove "Phone Companion" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.WindowsPhone' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsPhone_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ---------------Remove "Microsoft Phone" app---------------
+echo --- Remove "Microsoft Phone" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.CommsPhone' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.CommsPhone_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -----------------Remove "Phone Link" app------------------
+echo --- Remove "Phone Link" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.YourPhone' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.YourPhone_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: --------------------Remove "Call" app---------------------
+echo --- Remove "Call" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\EndOfLife\$CURRENT_USER_SID\Microsoft.Windows.CallingShellApp_cw5n1h2txyewy'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; $userSid = (New-Object System.Security.Principal.NTAccount($env:USERNAME)).Translate([Security.Principal.SecurityIdentifier]).Value; $registryPath = $registryPath.Replace('$CURRENT_USER_SID', $userSid); if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.Windows.CallingShellApp' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Windows.CallingShellApp_cw5n1h2txyewy'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\EndOfLife\$CURRENT_USER_SID\Microsoft.Windows.CallingShellApp_cw5n1h2txyewy'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; $userSid = (New-Object System.Security.Principal.NTAccount($env:USERNAME)).Translate([Security.Principal.SecurityIdentifier]).Value; $registryPath = $registryPath.Replace('$CURRENT_USER_SID', $userSid); Write-Host "^""Removing registry key at `"^""$registryPath`"^""."^""; if (-not (Test-Path -LiteralPath $registryPath)) { Write-Host "^""Skipping, no action needed, registry key `"^""$registryPath`"^"" does not exist."^""; exit 0; }; try { Remove-Item -LiteralPath $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully removed the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to remove the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -------------------Remove "Cortana" app-------------------
+echo --- Remove "Cortana" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.549981C3F5F10' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.549981C3F5F10_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -Remove "Get Help" app (breaks built-in troubleshooting)--
+echo --- Remove "Get Help" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.GetHelp' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.GetHelp_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ---------------Remove "Microsoft Tips" app----------------
+echo --- Remove "Microsoft Tips" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.Getstarted' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Getstarted_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -------------Remove "Microsoft Messaging" app-------------
+echo --- Remove "Microsoft Messaging" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.Messaging' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Messaging_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ------------Remove "Mixed Reality Portal" app-------------
+echo --- Remove "Mixed Reality Portal" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.MixedReality.Portal' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MixedReality.Portal_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ----------------Remove "Feedback Hub" app-----------------
+echo --- Remove "Feedback Hub" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.WindowsFeedbackHub' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ----------------Remove "Windows Maps" app-----------------
+echo --- Remove "Windows Maps" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.WindowsMaps' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsMaps_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: --------------Remove "Microsoft People" app---------------
+echo --- Remove "Microsoft People" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.People' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.People_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ----------------Remove "Microsoft Pay" app----------------
+echo --- Remove "Microsoft Pay" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.Wallet' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Wallet_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: ----------------Remove "Mobile Plans" app-----------------
+echo --- Remove "Mobile Plans" app
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.OneConnect' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.OneConnect_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -------Remove "Microsoft Solitaire Collection" app--------
+echo --- Remove "Microsoft Solitaire Collection" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.MicrosoftSolitaireCollection' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftSolitaireCollection_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -----------Remove "Microsoft Sticky Notes" app------------
+echo --- Remove "Microsoft Sticky Notes" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.MicrosoftStickyNotes' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: --------------Remove "Mail and Calendar" app--------------
+echo --- Remove "Mail and Calendar" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'microsoft.windowscommunicationsapps' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\microsoft.windowscommunicationsapps_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -----------Remove "Windows Sound Recorder" app------------
+echo --- Remove "Windows Sound Recorder" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.WindowsSoundRecorder' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsSoundRecorder_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
+
+:: --Remove "Microsoft To Do: Lists, Tasks & Reminders" app--
+echo --- Remove "Microsoft To Do: Lists, Tasks ^& Reminders" app
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "Get-AppxPackage 'Microsoft.Todos' | Remove-AppxPackage"
+PowerShell -ExecutionPolicy Unrestricted -Command "$keyPath='HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Todos_8wekyb3d8bbwe'; $registryHive = $keyPath.Split('\')[0]; $registryPath = "^""$($registryHive):$($keyPath.Substring($registryHive.Length))"^""; if (Test-Path $registryPath) { Write-Host "^""Skipping, no action needed, registry path `"^""$registryPath`"^"" already exists."^""; exit 0; }; try { New-Item -Path $registryPath -Force -ErrorAction Stop | Out-Null; Write-Host "^""Successfully created the registry key at path `"^""$registryPath`"^""."^""; } catch { Write-Error "^""Failed to create the registry key at path `"^""$registryPath`"^"": $($_.Exception.Message)"^""; }"
+chcp 65001 >nul 2>&1
 
 echo  Процесс удаления лишних программ от Microsoft Завершён. Переход назад будет выполнен автоматически через 5 секунд.
 timeout /t 5 /nobreak > NUL
 goto AppPanel
-
 
 
 REM =====================================================================================================================================================================================
@@ -9878,8 +10120,8 @@ goto GoBack
 
 :MicrosoftOffice
 call :ASX_Hub_Downloads_Title 
-set "FileName=Office 365 Setup.cmd"
-set "FileNameZip=Office_365_ProPlus.zip"
+set "FileName=Office Installer.exe"
+set "FileNameZip=Office.zip"
 set "FilePatch=%ASX-Directory%\Files\Downloads\Office\%FileName%"
 set "FilePatchZip=%ASX-Directory%\Files\Downloads\%FileNameZip%"
 set "FilePatchZipDestination=%ASX-Directory%\Files\Downloads\Office"
@@ -10068,9 +10310,11 @@ goto GoBack
 
 
 :EdgeTelemetry
+if "%DLEGT%" == "%COL%[92mВКЛ " (
+echo [INFO ] %TIME% - Выключении телеметрии edge >> "%ASX-Directory%\Files\Logs\%date%.txt"
+cls
 :: -----------Disable Edge diagnostic data sending-----------
 echo --- Disable Edge diagnostic data sending
-:: Configure "DiagnosticData" Edge policy
 :: Set the registry value: "HKLM\SOFTWARE\Policies\Microsoft\Edge!DiagnosticData"
 chcp 850 >nul 2>&1
 PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Policies\Microsoft\Edge'; $data =  '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Edge' /v 'DiagnosticData' /t 'REG_DWORD' /d "^""$data"^"" /f"
@@ -10080,7 +10324,6 @@ chcp 65001 >nul 2>&1
 
 :: --------Disable outdated Edge metrics data sending--------
 echo --- Disable outdated Edge metrics data sending
-:: Configure "MetricsReportingEnabled" Edge policy
 :: Set the registry value: "HKLM\SOFTWARE\Policies\Microsoft\Edge!MetricsReportingEnabled"
 chcp 850 >nul 2>&1
 PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Policies\Microsoft\Edge'; $data =  '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Edge' /v 'MetricsReportingEnabled' /t 'REG_DWORD' /d "^""$data"^"" /f"
@@ -10090,7 +10333,6 @@ chcp 65001 >nul 2>&1
 
 :: ------Disable outdated Edge site information sending------
 echo --- Disable outdated Edge site information sending
-:: Configure "SendSiteInfoToImproveServices" Edge policy
 :: Set the registry value: "HKLM\SOFTWARE\Policies\Microsoft\Edge!SendSiteInfoToImproveServices"
 chcp 850 >nul 2>&1
 PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Policies\Microsoft\Edge'; $data =  '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Edge' /v 'SendSiteInfoToImproveServices' /t 'REG_DWORD' /d "^""$data"^"" /f"
@@ -10100,15 +10342,54 @@ chcp 65001 >nul 2>&1
 
 :: ------------------Disable Edge Feedback-------------------
 echo --- Disable Edge Feedback
-:: Configure "UserFeedbackAllowed" Edge policy
 :: Set the registry value: "HKLM\SOFTWARE\Policies\Microsoft\Edge!UserFeedbackAllowed"
 chcp 850 >nul 2>&1
 PowerShell -ExecutionPolicy Unrestricted -Command "$registryPath = 'HKLM\SOFTWARE\Policies\Microsoft\Edge'; $data =  '0'; reg add 'HKLM\SOFTWARE\Policies\Microsoft\Edge' /v 'UserFeedbackAllowed' /t 'REG_DWORD' /d "^""$data"^"" /f"
 :: Suggest restarting Edge for changes to take effect
 PowerShell -ExecutionPolicy Unrestricted -Command "$message = 'For the changes to fully take effect, please restart Microsoft Edge.'; $warn =  $false; if ($warn) { Write-Warning "^""$message"^""; } else { Write-Host "^""Note: "^"" -ForegroundColor Blue -NoNewLine; Write-Output "^""$message"^""; }"
 chcp 65001 >nul 2>&1
+    set "operation_name=Выключении телеметрии edge"
+) >nul 2>&1 else (
+cls
+echo [INFO ] %TIME% - Включении телеметрии edge >> "%ASX-Directory%\Files\Logs\%date%.txt"
+:: ------Disable Edge diagnostic data sending (revert)-------
+echo --- Disable Edge diagnostic data sending - revert
+:: Delete the registry value "HKLM\SOFTWARE\Policies\Microsoft\Edge!DiagnosticData"
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "reg delete 'HKLM\SOFTWARE\Policies\Microsoft\Edge' /v 'DiagnosticData' /f 2>$null"
+:: Suggest restarting Edge for changes to take effect
+PowerShell -ExecutionPolicy Unrestricted -Command "$message = 'For the changes to fully take effect, please restart Microsoft Edge.'; $warn =  $false; if ($warn) { Write-Warning "^""$message"^""; } else { Write-Host "^""Note: "^"" -ForegroundColor Blue -NoNewLine; Write-Output "^""$message"^""; }"
+chcp 65001 >nul 2>&1
 
-set "operation_name=Отключение телеметрии Edge"
+:: ---Disable outdated Edge metrics data sending (revert)----
+echo --- Disable outdated Edge metrics data sending - revert
+:: Delete the registry value "HKLM\SOFTWARE\Policies\Microsoft\Edge!MetricsReportingEnabled"
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "reg delete 'HKLM\SOFTWARE\Policies\Microsoft\Edge' /v 'MetricsReportingEnabled' /f 2>$null"
+:: Suggest restarting Edge for changes to take effect
+PowerShell -ExecutionPolicy Unrestricted -Command "$message = 'For the changes to fully take effect, please restart Microsoft Edge.'; $warn =  $false; if ($warn) { Write-Warning "^""$message"^""; } else { Write-Host "^""Note: "^"" -ForegroundColor Blue -NoNewLine; Write-Output "^""$message"^""; }"
+chcp 65001 >nul 2>&1
+
+:: -Disable outdated Edge site information sending (revert)--
+echo --- Disable outdated Edge site information sending - revert
+:: Delete the registry value "HKLM\SOFTWARE\Policies\Microsoft\Edge!SendSiteInfoToImproveServices"
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "reg delete 'HKLM\SOFTWARE\Policies\Microsoft\Edge' /v 'SendSiteInfoToImproveServices' /f 2>$null"
+:: Suggest restarting Edge for changes to take effect
+PowerShell -ExecutionPolicy Unrestricted -Command "$message = 'For the changes to fully take effect, please restart Microsoft Edge.'; $warn =  $false; if ($warn) { Write-Warning "^""$message"^""; } else { Write-Host "^""Note: "^"" -ForegroundColor Blue -NoNewLine; Write-Output "^""$message"^""; }"
+chcp 65001 >nul 2>&1
+
+:: --------------Disable Edge Feedback (revert)--------------
+echo --- Disable Edge Feedback - revert
+:: Delete the registry value "HKLM\SOFTWARE\Policies\Microsoft\Edge!UserFeedbackAllowed"
+chcp 850 >nul 2>&1
+PowerShell -ExecutionPolicy Unrestricted -Command "reg delete 'HKLM\SOFTWARE\Policies\Microsoft\Edge' /v 'UserFeedbackAllowed' /f 2>$null"
+:: Suggest restarting Edge for changes to take effect
+PowerShell -ExecutionPolicy Unrestricted -Command "$message = 'For the changes to fully take effect, please restart Microsoft Edge.'; $warn =  $false; if ($warn) { Write-Warning "^""$message"^""; } else { Write-Host "^""Note: "^"" -ForegroundColor Blue -NoNewLine; Write-Output "^""$message"^""; }"
+chcp 65001 >nul 2>&1
+	set "operation_name=Включении телеметрии edge"
+) >nul 2>&1
+
 call:Complete_notice
 goto GoBack
 
@@ -10565,7 +10846,7 @@ goto GoBack
 
 :DriverFinder_Menu
 if exist "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe" (
-    "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe"
+    start "DriverFinder" "%ASX-Directory%\Files\Utilites\ASX_DriverFinder\DriverFinder.exe"
 ) else (
     title Загрузка отсутствующих компонентов...
     echo [INFO ] %TIME% - Загрузка отсутствующего компонента DriverFinder.exe >> "%ASX-Directory%\Files\Logs\%date%.txt"
@@ -11386,7 +11667,7 @@ echo                                                                     %COL%[9
 echo.
 echo          %COL%[36mДОБАВЛЕНИЕ НОВЫХ ПУНКТОВ
 echo          %COL%[97m------------------------
-echo           %COL%[90mДля файлов:%COL%[37m
+echo          %COL%[90mДля файлов:%COL%[37m
 echo           1 %COL%[36m[%COL%[37m %ContMenuOwner% %COL%[36m]%COL%[37m Пункт "Сменить владельца"
 echo           2 %COL%[36m[%COL%[37m %ContMenuNotepad% %COL%[36m]%COL%[37m Пункт "Открыть через БЛОКНОТ"
 echo           3 %COL%[36m[%COL%[37m %ContMenuExplorer% %COL%[36m]%COL%[37m Пункт "Перезапустить ПРОВОДНИК"
@@ -11395,12 +11676,12 @@ echo           5 %COL%[36m[%COL%[37m %RunWithPriority% %COL%[36m]%COL%[37m Пу�
 echo           6 %COL%[36m[%COL%[37m %DeleteFolderContents% %COL%[36m]%COL%[37m Пункт "Удалить содержимое папки"
 echo           7 %COL%[36m[%COL%[37m %EditInNotepad% %COL%[36m]%COL%[37m Пункт "Изменить в Блокноте"
 echo.
-echo           %COL%[90mДля рабочего стола:%COL%[37m
+echo          %COL%[90mДля рабочего стола:%COL%[37m
 echo           8 %COL%[36m[%COL%[37m %EmptyRecycleBin% %COL%[36m]%COL%[37m Пункт "Очистить корзину"
 echo           9 %COL%[36m[%COL%[37m %SettingsCME% %COL%[36m]%COL%[37m Пункт "Настройки"
 echo          10 %COL%[36m[%COL%[37m %WindowsTools% %COL%[36m]%COL%[37m Пункт "Инструменты Windows"
 echo.
-echo           %COL%[90mДля панели задач:%COL%[37m
+echo          %COL%[90mДля панели задач:%COL%[37m
 echo          11 %COL%[36m[%COL%[37m %EndTask% %COL%[36m]%COL%[37m Пункт "Завершить задачу"
 echo.
 echo.
@@ -12822,7 +13103,6 @@ if !length! gtr 6 (
     set /a UserNameWarn+=1
 )
 
-
 if %UserNameWarn% equ 0 (
     set "COLR3=%COL%[36m"
     set "COLR1=%COL%[36m"
@@ -12846,7 +13126,6 @@ color 0a
 echo  Загрузка PEGASUS
 
 if not exist "%ASX-Directory%\Files\Utilites\PEGASUS" ( 
-    rd "%ASX-Directory%\Files\Utilites\PEGASUS" >nul 2>&1
     md "%ASX-Directory%\Files\Utilites\PEGASUS" >nul 2>&1
     curl -g -L -# -o "%ASX-Directory%\Files\Downloads\PEGASUS.zip" "https://github.com/ALFiX01/ASX-Hub/raw/main/Files/Utilities/PEGASUS/PEGASUS.zip" >nul 2>&1
     IF %ERRORLEVEL% NEQ 0 (
@@ -12918,7 +13197,7 @@ echo                                        \_'/^>   7'_/' _/' \_ '\,_'_ \_ \'_,
 echo                                          ^>/  _ ,V  ,^<  \__ '\,_'_ \_ \'_,/
 echo                                        /'_  ^( ^)_^)\/-,',__ '\,_'_,\_,\'_\
 echo                                       ^( ^) \_ \^|_  `\_    \_,/'\,_'_,/'         ----------------------------------
-echo                                        \\_  \_\_^)    `\_                       ^| Утилита:  PEGASUS               ^|
+echo                                        \\_  \_\_^)    `\_                       ^| Утилита:  PEGASUS              ^|
 echo                                         \_^)   ^>        `\_                     ^| Версия:  v2.0                  ^|
 echo                                              /  `,      ^|`\_                   ^| Автор:  ALFiX.inc              ^| 
 echo                                             /    \     / \ `\                  ----------------------------------
@@ -13730,7 +14009,8 @@ echo [INFO ] %TIME% - Вызван ":Dynamic_Script" >> "%ASX-Directory%\Files\L
 set "Assistant_Message="
 
 if "%total_errors%" GEQ "1" (
-    echo                                              %COL%[90mАссистент: %COL%[91mВнимание %COL%[90mбыли обнаружены ошибки ^(%total_errors%^) ^[ F ^]
+    set "Assistant_Message=Ассистент: Внимание были обнаружены ошибки (%total_errors%) [ F ]"
+    REM echo                                              %COL%[90mАссистент: %COL%[91mВнимание %COL%[90mбыли обнаружены ошибки ^(%total_errors%^) ^[ F ^]
     set "RecomendedPanelNameGOTO=OpenLogs"
 ) else if "%Dynamic_Upd_on_startPC%"=="Yes" (    
     REM ASX Hub был обновлён до v%Version%
@@ -13782,7 +14062,6 @@ if "%total_errors%" GEQ "1" (
     set "RecomendedPanelNameGOTO=Dynamic_StartupManager"
     echo [INFO ] %TIME% - Много программ в автозагрузке: !StartupCount! >> "%ASX-Directory%\Files\Logs\%date%.txt"
 )
-
 
 rem Найдем длину строки Assistant_Message
 set "length=0"
@@ -13878,15 +14157,15 @@ echo.
 echo       %COL%[36mОписание обновления %COL%[37m%FullVersionNameCurrent%%COL%[37m
 echo       %COL%[97m!dashes!
 echo.
-echo         %COL%[36m1.%COL%[37m Улучшен дизайн панели редактирования контекстного меню.
-echo         %COL%[36m2.%COL%[37m На панель Редактирования контекстного меню добавлен пункт "Завершить задачу".
-echo         %COL%[36m3.%COL%[37m На панель Оптимизации и настроек добавлены пункты "Удалить Recall" "Удалить Copilot".
-echo         %COL%[36m4.%COL%[37m На панель кастомизации добавлен пункт "Серый цвет выделеной области".
-echo         %COL%[36m5.%COL%[37m На панель служб добавлены пункты "Службы обновления Windows" "Служба отслеживания местоположения"
-echo            "Запись хронологии действий в Windows".
-echo         %COL%[36m6.%COL%[37m Переписаны алгоритмы Быстрой настройки windows.
-echo         %COL%[36m7.%COL%[37m Улучшен алгоритм изменения состояния Служб диагностики.
-echo         %COL%[36m8.%COL%[37m Исправлены многочисленно обнаруженные баги, ошибки, недочёты.
+echo         %COL%[36m1.%COL%[37m На панель Оптимизации и настроек добавлены пункты "Системные звуки windows".
+echo         %COL%[36m2.%COL%[37m Для пункта "Телеметрия Edge" добавлена возможность вернуть значение по умолчанию.
+echo         %COL%[36m3.%COL%[37m Исправлен пункт "Отключение уведомлений от Windows Defender" в меню быстрой настройки.
+echo         %COL%[36m4.%COL%[37m Обновлена установка Microsoft office.
+echo         %COL%[36m5.%COL%[37m Улучшен алгоритм WidgetUninstall.
+echo         %COL%[36m6.%COL%[37m Обновлена алгоритм удаления лишний встроенных программ от microsoft.
+echo         %COL%[36m7.%COL%[37m Обновлены компоненты Notification и  DriverFinder.
+echo         %COL%[36m8.%COL%[37m Исправлены обнаруженные баги, ошибки, недочёты.
+echo.
 echo.
 echo.
 echo.
