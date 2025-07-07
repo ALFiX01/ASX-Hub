@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }} # Убедитесь, что этот токен имеет права на чтение релизов
           REPO_OWNER: ALFiX01
           REPO_NAME: ASX-Hub
-          ASSET_NAME: ASX.Hub.exe
+          ASSET_NAME: ASX-Hub.exe
           OUTPUT_FILE: docs/github-stats.json # Путь к файлу, куда сохраняется JSON
         run: |
           # Запрос всех релизов (первая страница, до 100 штук, но для последнего релиза нам важен только первый)
