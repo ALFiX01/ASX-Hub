@@ -1,4 +1,4 @@
-set "VersionNumberList=YL07S1 YL07S2"
-set "UPDVER=1.7.0"
-set "FullVersionName=1.7.0"
+set "VersionNumberList=YL21S1 YL21S2"
+set "UPDVER=1.7.1"
+set "FullVersionName=1.7.1"
 set "DisplayBranch=Stable"

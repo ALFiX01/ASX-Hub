@@ -103,13 +103,13 @@ echo 📌 Запуск ASX Hub >> "!ASX-Directory!\Files\Logs\%date%.txt"
 
 REM ИНФОРМАЦИЯ О ВЕРСИИ
 :: BranchCurrentVersion - ветка текущей версии
-set "Version=1.7.0"
-set "FullVersionNameCurrent=1.7.0"
-set "VersionNumberCurrent=YL07S1"
+set "Version=1.7.1"
+set "FullVersionNameCurrent=1.7.1"
+set "VersionNumberCurrent=YL21S1"
 
 set "BranchCurrentVersion=Stable"
 
-set "DateUpdate=07.07.2025"
+set "DateUpdate=21.07.2025"
 set "Dynamic_Upd_on_startPC=No"
 set "ASX_Version_OLD="
 set "SaveData=HKEY_CURRENT_USER\Software\ALFiX inc.\ASX\Data"
@@ -1067,11 +1067,12 @@ if %errorlevel% equ 0 (
     ) else (
         echo [INFO ] %TIME% - Шрифт консоли изменен с Consolas на __DefaultTTFont__ >> "%ASX-Directory%\Files\Logs\%date%.txt"
         cls
+        title Ошибка при запуске ASX Hub
         echo.
         echo.
         echo  Ассистент:
-        echo  - Некоректный запуск. сейчас я перезапущу ASX Hub.
-        timeout /t 4 /nobreak >nul
+        echo  - Произошла ошибка при запуске ASX Hub. Сейчас я его перезапущу.
+        timeout /t 3 /nobreak >nul
         start "" "%ASX-Directory%\ASX Hub.exe"
         exit /b
     )
@@ -2140,7 +2141,7 @@ echo.
 echo.
 echo.
 echo.
-echo.
+echo                                                           Нажми Enter, чтобы продолжить
 echo.
 echo.
 echo.
@@ -2190,7 +2191,7 @@ echo.
 echo.
 echo.
 echo.
-echo.
+echo                                                           Нажми Enter, чтобы продолжить
 echo.
 echo.
 echo.
@@ -4741,6 +4742,14 @@ for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Software\Classes\CLSID\{
 REM Сеть в проводнике
 for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Software\Classes\CLSID\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}" /v "System.IsPinnedToNameSpaceTree" ') do @if "%%A"=="0x1" (set "NetworkExplorer=%COL%[92mВКЛ ") else (set "NetworkExplorer=%COL%[91mВЫКЛ")
 
+REM Корзина в проводнике
+set "RecycleBinExplorer=%COL%[91mВЫКЛ"
+for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Software\Classes\CLSID\{645FF040-5081-101B-9F08-00AA002F954E}" /v "System.IsPinnedToNameSpaceTree" 2^>nul') do (
+    if "%%A"=="0x1" (
+        set "RecycleBinExplorer=%COL%[92mВКЛ "
+    )
+)
+
 REM День Недели на панели задач
 for /f "tokens=3" %%A in ('reg query "HKEY_CURRENT_USER\Control Panel\International" /v sShortDate ') do @(if "%%A"=="ddd-dd.MM.yyyy" (set "TaskBarDate=%COL%[92mВКЛ ") else (set "TaskBarDate=%COL%[91mВЫКЛ"))
 
@@ -4788,25 +4797,25 @@ echo            2 %COL%[36m[%COL%[37m %SFE% %COL%[36m]%COL%[37m Показыва
 echo            3 %COL%[36m[%COL%[90m Н/Д  %COL%[36m]%COL%[37m Установить %COL%[36m%THEME% %COL%[37mтему для всех программ
 echo            4 %COL%[36m[%COL%[37m %THPC% %COL%[36m]%COL%[37m Убрать иконки ^(Документы, Музыка и т.д.^) из Этот компьютер
 if "%WinVer%"=="Windows 11" (
-echo            5 %COL%[36m[%COL%[37m %OldContMenuWindows% %COL%[36m]%COL%[37m Старое контекстное меню из windows 10	
+echo            5 %COL%[36m[%COL%[37m %OldContMenuWindows% %COL%[36m]%COL%[37m Старое контекстное меню из Windows 10	
 ) else (
-echo            5 %COL%[36m[%COL%[37m %COL%[91mБЛОК %COL%[36m]%COL%[37m Старое контекстное меню из windows 10  %COL%[91m^(Не доступно на вашем пк^)%COL%[90m
+echo            5 %COL%[36m[%COL%[37m %COL%[91mБЛОК %COL%[36m]%COL%[37m Старое контекстное меню из Windows 10  %COL%[91m^(Не доступно на вашем пк^)%COL%[90m
 )
-echo            6 %COL%[36m[%COL%[37m %galleryExplorer% %COL%[36m]%COL%[37m Пункт Галерея на панели навигации в проводнике
-echo            7 %COL%[36m[%COL%[37m %HomeExplorer% %COL%[36m]%COL%[37m Пункт Главная на панели навигации в проводнике
-echo            8 %COL%[36m[%COL%[37m %NetworkExplorer% %COL%[36m]%COL%[37m Пункт Сеть в проводнике
-echo            9 %COL%[36m[%COL%[37m %TaskBarDate% %COL%[36m]%COL%[37m Показать день недели на панели задач
-echo           10 %COL%[36m[%COL%[37m %IconArrow% %COL%[36m]%COL%[37m Стрелки на ярлыках
-echo           11 %COL%[36m[%COL%[37m %DSWE% %COL%[36m]%COL%[37m Отключить экран приветствия Windows
-echo           12 %COL%[36m[%COL%[37m %MSRT% %COL%[36m]%COL%[37m Исключить средство удаления вредоносных программ из обновлений Windows
-echo           13 %COL%[36m[%COL%[37m %FolderNameTemplate% %COL%[36m]%COL%[37m Нестандартное имя для новой папки %FolderNameTemplateName%
-echo           14 %COL%[36m[%COL%[37m %GrayHilight% %COL%[36m]%COL%[37m Серый цвет выделеной области
+echo            6 %COL%[36m[%COL%[37m %galleryExplorer% %COL%[36m]%COL%[37m Пункт %COL%[36mГалерея %COL%[37mв проводнике
+echo            7 %COL%[36m[%COL%[37m %HomeExplorer% %COL%[36m]%COL%[37m Пункт %COL%[36mГлавная %COL%[37mв проводнике
+echo            8 %COL%[36m[%COL%[37m %RecycleBinExplorer% %COL%[36m]%COL%[37m Пункт %COL%[36mКорзина %COL%[37mв проводнике
+echo            9 %COL%[36m[%COL%[37m %NetworkExplorer% %COL%[36m]%COL%[37m Пункт %COL%[36mСеть %COL%[37mв проводнике
+echo           10 %COL%[36m[%COL%[37m %TaskBarDate% %COL%[36m]%COL%[37m Показать день недели на панели задач
+echo           11 %COL%[36m[%COL%[37m %IconArrow% %COL%[36m]%COL%[37m Стрелки на ярлыках
+echo           12 %COL%[36m[%COL%[37m %DSWE% %COL%[36m]%COL%[37m Отключить экран приветствия Windows
+echo           13 %COL%[36m[%COL%[37m %MSRT% %COL%[36m]%COL%[37m Исключить средство удаления вредоносных программ из обновлений Windows
+echo           14 %COL%[36m[%COL%[37m %FolderNameTemplate% %COL%[36m]%COL%[37m Нестандартное имя для новой папки %FolderNameTemplateName%
+echo           15 %COL%[36m[%COL%[37m %GrayHilight% %COL%[36m]%COL%[37m Серый цвет выделеной области
 echo.
 echo.
 echo          %COL%[36mПУНКТЫ
 echo          %COL%[97m------%COL%[37m
 echo          %COL%[36m[%COL%[37m CS %COL%[36m]%COL%[37m Меню выбора кастомного курсора мыши
-echo.
 echo.
 echo.
 echo.
@@ -4836,13 +4845,14 @@ if "%WinVer%"=="Windows 11" (
 )
 if /i "%choice%"=="6" ( set "history=WinCustomization;!history!" && call:GalleryExplorer )
 if /i "%choice%"=="7" ( set "history=WinCustomization;!history!" && call:HomeExplorer )
-if /i "%choice%"=="8" ( set "history=WinCustomization;!history!" && call:NetworkExplorer )
-if /i "%choice%"=="9" ( set "history=WinCustomization;!history!" && call:TaskBarDate )
-if /i "%choice%"=="10" ( set "history=WinCustomization;!history!" && call:IconArrowOnShortcut )
-if /i "%choice%"=="11" ( set "history=WinCustomization;!history!" && Call:DisableWelcomeExperience )
-if /i "%choice%"=="12" ( set "history=WinCustomization;!history!" && Call:MSRT_in_WindowsUpdate )
-if /i "%choice%"=="13" ( set "history=WinCustomization;!history!" && call:FolderNameTemplateMenu )
-if /i "%choice%"=="14" ( set "history=WinCustomization;!history!" && call:GrayHilightToggle )
+if /i "%choice%"=="8" ( set "history=WinCustomization;!history!" && call:RecycleBinExplorer )
+if /i "%choice%"=="9" ( set "history=WinCustomization;!history!" && call:NetworkExplorer )
+if /i "%choice%"=="10" ( set "history=WinCustomization;!history!" && call:TaskBarDate )
+if /i "%choice%"=="11" ( set "history=WinCustomization;!history!" && call:IconArrowOnShortcut )
+if /i "%choice%"=="12" ( set "history=WinCustomization;!history!" && Call:DisableWelcomeExperience )
+if /i "%choice%"=="13" ( set "history=WinCustomization;!history!" && Call:MSRT_in_WindowsUpdate )
+if /i "%choice%"=="14" ( set "history=WinCustomization;!history!" && call:FolderNameTemplateMenu )
+if /i "%choice%"=="15" ( set "history=WinCustomization;!history!" && call:GrayHilightToggle )
 
 if /i "%choice%"=="Cs" ( set "history=WinCustomization;!history!" && goto Cursor_menu )
 if /i "%choice%"=="сы" ( set "history=WinCustomization;!history!" && goto Cursor_menu )
@@ -5212,6 +5222,21 @@ if "%HomeExplorer%" == "%COL%[91mВЫКЛ" (
         reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowHome" /v "UncheckedValue" /t REG_DWORD /d "0" /f >nul 2>&1
         reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowHome" /v "ValueName" /t REG_SZ /d "System.IsPinnedToNameSpaceTree" /f >nul 2>&1
         set "operation_name=Выключение Главная в проводнике"
+) >nul 2>&1
+call:Complete_notice
+goto GoBack
+
+:RecycleBinExplorer
+echo [INFO ] %TIME% - Вызван ":RecycleBinExplorer" >> "%ASX-Directory%\Files\Logs\%date%.txt"
+if "%RecycleBinExplorer%" == "%COL%[91mВЫКЛ" (
+    REM Показываем Корзину на панели навигации для текущего пользователя
+    reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" /v "{645FF040-5081-101B-9F08-00AA002F954E}" /f >nul 2>&1
+    reg add "HKEY_CURRENT_USER\Software\Classes\CLSID\{645FF040-5081-101B-9F08-00AA002F954E}" /v "System.IsPinnedToNameSpaceTree" /t REG_DWORD /d "1" /f >nul 2>&1
+    set "operation_name=Включение Корзина в проводнике"
+) >nul 2>&1 else (
+    REM Удаляем Корзину из левой панели проводника через реестр (адаптация из .reg)
+    reg delete "HKEY_CURRENT_USER\Software\Classes\CLSID\{645FF040-5081-101B-9F08-00AA002F954E}" /f >nul 2>&1
+    set "operation_name=Выключение Корзина в проводнике"
 ) >nul 2>&1
 call:Complete_notice
 goto GoBack
@@ -12245,12 +12270,11 @@ if exist "%ASX-Directory%\Files\Utilites\PC_Cleaner\ASX-PC-Cleaner.exe" (
     start "" "%ASX-Directory%\Files\Utilites\PC_Cleaner\ASX-PC-Cleaner.exe"
 ) else (
     echo         - Скачивание PC Cleaner
+    md "%ASX-Directory%\Files\Utilites\PC_Cleaner" >nul 2>&1
     curl -g -L -# -o "%ASX-Directory%\Files\Utilites\PC_Cleaner\ASX-PC-Cleaner.exe" "https://github.com/ALFiX01/ASX-PC-Cleaner/raw/refs/heads/main/Files/PC_cleaner/ASX-PC-Cleaner.exe" >nul 2>&1
     start "" "%ASX-Directory%\Files\Utilites\PC_Cleaner\ASX-PC-Cleaner.exe"
 )
 goto GoBack
-
-
 
 
 :ASX_sorter
@@ -14157,14 +14181,14 @@ echo.
 echo       %COL%[36mОписание обновления %COL%[37m%FullVersionNameCurrent%%COL%[37m
 echo       %COL%[97m!dashes!
 echo.
-echo         %COL%[36m1.%COL%[37m На панель Оптимизации и настроек добавлены пункты "Системные звуки windows".
-echo         %COL%[36m2.%COL%[37m Для пункта "Телеметрия Edge" добавлена возможность вернуть значение по умолчанию.
-echo         %COL%[36m3.%COL%[37m Исправлен пункт "Отключение уведомлений от Windows Defender" в меню быстрой настройки.
-echo         %COL%[36m4.%COL%[37m Обновлена установка Microsoft office.
-echo         %COL%[36m5.%COL%[37m Улучшен алгоритм WidgetUninstall.
-echo         %COL%[36m6.%COL%[37m Обновлена алгоритм удаления лишний встроенных программ от microsoft.
-echo         %COL%[36m7.%COL%[37m Обновлены компоненты Notification и  DriverFinder.
-echo         %COL%[36m8.%COL%[37m Исправлены обнаруженные баги, ошибки, недочёты.
+echo         %COL%[36m1.%COL%[37m На панель Кастомизации добавлен пункт "Корзина в проводнике".
+echo         %COL%[36m2.%COL%[37m На панель Complete_notice добавлена подсказка "Нажми Enter, чтобы продолжить".
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
 echo.
 echo.
 echo.
